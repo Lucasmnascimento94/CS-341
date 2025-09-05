@@ -1,0 +1,355 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "6c10236c-9e65-4f73-b992-16ce5cc0ca01")
+	(paper "A4")
+	(lib_symbols)
+	(sheet
+		(at 86.36 13.97)
+		(size 48.26 21.59)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "3c08c7ca-7fd2-4d3a-9697-b70098ffac99")
+		(property "Sheetname" "BOOT_UP_EXAMPLE"
+			(at 86.36 13.2584 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "BOOT_UP.kicad_sch"
+			(at 86.36 36.1446 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "ATMEGA-SCHEMATICS"
+				(path "/6c10236c-9e65-4f73-b992-16ce5cc0ca01"
+					(page "7")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 149.86 15.24)
+		(size 45.72 20.32)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "44916116-ef18-4855-a07e-96b9ae9a3fa7")
+		(property "Sheetname" "SCHEMATIC_EXAMPLE"
+			(at 149.86 14.5284 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "SCHEMATIC.kicad_sch"
+			(at 149.86 36.1446 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "ATMEGA-SCHEMATICS"
+				(path "/6c10236c-9e65-4f73-b992-16ce5cc0ca01"
+					(page "10")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 15.24 116.84)
+		(size 41.91 20.32)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "9bf139df-e8f1-4e0c-8a3b-e628f086f728")
+		(property "Sheetname" "I2C_BITBANG_EXAMPLE"
+			(at 15.24 116.1284 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "I2C_BITBANG.kicad_sch"
+			(at 15.24 137.7446 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "ATMEGA-SCHEMATICS"
+				(path "/6c10236c-9e65-4f73-b992-16ce5cc0ca01"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 15.24 82.55)
+		(size 41.91 21.59)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "b118dab5-2898-428e-9f82-60065a76267c")
+		(property "Sheetname" "OneWire_EXAMPLE"
+			(at 15.24 81.8384 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "OneWire.kicad_sch"
+			(at 15.24 104.7246 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "ATMEGA-SCHEMATICS"
+				(path "/6c10236c-9e65-4f73-b992-16ce5cc0ca01"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 15.24 151.13)
+		(size 41.91 21.59)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "b3a44323-ae4f-4cb3-8ccc-a504013c9492")
+		(property "Sheetname" "SPI_EXAMPLE"
+			(at 15.24 150.4184 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "SPI_EXAMPLE.kicad_sch"
+			(at 15.24 173.3046 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "ATMEGA-SCHEMATICS"
+				(path "/6c10236c-9e65-4f73-b992-16ce5cc0ca01"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 12.7 13.97)
+		(size 44.45 21.59)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "cdfc2fdf-d702-4d18-a089-2db595800c58")
+		(property "Sheetname" "POWER"
+			(at 12.7 13.2584 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "untitled.kicad_sch"
+			(at 12.7 36.1446 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "ATMEGA-SCHEMATICS"
+				(path "/6c10236c-9e65-4f73-b992-16ce5cc0ca01"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 15.24 49.53)
+		(size 41.91 20.32)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "d8a2ace4-3918-4919-90fd-ef3bf9aa4f01")
+		(property "Sheetname" "I2C_EXAMPLE"
+			(at 15.24 48.8184 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "I2C.kicad_sch"
+			(at 15.24 70.4346 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "ATMEGA-SCHEMATICS"
+				(path "/6c10236c-9e65-4f73-b992-16ce5cc0ca01"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 85.09 49.53)
+		(size 49.53 21.59)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "e3088f20-9eb7-4928-867e-f443471e423b")
+		(property "Sheetname" "BLINK_LED_EXAMPLE"
+			(at 85.09 48.8184 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "BLINK_LED.kicad_sch"
+			(at 85.09 71.7046 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "ATMEGA-SCHEMATICS"
+				(path "/6c10236c-9e65-4f73-b992-16ce5cc0ca01"
+					(page "8")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 85.09 82.55)
+		(size 49.53 21.59)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "e745eda9-6d50-4d34-96f5-4da519a5526a")
+		(property "Sheetname" "GPIO_EXPANDER_EXAMPLE"
+			(at 85.09 81.8384 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "GPIO_EXPANDER.kicad_sch"
+			(at 85.09 104.7246 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "ATMEGA-SCHEMATICS"
+				(path "/6c10236c-9e65-4f73-b992-16ce5cc0ca01"
+					(page "9")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+)

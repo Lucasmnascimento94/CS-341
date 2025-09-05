@@ -1,0 +1,22 @@
+{
+  "configurations": [
+    {
+      "name": "macos-gcc-arm64",
+      "compilerPath": "/opt/homebrew/bin/avr-gcc",
+      "includePath": [
+        "${workspaceFolder}/**"
+      ],
+      "defines": [
+        "__AVR_ATmega168A__",
+        "F_CPU=16000000UL"
+      ],
+      "compilerArgs": [
+        "-mmcu=atmega168a"
+      ],
+      "intelliSenseMode": "macos-gcc-arm64",
+      "cStandard": "${default}",
+      "cppStandard": "${default}"
+    }
+  ],
+  "version": 4
+}

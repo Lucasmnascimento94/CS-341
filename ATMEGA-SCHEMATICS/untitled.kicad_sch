@@ -1,0 +1,118 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "908b1c22-d826-4059-ae23-5171e64b8395")
+	(paper "A4")
+	(lib_symbols)
+	(global_label "AREF"
+		(shape input)
+		(at 87.63 68.58 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3e3bb031-8b03-4160-8874-7380358589e4")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 95.2114 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape input)
+		(at 86.36 63.5 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "7611ee46-4704-45cf-bfd2-904b1870acc2")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 93.2157 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "RESET"
+		(shape input)
+		(at 85.09 44.45 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "900e20a8-7793-4c17-8934-c2f530ba660c")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 93.8203 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VCC"
+		(shape input)
+		(at 86.36 55.88 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "d0f927b9-b9a1-4bc3-8f6f-426584f70c78")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 92.9738 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "AVCC"
+		(shape input)
+		(at 85.09 50.8 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "f0145c0a-a4cf-43b6-82f1-0f9d1e1bd564")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 92.7924 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+)
