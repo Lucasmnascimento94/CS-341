@@ -518,7 +518,7 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "plot": "gerber/",
+      "plot": "LASER/",
       "pos_files": "",
       "specctra_dsn": "",
       "step": "",

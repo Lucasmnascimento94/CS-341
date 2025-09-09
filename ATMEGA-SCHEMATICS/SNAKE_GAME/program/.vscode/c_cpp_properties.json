@@ -1,0 +1,23 @@
+{
+  "version": 4,
+  "configurations": [
+    {
+      "name": "AVR",
+      "compilerPath": "/usr/bin/avr-gcc",
+      "compilerArgs": [
+        "-mmcu=atmega168",         // << your MCU
+        "-DF_CPU=8000000UL"        // << your clock (optional)
+      ],
+      "includePath": [
+        "${workspaceFolder}/**",
+        "/usr/lib/avr/include"     // << replace if yours differs
+      ],
+      "defines": [
+        "__AVR_ATmega168__"        // keep in sync with -mmcu
+      ],
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "gcc-x64"
+    }
+  ]
+}
