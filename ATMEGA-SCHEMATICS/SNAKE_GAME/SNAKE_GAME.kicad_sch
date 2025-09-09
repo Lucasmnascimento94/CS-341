@@ -1588,6 +1588,189 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Device:LED"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "D"
+				(at 0 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "LED"
+				(at 0 -2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Light emitting diode"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Sim.Pins" "1=K 2=A"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "LED diode"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "LED* LED_SMD:* LED_THT:*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "LED_0_1"
+				(polyline
+					(pts
+						(xy -3.048 -0.762) (xy -4.572 -2.286) (xy -3.81 -2.286) (xy -4.572 -2.286) (xy -4.572 -1.524)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.778 -0.762) (xy -3.302 -2.286) (xy -2.54 -2.286) (xy -3.302 -2.286) (xy -3.302 -1.524)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 0) (xy 1.27 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 -1.27) (xy -1.27 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -1.27) (xy 1.27 1.27) (xy -1.27 0) (xy 1.27 -1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "LED_1_1"
+				(pin passive line
+					(at -3.81 0 0)
+					(length 2.54)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 0 180)
+					(length 2.54)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Device:R"
 			(pin_numbers
 				(hide yes)
@@ -3154,26 +3337,6 @@
 			(embedded_fonts no)
 		)
 	)
-	(text_box "External Connections\n"
-		(exclude_from_sim no)
-		(at 12.7 121.92 0)
-		(size 162.56 74.93)
-		(margins 0.9525 0.9525 0.9525 0.9525)
-		(stroke
-			(width 0)
-			(type solid)
-		)
-		(fill
-			(type none)
-		)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left top)
-		)
-		(uuid "9de5b014-0edf-43fd-a04a-dede74d0d9d0")
-	)
 	(text_box "ATMEGA168"
 		(exclude_from_sim no)
 		(at 12.7 13.97 0)
@@ -3193,6 +3356,12 @@
 			(justify left top)
 		)
 		(uuid "e3b9b991-bbaa-434a-adad-9ea5bcc30e1c")
+	)
+	(junction
+		(at 43.18 144.78)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "07479460-4701-43db-806a-0ee5c3c9c146")
 	)
 	(junction
 		(at 144.78 144.78)
@@ -3235,6 +3404,18 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "355b39fb-6260-44ed-b76a-510574fc9025")
+	)
+	(junction
+		(at 43.18 147.32)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "408c55c7-3922-4393-987c-9a2b9c09634f")
+	)
+	(junction
+		(at 237.49 45.72)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "47628df5-da6f-4615-b5b7-4a4618c76ae2")
 	)
 	(junction
 		(at 82.55 170.18)
@@ -3339,6 +3520,12 @@
 		(uuid "8ec6987b-b070-46db-90f6-c83c994fd954")
 	)
 	(junction
+		(at 43.18 142.24)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a2ad4072-2850-4994-bc0d-3d4b3b314271")
+	)
+	(junction
 		(at 43.18 149.86)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3374,9 +3561,11 @@
 		(color 0 0 0 0)
 		(uuid "e62742c4-0669-4d62-99a1-4a37ad24eb51")
 	)
-	(no_connect
-		(at 43.18 142.24)
-		(uuid "20469f60-1e12-4e98-99c8-7ebf3a97e7f8")
+	(junction
+		(at 237.49 36.83)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "ffee0ab4-3dd3-4ae6-b652-09338f6d9ece")
 	)
 	(no_connect
 		(at 54.61 66.04)
@@ -3397,14 +3586,6 @@
 	(no_connect
 		(at 54.61 40.64)
 		(uuid "97315e5b-46dd-4cf7-b637-8af0682eb3ec")
-	)
-	(no_connect
-		(at 30.48 142.24)
-		(uuid "ba55dc39-a9bb-459b-b131-44c1a21a5f51")
-	)
-	(no_connect
-		(at 43.18 144.78)
-		(uuid "bdb485a7-29ba-4832-a9fd-12cb14f05c71")
 	)
 	(no_connect
 		(at 54.61 63.5)
@@ -3433,6 +3614,16 @@
 			(type default)
 		)
 		(uuid "01ff92f2-01d0-4422-93cf-57a68d4b5a9e")
+	)
+	(wire
+		(pts
+			(xy 232.41 35.56) (xy 236.22 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0590e08a-339a-4984-990d-b72e35c4b9a2")
 	)
 	(wire
 		(pts
@@ -3483,6 +3674,16 @@
 			(type default)
 		)
 		(uuid "09299954-1a02-4cc9-b5d9-44a092fd1e04")
+	)
+	(wire
+		(pts
+			(xy 218.44 45.72) (xy 237.49 45.72)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0a71591e-e31b-48d2-b24d-0c11e94ae955")
 	)
 	(wire
 		(pts
@@ -3623,6 +3824,16 @@
 			(type default)
 		)
 		(uuid "2b980585-abf2-4bf4-9536-470f33b5b40b")
+	)
+	(wire
+		(pts
+			(xy 43.18 144.78) (xy 43.18 147.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2d91728f-1d74-44f7-9401-0d22fbd62c68")
 	)
 	(wire
 		(pts
@@ -3836,6 +4047,16 @@
 	)
 	(wire
 		(pts
+			(xy 217.17 44.45) (xy 218.44 45.72)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5fa37ca9-adc8-43ac-b60c-046a6c5b08a8")
+	)
+	(wire
+		(pts
 			(xy 66.04 59.69) (xy 71.12 59.69)
 		)
 		(stroke
@@ -3843,6 +4064,16 @@
 			(type default)
 		)
 		(uuid "5fe3775d-a675-426c-ac6e-e401a61fd1a3")
+	)
+	(wire
+		(pts
+			(xy 30.48 142.24) (xy 43.18 142.24)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "609d8f02-152b-43df-bad2-81ccb5a77f50")
 	)
 	(wire
 		(pts
@@ -3906,6 +4137,16 @@
 	)
 	(wire
 		(pts
+			(xy 218.44 35.56) (xy 217.17 36.83)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "69da94a5-2a49-465d-8308-2d9204b5aef0")
+	)
+	(wire
+		(pts
 			(xy 124.46 144.78) (xy 144.78 144.78)
 		)
 		(stroke
@@ -3913,6 +4154,16 @@
 			(type default)
 		)
 		(uuid "6a066c84-278c-4d43-b1c7-b78c4ea800a7")
+	)
+	(wire
+		(pts
+			(xy 224.79 35.56) (xy 218.44 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6b16cf56-6ada-41ee-9dc5-f3fa44236e73")
 	)
 	(wire
 		(pts
@@ -4116,6 +4367,16 @@
 	)
 	(wire
 		(pts
+			(xy 43.18 142.24) (xy 43.18 144.78)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b0ef52b3-568d-445f-98a9-8d94815077c0")
+	)
+	(wire
+		(pts
 			(xy 54.61 68.58) (xy 58.42 68.58)
 		)
 		(stroke
@@ -4173,6 +4434,16 @@
 			(type default)
 		)
 		(uuid "bd503034-3895-4d2e-9c01-f26e7f4401c8")
+	)
+	(wire
+		(pts
+			(xy 236.22 35.56) (xy 237.49 36.83)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "be090a3b-fc40-43a6-b613-42d89adbc68f")
 	)
 	(wire
 		(pts
@@ -4695,6 +4966,70 @@
 		(uuid "f6b30d04-3bee-4475-8b83-9740576fb75f")
 	)
 	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 147.32 73.66 0)
+		(unit 1)
+		(exclude_from_sim yes)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "017bf53c-bef5-4f68-bb0c-13a39c3ae5ac")
+		(property "Reference" "H7"
+			(at 149.86 72.3899 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 149.86 74.9299 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
+			(at 147.32 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 147.32 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 147.32 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "SNAKE_GAME"
+				(path "/6a8c7582-1032-4e02-bf22-b5197316f506"
+					(reference "H7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:PWR_FLAG")
 		(at 238.76 36.83 0)
 		(unit 1)
@@ -5183,6 +5518,73 @@
 	)
 	(symbol
 		(lib_id "Device:R")
+		(at 228.6 35.56 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "178d4969-104d-43d4-a6eb-39e0e8b546ae")
+		(property "Reference" "R1"
+			(at 232.918 36.83 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100"
+			(at 228.346 35.56 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
+			(at 228.6 33.782 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 228.6 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 228.6 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d2186293-2750-4d7e-ba40-1694e7491ec9")
+		)
+		(pin "2"
+			(uuid "e42f69ea-8f24-4ad7-a295-54ef9a873f7b")
+		)
+		(instances
+			(project "SNAKE_GAME"
+				(path "/6a8c7582-1032-4e02-bf22-b5197316f506"
+					(reference "R1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
 		(at 135.89 151.13 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -5516,6 +5918,85 @@
 			(project "SNAKE_GAME"
 				(path "/6a8c7582-1032-4e02-bf22-b5197316f506"
 					(reference "#PWR013")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:LED")
+		(at 217.17 40.64 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "3170d8ad-e495-49f2-a390-88c0ebae6760")
+		(property "Reference" "D1"
+			(at 219.71 37.7824 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "LED"
+			(at 219.71 40.3224 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_THT:LED_D1.8mm_W3.3mm_H2.4mm"
+			(at 217.17 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 217.17 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Light emitting diode"
+			(at 217.17 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=K 2=A"
+			(at 217.17 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "50bb20c0-09de-4b6f-8440-88c0f23b635d")
+		)
+		(pin "1"
+			(uuid "6f49d205-cb44-4c8e-94ff-19599eab15e8")
+		)
+		(instances
+			(project ""
+				(path "/6a8c7582-1032-4e02-bf22-b5197316f506"
+					(reference "D1")
 					(unit 1)
 				)
 			)
@@ -6728,6 +7209,70 @@
 			(project "SNAKE_GAME"
 				(path "/6a8c7582-1032-4e02-bf22-b5197316f506"
 					(reference "#PWR015")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 156.21 39.37 0)
+		(unit 1)
+		(exclude_from_sim yes)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "87a40f4d-9591-4869-bd74-51d782a411db")
+		(property "Reference" "H5"
+			(at 158.75 38.0999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 158.75 40.6399 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
+			(at 156.21 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 156.21 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 156.21 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "SNAKE_GAME"
+				(path "/6a8c7582-1032-4e02-bf22-b5197316f506"
+					(reference "H5")
 					(unit 1)
 				)
 			)
@@ -8892,6 +9437,70 @@
 			(project "SNAKE_GAME"
 				(path "/6a8c7582-1032-4e02-bf22-b5197316f506"
 					(reference "C3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 147.32 55.88 0)
+		(unit 1)
+		(exclude_from_sim yes)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "e4f15553-6816-44e8-acd8-fbca88a461f1")
+		(property "Reference" "H6"
+			(at 149.86 54.6099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 149.86 57.1499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
+			(at 147.32 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 147.32 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 147.32 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "SNAKE_GAME"
+				(path "/6a8c7582-1032-4e02-bf22-b5197316f506"
+					(reference "H6")
 					(unit 1)
 				)
 			)
