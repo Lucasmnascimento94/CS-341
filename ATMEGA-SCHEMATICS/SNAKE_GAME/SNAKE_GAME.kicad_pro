@@ -644,6 +644,22 @@
     [
       "6a8c7582-1032-4e02-bf22-b5197316f506",
       "Root"
+    ],
+    [
+      "de9d9dbb-4b49-4ecb-94cb-6f9eaf4425bf",
+      "GRID_CONTROLLER"
+    ],
+    [
+      "b5969514-791c-4cbe-9832-8d10878c56a3",
+      "AUDIO-SCREEN_CONTROLLER"
+    ],
+    [
+      "eca50252-6d94-4864-8ea2-9e0d1f0ae3a5",
+      "POWER_SUPPLY"
+    ],
+    [
+      "5dc1caf5-1af5-4ded-a366-1064cb54642d",
+      "CONTROLLERS"
     ]
   ],
   "text_variables": {}
