@@ -10,7 +10,10 @@
       ],
       "includePath": [
         "${workspaceFolder}/**",
-        "/usr/lib/avr/include"     // << replace if yours differs
+        "/usr/lib/avr/include",
+        "/home/lucasnascimento/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/lib/*",
+        "/home/lucasnascimento/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/libC/*",
+        "/home/lucasnascimento/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/StartSetUp/*"    // << replace if yours differs
       ],
       "defines": [
         "__AVR_ATmega168__"        // keep in sync with -mmcu

@@ -1,0 +1,1 @@
+notes.o: notes.c

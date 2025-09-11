@@ -1,5 +1,10 @@
 {
     "files.associations": {
-        "delay.h": "c"
+        "delay.h": "c",
+        "ws2812b.C": "cpp",
+        "datastructures.h": "c",
+        "interrupt.h": "c",
+        "includes.h": "c",
+        "start.h": "c"
     }
 }
