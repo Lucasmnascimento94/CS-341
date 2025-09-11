@@ -2453,7 +2453,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 118.11 63.5 0)
 			(effects
 				(font
@@ -3703,7 +3703,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9159b749-1395-4d17-97d7-8c129005f187")
-		(property "Reference" "C10"
+		(property "Reference" "C2_Crystal1"
 			(at 170.1863 91.44 90)
 			(effects
 				(font
@@ -3712,7 +3712,7 @@
 			)
 		)
 		(property "Value" "C_Small"
-			(at 170.1863 88.9 90)
+			(at 170.18 88.646 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3755,7 +3755,7 @@
 		(instances
 			(project "SNAKE_GAME"
 				(path "/6a8c7582-1032-4e02-bf22-b5197316f506/de9d9dbb-4b49-4ecb-94cb-6f9eaf4425bf"
-					(reference "C10")
+					(reference "C2_Crystal1")
 					(unit 1)
 				)
 			)
@@ -3855,7 +3855,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 143.51 53.34 0)
 			(effects
 				(font
@@ -3991,7 +3991,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 132.08 53.34 0)
 			(effects
 				(font
@@ -4247,7 +4247,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e8deb32a-d90f-4f26-8c1b-4f047279767d")
-		(property "Reference" "C9"
+		(property "Reference" "C1_Crystal1"
 			(at 170.1863 71.12 90)
 			(effects
 				(font
@@ -4299,7 +4299,7 @@
 		(instances
 			(project "SNAKE_GAME"
 				(path "/6a8c7582-1032-4e02-bf22-b5197316f506/de9d9dbb-4b49-4ecb-94cb-6f9eaf4425bf"
-					(reference "C9")
+					(reference "C1_Crystal1")
 					(unit 1)
 				)
 			)

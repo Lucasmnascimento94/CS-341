@@ -1899,6 +1899,48 @@
 		)
 	)
 	(sheet
+		(at 149.86 96.52)
+		(size 45.72 31.75)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "cffd70bc-5509-4926-b1a4-921e7b0bbb1b")
+		(property "Sheetname" "ESP12E"
+			(at 149.86 95.8084 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "ESP12E.kicad_sch"
+			(at 149.86 128.8546 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "SNAKE_GAME"
+				(path "/6a8c7582-1032-4e02-bf22-b5197316f506"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet
 		(at 29.21 24.13)
 		(size 25.4 54.61)
 		(exclude_from_sim no)
