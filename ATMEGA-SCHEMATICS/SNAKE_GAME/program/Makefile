@@ -4,7 +4,7 @@ F_CPU    = 16000000UL
 TARGET   = main
 
 # Add any source directories here
-SRC_DIRS = . StartSetUp lib libC
+SRC_DIRS = . StartSetUp lib libC snake
 
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
@@ -21,7 +21,7 @@ CFLAGS  = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra -std=c11 $(INCS) -MMD 
 LDFLAGS = -mmcu=$(MCU)
 
 PROGRAMMER    = usbasp
-AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m168
+AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m328p
 
 # ===== Build =====
 all: $(TARGET).hex size

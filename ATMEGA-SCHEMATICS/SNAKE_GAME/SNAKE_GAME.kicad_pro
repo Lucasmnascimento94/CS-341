@@ -38,8 +38,8 @@
         "other_text_upright": false,
         "pads": {
           "drill": 1.0,
-          "height": 1.7,
-          "width": 1.7
+          "height": 2.0,
+          "width": 2.0
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -124,7 +124,7 @@
       },
       "rules": {
         "max_error": 0.005,
-        "min_clearance": 0.5,
+        "min_clearance": 0.2,
         "min_connection": 0.0,
         "min_copper_edge_clearance": 0.5,
         "min_groove_width": 0.0,
@@ -137,8 +137,8 @@
         "min_text_height": 0.8,
         "min_text_thickness": 0.08,
         "min_through_hole_diameter": 0.3,
-        "min_track_width": 0.5,
-        "min_via_annular_width": 0.1,
+        "min_track_width": 0.2,
+        "min_via_annular_width": 0.08,
         "min_via_diameter": 0.5,
         "solder_mask_to_copper_clearance": 0.0,
         "use_height_for_length_calcs": true
@@ -231,12 +231,12 @@
           "drill": 0.3
         },
         {
-          "diameter": 2.0,
-          "drill": 0.3
+          "diameter": 1.5,
+          "drill": 1.0
         },
         {
-          "diameter": 2.5,
-          "drill": 1.0
+          "diameter": 2.0,
+          "drill": 0.3
         }
       ],
       "zones_allow_external_fillets": false
@@ -660,10 +660,6 @@
     [
       "5dc1caf5-1af5-4ded-a366-1064cb54642d",
       "CONTROLLERS"
-    ],
-    [
-      "cffd70bc-5509-4926-b1a4-921e7b0bbb1b",
-      "ESP12E"
     ]
   ],
   "text_variables": {}

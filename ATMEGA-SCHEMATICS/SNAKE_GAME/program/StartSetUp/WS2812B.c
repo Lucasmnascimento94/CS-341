@@ -1,5 +1,7 @@
 #include "WS2812B.h"
-
+#include "print.h"
+#include "stdio.h"
+#include "string.h"
 
 static inline void DIN_H(void){ LED_PORT |=  (1<<LED_PIN); }
 static inline void DIN_L(void){ LED_PORT &= ~(1<<LED_PIN); }
@@ -18,26 +20,32 @@ static inline void send_pixel(uint8_t g, uint8_t r, uint8_t b){ // GRB order
     send_byte(g); send_byte(r); send_byte(b);
 }
 
+void displayGrid(SnakeBelly *belly, struct Cell *food){
+    struct Cell *temp;
+    uint16_t pixels[100] = {0};
 
-void playColor(){
-    for(uint16_t i = 0; i<GRID_PIXELS; i++){send_pixel(COLOR_G, COLOR_G, COLOR_G);}
-    latch();
-    for(uint16_t i = 0; i<GRID_PIXELS; i++){send_pixel(0x00, 0x00, 0x00);}
-    latch();
-}
+    uint16_t k = 0;
+    for(temp = belly->head; temp!= NULL; temp= temp->next){
+        pixels[k++] = temp->val;
+    }
+    
+    insertion_sort(pixels, belly->count);
+    k = 0;
+    for(uint16_t i = 1; i<=(int)GRID_PIXELS; i++){
 
-void cellbycell(){
-    for(int i = 0; i<(int)GRID_PIXELS; i++){
-        for(int j=0; j<(int)GRID_PIXELS; j++){
-            if(j <= i){
-                send_pixel(COLOR_G, COLOR_R, COLOR_B);
+            if(k < 100 && (pixels[k] == i)){
+                send_pixel((belly->color >> 16) & 0xFF, (belly->color >> 8) & 0xFF, (belly->color) & 0xFF);
+                k++;
+            }
+
+            else if(belly->begin && i == food->val){
+                send_pixel((belly->color_food >> 16) & 0xFF, (belly->color_food >> 8) & 0xFF, (belly->color_food) & 0xFF);
             }
             else{
                 send_pixel(0x00, 0x00, 0x00);
             }
-        }
-        latch();
     }
+    latch();
 }
 
 void clear(){
@@ -46,32 +54,3 @@ void clear(){
     }
     latch();
 }
-
-void snake(int size){
-    for(int i = 0; i<(int)GRID_PIXELS; i++){
-        for(int j=0; j<(int)GRID_PIXELS; j++){
-            if(j <=i && j >= i-size){
-                send_pixel(COLOR_G, COLOR_R, COLOR_B);
-            }
-            else{
-                send_pixel(0x00, 0x00, 0x00);
-            }
-        }
-        latch();
-    }
-}
-
-/*
-void loadGame(SnakeBelly *belly){
-    //belly->count = SNAKE_SIZE_INIT;
-}
-void engGame(SnakeBelly *belly){
-
-}
-void startGame(SnakeBelly *belly){
-
-}
-void walk(SnakeBelly *belly){
-
-}
-*/
