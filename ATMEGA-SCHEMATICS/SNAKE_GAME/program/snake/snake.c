@@ -172,7 +172,7 @@ bool ruleCheck(SnakeBelly *belly, uint16_t food){
 
     bool x_left = false;
     bool y_up = false;
-    while(p<10){
+    while(p<5){
         
         for(uint8_t i=0; i<p; i++){
             if(!x_left){
