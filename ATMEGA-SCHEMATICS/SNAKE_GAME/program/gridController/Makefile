@@ -1,3 +1,25 @@
+############################################################################################################
+#                                        MAKEFILE — GRID_CONTROLLER (MULTI-MCU)                                  #
+############################################################################################################
+#  Project     : Snake                                                                                     #
+#  Subprojects : gridController (grid/ISRs), gameController (game/UI/audio)                                #
+#  MCUs/Board  : ATmega168A (x2)  |  F_CPU: 20 MHz                                                         #
+#  Toolchain   : avr-gcc | avr-libc | avrdude | make                                                       #
+#  Author      : Lucas Nascimento                                                                          #
+#  Date        : 09/22/2025                                                                                #
+#                                                                                                          #
+#  Description : Orchestrates builds/flash/fuses for both MCUs by delegating to sub-Makefiles.             #
+#                                                                                                          #
+#  Targets     : all          – Build both subprojects                                                     #
+#                grid         – Build gridController                                                        #
+#                game         – Build gameController                                                        #
+#                flash-grid   – Flash gridController MCU                                                    #
+#                flash-game   – Flash gameController MCU                                                    #
+#                fuse-grid    – Program fuses for gridController (use LFUSE/HFUSE/EFUSE vars)              #
+#                fuse-game    – Program fuses for gameController (use LFUSE/HFUSE/EFUSE vars)              #
+#                clean        – Clean both subprojects                                                      #
+############################################################################################################
+
 
 # ===== Project =====
 MCU := ATmega168A
