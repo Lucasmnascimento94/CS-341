@@ -1,53 +1,144 @@
+############################################################################################################
+#                                        MAKEFILE — TOP-LEVEL (MULTI-MCU)                                  #
+############################################################################################################
+#  Project     : Snake                                                                                     #
+#  Subprojects : gridController (grid/ISRs), gameController (game/UI/audio)                                #
+#  MCUs/Board  : ATmega168A (x2)  |  F_CPU: 20 MHz                                                         #
+#  Toolchain   : avr-gcc | avr-libc | avrdude | make                                                       #
+#  Author      : Lucas Nascimento                                                                          #
+#  Date        : 09/22/2025                                                                                #
+#                                                                                                          #
+#  Description : Orchestrates builds/flash/fuses for both MCUs by delegating to sub-Makefiles.             #
+#                                                                                                          #
+#  Targets     : all          – Build both subprojects                                                     #
+#                grid         – Build gridController                                                        #
+#                game         – Build gameController                                                        #
+#                flash-grid   – Flash gridController MCU                                                    #
+#                flash-game   – Flash gameController MCU                                                    #
+#                fuse-grid    – Program fuses for gridController (use LFUSE/HFUSE/EFUSE vars)              #
+#                fuse-game    – Program fuses for gameController (use LFUSE/HFUSE/EFUSE vars)              #
+#                clean        – Clean both subprojects                                                      #
+############################################################################################################
+                                 
+
 # ===== Project =====
-MCU      = atmega168
-F_CPU    = 16000000UL
-TARGET   = main
+F_CPU    = 20000000UL
+DISTRO  := $(shell sh -c '. /etc/os-release 2>/dev/null && echo $$ID')
+OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
 
-# Add any source directories here
-SRC_DIRS = . StartSetUp lib libC snake
+#######################################################################################################################################################                                                                            
+#                               					 			GRID CONTROLLER MCU                                  	             				  #
+#######################################################################################################################################################
 
-# Auto-discover sources/headers
-SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
-OBJS   := $(SRCS:.c=.o)
-INCS   := $(addprefix -I,$(SRC_DIRS))
+##### Detect env #####
+ifeq ($(OS_NAME),Windows_NT)
+  ifdef MSYSTEM
+    ENV := msys
+	SEP := /
+	INIT := INIT_MYSYS
+  else
+    ENV := win
+	SEP := /
+	SHELL := powershell.exe
+	INIT := INIT_WIN
+  endif
+endif
 
-# ===== Tools/Flags =====
-CC      = avr-gcc
-OBJCOPY = avr-objcopy
-SIZE    = avr-size
-AVRDUDE = avrdude
+ifeq ($(OS_NAME), Linux)
+  ENV := Ubuntu
+  SEP := /
+  INIT := INIT_UBUNTU
+endif
 
-CFLAGS  = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra -std=c11 $(INCS) -MMD -MP
-LDFLAGS = -mmcu=$(MCU)
+ifeq ($(OS_NAME), POSIX)
+  ENV := POSIX
+  SEP := /
+  INIT := INIT_POSIX
+endif
 
-PROGRAMMER    = usbasp
-AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m168
+
+
+#######################################################################################################################################################                                                                            
+#                               								MAKEFILE --- LINUX OS                                  							      #
+#######################################################################################################################################################                                                    
+#  Author     : Lucas Nascimento                                               
+#  Date       : 09/22/2025                                                  
+
+ifeq ($(INIT), INIT_UBUNTU)
+SHELL := /usr/bin/env bash
+ROOT = $(HOME)/
+DIR := $(CURDIR)
+BUILD := $(DIR)/
+DEP := $(DIR)/dependencies/dependencies_shell.sh
+
 
 # ===== Build =====
-all: $(TARGET).hex size
+.PHONY: clean install_deps \
+		grid grid_flash grid_clean grid_read_fuse\
+		game game_flash game_clean game_read_fuse 
 
-$(TARGET).elf: $(OBJS)
-	$(CC) $(LDFLAGS) $^ -o $@
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+grid:
+	$(MAKE) -C ./gridController
 
-$(TARGET).hex: $(TARGET).elf
-	$(OBJCOPY) -O ihex -R .eeprom $< $@
+grid_flash:
+	$(MAKE) -C ./gridController flash
 
-size: $(TARGET).elf
-	$(SIZE) --mcu=$(MCU) --format=avr $<
+grid_clean:
+	$(MAKE) -C ./gridController clean
 
-flash: $(TARGET).hex
-	$(AVRDUDE) $(AVRDUDE_FLAGS) -U flash:w:$<
+grid_read_fuse:
+	$(MAKE) -C ./gridController readfuse
 
-fuse:
-	$(AVRDUDE) $(AVRDUDE_FLAGS) -U lfuse:w:0xFF:m
 
-readfuse:
-	$(AVRDUDE) $(AVRDUDE_FLAGS) -U lfuse:r:-:h -U hfuse:r:-:h -U efuse:r:-:h
 
-clean:
-	rm -f $(OBJS) $(SRCS:.c=.d) $(TARGET).elf $(TARGET).hex
 
--include $(SRCS:.c=.d)
+game:
+	$(MAKE) -C ./gridController
+
+game_flash:
+	$(MAKE) -C ./gridController flash
+
+game_clean:
+	$(MAKE) -C ./gridController clean
+
+game_read_fuse:
+	$(MAKE) -C ./gridController readfuse
+
+
+
+
+install_deps: 
+	@$(SHELL) $(DEP) -v
+
+endif
+
+
+
+
+#######################################################################################################################################################                                                                            
+#                               								MAKEFILE --- MAC OS                                  							      #
+#######################################################################################################################################################                                                    
+#  Author     : Lucas Nascimento                                               
+#  Date       : 09/22/2025  
+
+ifeq ($(INIT), INIT_POSIX)
+ROOT = ~/
+
+endif
+
+
+#######################################################################################################################################################                                                                            
+#                               								MAKEFILE --- MAC OS                                  							      #
+#######################################################################################################################################################                                                    
+#  Author     : Lucas Nascimento                                               
+#  Date       : 09/22/2025  
+ifeq ($(INIT), INIT_WIN)
+
+endif
+
+
+DIRS:
+	@echo "ROOT>> $(ROOT)"
+	@echo "DIR>> $(DIR)"
+	@echo "DEP>> $(DEP)"
