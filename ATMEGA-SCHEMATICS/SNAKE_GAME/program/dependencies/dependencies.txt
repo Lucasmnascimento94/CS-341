@@ -2,4 +2,3 @@ avrdude
 avr-gcc
 make
 avr-libc
-cowsay

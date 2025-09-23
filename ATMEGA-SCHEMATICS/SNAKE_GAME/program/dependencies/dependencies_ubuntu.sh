@@ -1,6 +1,8 @@
-check_dependencies(){
-    verbose="${1:-nv}"
-    DEP="$PWD/dependencies/dependencies.txt"
+################################################################################################################                                                   
+#  Check dependencies on Linux Environment  
+check_dependencies(){ 
+    DEP="$PWD/dependencies/dependencies.txt" # txt File which holds necessary packages for the program to run
+    verbose="${1:-nv}" # Verbose Mode <Default !Verbose>
 
     while read -r line || [ -n "$line" ];
     do

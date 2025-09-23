@@ -50,7 +50,7 @@ ifeq ($(OS_NAME), Linux)
   INIT := INIT_UBUNTU
 endif
 
-ifeq ($(OS_NAME), POSIX)
+ifeq ($(OS_NAME), Darwin)
   ENV := POSIX
   SEP := /
   INIT := INIT_POSIX
@@ -69,45 +69,43 @@ SHELL := /usr/bin/env bash
 ROOT = $(HOME)/
 DIR := $(CURDIR)
 BUILD := $(DIR)/
-DEP := $(DIR)/dependencies/dependencies_shell.sh
+DEP := dependencies/dependencies_ubuntu.sh
 
 
-# ===== Build =====
 .PHONY: clean install_deps \
 		grid grid_flash grid_clean grid_read_fuse\
 		game game_flash game_clean game_read_fuse 
 
-
-grid:
+# ===== Grid controller MCU =====
+grid: # Build files
 	$(MAKE) -C ./gridController
 
-grid_flash:
+grid_flash: # Flash files built with the above command
 	$(MAKE) -C ./gridController flash
 
-grid_clean:
+grid_clean: # Clean old files
 	$(MAKE) -C ./gridController clean
 
-grid_read_fuse:
+grid_read_fuse: # Read fuses in the MCU
 	$(MAKE) -C ./gridController readfuse
 
 
 
+# ===== Game controller MCU =====
+game: # Build files
+	$(MAKE) -C ./gridController 
 
-game:
-	$(MAKE) -C ./gridController
-
-game_flash:
+game_flash: # Flash files built with the above command
 	$(MAKE) -C ./gridController flash
 
-game_clean:
+game_clean: # Clean old files
 	$(MAKE) -C ./gridController clean
 
-game_read_fuse:
+game_read_fuse: # Read fuses in the MCU
 	$(MAKE) -C ./gridController readfuse
 
 
-
-
+# ===== Install dependencies out of the dependencies.txt file =====
 install_deps: 
 	@$(SHELL) $(DEP) -v
 
@@ -123,7 +121,45 @@ endif
 #  Date       : 09/22/2025  
 
 ifeq ($(INIT), INIT_POSIX)
-ROOT = ~/
+USR_ENV := $(HOME)
+ROOT := /usr/
+SHELL := zsh
+DIR := $(CURDIR)
+DEP := $(DIR)/dependencies/dependencies_posix.sh
+
+
+# ===== Grid controller MCU =====
+grid: # Build files
+	$(MAKE) -C ./gridController
+
+grid_flash: # Flash files built with the above command
+	$(MAKE) -C ./gridController flash
+
+grid_clean: # Clean old files
+	$(MAKE) -C ./gridController clean
+
+grid_read_fuse: # Read fuses in the MCU
+	$(MAKE) -C ./gridController readfuse
+
+
+
+# ===== Game controller MCU =====
+game: # Build files
+	$(MAKE) -C ./gridController 
+
+game_flash: # Flash files built with the above command
+	$(MAKE) -C ./gridController flash
+
+game_clean: # Clean old files
+	$(MAKE) -C ./gridController clean
+
+game_read_fuse: # Read fuses in the MCU
+	$(MAKE) -C ./gridController readfuse
+
+
+# ===== Install dependencies out of the dependencies.txt file =====
+install_deps: 
+	@$(SHELL) $(DEP) -v
 
 endif
 
