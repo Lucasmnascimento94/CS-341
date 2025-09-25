@@ -24,7 +24,7 @@
 
 
 # ===== Project =====
-MCU := ATmega168A
+MCU := atmega168a
 F_CPU    = 20000000UL
 DISTRO  := $(shell sh -c '. /etc/os-release 2>/dev/null && echo $$ID')
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))

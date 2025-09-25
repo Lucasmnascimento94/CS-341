@@ -73,8 +73,8 @@ DEP := dependencies/dependencies_ubuntu.sh
 
 
 .PHONY: clean install_deps \
-		grid grid_flash grid_clean grid_read_fuse\
-		game game_flash game_clean game_read_fuse 
+		grid grid_flash grid_clean grid_read_fuse grid_read_obj grid_read_elf\
+		game game_flash game_clean game_read_fuse game_rad_obj game_read_elf
 
 # ===== Grid controller MCU =====
 grid: # Build files
@@ -88,6 +88,11 @@ grid_clean: # Clean old files
 
 grid_read_fuse: # Read fuses in the MCU
 	$(MAKE) -C ./gridController readfuse
+
+grid_read_obj: # Read object file
+	
+	
+grid_read_elf: # Read elf file
 
 
 
@@ -103,6 +108,12 @@ game_clean: # Clean old files
 
 game_read_fuse: # Read fuses in the MCU
 	$(MAKE) -C ./gridController readfuse
+
+game_read_obj: # Read object file
+
+
+game_read_elf: # Read elf file
+
 
 
 # ===== Install dependencies out of the dependencies.txt file =====
