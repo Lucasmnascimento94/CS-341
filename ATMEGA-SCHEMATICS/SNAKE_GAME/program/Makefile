@@ -23,7 +23,6 @@
 
 # ===== Project =====
 F_CPU    = 20000000UL
-DISTRO  := $(shell sh -c '. /etc/os-release 2>/dev/null && echo $$ID')
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
 
 #######################################################################################################################################################                                                                            
@@ -176,12 +175,50 @@ endif
 
 
 #######################################################################################################################################################                                                                            
-#                               								MAKEFILE --- MAC OS                                  							      #
+#                               								MAKEFILE --- WINDOWS OS                                  							      #
 #######################################################################################################################################################                                                    
 #  Author     : Lucas Nascimento                                               
 #  Date       : 09/22/2025  
 ifeq ($(INIT), INIT_WIN)
+USR_ENV := $(HOME)
+ROOT := C:/Users
+SHELL := powershell
+DIR := $(CURDIR)
+DEP := $(DIR)/dependencies/dependencies_win.ps1
 
+
+# ===== Grid controller MCU =====
+grid: # Build files
+	$(MAKE) -C ./gridController
+
+grid_flash: # Flash files built with the above command
+	$(MAKE) -C ./gridController flash
+
+grid_clean: # Clean old files
+	$(MAKE) -C ./gridController clean
+
+grid_read_fuse: # Read fuses in the MCU
+	$(MAKE) -C ./gridController readfuse
+
+
+
+# ===== Game controller MCU =====
+game: # Build files
+	$(MAKE) -C ./gridController 
+
+game_flash: # Flash files built with the above command
+	$(MAKE) -C ./gridController flash
+
+game_clean: # Clean old files
+	$(MAKE) -C ./gridController clean
+
+game_read_fuse: # Read fuses in the MCU
+	$(MAKE) -C ./gridController readfuse
+
+
+# ===== Install dependencies out of the dependencies.txt file =====
+install_deps: 
+	@$(SHELL) -ExecutionPolicy Bypass -File $(DEP) -verbose
 endif
 
 
