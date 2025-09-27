@@ -1,0 +1,2 @@
+avrdude
+avr-gcc
