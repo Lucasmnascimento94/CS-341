@@ -1,0 +1,6146 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "c669befd-cccf-43db-92af-3fe6a71006f4")
+	(paper "A4")
+	(lib_symbols
+		(symbol "Connector:Conn_01x04_Pin"
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "J"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Conn_01x04_Pin"
+				(at 0 -7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Generic connector, single row, 01x04, script generated"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "connector"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Connector*:*_1x??_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Conn_01x04_Pin_1_1"
+				(rectangle
+					(start 0.8636 2.667)
+					(end 0 2.413)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 0.127)
+					(end 0 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 -2.413)
+					(end 0 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 -4.953)
+					(end 0 -5.207)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 2.54) (xy 0.8636 2.54)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 0) (xy 0.8636 0)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -2.54) (xy 0.8636 -2.54)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -5.08) (xy 0.8636 -5.08)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 5.08 2.54 180)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -2.54 180)
+					(length 3.81)
+					(name "Pin_3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -5.08 180)
+					(length 3.81)
+					(name "Pin_4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:C"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "C"
+				(at 0.635 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "C"
+				(at 0.635 -2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0.9652 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Unpolarized capacitor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "cap capacitor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "C_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "C_0_1"
+				(polyline
+					(pts
+						(xy -2.032 0.762) (xy 2.032 0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.032 -0.762) (xy 2.032 -0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "C_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 2.794)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 2.794)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "LED:APA102-2020"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "D"
+				(at 5.08 5.715 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify right bottom)
+				)
+			)
+			(property "Value" "APA102-2020"
+				(at 1.27 -5.715 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+			)
+			(property "Footprint" "LED_SMD:LED-APA102-2020"
+				(at 1.27 -7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+				(at 2.54 -9.525 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
+			)
+			(property "Description" "RGB LED with integrated controller"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "RGB LED addressable 8bit pwm 5bit greyscale"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "LED*APA102*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "APA102-2020_0_0"
+				(text "RGB"
+					(at 2.286 -4.191 0)
+					(effects
+						(font
+							(size 0.762 0.762)
+						)
+					)
+				)
+			)
+			(symbol "APA102-2020_0_1"
+				(polyline
+					(pts
+						(xy 1.27 -2.54) (xy 1.778 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -3.556) (xy 1.778 -3.556)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.286 -1.524) (xy 1.27 -2.54) (xy 1.27 -2.032)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.286 -2.54) (xy 1.27 -3.556) (xy 1.27 -3.048)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 3.683 -1.016) (xy 3.683 -3.556) (xy 3.683 -4.064)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 4.699 -1.524) (xy 2.667 -1.524) (xy 3.683 -3.556) (xy 4.699 -1.524)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 4.699 -3.556) (xy 2.667 -3.556)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 5.08 5.08)
+					(end -5.08 -5.08)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "APA102-2020_1_1"
+				(pin input line
+					(at -7.62 2.54 0)
+					(length 2.54)
+					(name "SDI"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -7.62 0 0)
+					(length 2.54)
+					(name "CKI"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 7.62 270)
+					(length 2.54)
+					(name "VDD"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -7.62 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 7.62 2.54 180)
+					(length 2.54)
+					(name "SDO"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 7.62 0 180)
+					(length 2.54)
+					(name "CKO"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "power:GND"
+			(power)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR"
+				(at 0 -6.35 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "GND"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "GND_0_1"
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 -1.27) (xy 1.27 -1.27) (xy 0 -2.54) (xy -1.27 -1.27) (xy 0 -1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "GND_1_1"
+				(pin power_in line
+					(at 0 0 270)
+					(length 0)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "power:PWR_FLAG"
+			(power)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#FLG"
+				(at 0 1.905 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "PWR_FLAG"
+				(at 0 3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Special symbol for telling ERC where power comes from"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "flag power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "PWR_FLAG_0_0"
+				(pin power_out line
+					(at 0 0 90)
+					(length 0)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "PWR_FLAG_0_1"
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 1.27) (xy -1.016 1.905) (xy 0 2.54) (xy 1.016 1.905) (xy 0 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "power:VCC"
+			(power)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "VCC"
+				(at 0 3.556 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"VCC\""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "VCC_0_1"
+				(polyline
+					(pts
+						(xy -0.762 1.27) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "VCC_1_1"
+				(pin power_in line
+					(at 0 0 90)
+					(length 0)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(junction
+		(at 24.13 46.99)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "02644730-3edd-41ac-ac9e-f31b011ca517")
+	)
+	(junction
+		(at 116.84 38.1)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "08f2fa58-61b3-4fd1-a57a-62132fc82f35")
+	)
+	(junction
+		(at 55.88 12.7)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0a10c5b0-78de-4bc3-806b-489be93a7a41")
+	)
+	(junction
+		(at 24.13 21.59)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "108bf96a-9e5d-416d-93d8-d875c39e0fbe")
+	)
+	(junction
+		(at 71.12 64.77)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1157de7b-97b4-4bc5-8341-e206d8242460")
+	)
+	(junction
+		(at 116.84 12.7)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "11b3feba-c1a7-4740-b4cf-c0d23f8dfc11")
+	)
+	(junction
+		(at 55.88 38.1)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "16452e49-54cb-4802-8972-3366dc32c3e0")
+	)
+	(junction
+		(at 132.08 64.77)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1c541a2d-e257-46ad-b8b0-7b3d02cfa781")
+	)
+	(junction
+		(at 71.12 46.99)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1d75be1f-4682-445e-bfea-42a1876cfc67")
+	)
+	(junction
+		(at 55.88 62.23)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1dbaaa8d-e057-473b-bfec-766196017d8f")
+	)
+	(junction
+		(at 55.88 22.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1e74de7e-1251-43b1-80f3-7d940d4e560b")
+	)
+	(junction
+		(at 101.6 22.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "2289f884-ba1f-4fc1-9160-62c15663a7e7")
+	)
+	(junction
+		(at 86.36 12.7)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "27ff4015-0920-4d73-8dca-c2cd67e20e8d")
+	)
+	(junction
+		(at 76.2 62.23)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "2bc8b24a-0b4b-452d-b646-5f816254e584")
+	)
+	(junction
+		(at 120.65 62.23)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "301df3cd-01f0-4ab0-9803-153a7a680999")
+	)
+	(junction
+		(at 137.16 64.77)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "33c64656-c6c7-477d-b883-6059873b1086")
+	)
+	(junction
+		(at 71.12 62.23)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "33d12abd-92da-41e8-b265-8d8f20b04387")
+	)
+	(junction
+		(at 120.65 69.85)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3a2ba5e5-d888-438e-8963-b21520c7947a")
+	)
+	(junction
+		(at 132.08 62.23)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3bfecd0a-83af-4666-a22a-4142d13105ac")
+	)
+	(junction
+		(at 71.12 87.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3e302a34-1c3b-4408-986f-e29370b4cf0c")
+	)
+	(junction
+		(at 86.36 87.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "40d8da5a-9614-44bb-b212-b81e40e52538")
+	)
+	(junction
+		(at 101.6 38.1)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "47779f8e-fd5f-4d99-985f-4b940f0de806")
+	)
+	(junction
+		(at 55.88 72.39)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "48a4630d-d7de-4246-a99f-ac36190f6405")
+	)
+	(junction
+		(at 55.88 64.77)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "4f5ff93b-c017-4c56-ab41-6e45eae4d265")
+	)
+	(junction
+		(at 101.6 46.99)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "50170105-5f9e-4d92-932d-aa32e86c4d94")
+	)
+	(junction
+		(at 86.36 69.85)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "5062a82e-8875-4c83-9db1-d7de6a490282")
+	)
+	(junction
+		(at 101.6 72.39)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "51eec018-5f15-4731-ad96-d013e7565b6c")
+	)
+	(junction
+		(at 162.56 72.39)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "54f93d46-9644-43e7-86d2-106d811c8c51")
+	)
+	(junction
+		(at 71.12 72.39)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "5dc145a8-4c6c-4357-8e5d-a0231c573e80")
+	)
+	(junction
+		(at 101.6 62.23)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "6a186bc3-89fe-485b-8976-991139bac08d")
+	)
+	(junction
+		(at 86.36 46.99)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "6fa9ebe6-d986-428f-92f7-585eefe716f9")
+	)
+	(junction
+		(at 116.84 72.39)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "735652d7-8750-4af4-9fb7-eba97f8bc8bd")
+	)
+	(junction
+		(at 55.88 46.99)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "757cef8c-dd19-4a62-b3b5-49fe871226e2")
+	)
+	(junction
+		(at 132.08 87.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "75a1b309-feda-4ca1-b225-6ae5373abf27")
+	)
+	(junction
+		(at 55.88 87.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7d1d56de-2980-4537-b2ee-81af16b18dcb")
+	)
+	(junction
+		(at 147.32 87.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "819dfeb4-700b-4b44-84c6-451e48fed3ec")
+	)
+	(junction
+		(at 71.12 12.7)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "83122f6a-46bc-4a7e-b4ce-c1cde51e4b53")
+	)
+	(junction
+		(at 19.05 17.78)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "85cbe481-7bbc-4222-a626-08cd81291e90")
+	)
+	(junction
+		(at 71.12 22.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "881cb0a4-d99d-4858-9f8a-e0be7e8fec33")
+	)
+	(junction
+		(at 24.13 38.1)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8a32482e-217e-4c4e-a901-59aa9dbed009")
+	)
+	(junction
+		(at 106.68 69.85)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8bb5e47b-6999-422c-9630-e3b8f51a5e86")
+	)
+	(junction
+		(at 132.08 46.99)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8be2c3cf-0d06-4032-87b5-26fbe143c4e0")
+	)
+	(junction
+		(at 30.48 22.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8c8e6d09-5729-4a1d-bdfe-a56b9f4d13ac")
+	)
+	(junction
+		(at 116.84 22.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8e9aec0b-f154-4dd3-9daa-35ce53d82894")
+	)
+	(junction
+		(at 132.08 72.39)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8f6afdd3-a170-4503-a04b-fc1362adc920")
+	)
+	(junction
+		(at 19.05 20.32)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8fe19db9-a299-487e-be7f-ae2621982ab9")
+	)
+	(junction
+		(at 59.69 69.85)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "93971283-8391-4149-ace7-1425a35dafc8")
+	)
+	(junction
+		(at 24.13 30.48)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "9413e3e7-d34c-4f25-9945-9f0ae77f132d")
+	)
+	(junction
+		(at 59.69 62.23)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "9c324c6b-7d59-4f15-b935-5a80f62410ed")
+	)
+	(junction
+		(at 24.13 64.77)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "9e78068b-9bdd-425f-a308-898a6aef6424")
+	)
+	(junction
+		(at 86.36 62.23)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a195602d-9e6f-4273-803b-461348be771a")
+	)
+	(junction
+		(at 86.36 72.39)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a1e056e1-c463-4b3a-a231-75243629e7a4")
+	)
+	(junction
+		(at 19.05 22.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a58bb047-3b56-454e-a967-93cdfa26d8d5")
+	)
+	(junction
+		(at 71.12 38.1)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a69184ea-a104-475a-81ee-311fd2eb9d54")
+	)
+	(junction
+		(at 147.32 72.39)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "ad45dba7-098e-4c12-9e01-a2a2d74ebf73")
+	)
+	(junction
+		(at 116.84 64.77)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b2c13caf-c8ed-40c2-a3d6-baceae2082e7")
+	)
+	(junction
+		(at 132.08 38.1)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b479235d-b035-44fe-a52c-eb0cf95e2340")
+	)
+	(junction
+		(at 116.84 62.23)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b5664c48-3646-4fb3-bb30-3bd692789e1d")
+	)
+	(junction
+		(at 91.44 62.23)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b952eddf-41f1-49ce-9f5b-ca1a461d6d2c")
+	)
+	(junction
+		(at 101.6 12.7)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "bcfc0399-dc66-45c7-93cb-8e722c92b8c3")
+	)
+	(junction
+		(at 30.48 33.02)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "bd87ec35-f6e3-45b1-be9f-6497aab3493c")
+	)
+	(junction
+		(at 106.68 62.23)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "bd886064-8420-41fa-b7f2-2d643bb0770b")
+	)
+	(junction
+		(at 19.05 25.4)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c2d70f26-2a97-4b05-85d8-a188d147065d")
+	)
+	(junction
+		(at 30.48 25.4)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c595a8a4-63da-47d7-a9ff-775ade34f9f2")
+	)
+	(junction
+		(at 116.84 46.99)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c8048a10-0c8b-4346-904c-305d6fc228bc")
+	)
+	(junction
+		(at 147.32 64.77)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "ceedfebc-dc40-4fbb-b095-c67ae891f605")
+	)
+	(junction
+		(at 91.44 69.85)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "d196377c-31b4-4f73-88f9-44902c674d91")
+	)
+	(junction
+		(at 86.36 22.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "de28fb74-da41-4b4d-b8dc-a875d5a7dd05")
+	)
+	(junction
+		(at 116.84 87.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "df404ac0-a821-4d91-b9ce-1deedc971fc8")
+	)
+	(junction
+		(at 101.6 64.77)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e413ac09-c9bf-438c-b1b0-8e812e0c3888")
+	)
+	(junction
+		(at 24.13 22.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e7f073d4-81fb-492f-83c4-351bc1878890")
+	)
+	(junction
+		(at 76.2 69.85)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "ea272e00-e851-4b19-99b5-9654401b22a0")
+	)
+	(junction
+		(at 30.48 62.23)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "eea1c6c6-0fec-44ba-ac55-6a7e2937c796")
+	)
+	(junction
+		(at 86.36 38.1)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f0225680-f718-4d5c-ab8f-2e6d2d879ee0")
+	)
+	(junction
+		(at 101.6 87.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f586a6a7-8d59-4b5d-86e0-8a9f85718685")
+	)
+	(junction
+		(at 132.08 22.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "fffad53d-4d98-46a7-a566-9bb3c9273527")
+	)
+	(no_connect
+		(at 170.18 80.01)
+		(uuid "5a77cd76-aa73-4b94-a9ab-0a9604192168")
+	)
+	(no_connect
+		(at 170.18 77.47)
+		(uuid "7b87fcf6-0904-4360-8a71-f91c7dfb8a57")
+	)
+	(wire
+		(pts
+			(xy 55.88 46.99) (xy 71.12 46.99)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "01ba0692-9c10-4c23-91db-b37a170af03f")
+	)
+	(wire
+		(pts
+			(xy 86.36 12.7) (xy 101.6 12.7)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0250ec47-86f9-47dc-9b7e-7cdba9e37105")
+	)
+	(wire
+		(pts
+			(xy 101.6 12.7) (xy 116.84 12.7)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "06e74834-c6b8-4537-ae0d-bdf6b1951887")
+	)
+	(wire
+		(pts
+			(xy 106.68 69.85) (xy 101.6 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0974d7d0-00a3-407e-8186-e87ec03a3a47")
+	)
+	(wire
+		(pts
+			(xy 139.7 57.15) (xy 143.51 57.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0a81856f-66f1-4f27-9356-a7d1f7675b13")
+	)
+	(wire
+		(pts
+			(xy 147.32 64.77) (xy 137.16 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0e2bd574-6679-4d9f-a854-5b71cd1053a9")
+	)
+	(wire
+		(pts
+			(xy 11.43 25.4) (xy 19.05 25.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0e84f9fc-898e-41ce-aade-36350cc46b10")
+	)
+	(wire
+		(pts
+			(xy 76.2 64.77) (xy 76.2 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "113508a9-364c-4181-a5db-4fdb4d45fe79")
+	)
+	(wire
+		(pts
+			(xy 21.59 20.32) (xy 19.05 20.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "146c410b-40fe-4911-889b-829df18cb2b0")
+	)
+	(wire
+		(pts
+			(xy 41.91 21.59) (xy 41.91 12.7)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "15b21781-7ef9-4014-8134-567dbe8fb3a1")
+	)
+	(wire
+		(pts
+			(xy 86.36 20.32) (xy 86.36 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "15e4d596-d873-4657-abad-fd88cd7aa6bb")
+	)
+	(wire
+		(pts
+			(xy 45.72 80.01) (xy 48.26 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "16fdc608-80d3-4a15-94fd-ddd62c38bd0e")
+	)
+	(wire
+		(pts
+			(xy 162.56 72.39) (xy 147.32 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1710cd21-b383-4b81-bada-6680a32db0a6")
+	)
+	(wire
+		(pts
+			(xy 132.08 46.99) (xy 132.08 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1cfd1fee-4851-430a-8cbb-179550c1a7d3")
+	)
+	(wire
+		(pts
+			(xy 132.08 62.23) (xy 137.16 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "22049d52-4c53-47e5-b81e-9c9219aeecd9")
+	)
+	(wire
+		(pts
+			(xy 71.12 38.1) (xy 86.36 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "23e8c2f1-a7ee-498b-a85e-e1f76185cc0a")
+	)
+	(wire
+		(pts
+			(xy 30.48 19.05) (xy 30.48 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "250c64f6-3b58-4daa-8d0e-bc5f8788fba7")
+	)
+	(wire
+		(pts
+			(xy 59.69 69.85) (xy 71.12 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2654361b-ad56-4898-9e66-0edf369915c8")
+	)
+	(wire
+		(pts
+			(xy 30.48 25.4) (xy 30.48 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2c75d67a-dc5f-46c5-9fb1-532e982cfd74")
+	)
+	(wire
+		(pts
+			(xy 45.72 54.61) (xy 45.72 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2cce2195-b03d-4170-b750-b244c7888146")
+	)
+	(wire
+		(pts
+			(xy 71.12 62.23) (xy 76.2 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2d542495-e1e3-413c-8cb7-08662469ac34")
+	)
+	(wire
+		(pts
+			(xy 35.56 15.24) (xy 19.05 15.24)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2fe6d7ec-fc12-4870-9df0-f732c86f5511")
+	)
+	(wire
+		(pts
+			(xy 30.48 72.39) (xy 30.48 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "378e8a8e-d110-4ac4-bd00-3d7e3faf3df4")
+	)
+	(wire
+		(pts
+			(xy 101.6 69.85) (xy 101.6 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3819c4b9-7334-4b4c-b0d9-1dbb6cd7ead7")
+	)
+	(wire
+		(pts
+			(xy 101.6 87.63) (xy 116.84 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "38fa7dcd-6e84-4b41-82ca-d3d7b39b8c45")
+	)
+	(wire
+		(pts
+			(xy 147.32 64.77) (xy 162.56 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3a63a4dd-3a4e-467a-8491-08a02562962c")
+	)
+	(wire
+		(pts
+			(xy 24.13 87.63) (xy 55.88 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3c1c21f3-aece-4700-adbb-49ba35aa9b08")
+	)
+	(wire
+		(pts
+			(xy 19.05 22.86) (xy 24.13 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3c881852-a03c-4f2b-a040-39512776f8ae")
+	)
+	(wire
+		(pts
+			(xy 116.84 38.1) (xy 132.08 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3efdcd0d-83e0-4f84-856e-8e01ca7b19f7")
+	)
+	(wire
+		(pts
+			(xy 19.05 25.4) (xy 30.48 25.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "42502483-2c83-472e-8ddf-2201bb55ca20")
+	)
+	(wire
+		(pts
+			(xy 30.48 22.86) (xy 55.88 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "434019a5-1734-42c7-b738-09f0f6b43a34")
+	)
+	(wire
+		(pts
+			(xy 132.08 64.77) (xy 120.65 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4a3fc8a9-6df3-4cb2-9a43-d2fa1686d157")
+	)
+	(wire
+		(pts
+			(xy 91.44 62.23) (xy 101.6 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4ca5104c-18aa-4813-84ff-96a7d90b92af")
+	)
+	(wire
+		(pts
+			(xy 48.26 54.61) (xy 45.72 54.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4d241c77-d7af-42be-b2d3-8e9246ffe3e5")
+	)
+	(wire
+		(pts
+			(xy 59.69 62.23) (xy 71.12 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4d774099-7a64-4a02-bc34-a07b4ef707fb")
+	)
+	(wire
+		(pts
+			(xy 48.26 57.15) (xy 48.26 77.47)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4d7f4702-4758-492f-a38e-51522938dd51")
+	)
+	(wire
+		(pts
+			(xy 55.88 62.23) (xy 59.69 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4fa8a6de-0401-4e3d-9561-5372fab35f84")
+	)
+	(wire
+		(pts
+			(xy 101.6 72.39) (xy 86.36 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "50e77f52-71d1-45f8-9d7d-c8b2875fb22f")
+	)
+	(wire
+		(pts
+			(xy 101.6 62.23) (xy 106.68 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "51bc4e57-fda7-4f27-b6ac-72945c1a3fd1")
+	)
+	(wire
+		(pts
+			(xy 116.84 12.7) (xy 132.08 12.7)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "53a371f9-ff6e-4dda-b6d8-361875c12a60")
+	)
+	(wire
+		(pts
+			(xy 139.7 27.94) (xy 143.51 27.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "55971a70-eab2-4f7a-bf31-9b972d8deadb")
+	)
+	(wire
+		(pts
+			(xy 71.12 64.77) (xy 76.2 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "56da7b17-e458-438e-84c0-2af6f1e272ea")
+	)
+	(wire
+		(pts
+			(xy 101.6 22.86) (xy 116.84 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "57049ea5-9171-439f-ab72-520f44f2f0eb")
+	)
+	(wire
+		(pts
+			(xy 116.84 64.77) (xy 106.68 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "57789a9f-3ff9-4e13-b5ef-c621967645a9")
+	)
+	(wire
+		(pts
+			(xy 106.68 64.77) (xy 106.68 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "58ccd0a1-8fdc-4416-b8f5-384a32d1f3a2")
+	)
+	(wire
+		(pts
+			(xy 101.6 38.1) (xy 116.84 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5c88de18-1fb1-4748-8e28-9f9132660a18")
+	)
+	(wire
+		(pts
+			(xy 116.84 20.32) (xy 116.84 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5ca36974-ae94-48ee-b3a2-eb88a94d374c")
+	)
+	(wire
+		(pts
+			(xy 11.43 17.78) (xy 19.05 17.78)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6b88d048-ee4b-4118-b96a-8be0c7127a20")
+	)
+	(wire
+		(pts
+			(xy 86.36 87.63) (xy 101.6 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6bc60341-9cb4-4123-9198-c8ec64920068")
+	)
+	(wire
+		(pts
+			(xy 55.88 64.77) (xy 59.69 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "74ae5487-c5ae-4221-bf96-67081e11a6e7")
+	)
+	(wire
+		(pts
+			(xy 137.16 64.77) (xy 137.16 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "791ba9c0-92fa-487a-b70b-dad16fb82b8a")
+	)
+	(wire
+		(pts
+			(xy 24.13 19.05) (xy 24.13 21.59)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "793309b4-d770-4897-bb1b-00a4ff0d6d72")
+	)
+	(wire
+		(pts
+			(xy 116.84 69.85) (xy 116.84 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "79707c23-35ec-4825-a046-0c5f395d0b80")
+	)
+	(wire
+		(pts
+			(xy 116.84 87.63) (xy 132.08 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7a485408-09b4-4eb4-9309-8697a3f1d794")
+	)
+	(wire
+		(pts
+			(xy 76.2 69.85) (xy 86.36 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "83b8ff67-3612-4c9b-b1b9-8f54aca7ec12")
+	)
+	(wire
+		(pts
+			(xy 71.12 20.32) (xy 71.12 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "83ed3cae-c21f-4e70-91a7-e2ddb7b1a8b0")
+	)
+	(wire
+		(pts
+			(xy 106.68 62.23) (xy 116.84 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "84cfcf37-90f2-4da5-af0c-134a7030c4de")
+	)
+	(wire
+		(pts
+			(xy 86.36 22.86) (xy 101.6 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "85053ebd-6675-441d-9887-cbc71582530a")
+	)
+	(wire
+		(pts
+			(xy 91.44 69.85) (xy 86.36 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "865bc9ce-7542-4b49-bf0f-054c204b6070")
+	)
+	(wire
+		(pts
+			(xy 55.88 20.32) (xy 55.88 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8925adc5-4338-4430-8ce8-865056c69f95")
+	)
+	(wire
+		(pts
+			(xy 132.08 87.63) (xy 147.32 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8c237b03-cdd4-4a6a-87f2-ebcbf0c9371b")
+	)
+	(wire
+		(pts
+			(xy 116.84 46.99) (xy 132.08 46.99)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8d818cfc-739b-44b3-8e3e-ac7a98a58822")
+	)
+	(wire
+		(pts
+			(xy 101.6 20.32) (xy 101.6 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8ebe6acc-28c4-4356-98d7-3871197505c2")
+	)
+	(wire
+		(pts
+			(xy 132.08 20.32) (xy 132.08 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9049afad-5078-45c7-bbea-4207a1e976b2")
+	)
+	(wire
+		(pts
+			(xy 41.91 12.7) (xy 55.88 12.7)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "90626ffb-6133-4947-92ee-862c9b9c5489")
+	)
+	(wire
+		(pts
+			(xy 24.13 38.1) (xy 55.88 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "91c3cf0e-4244-458c-ba0f-cf25332f4949")
+	)
+	(wire
+		(pts
+			(xy 19.05 15.24) (xy 19.05 17.78)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9542ac22-a0c8-4988-9f76-aeb8d23c0596")
+	)
+	(wire
+		(pts
+			(xy 101.6 46.99) (xy 116.84 46.99)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9605eb79-08cc-49c6-a367-c196d8fdd37a")
+	)
+	(wire
+		(pts
+			(xy 132.08 64.77) (xy 137.16 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9894908c-0efc-48c0-a64f-8799b48122e2")
+	)
+	(wire
+		(pts
+			(xy 120.65 69.85) (xy 116.84 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "98f2c596-a340-46a2-b215-dab6a7f7479e")
+	)
+	(wire
+		(pts
+			(xy 139.7 30.48) (xy 139.7 54.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "99e5184f-6156-492f-9931-5af7e5ea5a7a")
+	)
+	(wire
+		(pts
+			(xy 30.48 33.02) (xy 30.48 25.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9a6e0ad4-6794-4f79-9032-7c249db3ae6d")
+	)
+	(wire
+		(pts
+			(xy 116.84 62.23) (xy 120.65 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9b6b24cd-c9aa-4566-a5bd-8a3756865b39")
+	)
+	(wire
+		(pts
+			(xy 24.13 46.99) (xy 24.13 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9ce84b81-2bbc-46d4-82b0-158f0c92bb42")
+	)
+	(wire
+		(pts
+			(xy 132.08 72.39) (xy 116.84 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9d6f48e6-80b2-48bc-a411-0bd900e7a680")
+	)
+	(wire
+		(pts
+			(xy 120.65 62.23) (xy 132.08 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9dca2546-4b1b-4fd2-ac5e-210235ffcf34")
+	)
+	(wire
+		(pts
+			(xy 48.26 27.94) (xy 21.59 27.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a2443f1a-862d-415d-b98e-4ac40aad9f7d")
+	)
+	(wire
+		(pts
+			(xy 24.13 64.77) (xy 55.88 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a363f214-79ff-4acb-ba3c-292a32dc8646")
+	)
+	(wire
+		(pts
+			(xy 24.13 22.86) (xy 24.13 30.48)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a36fd572-f696-41b7-bcf6-05ae86caf537")
+	)
+	(wire
+		(pts
+			(xy 30.48 62.23) (xy 55.88 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a3db33e7-749a-457f-a1f9-3c9c559050c8")
+	)
+	(wire
+		(pts
+			(xy 48.26 30.48) (xy 35.56 30.48)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a469abb0-bdef-47d1-a795-4897b871f383")
+	)
+	(wire
+		(pts
+			(xy 30.48 62.23) (xy 30.48 33.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a7e7383c-1c32-4339-8118-77c03e2e5243")
+	)
+	(wire
+		(pts
+			(xy 71.12 46.99) (xy 86.36 46.99)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a87153dd-c4fb-41b0-bdb9-7727e6059605")
+	)
+	(wire
+		(pts
+			(xy 55.88 87.63) (xy 71.12 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "aad54537-7bb1-4e29-a6bb-42e4db5bc284")
+	)
+	(wire
+		(pts
+			(xy 11.43 22.86) (xy 19.05 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ad705b3a-6262-44ea-b02f-8e5b6d0168e1")
+	)
+	(wire
+		(pts
+			(xy 86.36 46.99) (xy 101.6 46.99)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b0521160-3e23-4ef8-9217-dd52e6c0e553")
+	)
+	(wire
+		(pts
+			(xy 71.12 87.63) (xy 86.36 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b1f61c44-be3a-4a02-913f-6878555e66bd")
+	)
+	(wire
+		(pts
+			(xy 24.13 30.48) (xy 24.13 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b3ccee91-8894-4c25-8be4-18cc7d8772a6")
+	)
+	(wire
+		(pts
+			(xy 147.32 72.39) (xy 132.08 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b58c3a35-e9ff-4b29-a1bb-bb9e456c2e67")
+	)
+	(wire
+		(pts
+			(xy 24.13 21.59) (xy 24.13 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b66bedb5-239d-48b2-bb0a-a023e461fdf8")
+	)
+	(wire
+		(pts
+			(xy 86.36 72.39) (xy 71.12 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b6cc37ce-7aba-4c1f-b4ff-3de41b0a24f4")
+	)
+	(wire
+		(pts
+			(xy 71.12 22.86) (xy 86.36 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bc995fe0-1ade-46ab-9224-4d2d3156ea86")
+	)
+	(wire
+		(pts
+			(xy 55.88 12.7) (xy 71.12 12.7)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bce30274-4c8e-44e6-831b-71974734e956")
+	)
+	(wire
+		(pts
+			(xy 86.36 62.23) (xy 91.44 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c15faa0c-28a0-4cf3-8b87-c69d1077046f")
+	)
+	(wire
+		(pts
+			(xy 24.13 21.59) (xy 41.91 21.59)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c16e1dd9-3e5b-4c84-861a-7f696953e797")
+	)
+	(wire
+		(pts
+			(xy 86.36 69.85) (xy 86.36 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c203457d-5832-4a89-9ff4-f61ad07385a6")
+	)
+	(wire
+		(pts
+			(xy 21.59 27.94) (xy 21.59 20.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c55b5153-3d9d-4589-9687-2c53771f8dad")
+	)
+	(wire
+		(pts
+			(xy 116.84 22.86) (xy 132.08 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c6829dec-9373-4e76-93a5-10b6beaab560")
+	)
+	(wire
+		(pts
+			(xy 101.6 64.77) (xy 91.44 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c82a6ca3-b67e-4325-a7f5-1628703566f1")
+	)
+	(wire
+		(pts
+			(xy 55.88 72.39) (xy 30.48 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cc2e8c24-5160-4e80-8904-fda2206011b3")
+	)
+	(wire
+		(pts
+			(xy 55.88 38.1) (xy 71.12 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cd1493b1-3179-4c62-975a-54d9c1b84f69")
+	)
+	(wire
+		(pts
+			(xy 24.13 46.99) (xy 55.88 46.99)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d3c24b5d-9ac4-4b9a-99ae-e25336ebfaa4")
+	)
+	(wire
+		(pts
+			(xy 55.88 22.86) (xy 71.12 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d5b8e3c0-1c9b-46ad-a59f-26bdbf064c85")
+	)
+	(wire
+		(pts
+			(xy 71.12 72.39) (xy 55.88 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d93ba584-e6d4-4687-82ba-dedfb5893302")
+	)
+	(wire
+		(pts
+			(xy 71.12 12.7) (xy 86.36 12.7)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "db7141d6-a3d3-4f20-9508-6ffc393d9b73")
+	)
+	(wire
+		(pts
+			(xy 116.84 72.39) (xy 101.6 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dd4e5174-0f5c-4786-aea9-cddb0af5700b")
+	)
+	(wire
+		(pts
+			(xy 91.44 64.77) (xy 91.44 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "de787fa0-2dd8-4dc2-b8fa-8a183f06f5c9")
+	)
+	(wire
+		(pts
+			(xy 120.65 64.77) (xy 120.65 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dece7af1-28a6-430c-82c0-ea5a73765f4e")
+	)
+	(wire
+		(pts
+			(xy 11.43 20.32) (xy 19.05 20.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "df18373e-c59d-478b-9d17-04efb751ac4a")
+	)
+	(wire
+		(pts
+			(xy 24.13 38.1) (xy 24.13 46.99)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e2aa9c32-ebe2-4407-a2bf-77dc3b528c6e")
+	)
+	(wire
+		(pts
+			(xy 59.69 64.77) (xy 59.69 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e6a4f07b-1ac1-4499-aba9-f891e1249c89")
+	)
+	(wire
+		(pts
+			(xy 143.51 57.15) (xy 143.51 27.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e87eff2f-b7b7-4775-ba47-095cdfe2f34d")
+	)
+	(wire
+		(pts
+			(xy 76.2 62.23) (xy 86.36 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ea81b060-efda-44b9-a0d9-417f620a5981")
+	)
+	(wire
+		(pts
+			(xy 147.32 87.63) (xy 162.56 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f60bfb96-5605-4cdd-aae1-8dbed8b5530d")
+	)
+	(wire
+		(pts
+			(xy 71.12 69.85) (xy 71.12 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f8851a27-2f4f-4c77-8014-92b21755a9b9")
+	)
+	(wire
+		(pts
+			(xy 35.56 30.48) (xy 35.56 15.24)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f8bb792c-85cd-4b36-97f1-346a56ee7a1b")
+	)
+	(wire
+		(pts
+			(xy 24.13 64.77) (xy 24.13 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fa73c0dc-acc8-46b7-ab29-7a48ec17a61c")
+	)
+	(wire
+		(pts
+			(xy 86.36 38.1) (xy 101.6 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fdbf3776-6cab-4fc0-8538-f57dca23d52b")
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 86.36 54.61 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "085003cb-1851-49e3-ab6c-3136b58d4f03")
+		(property "Reference" "D23"
+			(at 84.2167 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 84.2167 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 85.09 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 83.82 45.085 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 86.36 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "efe8bf80-79f2-45ec-a34b-5994c0ea121c")
+		)
+		(pin "6"
+			(uuid "cf492d69-c271-4bcb-abe5-ee8788c7f029")
+		)
+		(pin "1"
+			(uuid "5cb0085d-5b55-4204-885a-a0aa61adf7ab")
+		)
+		(pin "5"
+			(uuid "07814cd2-c68d-4ac1-b86f-4e9a0e4c9d3c")
+		)
+		(pin "2"
+			(uuid "a71d59e6-3f6a-4e6f-9c69-79e0836b4cda")
+		)
+		(pin "3"
+			(uuid "17b2e4c7-716c-464e-9dc0-b2f307a65d35")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D23")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 116.84 30.48 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "19613ce3-66a3-444c-a22e-a894f2cf4e2b")
+		(property "Reference" "D2"
+			(at 118.9833 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 118.9833 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 118.11 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 119.38 40.005 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 116.84 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "acb444fe-b9a1-4dca-b0db-53c6e8e7a68f")
+		)
+		(pin "6"
+			(uuid "88a8d92d-39db-46f1-a9d8-5ae72145dbc2")
+		)
+		(pin "1"
+			(uuid "7a1d1555-341b-40d5-8536-45da8576fa21")
+		)
+		(pin "5"
+			(uuid "26277dcb-6d41-49d6-bd61-a2dfe84e6487")
+		)
+		(pin "2"
+			(uuid "c30c66ba-9faf-432e-ad31-9c31769f9329")
+		)
+		(pin "3"
+			(uuid "0a9b0424-4379-4b6d-b36a-8c88df50f581")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 147.32 80.01 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "213e5b90-0767-4ecd-b139-4aa493850a55")
+		(property "Reference" "D11"
+			(at 149.4633 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 149.4633 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 148.59 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 149.86 89.535 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 147.32 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "6946577e-89fc-4603-b7ec-85963a8a8016")
+		)
+		(pin "6"
+			(uuid "4054a73e-7766-4adf-b1d0-d5e4d7a451b8")
+		)
+		(pin "1"
+			(uuid "64dd0aeb-198b-4cf7-8d3c-0411f9a1b238")
+		)
+		(pin "5"
+			(uuid "c31ab7ba-d8e3-4eac-b8ec-39780cb78312")
+		)
+		(pin "2"
+			(uuid "299b8da0-8d1a-42b5-896b-aef17c3da8e4")
+		)
+		(pin "3"
+			(uuid "42d90a27-e034-491b-91c8-2f507d173225")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D11")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 24.13 30.48 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "2ce0bb3a-893b-4d8d-898b-51f364651217")
+		(property "Reference" "#FLG02"
+			(at 22.225 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 20.32 30.4799 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 24.13 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 24.13 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 24.13 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "dce24077-6fbb-4f75-9174-8ac586e454e3")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "#FLG02")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 71.12 54.61 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "30767f52-e253-4280-b7c9-8745adce0897")
+		(property "Reference" "D24"
+			(at 68.9767 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 68.9767 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 69.85 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 68.58 45.085 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 71.12 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "c4c308e9-4094-4bfc-a6a4-48a737a7e550")
+		)
+		(pin "6"
+			(uuid "fcbf3991-a85e-4f26-8ade-af9f0730d2a0")
+		)
+		(pin "1"
+			(uuid "8f8681cd-2281-4b8b-b911-522c2bc58994")
+		)
+		(pin "5"
+			(uuid "1526ef4f-7643-4f51-ac60-4bd4870c3e90")
+		)
+		(pin "2"
+			(uuid "241d1174-2109-44e8-b1de-300339b82d38")
+		)
+		(pin "3"
+			(uuid "03f24f72-2180-4f46-8859-d3822bbc1122")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D24")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 147.32 68.58 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "31bba426-8b1e-40aa-8b39-c044032dfea9")
+		(property "Reference" "C18"
+			(at 151.13 67.3099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 151.13 69.8499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 148.2852 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 147.32 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 147.32 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "33b0031f-9478-4c6e-b83e-c7e93ea47acf")
+		)
+		(pin "1"
+			(uuid "8cfc916e-c133-44bb-b6be-49b244fd5ebd")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C18")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:VCC")
+		(at 30.48 19.05 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "32d5cbf4-18b9-4747-97b9-8df1872ed5c6")
+		(property "Reference" "#PWR01"
+			(at 30.48 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "VCC"
+			(at 30.48 13.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 30.48 19.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 30.48 19.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VCC\""
+			(at 30.48 19.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "eb232d5e-854d-479a-9023-909aa82ab7b0")
+		)
+		(instances
+			(project ""
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "#PWR01")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Conn_01x04_Pin")
+		(at 13.97 20.32 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "4101557b-d028-43a0-b4e2-f9f8af101b3b")
+		(property "Reference" "J1"
+			(at 14.605 12.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Conn_01x04_Pin"
+			(at 14.605 15.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical"
+			(at 13.97 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 13.97 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x04, script generated"
+			(at 13.97 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "98738553-84d5-49bc-acc3-d7e4bf4ee3bb")
+		)
+		(pin "4"
+			(uuid "220e7014-89c3-4217-9a18-df9788501490")
+		)
+		(pin "1"
+			(uuid "ff5719b0-11c9-4b5c-8e3d-e03dac4ed618")
+		)
+		(pin "2"
+			(uuid "2b3c6a3b-27bd-4942-896f-e3b6d4cb2576")
+		)
+		(instances
+			(project ""
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "J1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 137.16 66.04 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "48d97152-ca97-4106-b81f-6805fc92f02d")
+		(property "Reference" "C17"
+			(at 140.97 64.7699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 140.97 67.3099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 138.1252 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 137.16 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 137.16 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "3aafa803-1b66-4def-a7b0-e78de6a56af0")
+		)
+		(pin "1"
+			(uuid "32df77c9-adaf-4e63-b8be-25f3fbe4dcd4")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C17")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 101.6 80.01 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "4b7d0d79-d7a5-46e3-a02c-ed144e43bee1")
+		(property "Reference" "D4"
+			(at 103.7433 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 103.7433 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 102.87 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 104.14 89.535 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 101.6 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "85e9657d-1da9-40b1-b1a7-bad727783ad0")
+		)
+		(pin "6"
+			(uuid "1d7c7772-8d99-406d-8f39-219dc1b5aaa6")
+		)
+		(pin "1"
+			(uuid "2301877a-9ea2-448d-b485-4d1b15bfb4b5")
+		)
+		(pin "5"
+			(uuid "aa71dd33-36c7-484b-b807-8aac461dbf08")
+		)
+		(pin "2"
+			(uuid "8f6fc549-400c-46f7-9b45-ca814d622606")
+		)
+		(pin "3"
+			(uuid "eeca1f3f-9ada-4d5b-894d-fe91a00d2dba")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 132.08 54.61 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "4b9b036b-6647-4b11-8e1a-9070ec9812ea")
+		(property "Reference" "D16"
+			(at 129.9367 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 129.9367 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 130.81 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 129.54 45.085 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 132.08 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "bdc9a80b-f024-4b47-b0ac-4a49f69fba39")
+		)
+		(pin "6"
+			(uuid "b2c1e984-ba25-484f-a219-da924469f454")
+		)
+		(pin "1"
+			(uuid "1f111b61-52fa-48e6-a44b-1289c655bcca")
+		)
+		(pin "5"
+			(uuid "9de61762-7199-4cad-8363-9e0d810b4def")
+		)
+		(pin "2"
+			(uuid "33d8d116-74d6-4641-9fa1-5399d203d543")
+		)
+		(pin "3"
+			(uuid "3f93c692-af2b-42c2-b342-e6dadb9367ac")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D16")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 120.65 66.04 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "56f3205f-2154-4f85-89a7-ed6178a72923")
+		(property "Reference" "C16"
+			(at 124.46 64.7699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 124.46 67.3099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 121.6152 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 120.65 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 120.65 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "b9e2ada4-3514-4bf7-82c5-b36beed738c9")
+		)
+		(pin "1"
+			(uuid "b4b480c0-d993-4368-97f9-26b2d69d42fd")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C16")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 116.84 54.61 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "57214dea-e315-4895-870a-068a9fd1a888")
+		(property "Reference" "D21"
+			(at 114.6967 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 114.6967 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 115.57 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 114.3 45.085 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 116.84 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "f284f201-1794-4158-97e5-3d7ee5f1cd7d")
+		)
+		(pin "6"
+			(uuid "59fd6da6-329b-4389-9df3-0c46b39d445d")
+		)
+		(pin "1"
+			(uuid "b751d83a-f122-4d2a-a2fc-55bbb3d1fd07")
+		)
+		(pin "5"
+			(uuid "60f1a975-d676-4de6-8cce-18e3015233cd")
+		)
+		(pin "2"
+			(uuid "e0cc16f5-5172-4c37-b737-16ea895af080")
+		)
+		(pin "3"
+			(uuid "f379031b-7eb3-47ae-92c1-386cfcfaed42")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D21")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 91.44 66.04 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "584509a6-cf3d-4ad7-a067-9dd33bd56493")
+		(property "Reference" "C14"
+			(at 95.25 64.7699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 95.25 67.3099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 92.4052 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 91.44 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 91.44 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "5f94c43c-18c7-4290-b698-68f02b38070e")
+		)
+		(pin "1"
+			(uuid "9f759fdd-537a-490f-9cd8-74995d7c396f")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C14")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 86.36 30.48 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "5c0599b3-3319-4359-ba49-657764cb1b48")
+		(property "Reference" "D1"
+			(at 88.5033 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 88.5033 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 87.63 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 88.9 40.005 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 86.36 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "09d6e57d-2010-4e15-ad40-de31a8e96d89")
+		)
+		(pin "6"
+			(uuid "8177009f-2e3c-424e-830d-8ed29a35b2ef")
+		)
+		(pin "1"
+			(uuid "9faecd25-a5f4-4c19-8349-ec8d64d4f16a")
+		)
+		(pin "5"
+			(uuid "380c4b14-76d3-4c4c-9355-50bd32c702ed")
+		)
+		(pin "2"
+			(uuid "a5d7e91c-114a-479b-b44f-27ca879aa074")
+		)
+		(pin "3"
+			(uuid "39cb616e-b39f-4b26-b35b-50367ebfdfea")
+		)
+		(instances
+			(project ""
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 86.36 80.01 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "5cf83d1e-e350-44fb-98e7-3fe44c9c581c")
+		(property "Reference" "D7"
+			(at 88.5033 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 88.5033 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 87.63 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 88.9 89.535 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 86.36 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "1ea29efd-9998-4bd2-b458-fc989e15cd03")
+		)
+		(pin "6"
+			(uuid "345ae285-b018-49aa-a83c-7f41dbfa6d7d")
+		)
+		(pin "1"
+			(uuid "02f24c24-ca9b-4cb9-b96f-6955fd5421c4")
+		)
+		(pin "5"
+			(uuid "a2bc87b5-3ed7-4f6c-949f-a2ce650df758")
+		)
+		(pin "2"
+			(uuid "4b96e92a-c98a-4f99-9866-62c08e537f81")
+		)
+		(pin "3"
+			(uuid "b3fbbec0-9795-41d9-9795-e854846fa257")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 55.88 30.48 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "5de22563-ffca-4758-9dcf-2752bd8f8379")
+		(property "Reference" "D13"
+			(at 58.0233 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 58.0233 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 57.15 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 58.42 40.005 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 55.88 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "a2b2c66b-0803-4d57-9b4e-995b1be58b00")
+		)
+		(pin "6"
+			(uuid "28876833-d8bc-496b-8658-aacf807cded7")
+		)
+		(pin "1"
+			(uuid "7a9da341-c796-4be4-879c-9735e53dfef8")
+		)
+		(pin "5"
+			(uuid "3862c0fb-dd21-475e-b423-2b46ebf2e191")
+		)
+		(pin "2"
+			(uuid "f5937bf3-0e19-4394-ac28-3b17e4165b1a")
+		)
+		(pin "3"
+			(uuid "2a870338-dce2-47ea-9d13-17fb22d1e2a6")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D13")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 59.69 66.04 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "704cab97-60e1-48f6-9c6b-6795e8199ecb")
+		(property "Reference" "C12"
+			(at 63.5 64.7699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 63.5 67.3099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 60.6552 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 59.69 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 59.69 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "d0d2732d-64a7-49ec-8eda-2df6278a2d95")
+		)
+		(pin "1"
+			(uuid "98509a4b-5f97-4c9c-9247-fd13aded2b75")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 132.08 30.48 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "70c31799-217b-40ac-9551-56f8e9a992a3")
+		(property "Reference" "D3"
+			(at 134.2233 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 134.2233 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 133.35 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 134.62 40.005 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 132.08 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "0ab5fc7e-dfb2-4dda-9b50-f3e526d64fa4")
+		)
+		(pin "6"
+			(uuid "1094f5dd-99aa-4f04-89e8-c583e9bd4f4f")
+		)
+		(pin "1"
+			(uuid "57e24b3f-2de0-4d51-8f8f-5319eed0cbcd")
+		)
+		(pin "5"
+			(uuid "7b67cb94-abb6-4dd7-91eb-e37b935e303e")
+		)
+		(pin "2"
+			(uuid "05c23f97-958b-4f9f-b6a9-5d9538d85353")
+		)
+		(pin "3"
+			(uuid "21fedcea-1230-4a6e-a860-7fd57c553a76")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 116.84 16.51 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "74256d4c-3f98-44ac-8aed-5aae739a6115")
+		(property "Reference" "C10"
+			(at 120.65 15.2399 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 120.65 17.7799 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 117.8052 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 116.84 16.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 116.84 16.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "019c41dd-b781-4de4-8397-aff46a3de5aa")
+		)
+		(pin "1"
+			(uuid "171ff77f-0ef2-47d4-88e9-e88c9f191048")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 116.84 80.01 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "83c2a16e-c3df-46d1-a483-852d3f58e2aa")
+		(property "Reference" "D8"
+			(at 118.9833 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 118.9833 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 118.11 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 119.38 89.535 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 116.84 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "ee7d5e42-0770-47d6-a42b-3e5946b06c7c")
+		)
+		(pin "6"
+			(uuid "e51c97e9-ade4-486d-b05e-e451ef249573")
+		)
+		(pin "1"
+			(uuid "11673df9-137c-42cd-8dd5-4cfbc34d72fb")
+		)
+		(pin "5"
+			(uuid "8f1d1f80-4207-40e3-9f5a-c209c5aabd2a")
+		)
+		(pin "2"
+			(uuid "40a5fcd3-15c8-444c-8cb5-9cb4c38827d1")
+		)
+		(pin "3"
+			(uuid "a5e9e0ea-7cd7-47ad-87ef-89b466638635")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 71.12 68.58 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "89124d86-11d1-4cdb-ae43-b4852452b48c")
+		(property "Reference" "C24"
+			(at 74.93 67.3099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 74.93 69.8499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 72.0852 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 71.12 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 71.12 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "8f075e49-9e77-4720-9508-9be23d4e0ec0")
+		)
+		(pin "1"
+			(uuid "06c6b213-e260-4bcc-a81f-33da00b62917")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C24")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 116.84 68.58 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "8e0aafc3-a35a-474b-8bc7-9d02309c07de")
+		(property "Reference" "C21"
+			(at 120.65 67.3099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 120.65 69.8499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 117.8052 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 116.84 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 116.84 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "cc724cb7-365d-4595-89e5-792f774ce806")
+		)
+		(pin "1"
+			(uuid "cc3a0b0d-94c2-4a1a-98f3-3669a1d029d2")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C21")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 86.36 68.58 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "91cfb507-eaf9-4b81-95bf-84c878da0205")
+		(property "Reference" "C23"
+			(at 90.17 67.3099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 90.17 69.8499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 87.3252 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 86.36 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 86.36 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "206d3ecb-948a-4ca5-a2e6-9fd0a94bd7c8")
+		)
+		(pin "1"
+			(uuid "54994636-f6bb-4cc1-9d5a-d6a33821243b")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C23")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 76.2 66.04 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "948e3113-685a-46ad-8088-d9ad45e17a1a")
+		(property "Reference" "C13"
+			(at 80.01 64.7699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 80.01 67.3099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 77.1652 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 76.2 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 76.2 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "fdf4f111-e0e0-4e60-b858-b03bb5563a72")
+		)
+		(pin "1"
+			(uuid "60939891-7d07-421f-913e-865ec09890d1")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C13")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 106.68 66.04 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "aac78a01-ce29-4169-9f80-a0263881243a")
+		(property "Reference" "C15"
+			(at 110.49 64.7699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 110.49 67.3099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 107.6452 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 106.68 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 106.68 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "30c10499-609c-400f-aecc-78b0c174c9b7")
+		)
+		(pin "1"
+			(uuid "9bd3aad2-fc66-4518-911b-5aa4ffd8b6a8")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C15")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 101.6 30.48 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ab04cc83-fcb9-4a36-8795-d73ba3df0dee")
+		(property "Reference" "D15"
+			(at 103.7433 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 103.7433 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 102.87 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 104.14 40.005 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 101.6 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "a678ad4d-cb58-43aa-937e-f00f2d21ff49")
+		)
+		(pin "6"
+			(uuid "3b6c40b6-5ae6-4c2b-8854-d148ca7b5365")
+		)
+		(pin "1"
+			(uuid "156deff2-4969-44fc-a357-e6f6fbdcbbc5")
+		)
+		(pin "5"
+			(uuid "ea87a9fa-1d08-4998-a606-21966dfd668d")
+		)
+		(pin "2"
+			(uuid "d882d7f3-5317-43b4-9323-e5b698a55ba4")
+		)
+		(pin "3"
+			(uuid "8028a337-e0ae-4e71-964d-bb4c389f646a")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D15")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 71.12 30.48 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b4b21f56-ee24-458b-ae46-5f89db95cfca")
+		(property "Reference" "D14"
+			(at 73.2633 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 73.2633 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 72.39 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 73.66 40.005 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 71.12 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "575817b5-5a66-4d26-8c14-63c2f1c5744f")
+		)
+		(pin "6"
+			(uuid "47ce7852-7209-4857-8536-0417b031a1e0")
+		)
+		(pin "1"
+			(uuid "978e2f7d-d0ae-4ca3-8c83-81f3c4f1375d")
+		)
+		(pin "5"
+			(uuid "0fab00e0-1f25-409f-8c7a-2e3ebb3435fb")
+		)
+		(pin "2"
+			(uuid "f460a4ac-fcb2-4668-aef4-a63bd0d4eb36")
+		)
+		(pin "3"
+			(uuid "adfda678-de1a-4fdf-aee1-d88cb967a218")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D14")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 132.08 68.58 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b77c2d5e-396f-400f-ad11-9beaa89ce72d")
+		(property "Reference" "C20"
+			(at 135.89 67.3099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 135.89 69.8499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 133.0452 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 132.08 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 132.08 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "b09315eb-ee59-4587-8734-b748d0e10c90")
+		)
+		(pin "1"
+			(uuid "9c8839f0-4855-425c-9e81-1e67691ce577")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C20")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 132.08 16.51 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ba94b3d0-643c-4571-a6f5-660fea7e5370")
+		(property "Reference" "C11"
+			(at 135.89 15.2399 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 135.89 17.7799 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 133.0452 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 132.08 16.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 132.08 16.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "57173cb5-53b8-4c45-b9ea-d319867c94a8")
+		)
+		(pin "1"
+			(uuid "1f4de74d-65b0-4e77-88ca-fbda2992773c")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C11")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 55.88 80.01 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "bb664157-aea7-4fa8-8c95-0f2d086b6451")
+		(property "Reference" "D5"
+			(at 58.0233 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 58.0233 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 57.15 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 58.42 89.535 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 55.88 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "8183180d-7285-44cd-8df3-843a8defebde")
+		)
+		(pin "6"
+			(uuid "885fe85a-82b3-4467-9b32-54d72f52f0e4")
+		)
+		(pin "1"
+			(uuid "296e3f12-15b7-42d4-b144-d7bfa4078a32")
+		)
+		(pin "5"
+			(uuid "505722a1-7b7f-4569-9ea3-a87ddaaa0ff1")
+		)
+		(pin "2"
+			(uuid "0a82f682-4e6a-473d-97dc-b6aec4285fcc")
+		)
+		(pin "3"
+			(uuid "17f77127-1e63-40d6-a91f-09fcb98fe7fd")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 30.48 33.02 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "bce78285-80ed-43f6-8ea3-2fc20c27d342")
+		(property "Reference" "#FLG01"
+			(at 28.575 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 26.67 33.0199 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 30.48 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 30.48 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 30.48 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d352c277-f97d-4693-97da-de4ec052e1b1")
+		)
+		(instances
+			(project ""
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "#FLG01")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 101.6 54.61 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "c0b7a135-c94f-4cd0-8085-bb014557297d")
+		(property "Reference" "D22"
+			(at 99.4567 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 99.4567 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 100.33 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 99.06 45.085 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 101.6 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "8cb4d2e7-cb43-4b9a-8a89-fd5de26ad4b8")
+		)
+		(pin "6"
+			(uuid "8cc06eda-f807-4d3c-bfb9-4380d800e09a")
+		)
+		(pin "1"
+			(uuid "c8af03ca-01b7-40f3-ab53-07b22fc87e57")
+		)
+		(pin "5"
+			(uuid "f6c341b8-3409-4f8f-b37f-fe568e9a0ec3")
+		)
+		(pin "2"
+			(uuid "2e3c4337-cff5-4f49-b387-5ea214febdb2")
+		)
+		(pin "3"
+			(uuid "fe927eab-aff0-4ca2-9229-7cbbd72114d1")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D22")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 101.6 16.51 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c55b6574-2c24-4b2e-85af-db26d236badd")
+		(property "Reference" "C9"
+			(at 105.41 15.2399 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 105.41 17.7799 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 102.5652 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 101.6 16.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 101.6 16.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "9bb941ec-7a59-4152-af9e-095538819b0d")
+		)
+		(pin "1"
+			(uuid "19a7eef9-a011-4f84-b2d2-2b2ccb03cd47")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 101.6 68.58 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c725871f-c9a8-4e08-8826-302d5c20f2a5")
+		(property "Reference" "C22"
+			(at 105.41 67.3099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 105.41 69.8499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 102.5652 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 101.6 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 101.6 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "6c7264a2-40ce-42c7-9df1-0330cf1a44b1")
+		)
+		(pin "1"
+			(uuid "65b8f734-5552-4659-a9b7-ea0ca1f7052d")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C22")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 55.88 16.51 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ce7d4109-c8c6-4897-8fd8-5375254bb26e")
+		(property "Reference" "C6"
+			(at 59.69 15.2399 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 59.69 17.7799 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 56.8452 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 55.88 16.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 55.88 16.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "9f287190-6fdb-4073-bc97-937a0074a614")
+		)
+		(pin "1"
+			(uuid "78da220b-a81a-474c-9fe4-84a7ab9aefa3")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 71.12 16.51 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d6c934b7-ae48-41e7-9e5c-a297927bce4c")
+		(property "Reference" "C7"
+			(at 74.93 15.2399 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 74.93 17.7799 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 72.0852 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 71.12 16.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 71.12 16.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "176e4f04-5264-4eef-aacf-3d6cf56b28a6")
+		)
+		(pin "1"
+			(uuid "14d44e1a-2de3-4a25-890a-3bf466f90ffb")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Conn_01x04_Pin")
+		(at 6.35 20.32 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "db9dc473-2139-490d-a4f5-e298872bcaec")
+		(property "Reference" "J2"
+			(at 6.985 12.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Conn_01x04_Pin"
+			(at 6.985 15.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical"
+			(at 6.35 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 6.35 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x04, script generated"
+			(at 6.35 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "8750ebe5-ff7e-498f-a65d-c7d007774f02")
+		)
+		(pin "4"
+			(uuid "64d08207-4750-439e-8710-5e2f049e182e")
+		)
+		(pin "1"
+			(uuid "c3012107-d587-4b4e-a0d3-cd74972fdf48")
+		)
+		(pin "2"
+			(uuid "600ed562-1bb5-4a53-95a6-9e796d11d117")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "J2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 162.56 80.01 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "dd120af3-57c3-45e4-aac4-4fd4dc456a6c")
+		(property "Reference" "D9"
+			(at 164.7033 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 164.7033 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 163.83 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 165.1 89.535 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 162.56 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "21b004ac-05cd-4fb3-9da1-683c244bebfe")
+		)
+		(pin "6"
+			(uuid "fcf98681-6fa7-463f-93a3-0236eebe9de6")
+		)
+		(pin "1"
+			(uuid "06f98080-b94b-4800-9f13-b9567f217eaf")
+		)
+		(pin "5"
+			(uuid "d23de847-26dd-4078-88fd-97e1ab551b97")
+		)
+		(pin "2"
+			(uuid "d2aa9330-0a3a-4b56-81e2-e1f0d40ef119")
+		)
+		(pin "3"
+			(uuid "e9aacdde-416d-4d74-8207-f3b64bcf387c")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 132.08 80.01 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "e11d5d0d-9790-48ae-b1b2-181ed137f281")
+		(property "Reference" "D10"
+			(at 134.2233 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 134.2233 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 133.35 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 134.62 89.535 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 132.08 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "fd90d33f-dd50-4dd8-930b-fa6962ec98dc")
+		)
+		(pin "6"
+			(uuid "b112e8ab-bdae-4e5d-9e99-d43b48e2b2c0")
+		)
+		(pin "1"
+			(uuid "24943644-404e-4f9e-85db-ddac291df723")
+		)
+		(pin "5"
+			(uuid "1d7fea3c-d8bc-47a4-9c43-067b22b25b99")
+		)
+		(pin "2"
+			(uuid "d882e837-7bfa-47af-83d6-ae02256ce1d6")
+		)
+		(pin "3"
+			(uuid "ea5f1224-ce58-4247-899d-15005c3ec0ce")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 24.13 19.05 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "e3e746ba-2e6a-40c1-a4c8-51211a1d1cd6")
+		(property "Reference" "#PWR02"
+			(at 24.13 12.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 24.13 13.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 24.13 19.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 24.13 19.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 24.13 19.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "90c341e8-d83d-41a3-bfbf-5f069a57e7f0")
+		)
+		(instances
+			(project ""
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "#PWR02")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 86.36 16.51 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "e5271a3a-4bcd-4ba1-8524-ed05b8607ccd")
+		(property "Reference" "C8"
+			(at 90.17 15.2399 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 90.17 17.7799 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 87.3252 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 86.36 16.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 86.36 16.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "3f016e79-f3bd-4498-98a8-99b8f833428c")
+		)
+		(pin "1"
+			(uuid "2c7cc3b2-6a0f-4a00-84b4-270d98416a9c")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 71.12 80.01 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ea64d51d-f41a-46eb-a86a-f19da261c29f")
+		(property "Reference" "D6"
+			(at 73.2633 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 73.2633 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 72.39 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 73.66 89.535 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 71.12 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "a5a79e7e-20ed-49cb-8a41-f462baf28fbf")
+		)
+		(pin "6"
+			(uuid "b60a6fe7-d59f-49f0-b38e-9adab1ddbd01")
+		)
+		(pin "1"
+			(uuid "b3750d2d-bad4-4f80-9a29-36eda9b3f9e2")
+		)
+		(pin "5"
+			(uuid "d6697bd0-f646-4d01-89db-538bce136793")
+		)
+		(pin "2"
+			(uuid "8e0a8633-f3c3-4709-95d5-d6881cf0d856")
+		)
+		(pin "3"
+			(uuid "914761e8-8485-4439-a275-a247987f3490")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 162.56 68.58 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ed1bbb98-5923-4b33-b0e9-f44ef5f2d475")
+		(property "Reference" "C19"
+			(at 166.37 67.3099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 166.37 69.8499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 163.5252 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 162.56 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 162.56 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "1cc3e825-7112-4c00-927e-f4900fec9ce1")
+		)
+		(pin "1"
+			(uuid "39a8797c-8632-4553-a3a7-58d9c5cc544a")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C19")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 55.88 68.58 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f20b41e3-932a-4782-9076-e64cbcd3d173")
+		(property "Reference" "C25"
+			(at 59.69 67.3099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 59.69 69.8499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 56.8452 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 55.88 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 55.88 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "5e7be58e-2f79-4c2d-91f2-2c9148899981")
+		)
+		(pin "1"
+			(uuid "31669582-9b4e-4ed9-836f-275436e6d64b")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "C25")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:APA102-2020")
+		(at 55.88 54.61 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f6e8ba0d-d9ec-45c7-9fb4-3d58237c64c6")
+		(property "Reference" "D25"
+			(at 53.7367 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "APA102-2020"
+			(at 53.7367 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED-APA102-2020"
+			(at 54.61 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf"
+			(at 53.34 45.085 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 55.88 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "2cf8b12a-67e3-418d-a7af-edd30105abd4")
+		)
+		(pin "6"
+			(uuid "7dd51563-5aba-4e9e-b5a5-6d273a0c19be")
+		)
+		(pin "1"
+			(uuid "47e56826-069c-4737-ab87-13770b9605fb")
+		)
+		(pin "5"
+			(uuid "e11b7aaa-0e36-4dae-97eb-2209adde0f8f")
+		)
+		(pin "2"
+			(uuid "449d3bac-bd40-44e5-a455-8c5a4d281f6e")
+		)
+		(pin "3"
+			(uuid "8c2a8714-5bae-4b1a-8427-8dd66bc2b034")
+		)
+		(instances
+			(project "GRID"
+				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
+					(reference "D25")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)
