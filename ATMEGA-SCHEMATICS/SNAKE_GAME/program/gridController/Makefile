@@ -187,6 +187,7 @@ ifeq ($(INIT), INIT_WIN)
 SRC_DIRS = . StartSetUp lib libC snake
 
 # Auto-discover sources/headers
+TARGET := main
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
 OBJS   := $(SRCS:.c=.o)
 INCS   := $(addprefix -I,$(SRC_DIRS))
