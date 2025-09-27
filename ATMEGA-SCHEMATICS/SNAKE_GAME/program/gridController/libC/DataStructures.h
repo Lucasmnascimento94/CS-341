@@ -4,12 +4,12 @@
 
 
 typedef struct Cell {
-    struct Cell *next;
-    struct Cell *prev;
-    uint16_t val;
-    uint8_t i;
-    uint8_t j;
-    bool poison;
+    struct Cell *next; // -> 2bytes
+    struct Cell *prev; // -> 2bytes
+    uint16_t val; // -> 2bytes
+    uint8_t i; // -> 1 byte
+    uint8_t j; // -> 1 byte
+    bool poison; // -> 1 byte -> TOTAL : 9bytes
 }Cell;
 
 typedef struct {

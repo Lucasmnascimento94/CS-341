@@ -3,7 +3,7 @@
 
 void gpioConfig(){
     joyStickConf();
-    setUpUART();
+    //setUpUART();
 }
 
 
