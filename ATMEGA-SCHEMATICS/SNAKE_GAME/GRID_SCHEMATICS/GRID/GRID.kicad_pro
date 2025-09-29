@@ -227,6 +227,10 @@
           "drill": 0.0
         },
         {
+          "diameter": 0.4,
+          "drill": 0.3
+        },
+        {
           "diameter": 0.7,
           "drill": 0.3
         },
@@ -517,7 +521,7 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "plot": "",
+      "plot": "MINI_GRID/",
       "pos_files": "",
       "specctra_dsn": "",
       "step": "",

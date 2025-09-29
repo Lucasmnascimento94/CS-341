@@ -23,7 +23,7 @@
 
 # ===== Project =====
 MCU := atmega168a
-F_CPU    = 20000000UL
+F_CPU    = 16000000UL
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
 
 #######################################################################################################################################################                                                                            
@@ -66,7 +66,7 @@ endif
 ifeq ($(INIT), INIT_UBUNTU)
 
 # Add any source directories here
-SRC_DIRS = . StartSetUp lib libC snake
+SRC_DIRS = . StartSetUp lib libC snake 
 
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
