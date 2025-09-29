@@ -219,6 +219,7 @@ game_read_fuse: # Read fuses in the MCU
 # ===== Install dependencies out of the dependencies.txt file =====
 install_deps: 
 	@$(SHELL) -ExecutionPolicy Bypass -File $(DEP) -verbose
+
 endif
 
 
