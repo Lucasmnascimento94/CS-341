@@ -223,6 +223,7 @@ endif
 
 
 DIRS:
+	@echo "MY SYSTEM>> $(INIT)"
 	@echo "ROOT>> $(ROOT)"
 	@echo "DIR>> $(DIR)"
 	@echo "DEP>> $(DEP)"

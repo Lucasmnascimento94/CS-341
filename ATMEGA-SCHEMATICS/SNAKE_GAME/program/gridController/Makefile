@@ -25,6 +25,7 @@
 MCU := atmega168a
 F_CPU    = 16000000UL
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
+TARGET := main
 
 #######################################################################################################################################################                                                                            
 #                               					 			GRID CONTROLLER MCU                                  	             				  #
@@ -187,7 +188,6 @@ ifeq ($(INIT), INIT_WIN)
 SRC_DIRS = . StartSetUp lib libC snake
 
 # Auto-discover sources/headers
-TARGET := main
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
 OBJS   := $(SRCS:.c=.o)
 INCS   := $(addprefix -I,$(SRC_DIRS))
@@ -217,7 +217,7 @@ $(TARGET).hex: $(TARGET).elf
 	$(OBJCOPY) -O ihex -R .eeprom $< $@
 
 size: $(TARGET).elf
-	$(SIZE) --mcu=$(MCU) --format=avr $<
+	$(SIZE) --format=sysv $<
 
 flash: $(TARGET).hex
 	$(AVRDUDE) $(AVRDUDE_FLAGS) -U flash:w:$<
