@@ -22,7 +22,7 @@
                                  
 
 # ===== Project =====
-F_CPU    = 20000000UL
+F_CPU    = 16000000UL
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
 
 #######################################################################################################################################################                                                                            
@@ -219,10 +219,12 @@ game_read_fuse: # Read fuses in the MCU
 # ===== Install dependencies out of the dependencies.txt file =====
 install_deps: 
 	@$(SHELL) -ExecutionPolicy Bypass -File $(DEP) -verbose
+
 endif
 
 
 DIRS:
+	@echo "MY SYSTEM>> $(INIT)"
 	@echo "ROOT>> $(ROOT)"
 	@echo "DIR>> $(DIR)"
 	@echo "DEP>> $(DEP)"

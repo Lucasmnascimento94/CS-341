@@ -3,6 +3,7 @@
 #include "print.h"
 #include "snake/snake.h"
 #include "snake/colors.h"
+#include "StartSetUp/opcodes/sram.h"
 
 SnakeBelly belly = {
     .color = COLOR_GOLD,
@@ -37,21 +38,22 @@ int main(void){
     //seed_prng();
     gpioConfig();
     //clear();
-    DDRB |= (1<<PIN1);
-    PORTB &= ~(1<<PIN1);
-    
-    //print("STARTING\n", 1);
-    //initSnake(&belly);
-    //gameInit(&belly, &food);
+   // DDRC |= (0<<PC6);
+   // PORTC |= (1<<PC6);
+
+    print("STARTING\n", 1);
+    gameInit(&belly, &food);
     _delay_ms(500);
-    //initSnake(&belly, &food);
-    //belly.begin = true;
-    //push(&belly, PIXEL_ADDRESS(8, 5, 2), 8, 5, false);
+    initSnake(&belly, &food);
+    belly.begin = true;
+    push(&belly, PIXEL_ADDRESS(8, 5, 2), 8, 5, false);
+
     while(1){
-        //print("LOOPING\n", 1);
+        //print("LOOPING 123\n", 1);
         //walk(&belly, &food);
 
         //if(belly.end) gameEnd(&belly, &food);
-        _delay_ms(1000);
+        writeByte("HELLO", 0XFF);
+        //_delay_ms(500);
     }
 }
