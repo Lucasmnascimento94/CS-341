@@ -1,0 +1,94 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "85b314bd-c3de-482e-9651-a2e76e7db0f6")
+	(paper "A4")
+	(lib_symbols)
+	(wire
+		(pts
+			(xy 114.3 76.2) (xy 114.3 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3d2009cc-f703-4843-add3-80b6d76da68c")
+	)
+	(wire
+		(pts
+			(xy 127 76.2) (xy 127 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f3cd3c82-adc6-415a-ba22-d18aec0d03d9")
+	)
+	(global_label "VCC"
+		(shape input)
+		(at 114.3 76.2 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "fe993b22-4900-429f-9c51-961f5ffe0144")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 114.3 69.5862 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape output)
+		(at 127 76.2 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "fe993b22-4900-429f-9c51-961f5ffe0144")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 127 69.3443 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(hierarchical_label "GND"
+		(shape input)
+		(at 127 85.09 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "cf4f1e0e-86e3-4d4d-9f86-639d3f0912b4")
+	)
+	(hierarchical_label "VCC"
+		(shape input)
+		(at 114.3 85.09 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "cf4f1e0e-86e3-4d4d-9f86-639d3f0912b4")
+	)
+)

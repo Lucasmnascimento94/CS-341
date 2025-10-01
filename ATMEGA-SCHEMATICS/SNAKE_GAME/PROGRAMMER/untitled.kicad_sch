@@ -929,7 +929,7 @@
 			)
 			(justify right)
 		)
-		(uuid "0951ad06-a103-4d2f-8e5b-711e8ef44ebd")
+		(uuid "0951ad06-a103-4d2f-8e5b-711e8ef44ebe")
 	)
 	(hierarchical_label "USBCD+"
 		(shape input)
@@ -940,7 +940,7 @@
 			)
 			(justify right)
 		)
-		(uuid "0951ad06-a103-4d2f-8e5b-711e8ef44ebd")
+		(uuid "0951ad06-a103-4d2f-8e5b-711e8ef44ebf")
 	)
 	(hierarchical_label "CTS"
 		(shape output)
@@ -973,7 +973,7 @@
 			)
 			(justify left)
 		)
-		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269a9")
+		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269aa")
 	)
 	(hierarchical_label "TEST"
 		(shape output)
@@ -984,7 +984,7 @@
 			)
 			(justify right)
 		)
-		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269a9")
+		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269ab")
 	)
 	(hierarchical_label "GND"
 		(shape output)
@@ -995,7 +995,7 @@
 			)
 			(justify left)
 		)
-		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269a9")
+		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269ac")
 	)
 	(hierarchical_label "CBUS4"
 		(shape output)
@@ -1006,7 +1006,7 @@
 			)
 			(justify left)
 		)
-		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269a9")
+		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269ad")
 	)
 	(hierarchical_label "CBUS3"
 		(shape output)
@@ -1017,7 +1017,7 @@
 			)
 			(justify left)
 		)
-		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269a9")
+		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269ae")
 	)
 	(hierarchical_label "CBUS2"
 		(shape output)
@@ -1028,7 +1028,7 @@
 			)
 			(justify left)
 		)
-		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269a9")
+		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269af")
 	)
 	(hierarchical_label "CBUS1"
 		(shape output)
@@ -1039,7 +1039,7 @@
 			)
 			(justify left)
 		)
-		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269a9")
+		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269b0")
 	)
 	(hierarchical_label "RTS"
 		(shape output)
@@ -1050,7 +1050,7 @@
 			)
 			(justify left)
 		)
-		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269a9")
+		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269b1")
 	)
 	(hierarchical_label "RXD"
 		(shape output)
@@ -1061,7 +1061,7 @@
 			)
 			(justify left)
 		)
-		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269a9")
+		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269b2")
 	)
 	(hierarchical_label "TXD"
 		(shape output)
@@ -1072,7 +1072,7 @@
 			)
 			(justify left)
 		)
-		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269a9")
+		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269b3")
 	)
 	(hierarchical_label "CBUS0"
 		(shape output)
@@ -1083,7 +1083,7 @@
 			)
 			(justify left)
 		)
-		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269a9")
+		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269b4")
 	)
 	(hierarchical_label "AGND"
 		(shape output)
@@ -1094,7 +1094,7 @@
 			)
 			(justify right)
 		)
-		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269a9")
+		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269b5")
 	)
 	(hierarchical_label "3V3OUT"
 		(shape output)
@@ -1105,7 +1105,7 @@
 			)
 			(justify right)
 		)
-		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269a9")
+		(uuid "aacddd0b-94d4-40b0-88f2-71655dd269b6")
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -1169,14 +1169,6 @@
 		)
 		(instances
 			(project "PROGRAMMER"
-				(path "/c3d4d3ca-3b0c-4b66-9122-b6670ae5401e/2cbea412-bf39-4f60-b523-4e2fdcdab1fc"
-					(reference "C7")
-					(unit 1)
-				)
-				(path "/c3d4d3ca-3b0c-4b66-9122-b6670ae5401e/bdfe0887-b69a-4f4b-b853-851b48222b71"
-					(reference "C8")
-					(unit 1)
-				)
 				(path "/c3d4d3ca-3b0c-4b66-9122-b6670ae5401e/f80a6ea3-817f-470e-88f7-47e64e60582d"
 					(reference "C4")
 					(unit 1)
@@ -1319,14 +1311,6 @@
 		)
 		(instances
 			(project "PROGRAMMER"
-				(path "/c3d4d3ca-3b0c-4b66-9122-b6670ae5401e/2cbea412-bf39-4f60-b523-4e2fdcdab1fc"
-					(reference "U3")
-					(unit 1)
-				)
-				(path "/c3d4d3ca-3b0c-4b66-9122-b6670ae5401e/bdfe0887-b69a-4f4b-b853-851b48222b71"
-					(reference "U3")
-					(unit 1)
-				)
 				(path "/c3d4d3ca-3b0c-4b66-9122-b6670ae5401e/f80a6ea3-817f-470e-88f7-47e64e60582d"
 					(reference "U3")
 					(unit 1)

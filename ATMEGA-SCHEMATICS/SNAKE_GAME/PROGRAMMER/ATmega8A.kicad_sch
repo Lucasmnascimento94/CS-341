@@ -759,7 +759,7 @@
 			)
 			(justify right)
 		)
-		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb5c")
+		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb5d")
 	)
 	(hierarchical_label "PD3"
 		(shape input)
@@ -770,7 +770,7 @@
 			)
 			(justify right)
 		)
-		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb5c")
+		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb5e")
 	)
 	(hierarchical_label "PD5"
 		(shape input)
@@ -781,7 +781,7 @@
 			)
 			(justify right)
 		)
-		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb5c")
+		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb5f")
 	)
 	(hierarchical_label "PD6"
 		(shape input)
@@ -792,7 +792,7 @@
 			)
 			(justify right)
 		)
-		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb5c")
+		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb60")
 	)
 	(hierarchical_label "PD4"
 		(shape input)
@@ -803,7 +803,7 @@
 			)
 			(justify right)
 		)
-		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb5c")
+		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb61")
 	)
 	(hierarchical_label "GND"
 		(shape input)
@@ -814,7 +814,7 @@
 			)
 			(justify left)
 		)
-		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb5c")
+		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb62")
 	)
 	(hierarchical_label "PD1"
 		(shape input)
@@ -825,7 +825,7 @@
 			)
 			(justify right)
 		)
-		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb5c")
+		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb63")
 	)
 	(hierarchical_label "PD2"
 		(shape input)
@@ -836,7 +836,7 @@
 			)
 			(justify right)
 		)
-		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb5c")
+		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb64")
 	)
 	(hierarchical_label "PD0"
 		(shape input)
@@ -847,7 +847,7 @@
 			)
 			(justify right)
 		)
-		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb5c")
+		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb65")
 	)
 	(hierarchical_label "AVCC"
 		(shape input)
@@ -858,7 +858,7 @@
 			)
 			(justify right)
 		)
-		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb5c")
+		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb66")
 	)
 	(hierarchical_label "VCC"
 		(shape input)
@@ -869,7 +869,7 @@
 			)
 			(justify left)
 		)
-		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb5c")
+		(uuid "6d3a7c5e-50a5-4a83-8fc5-3809c000cb67")
 	)
 	(symbol
 		(lib_id "MCU_Microchip_ATmega:ATmega8-16A")

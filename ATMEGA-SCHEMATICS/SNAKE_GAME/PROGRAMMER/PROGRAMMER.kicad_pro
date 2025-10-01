@@ -623,20 +623,20 @@
       "Root"
     ],
     [
+      "560f3c06-54e4-47d2-ac18-f2d742b55aec",
+      "Power"
+    ],
+    [
+      "f98597a4-2f52-4f39-ba8e-756df2eb55ce",
+      "UBS_C"
+    ],
+    [
       "f80a6ea3-817f-470e-88f7-47e64e60582d",
       "FT232RL"
     ],
     [
       "05e9ee93-91ea-4ffd-8e5e-cec8546b601e",
       "ATmega8A"
-    ],
-    [
-      "2cbea412-bf39-4f60-b523-4e2fdcdab1fc",
-      "Untitled Sheet"
-    ],
-    [
-      "bdfe0887-b69a-4f4b-b853-851b48222b71",
-      "Untitled Sheet"
     ]
   ],
   "text_variables": {}
