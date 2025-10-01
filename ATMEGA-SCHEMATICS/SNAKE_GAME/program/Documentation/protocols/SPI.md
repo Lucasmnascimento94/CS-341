@@ -157,7 +157,7 @@ Step-by-step description of how this feature is implemented:
 
 - logic analyzer.
 
-- Unit test present at ./Documentation/unitTest
+- Unit Test (To Do)
 
 - Known limitations
     Current design uses a 16MHz external clock.
