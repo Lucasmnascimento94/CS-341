@@ -33,10 +33,12 @@ The goal is to provide a clear reference so other teams can understand SPI opera
 
 - **Wiring**
 
-    MISO (master) <<<<<<>>>>>> MISO  (slave)
-    MOSI (master) <<<<<<>>>>>> MOSI  (slave)
-    SCK  (master) <<<<<<>>>>>> SCK   (slave)
-    SS   (master) <<<<<<>>>>>> SS/CS (slave)
+   - MISO   (master) <<<<<<>>>>>> MISO  (slave)
+   - MOSI   (master) <<<<<<>>>>>> MOSI  (slave)
+   - SCK    (master) <<<<<<>>>>>> SCK   (slave)
+   - SS/CS  (master) <<<<<<>>>>>> SS/CS (slave)
+
+
 - **Modes of Operation**:
 
     - **Slave Mode**: In this mode, the Atmega will not be responsible for driving the clock and it will be reading data in the MOSI and writing data into MISO.
