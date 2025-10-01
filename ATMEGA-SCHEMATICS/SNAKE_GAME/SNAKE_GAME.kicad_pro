@@ -38,8 +38,8 @@
         "other_text_upright": false,
         "pads": {
           "drill": 1.0,
-          "height": 1.7,
-          "width": 1.7
+          "height": 2.0,
+          "width": 2.0
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -124,7 +124,7 @@
       },
       "rules": {
         "max_error": 0.005,
-        "min_clearance": 0.5,
+        "min_clearance": 0.2,
         "min_connection": 0.0,
         "min_copper_edge_clearance": 0.5,
         "min_groove_width": 0.0,
@@ -137,8 +137,8 @@
         "min_text_height": 0.8,
         "min_text_thickness": 0.08,
         "min_through_hole_diameter": 0.3,
-        "min_track_width": 0.5,
-        "min_via_annular_width": 0.1,
+        "min_track_width": 0.2,
+        "min_via_annular_width": 0.08,
         "min_via_diameter": 0.5,
         "solder_mask_to_copper_clearance": 0.0,
         "use_height_for_length_calcs": true
@@ -189,6 +189,7 @@
       ],
       "track_widths": [
         0.0,
+        0.2,
         0.3,
         0.5,
         1.0,
@@ -231,12 +232,12 @@
           "drill": 0.3
         },
         {
-          "diameter": 2.0,
-          "drill": 0.3
+          "diameter": 1.5,
+          "drill": 1.0
         },
         {
-          "diameter": 2.5,
-          "drill": 1.0
+          "diameter": 2.0,
+          "drill": 0.3
         }
       ],
       "zones_allow_external_fillets": false
@@ -518,7 +519,7 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "plot": "gerber/",
+      "plot": "LASER/",
       "pos_files": "",
       "specctra_dsn": "",
       "step": "",
@@ -716,6 +717,22 @@
     [
       "6a8c7582-1032-4e02-bf22-b5197316f506",
       "Root"
+    ],
+    [
+      "de9d9dbb-4b49-4ecb-94cb-6f9eaf4425bf",
+      "GRID_CONTROLLER"
+    ],
+    [
+      "b5969514-791c-4cbe-9832-8d10878c56a3",
+      "AUDIO-SCREEN_CONTROLLER"
+    ],
+    [
+      "eca50252-6d94-4864-8ea2-9e0d1f0ae3a5",
+      "POWER_SUPPLY"
+    ],
+    [
+      "5dc1caf5-1af5-4ded-a366-1064cb54642d",
+      "CONTROLLERS"
     ]
   ],
   "text_variables": {}
