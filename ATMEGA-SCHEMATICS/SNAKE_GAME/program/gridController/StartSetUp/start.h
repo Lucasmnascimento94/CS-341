@@ -12,7 +12,7 @@ JoyStick_RIGHT >> PD5 - PCINT21
 
 */
 
-#define F_CPU 20000000UL
+#define F_CPU 16000000UL
 
 #define JOYSTICK_PORT PORTD
 #define JOYSTICK_DDR DDRD
