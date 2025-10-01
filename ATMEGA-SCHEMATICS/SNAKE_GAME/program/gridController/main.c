@@ -41,7 +41,7 @@ int main(void){
    // DDRC |= (0<<PC6);
    // PORTC |= (1<<PC6);
 
-    print("STARTING\n", 1);
+    //print("STARTING\n", 1);
     gameInit(&belly, &food);
     _delay_ms(500);
     initSnake(&belly, &food);
@@ -49,11 +49,14 @@ int main(void){
     push(&belly, PIXEL_ADDRESS(8, 5, 2), 8, 5, false);
 
     while(1){
+        uint8_t c;
         //print("LOOPING 123\n", 1);
         //walk(&belly, &food);
 
         //if(belly.end) gameEnd(&belly, &food);
-        writeByte("HELLO", 0XFF);
-        //_delay_ms(500);
+        writeByte('H', 0XFF);
+        _delay_ms(100);
+        readByte(&c, 0xFF);
+        _delay_ms(100);
     }
 }
