@@ -1,5 +1,5 @@
-#include "./ws2812b/WS2812B.h"
-#include "print.h"
+#include "WS2812B.h"
+#include "uart.h"
 #include "stdio.h"
 #include "string.h"
 

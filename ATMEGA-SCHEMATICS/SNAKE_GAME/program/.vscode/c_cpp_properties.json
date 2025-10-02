@@ -10,16 +10,17 @@
             ],
             "includePath": [
                 "${workspaceFolder}/**",
-                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/startSetUp/sram",
-                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/startSetUp/timer",
-                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/startSetUp/uart",
-                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/startSetUp/ws2812b",
-                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/startSetUp/spi",
-                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/startSetUp/isr",
-                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/startSetUp/i2c",
-                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/startSetUp/flash",
-                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/snake",
-                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/libC"
+                "${workspaceFolder}/gridController",
+                "${workspaceFolder}/gridController/startSetUp",
+                "${workspaceFolder}/gridController/startSetUp/sram",
+                "${workspaceFolder}/gridController/startSetUp/timer",
+                "${workspaceFolder}/gridController/startSetUp/uart",
+                "${workspaceFolder}/gridController/startSetUp/ws2812b",
+                "${workspaceFolder}/gridController/startSetUp/spi",
+                "${workspaceFolder}/gridController/startSetUp/isr",
+                "${workspaceFolder}/gridController/startSetUp/flash",
+                "${workspaceFolder}/gridController/snake",
+                "${workspaceFolder}/gridController/libC"
             ],
             "defines": [
                 "__AVR_ATmega168__"

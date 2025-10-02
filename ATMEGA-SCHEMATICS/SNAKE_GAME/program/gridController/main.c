@@ -1,4 +1,4 @@
-#include "./startSetUp/start.h"
+#include "start.h"
 #include "./startSetUp/ws2812b/WS2812B.h"
 #include "snake/snake.h"
 #include "ws2812b/colors.h"
@@ -36,9 +36,8 @@ int main(void){
     LED_DDR |= (1 << LED_PIN);   // data pin as output
     //seed_prng();
     gpioConfig();
-    //clear();
-   // DDRC |= (0<<PC6);
-   // PORTC |= (1<<PC6);
+    clear();
+
 
     //print("STARTING\n", 1);
     gameInit(&belly, &food);
@@ -48,14 +47,10 @@ int main(void){
     push(&belly, PIXEL_ADDRESS(8, 5, 2), 8, 5, false);
 
     while(1){
-        uint8_t c;
-        //print("LOOPING 123\n", 1);
-        //walk(&belly, &food);
+        walk(&belly, &food);
 
-        //if(belly.end) gameEnd(&belly, &food);
-        writeByte('H', 0XFF);
-        _delay_ms(100);
-        readByte(&c, 0xFF);
+        if(belly.end) gameEnd(&belly, &food);
+        //writeByte('H', 0XFF);
         _delay_ms(100);
     }
 }

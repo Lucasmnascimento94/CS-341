@@ -131,7 +131,6 @@ bool ruleCheck(SnakeBelly *belly, uint16_t food){
         *eatFood = true;
         push(belly, food->val, food->i, food->j, food->poison);
         sprintf(c, "Belly Count: %d\n", belly->count);
-        print(c, 1);
 
         bool stop = false;
         while(!stop){
@@ -163,6 +162,9 @@ bool ruleCheck(SnakeBelly *belly, uint16_t food){
  *============================================================================================*/
 
  void gameInit(SnakeBelly *belly, struct Cell *food){
+
+    PORTB |= (1<<PB1);
+    PORTB &= ~(1<<PB1);
     /*Square coil*/
     uint8_t x = FIRST_PIXEL_X;
     uint8_t y = FIRST_PIXEL_Y;

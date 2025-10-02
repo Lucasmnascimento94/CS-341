@@ -6,7 +6,7 @@
 
 
 
-#define IO_WRITE_CYC 6
+#define IO_WRITE_CYC 2
 
 
 #ifndef CYCLE_NS
@@ -15,11 +15,11 @@
   #endif
 
   #if   (F_CPU == 16000000UL)
-    #define T1H_TOT 13  
-    #define T1L_TOT 7    
-    #define T0H_TOT 6    
-    #define T0L_TOT 12   
-    #define TLL 1000
+    #define T1H_TOT 16  
+    #define T1L_TOT 9    
+    #define T0H_TOT 8    
+    #define T0L_TOT 17   
+    #define TLL 100
   #elif (F_CPU == 20000000UL)
     #define T1H_TOT 14   // 0.70us high
     #define T1L_TOT 9   // 0.55us low
