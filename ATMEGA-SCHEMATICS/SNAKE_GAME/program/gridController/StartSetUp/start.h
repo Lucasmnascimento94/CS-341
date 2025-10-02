@@ -37,19 +37,41 @@ JoyStick_RIGHT >> PD5 - PCINT21
 #define GRID_PIXELS (48u*32u)
 
 
-/*#############################-- UART --##################################### */
+/*==============================================================================
+ *  UART MODULE CONFIGURATION
+ *==============================================================================
+ *  Reference:
+ *    ---
+ *
+ *  Description:
+ *    ---
+ *
+ *============================================================================*/
 #define FOSC      16000000UL
 #define BAUD_RATE 9600UL
 #define MYUBRR    (FOSC/(16UL*BAUD_RATE) - 1) 
+/*==============================================================================
+ *  END OF UART MODULE CONFIGURATION
+*==============================================================================*/
 
 
 
-/*#############################-- SPI --##################################### */
-// ===== SPI config =====
 
-// You will find this information at:
-// Atmega168 Datasheet - Pg: 174 - 177
-// 23A1024/23LC1024 Datasheet Pg: 6
+
+
+/*==============================================================================
+ *  SPI MODULE CONFIGURATION
+ *==============================================================================
+ *  Reference:
+ *    - SPI Application Note : ./documentation/protocols/SPI.md
+ *    - SRAM Application Note: ./documentation/grid/SRAM.md
+ *
+ *  Description:
+ *    This section contains configuration and setup for the SPI peripheral
+ *    on the ATmega168A. All implementation details (registers, data flow,
+ *    usage patterns) are documented in the application notes listed above.
+ *
+ *============================================================================*/
 #define SPI_MODE        0       // 0,1,2,3  (SRAM likes 0)
 #define SPI_MSBFIRST    0       // 1=MSB first, 0=LSB first
 #define SPI_PRESCALER   64       // 2,4,8,16,32,64,128
@@ -124,6 +146,9 @@ JoyStick_RIGHT >> PD5 - PCINT21
 #else
     #define SPI_DORD 1
 #endif
+/*==============================================================================
+ *  END OF SPI MODULE CONFIGURATION
+*==============================================================================*/
 
 
 
