@@ -1,4 +1,4 @@
-#include "opcodes/sram.h"
+#include "sram.h"
 #include "string.h"
 
 

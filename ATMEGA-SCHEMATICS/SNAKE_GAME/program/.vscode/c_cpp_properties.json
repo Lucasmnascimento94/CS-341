@@ -1,22 +1,32 @@
 {
-  "version": 4,
-  "configurations": [
-    {
-      "name": "macos-clang-arm64",
-      "compilerPath": "/usr/bin/clang",
-      "compilerArgs": [
-        "-mmcu=atmega168",
-        "-DF_CPU=8000000UL"
-      ],
-      "includePath": [
-        "${workspaceFolder}/**"
-      ],
-      "defines": [
-        "__AVR_ATmega168__"
-      ],
-      "cStandard": "${default}",
-      "cppStandard": "${default}",
-      "intelliSenseMode": "macos-clang-arm64"
-    }
-  ]
+    "version": 4,
+    "configurations": [
+        {
+            "name": "macos-clang-arm64",
+            "compilerPath": "/usr/bin/clang",
+            "compilerArgs": [
+                "-mmcu=atmega168",
+                "-DF_CPU=8000000UL"
+            ],
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/startSetUp/sram",
+                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/startSetUp/timer",
+                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/startSetUp/uart",
+                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/startSetUp/ws2812b",
+                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/startSetUp/spi",
+                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/startSetUp/isr",
+                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/startSetUp/i2c",
+                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/startSetUp/flash",
+                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/snake",
+                "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/libC"
+            ],
+            "defines": [
+                "__AVR_ATmega168__"
+            ],
+            "cStandard": "${default}",
+            "cppStandard": "${default}",
+            "intelliSenseMode": "macos-clang-arm64"
+        }
+    ]
 }

@@ -1,9 +1,8 @@
-#include "start.h"
-#include "WS2812B.h"
-#include "print.h"
+#include "./startSetUp/start.h"
+#include "./startSetUp/ws2812b/WS2812B.h"
 #include "snake/snake.h"
-#include "snake/colors.h"
-#include "StartSetUp/opcodes/sram.h"
+#include "ws2812b/colors.h"
+#include "startSetUp/sram/sram.h"
 
 SnakeBelly belly = {
     .color = COLOR_GOLD,

@@ -1,6 +1,6 @@
-#include "snake/snake.h"
-#include "snake/colors.h"
-#include "print.h"
+#include "snake.h"
+#include "./ws2812b/WS2812B.h"
+#include "../startSetUp/uart/uart.h"
 
 /*============================================================================================*
  * RENDER — framebuffer/bitset and scanout                                                     *

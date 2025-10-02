@@ -1,14 +1,27 @@
-main.o: main.c StartSetUp/start.h StartSetUp/includes.h \
- StartSetUp/WS2812B.h StartSetUp/start.h libC/DataStructures.h \
- StartSetUp/includes.h libC/print.h snake/snake.h snake/colors.h \
- StartSetUp/opcodes/sram.h
-StartSetUp/start.h:
+main.o: main.c startSetUp/start.h startSetUp/includes.h \
+ startSetUp/ws2812b/WS2812B.h StartSetUp/includes.h StartSetUp/start.h \
+ libC/DataStructures.h snake/snake.h \
+ snake/../startSetUp/ws2812b/WS2812B.h startSetUp/ws2812b/colors.h \
+ StartSetUp/ws2812b/colors.h startSetUp/sram/sram.h
+
+startSetUp/start.h:
+
+startSetUp/includes.h:
+
+startSetUp/ws2812b/WS2812B.h:
+
 StartSetUp/includes.h:
-StartSetUp/WS2812B.h:
+
 StartSetUp/start.h:
+
 libC/DataStructures.h:
-StartSetUp/includes.h:
-libC/print.h:
+
 snake/snake.h:
-snake/colors.h:
-StartSetUp/opcodes/sram.h:
+
+snake/../startSetUp/ws2812b/WS2812B.h:
+
+startSetUp/ws2812b/colors.h:
+
+StartSetUp/ws2812b/colors.h:
+
+startSetUp/sram/sram.h:

@@ -1,5 +1,5 @@
 #include "DataStructures.h"
-#include "print.h"
+#include "../startSetUp/uart/uart.h"
 #include "string.h"
 #include "stdint.h"
 void push(SnakeBelly *belly, uint16_t val, uint8_t i, uint8_t j, bool poison){

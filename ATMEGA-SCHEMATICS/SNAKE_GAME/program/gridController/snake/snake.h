@@ -25,10 +25,10 @@
 
 #include "includes.h"
 #include "DataStructures.h"
-#include "WS2812B.h"
-#include "print.h"
+#include "../startSetUp/ws2812b/WS2812B.h"
 #include "stdio.h"
 #include "string.h"
+#include "./startSetUp/ws2812b/colors.h"
 
 
 
