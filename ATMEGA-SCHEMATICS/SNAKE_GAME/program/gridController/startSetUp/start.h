@@ -19,10 +19,7 @@ JoyStick_RIGHT >> PD5 - PCINT21
 #define JOYSTICK_UP   PIN2
 #define JOYSTICK_DOWN PIN3
 #define JOYSTICK_LEFT PIN4
-
-#define JOYSTICK_PORT_ PORTC
-#define JOYSTICK_DDR_ DDRC
-#define JOYSTICK_RIGHT PIN0
+#define JOYSTICK_RIGHT PIN5
 
 #define STALL   0x00
 #define UP      0x01

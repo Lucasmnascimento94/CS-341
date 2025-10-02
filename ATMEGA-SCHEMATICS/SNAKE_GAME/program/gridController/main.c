@@ -34,6 +34,8 @@ DDRX -> DIRECTION
 int main(void){
     //char c[20];
     LED_DDR |= (1 << LED_PIN);   // data pin as output
+    //DDRB |= (1<<PB1);
+    //PORTB &= ~(1<<PB1);
     //seed_prng();
     gpioConfig();
     clear();
@@ -50,7 +52,6 @@ int main(void){
         walk(&belly, &food);
 
         if(belly.end) gameEnd(&belly, &food);
-        //writeByte('H', 0XFF);
-        _delay_ms(100);
+        _delay_ms(10);
     }
 }

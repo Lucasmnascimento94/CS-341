@@ -163,8 +163,6 @@ bool ruleCheck(SnakeBelly *belly, uint16_t food){
 
  void gameInit(SnakeBelly *belly, struct Cell *food){
 
-    PORTB |= (1<<PB1);
-    PORTB &= ~(1<<PB1);
     /*Square coil*/
     uint8_t x = FIRST_PIXEL_X;
     uint8_t y = FIRST_PIXEL_Y;
