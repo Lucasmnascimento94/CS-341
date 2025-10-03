@@ -51,6 +51,7 @@
 #define START_SPI       (PORTB &= ~(1<<CS))
 #define STOP_SPI        (PORTB |=  (1<<CS))
 
+
 // ---- mode -> CPOL/CPHA ----
 #if   (SPI_MODE==0)
   #define SPI_CPOL 0
@@ -121,7 +122,10 @@
 void spiInitPoll();
 void spiInitInt();
 void spiWritePoll(char *data);
+void spiWritePoll_(uint8_t *data, uint16_t len);
 void spiWriteInt(char *data);
-void spiRead(char *data, size_t size);
+void spiReadPoll(char *data, uint16_t size);
+void spiReadPoll_(uint8_t *data, uint16_t len);
+void spiReadInt(char *data, uint16_t size);
 
 #endif

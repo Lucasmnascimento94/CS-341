@@ -3,14 +3,12 @@
 #include "spi.h"
 
 void sendInstruction(uint32_t address){
-    char byte[4] = {};
-     for(int i=0; i<=3; i++){
-        byte = (address >> (3-i)*8);
-        char[i] = byte;
+    uint8_t byte[4] = {};
+     for(int i=0; i<4; i++){
+        byte[i] = (uint8_t)((address >> ((3 - i) * 8)) & 0xFF);
      }
-     spiWritePoll(&byte);
+     spiWritePoll_(byte, 4);
 }
-
 
 
 /* Writing One Byte Process:
@@ -20,18 +18,28 @@ void sendInstruction(uint32_t address){
 */
 void writeByte(uint8_t c, uint32_t address){
     address = (SRAM_WRITE << 24) | address; // Combine Command instruction to the address data
-    sendInstruction(address);        
-}
-
-void writeString(char *c, uint32_t address){
-    for (uint8_t i = 0; i < strlen(c); i++){
-        SPDR = (uint8_t)c[i];          // start transfer
-        while(!(SPSR & (1<<SPIF))){}   // Clear flag by reading the status register
-    }
+    START_SPI;
+    sendInstruction(address); 
+    spiWritePoll_(&c, 1);
+    STOP_SPI;
 }
 
 
 /* Writing One Byte Process:
+>> 1byte: command Instruction [SRAM_WRITE]
+>> 3bytes: 24 bit address
+>> 1byte: Data Stream
+*/
+void writeStringpPoll(char *data, uint32_t address){
+    address = (SRAM_WRITE << 24) | address;
+    START_SPI;
+    sendInstruction(address); 
+    spiWritePoll_((uint8_t *)data, strlen(data));
+    STOP_SPI;
+}
+
+
+/* Writing One Byte Process:spiWritePoll
 >> 1byte: command Instruction [SRAM_READ]
 >> 3bytes: 24 bit address
 >> 1byte: Data out

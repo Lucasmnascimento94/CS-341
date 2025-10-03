@@ -44,10 +44,10 @@ SetUp       -> Falling
 
 void sendInstruction(uint32_t address);
 
-void writeByte(uint8_t c, uint32_t address);
-void writeString(char *c, uint32_t address);
+void writeByte(uint8_t data, uint32_t address);
+void writeStringPoll(char *data, uint32_t address);
 
-void readByte(uint8_t *c, uint32_t address);
-void readString(uint8_t *c, size_t len, uint32_t address);
+void readByte(uint8_t *data, uint32_t address);
+void readString(uint8_t *data, size_t len, uint32_t address);
 
 #endif

@@ -1,6 +1,7 @@
 #include "spi.h"
 #include "string.h"
 
+
 /*=============================================================================
  * SPI Protocol – Polling-Mode Initialization
  *
@@ -88,12 +89,29 @@ void spiInitInt(){
 void spiWritePoll(char *data){
 
     START_SPI;                         // CS low
-    for(int i=0; i< strlen(data), i++){
-        sendInstruction(address);          // Send instruction + address
-        SPDR = (uint8_t)c;        
+    for(uint16_t i=0; i< strlen(data); i++){
+        SPDR = (uint8_t)data[i];        
         while(!(SPSR & (1<<SPIF))){}
     }
     STOP_SPI;        
+}
+
+
+/*=============================================================================
+ * SPI Protocol – Write (Polling) -- Type 2
+ *
+ * @summary
+ *   Transmits a byte stream over SPI in master mode using pollin just as the above
+ * function. However, the SPI start and stop control are handled by the caller. Also,
+ * It is the caller responsibility to determine how many bytes are to be sent.
+
+ *============================================================================*/
+void spiWritePoll_(uint8_t *data, uint16_t len){
+
+    for(uint16_t i=0; i< len; i++){
+        SPDR = (uint8_t)data[i];        
+        while(!(SPSR & (1<<SPIF))){}
+    }     
 }
 
 
@@ -129,10 +147,10 @@ void spiWriteInt(char *data){
  *   - CS is asserted low by caller before read; deasserted after.
  *   - Slave prepared to shift data out (master will clock by writing dummy 0xFF).
  *============================================================================*/
-void spiReadPoll(char *data, size_t size){
+void spiReadPoll(char *data, uint16_t size){
 
     START_SPI;
-    for(int i=0; i<size; i++){
+    for(uint16_t i=0; i<size; i++){
         SPDR = 0x00;
         while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
         data[i] = SPDR;                       // Get data from buffer
@@ -141,6 +159,9 @@ void spiReadPoll(char *data, size_t size){
 }
 
 
+void spiReadPoll_(uint8_t *data, uint16_t len){
+    // To Do
+}
 /*=============================================================================
  * SPI Protocol – Read (Polling)
  *
@@ -156,6 +177,6 @@ void spiReadPoll(char *data, size_t size){
  *   - CS is asserted low by caller before read; deasserted after.
  *   - Slave prepared to shift data out (master will clock by writing dummy 0xFF).
  *============================================================================*/
-void spiReadInt(char *data, size_t size){
+void spiReadInt(char *data, uint16_t size){
     // TO DO
 }

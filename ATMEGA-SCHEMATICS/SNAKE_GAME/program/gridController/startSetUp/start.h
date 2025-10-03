@@ -3,6 +3,8 @@
 
 
 #include "includes.h"
+#include "spi.h"
+#include "uart.h"
 
 /*
 JoyStick_UP    >> PD2 - PCINT18
@@ -34,127 +36,12 @@ JoyStick_RIGHT >> PD5 - PCINT21
 #define GRID_PIXELS (48u*32u)
 
 
-/*==============================================================================
- *  UART MODULE CONFIGURATION
- *==============================================================================
- *  Reference:
- *    ---
- *
- *  Description:
- *    ---
- *
- *============================================================================*/
-#define FOSC      16000000UL
-#define BAUD_RATE 9600UL
-#define MYUBRR    (FOSC/(16UL*BAUD_RATE) - 1) 
-/*==============================================================================
- *  END OF UART MODULE CONFIGURATION
-*==============================================================================*/
-
-
-
-
-
-
-/*==============================================================================
- *  SPI MODULE CONFIGURATION
- *==============================================================================
- *  Reference:
- *    - SPI Application Note : ./documentation/protocols/SPI.md
- *    - SRAM Application Note: ./documentation/grid/SRAM.md
- *
- *  Description:
- *    This section contains configuration and setup for the SPI peripheral
- *    on the ATmega168A. All implementation details (registers, data flow,
- *    usage patterns) are documented in the application notes listed above.
- *
- *============================================================================*/
-#define SPI_MODE        0       // 0,1,2,3  (SRAM likes 0)
-#define SPI_MSBFIRST    0       // 1=MSB first, 0=LSB first
-#define SPI_PRESCALER   64       // 2,4,8,16,32,64,128
-#define SPI_USE_IRQ     0       // 1=use SPI interrupt, 0=poll
-#define SPI_SPE         1       // SPI Enable(1) Disable(0)
-#define SPI_MSTR        1       // MSTR: Master(1)/Slave Select(0)
-
-#define SCK             PB5
-#define MISO            PB4
-#define MOSI            PB3
-#define CS              PB1
-
-// ---- mode -> CPOL/CPHA ----
-#if   (SPI_MODE==0)
-  #define SPI_CPOL 0
-  #define SPI_CPHA 0
-#elif (SPI_MODE==1)
-  #define SPI_CPOL 0
-  #define SPI_CPHA 1
-#elif (SPI_MODE==2)
-  #define SPI_CPOL 1
-  #define SPI_CPHA 0
-#elif (SPI_MODE==3)
-  #define SPI_CPOL 1
-  #define SPI_CPHA 1
-#else
-  #error "SPI_MODE must be 0..3"
-#endif
-
-// ---- prescaler -> SPR1/SPR0 + SPI2X ----
-#if   (SPI_PRESCALER==2)
-  #define SPI_SPR1 0
-  #define SPI_SPR0 0
-  #define SPI_SPI2X 1
-#elif (SPI_PRESCALER==4)
-  #define SPI_SPR1 0
-  #define SPI_SPR0 0
-  #define SPI_SPI2X 0
-#elif (SPI_PRESCALER==8)
-  #define SPI_SPR1 0
-  #define SPI_SPR0 1
-  #define SPI_SPI2X 1
-#elif (SPI_PRESCALER==16)
-  #define SPI_SPR1 0
-  #define SPI_SPR0 1
-  #define SPI_SPI2X 0
-#elif (SPI_PRESCALER==32)
-  #define SPI_SPR1 1
-  #define SPI_SPR0 0
-  #define SPI_SPI2X 1
-#elif (SPI_PRESCALER==64)
-  #define SPI_SPR1 1
-  #define SPI_SPR0 0
-  #define SPI_SPI2X 0
-#elif (SPI_PRESCALER==128)
-  #define SPI_SPR1 1
-  #define SPI_SPR0 1
-  #define SPI_SPI2X 0
-#else
-  #error "SPI_PRESCALER must be one of {2,4,8,16,32,64,128}"
-#endif
-
-// ---- Interrupt Enable----
-#if (SPI_USE_IRQ == 0)
-    #define SPI_SPIE 0
-#else
-    #define SPI_SPIE 1
-#endif
-
-#if (SPI_MSBFIRST == 0)
-    #define SPI_DORD 0
-#else
-    #define SPI_DORD 1
-#endif
-/*==============================================================================
- *  END OF SPI MODULE CONFIGURATION
-*==============================================================================*/
-
-
-
 void gpioConfig();
 void setUpISR();
 void setUpUART();
 void joyStickConf();
 void setUpSPI();
-
+void spiInitPoll();
 void seed_prng(void);
 
 #endif
