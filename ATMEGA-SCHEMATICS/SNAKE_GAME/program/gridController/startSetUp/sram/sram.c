@@ -1,14 +1,14 @@
 #include "sram.h"
 #include "string.h"
-
+#include "spi.h"
 
 void sendInstruction(uint32_t address){
-    uint8_t byte = 0x00;
+    char byte[4] = {};
      for(int i=0; i<=3; i++){
         byte = (address >> (3-i)*8);
-        SPDR = (uint8_t)byte;
-        while(!(SPSR & (1<<SPIF))){} // Clear flag
+        char[i] = byte;
      }
+     spiWritePoll(&byte);
 }
 
 
@@ -20,21 +20,14 @@ void sendInstruction(uint32_t address){
 */
 void writeByte(uint8_t c, uint32_t address){
     address = (SRAM_WRITE << 24) | address; // Combine Command instruction to the address data
-
-    START_SPI;                         // CS low
-    sendInstruction(address);          // Send instruction + address
-    SPDR = (uint8_t)c;        
-    while(!(SPSR & (1<<SPIF))){}
-    STOP_SPI;                          // CS high
+    sendInstruction(address);        
 }
 
 void writeString(char *c, uint32_t address){
-    START_SPI;                         // CS low
     for (uint8_t i = 0; i < strlen(c); i++){
         SPDR = (uint8_t)c[i];          // start transfer
         while(!(SPSR & (1<<SPIF))){}   // Clear flag by reading the status register
     }
-    STOP_SPI;                          // CS high
 }
 
 

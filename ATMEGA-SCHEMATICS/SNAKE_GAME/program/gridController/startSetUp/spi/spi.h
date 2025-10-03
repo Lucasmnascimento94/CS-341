@@ -14,9 +14,6 @@
  *    ---
  *
  *============================================================================*/
-#define FOSC      16000000UL
-#define BAUD_RATE 9600UL
-#define MYUBRR    (FOSC/(16UL*BAUD_RATE) - 1) 
 /*==============================================================================
  *  END OF UART MODULE CONFIGURATION
 *==============================================================================*/
@@ -50,6 +47,9 @@
 #define MISO            PB4
 #define MOSI            PB3
 #define CS              PB1
+
+#define START_SPI       (PORTB &= ~(1<<CS))
+#define STOP_SPI        (PORTB |=  (1<<CS))
 
 // ---- mode -> CPOL/CPHA ----
 #if   (SPI_MODE==0)
@@ -118,13 +118,10 @@
 *==============================================================================*/
 
 
-
-void gpioConfig();
-void setUpISR();
-void setUpUART();
-void joyStickConf();
-void setUpSPI();
-
-void seed_prng(void);
+void spiInitPoll();
+void spiInitInt();
+void spiWritePoll(char *data);
+void spiWriteInt(char *data);
+void spiRead(char *data, size_t size);
 
 #endif

@@ -1,7 +1,5 @@
 /**
  * @file    snake.h
- * @brief   <one-line summary of the module>
- * @details <optional longer description; usage, constraints, timing notes>
  *
  * @author  Lucas Nascimento <lucas@hausintelligence.com>
  * @version 1.0.0

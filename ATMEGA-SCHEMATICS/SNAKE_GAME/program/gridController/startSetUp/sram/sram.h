@@ -10,8 +10,6 @@
 #define SRAM_RSTIO      (uint32_t)0XFF // Reset Dual and Quad I/O access (revert to SPI bus mode)
 #define SRAM_RDMR       (uint32_t)0X05 // Read Mode Register
 #define SRAM_WRMR       (uint32_t)0X01 // Write Mode Register
-#define START_SPI       (PORTB &= ~(1<<CS))
-#define STOP_SPI        (PORTB |=  (1<<CS))
 /* Data Sample TIming
 
 Data Sample -> Rising

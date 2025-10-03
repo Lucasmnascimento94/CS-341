@@ -133,8 +133,15 @@ endif
 #  Date       : 09/22/2025  
 ifeq ($(INIT), INIT_POSIX)
 # Add any source directories here
-SRC_DIRS = . startSetUp lib libC snake
-
+SRC_DIRS = \
+  . \
+  lib lib/console lib/esp lib/screen \
+  libC \
+  snake \
+  startSetUp \
+  startSetUp/flash startSetUp/i2c startSetUp/isr startSetUp/spi \
+  startSetUp/sram startSetUp/timer startSetUp/uart startSetUp/ws2812b
+  
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
 OBJS   := $(SRCS:.c=.o)
