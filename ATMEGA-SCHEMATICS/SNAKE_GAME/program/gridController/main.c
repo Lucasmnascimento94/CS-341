@@ -43,8 +43,6 @@ int main(void){
    // DDRC |= (0<<PC6);
    // PORTC |= (1<<PC6);
 
-    print("STARTING\n", 1);
-
 #if USE_I2C
     i2c_init();
 #endif
