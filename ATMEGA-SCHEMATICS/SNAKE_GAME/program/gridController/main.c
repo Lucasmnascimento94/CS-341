@@ -5,6 +5,8 @@
 #include "snake/colors.h"
 #include "StartSetUp/opcodes/sram.h"
 
+#define USE_I2C 1
+
 SnakeBelly belly = {
     .color = COLOR_GOLD,
     .color_food = COLOR_GREEN,
@@ -42,6 +44,11 @@ int main(void){
    // PORTC |= (1<<PC6);
 
     print("STARTING\n", 1);
+
+#if USE_I2C
+    i2c_init();
+#endif
+
     gameInit(&belly, &food);
     _delay_ms(500);
     initSnake(&belly, &food);
@@ -53,7 +60,7 @@ int main(void){
         //walk(&belly, &food);
 
         //if(belly.end) gameEnd(&belly, &food);
-        writeByte("HELLO", 0XFF);
-        //_delay_ms(500);
+        writeByte("HELLO", 0xA0);
+        // _delay_ms(500);
     }
 }
