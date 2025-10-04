@@ -1,0 +1,32 @@
+PRG_EN                              0xAC 0x53 0x00 0x00
+CHIP_ERASE                          0xAC 0x80 0x00 0x00
+POLL_RDY                            0xF0 0x00 0x00 0x00
+
+
+
+LOAD_EXT_ADDR_BYTE                  0x4D 0x00  index   0x00
+LOAD_PRG_MEM_PAGE_HIGH_BYTE         0x48 0x00  index   data_in
+LOAD_PRG_MEM_PAGE_LOW_BYTE          0x40 0x00  index   data_in
+LOAD_EEPROM_MEM_PAGE                0xC1 0x00  index   data_in
+
+
+
+READ_PRG_MEM_HIGH_BYTE              0x28 addr_msb addr_lsb data_out
+READ_PRG_MEM_LOW_BYTE               0x20 addr_msb addr_lsb data_out
+READ_EEPROM_MEM                     0xA0 addr_msb addr_lsb data_out
+READ_LOCK_BITS                      0x58 0x00 0x00 data_out
+READ_SIGNATURE_BYTE                 0x30 0x00 data_out data_out
+READ_FUSE_BITS                      0x50 0x00 0x00 data_out
+READ_FUSE_HIGH_BITS                 0x58 0x08 0x00 data_out
+READ_EXT_FUSE_BITS                  0x50 0x08 0x00 data_out
+READ_CAL_BYTE                       0x38 0x00 0x00 data_out
+
+
+
+WRITE_PRG_MEM_PAGE                  0x4C addr_msb addr_lsb 0x00
+WRITE_EEPROM_MEM                    0xC0 addr_msb addr_lsb data_in
+WRITE_EEPROM_MEM_PAGE               0xC2 addr_msb addr_lsb 0x00
+WRITE_LOCK_BITS                     0xAc 0xEC 0x00 data_in
+WRITE_FUSE_BITS                     0xAC 0xA0 0x00 data_in
+WRITE_FUSE_HIGH_BITS                0xAC 0xA8 0x00 data_in
+WRITE_EXT_FUSE_BITS                 0xAC 0xA4 0x00 data_in

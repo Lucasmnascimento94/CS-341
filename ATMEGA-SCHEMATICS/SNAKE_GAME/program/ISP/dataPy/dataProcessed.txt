@@ -1,0 +1,52 @@
+txn 0001
+mosi: AC 00 00 56
+miso: 00 00 00 00
+
+txn 0002
+mosi: 29 80 00 2B
+miso: 00 00 00 00
+
+txn 0003
+mosi: 14 C0 00 15
+miso: 00 00 00 00
+
+txn 0004
+mosi: 8A 60 00 0A
+miso: 00 00 00 00
+
+txn 0005
+mosi: C5 30 00 05
+miso: 00 00 00 00
+
+txn 0006
+mosi: 62 98 00 02
+miso: 00 00 00 00
+
+txn 0007
+mosi: B1 4C 00 01
+miso: 00 00 00 00
+
+txn 0008
+mosi: 58 A6 00 00
+miso: 00 00 00 00
+
+txn 0009
+mosi: AC 53 00 00
+miso: 00 00 53 00
+
+txn 0010
+mosi: 30 00 00 00
+miso: 00 30 00 1E
+
+txn 0011
+mosi: 30 00 01 00
+miso: 00 30 00 94
+
+txn 0012
+mosi: 30 00 02 00
+miso: 00 30 00 06
+
+txn 0013
+mosi: 50 00 00 80
+miso: 00 50 00 FF
+
