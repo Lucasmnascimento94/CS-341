@@ -8,8 +8,18 @@
 #define F_CPU 16000000UL
 #define SCL_CLOCK 100000L
 
-#if USE_I2C
 
+//#if USE_I2C
+
+void i2cInit(){
+    // Initialize GPIOs (Pull-Up mode to work with the protocol)
+    I2C_DDR &= ~(1<<SDA);
+    I2C_DDR &= ~(1<<SCL);
+
+    I2C_PORT |= (1<<SDA) | (1<<SCL); 
+}
+
+/*
 // Implement I2C Protocol.
 void i2c_init(void) {
     TWSR = 0;
@@ -31,7 +41,7 @@ void i2c_write(uint8_t data) {
     while (!(TWCR & (1<<TWINT)));
 }
 
-#endif
+//#endif
 
 // Use either I2C or SPI. For now, use I2C.
 void writeByte(char *c, uint32_t address) {
@@ -49,4 +59,4 @@ void writeByte(char *c, uint32_t address) {
     }
     STOP_SPI;                          // CS high
 #endif
-}
+}*/

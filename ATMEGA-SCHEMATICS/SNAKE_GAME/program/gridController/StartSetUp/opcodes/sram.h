@@ -12,6 +12,13 @@
 #define SRAM_WRMR       0X01 // Write Mode Register
 #define START_SPI       (PORTB &= ~(1<<CS))
 #define STOP_SPI        (PORTB |=  (1<<CS))
+
+
+#define I2C_PORT PORTC
+#define I2C_DDR DDRC
+#define SDA PIN4
+#define SCL PIN5
+
 /* Data Sample TIming
 
 Data Sample -> Rising
@@ -45,5 +52,6 @@ SetUp       -> Falling
 */
 
 
-void writeByte(char *c, uint32_t address);
+//void writeByte(char *c, uint32_t address);
+void i2cInit();
 #endif
