@@ -49,12 +49,22 @@ int main(void){
     push(&belly, PIXEL_ADDRESS(8, 5, 2), 8, 5, false);
     uint32_t addr = 0X00;
     while(1){
-        uint8_t c;
-        sramWriteByte(0x48, addr);
-        walk(&belly, &food);
-        if(belly.end) gameEnd(&belly, &food);
-        _delay_ms(10);
-        sramReadByte(&c, addr);
+        //uint8_t c;
+        //sramWriteByte(0x48, addr);
+        //walk(&belly, &food);
+        //if(belly.end) gameEnd(&belly, &food);
+        sramWriteModeRegister(SRAM_MODE_BYTE);
+        sramReadModeRegister();
+        _delay_ms(100);
+
+        sramWriteModeRegister(SRAM_MODE_PAGE);
+        sramReadModeRegister();
+        _delay_ms(100);
+
+        sramWriteModeRegister(SRAM_MODE_SEQU);
+        sramReadModeRegister();
+        _delay_ms(100);
+        //sramReadByte(&c, addr);
         //spiWritePoll("HELLO");
     }
 }

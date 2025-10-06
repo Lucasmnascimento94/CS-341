@@ -62,3 +62,29 @@ void sramReadString(uint8_t *c, size_t len, uint32_t address){
 }
 
 
+void sramReadModeRegister(){
+    uint8_t data = 0x00;
+    START_SPI;                         // CS low
+    SPDR = (uint8_t)(SRAM_RDMR & 0xFF);
+    while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
+    SPDR = 0xFF;
+    while(!(SPSR & (1<<SPIF))){}
+    data = SPDR;                       // Get data from buffer
+    STOP_SPI;   
+}
+
+void sramWriteModeRegister(uint8_t mode){
+    uint8_t data = 0x00;
+
+    if(mode != SRAM_MODE_BYTE && mode != SRAM_MODE_PAGE \
+       && mode != SRAM_MODE_SEQU && mode != SRAM_MODE_RESE){
+        return;
+    }
+    START_SPI;                         // CS low
+    SPDR = (uint8_t)SRAM_WRMR;
+    while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
+    SPDR = mode;
+    while(!(SPSR & (1<<SPIF))){}
+    data = SPDR;                       // Get data from buffer
+    STOP_SPI;   
+}
