@@ -16,7 +16,7 @@ void sendInstruction(uint32_t address){
 >> 3bytes: 24 bit address
 >> 1byte: Data out
 */
-void writeByte(uint8_t c, uint32_t address){
+void sramWriteByte(uint8_t c, uint32_t address){
     address = (SRAM_WRITE << 24) | address; // Combine Command instruction to the address data
     START_SPI;
     sendInstruction(address); 
@@ -30,7 +30,7 @@ void writeByte(uint8_t c, uint32_t address){
 >> 3bytes: 24 bit address
 >> 1byte: Data Stream
 */
-void writeStringpPoll(char *data, uint32_t address){
+void sramWriteStringPoll(char *data, uint32_t address){
     address = (SRAM_WRITE << 24) | address;
     START_SPI;
     sendInstruction(address); 
@@ -44,7 +44,7 @@ void writeStringpPoll(char *data, uint32_t address){
 >> 3bytes: 24 bit address
 >> 1byte: Data out
 */
-void readByte(uint8_t *c, uint32_t address){
+void sramReadByte(uint8_t *c, uint32_t address){
     address = (SRAM_READ << 24) | address; // Combine Command instruction to the address data
     *c = 0x00;
 
@@ -57,7 +57,7 @@ void readByte(uint8_t *c, uint32_t address){
 }
 
 
-void readString(uint8_t *c, size_t len, uint32_t address){
+void sramReadString(uint8_t *c, size_t len, uint32_t address){
 
 }
 
