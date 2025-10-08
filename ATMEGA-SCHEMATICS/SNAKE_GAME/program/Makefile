@@ -183,37 +183,38 @@ ifeq ($(INIT), INIT_WIN)
 USR_ENV := $(HOME)
 ROOT := C:/Users
 SHELL := powershell
+.SHELLFLAGS := -NoProfile -ExecutionPolicy Bypass -Command
 DIR := $(CURDIR)
 DEP := $(DIR)/dependencies/dependencies_win.ps1
 
 
 # ===== Grid controller MCU =====
 grid: # Build files
-	$(MAKE) -C ./gridController
+	& "$(MAKE)" -C ./gridController
 
 grid_flash: # Flash files built with the above command
-	$(MAKE) -C ./gridController flash
+	& "$(MAKE)" -C ./gridController flash
 
 grid_clean: # Clean old files
-	$(MAKE) -C ./gridController clean
+	& "$(MAKE)" -C ./gridController clean
 
 grid_read_fuse: # Read fuses in the MCU
-	$(MAKE) -C ./gridController readfuse
+	& "$(MAKE)" -C ./gridController readfuse
 
 
 
 # ===== Game controller MCU =====
 game: # Build files
-	$(MAKE) -C ./gridController 
+	& "$(MAKE)" -C ./gridController 
 
 game_flash: # Flash files built with the above command
-	$(MAKE) -C ./gridController flash
+	& "$(MAKE)" -C ./gridController flash
 
 game_clean: # Clean old files
-	$(MAKE) -C ./gridController clean
+	& "$(MAKE)" -C ./gridController clean
 
 game_read_fuse: # Read fuses in the MCU
-	$(MAKE) -C ./gridController readfuse
+	& "$(MAKE)" -C ./gridController readfuse
 
 
 # ===== Install dependencies out of the dependencies.txt file =====
@@ -228,3 +229,4 @@ DIRS:
 	@echo "ROOT>> $(ROOT)"
 	@echo "DIR>> $(DIR)"
 	@echo "DEP>> $(DEP)"
+	@echo "MAKE >> $(MAKE)"
