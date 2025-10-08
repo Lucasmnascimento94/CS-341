@@ -1,37 +1,83 @@
-# [TOPIC] APPLICATION NOTE
+# SRAM APPLICATION NOTE
 
-**Author(s):** [Team or individual name]  
-**Date:** [MM/DD/YYYY]  
-**Related Module:** [game | grid | programmer | protocols]
+**Author(s):** Lucas Nascimento 
+**Date:** 10/08/2025  
+**Related Module:** SRAM
 
 ---
 
 ## Purpose
 
-This document explains how **[specific topic, e.g., SPI, SRAM, LED timing]** is handled in this project.  
-It is intended to provide a clear reference for other teams so they can understand the design decisions, configuration, and testing methods without having to parse datasheets directly.
+This document explains how the external SRAM is handled in this project, how it is configured and how you can use the current API to access it.
 
 ---
 
 ## Scope
 
-- Define what this note covers and what it does not.  
-- Mention which part of the system depends on it (e.g., external memory, programmer, LED grid).  
+- Read data from SRAM
+- Write data to the SRAM
+- Read Mode Register
+- Write Mode Register
 
 ---
 
 ## Configuration / Design
 
-- Hardware settings (registers, pins, wiring, timing).  
-- Software setup (initialization sequence, routines, algorithms).  
-- Any assumptions or constraints.  
+- The SRAM interface utilizes SPI protocol to exchange data, which is an available feature in our atmega168 MCU. Therefore, the SRAM-MCU communication is built on top
+  of the SPI configured prior.
 
+- Hardware Configuration:
+
+    **Wiring**
+    MCU_MOSI <<<<<<>>>>>> SRAM_SI/SIOO
+    MCU_MISO <<<<<<>>>>>> SRAM_SO/SIO1
+    MCU_SCK  <<<<<<>>>>>> SRAM_SCK
+    MCU_PB1  <<<<<<>>>>>> SRAM_CS
+    (TO DO)  <<<<<<>>>>>> SRAM_HOLD
+
+    **SPI Requirement**
+    | SPI Mode | CPOL | CPHA | Leading Edge | Trailing Edge |
+    |----------|------|------|--------------|---------------|
+    | 0        | 0    | 0    | Rising (Sample) | Falling (Setup) |
+
+    Note: This is mode 0 in this project spi.
+
+    **Instructions Structure**
+    - Writing:
+        send a 32bits instruction as:
+        [31-23]               [23-0]
+        [Write_Instruction]   [Memory_Address]
+
+        Send Data
+        [Send_String]
+
+    - Reading:
+        send a 32bits instruction as:
+        [31-23]              [23-0]
+        [Read_Instruction]   [Memory_Address]
+        
+        Read Data
+        [Read_String]
+
+    - Writing Mode Resgister:
+        send a 16bits instruction as:
+        [15-8]                              [7-0]
+        [Write_Mode_Register_Instruction]   [Mode_Register_Value]
+
+    - Reading Mode Resgister:
+        send a 8bits instruction as:
+        [15-8]                              
+        [Read_Mode_Register_Instruction]    
+        
+        Read Mode register Value
+        [Mode_Register_Value]  
 ---
 
 ## Implementation Flow
 
 Step-by-step description of how this feature is implemented:  
 1. Initialization  
+    - 
 2. Data flow / command handling  
 3. Error handling  
 4. Interaction with other modules  
@@ -58,5 +104,4 @@ Step-by-step description of how this feature is implemented:
 
 | Date       | Version | Author     | Notes/Changes |
 |------------|---------|------------|---------------|
-| MM/DD/YYYY | v0.1    | [Name]     | Initial draft |
-| MM/DD/YYYY | v0.2    | [Name]     | Updates/fixes |
+| 10/08/2025 | v0.1    | [Lucas Nascimento]     | Initial draft |

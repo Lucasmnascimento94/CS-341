@@ -20,6 +20,6 @@
 *==============================================================================*/
 
 
-void print(char *c, int size);
+void uartWrite(char *c, uint16_t size);
 
 #endif

@@ -30,11 +30,11 @@ void sramWriteByte(uint8_t c, uint32_t address){
 >> 3bytes: 24 bit address
 >> 1byte: Data Stream
 */
-void sramWriteStringPoll(char *data, uint32_t address){
+void sramWriteStringPoll(char *data, uint32_t address, uint16_t size){
     address = (SRAM_WRITE << 24) | address;
     START_SPI;
     sendInstruction(address); 
-    spiWritePoll_((uint8_t *)data, strlen(data));
+    spiWritePoll_((uint8_t *)data, size);
     STOP_SPI;
 }
 

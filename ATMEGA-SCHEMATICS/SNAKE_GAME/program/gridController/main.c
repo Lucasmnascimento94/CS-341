@@ -26,6 +26,11 @@ struct Cell food = {
     .val = PIXEL_ADDRESS(8, 5, 2) 
 };
 
+static char c[]= "In a small coastal town, the rhythm of life followed the tides. "
+                    "Every morning, fishermen set sail before sunrise, "
+                    "their boats cutting through the mist as gulls cried overhead.";
+static char msg[]  = "MESSAGE SENT\r\n";
+static const char msg2[] = "MESSAGE READ\r\n";
 /*
 DDRX -> DIRECTION
 
@@ -49,21 +54,30 @@ int main(void){
     push(&belly, PIXEL_ADDRESS(8, 5, 2), 8, 5, false);
     uint32_t addr = 0X00;
 
+    uint16_t len_text = (uint16_t)(sizeof(c) - 1);
+    uint16_t len_msg  = (uint16_t)(sizeof(msg)  - 1);
+    uint16_t len_msg2 = (uint16_t)(sizeof(msg2) - 1);
+    uint8_t buffer[300];         
+    uint16_t len = sizeof(c);
     sramWriteModeRegister(SRAM_MODE_SEQU);
     sramReadModeRegister();
-    while(1){
-        //uint8_t c;
-        //sramWriteByte(0x48, addr);
-        //walk(&belly, &food);
-        //if(belly.end) gameEnd(&belly, &food);
-        uint8_t c[]="HELLO WORLD FROM SRAM";
-        uint16_t len = strlen(c);
-        uint8_t buffer[50] = {};
-        sramWriteStringPoll(c, 0xFF);
-        _delay_ms(10);
+    sramWriteStringPoll(0x00, 0xFF, len);
+    _delay_ms(10);
 
-        sramReadString(buffer, len, 0xFF);
-        //sramReadByte(&c, addr);
-        //spiWritePoll("HELLO");
+    while(1){
+        uartWrite(msg,  len_msg);
+        uartWrite(c, len_text);
+        uartWrite("\r\n\r\n\r\n", 6);   // exactly 6 bytes
+        _delay_ms(5);
+
+        // (Re)write then read back
+        sramWriteStringPoll(c, 0xFF, len_text);
+        _delay_ms(5);
+        sramReadString(buffer, len_text, 0xFF);
+
+        uartWrite(msg2, len_msg2);
+        uartWrite((const char*)buffer, len_text);
+        uartWrite("\r\n\r\n\r\n", 6);
+        _delay_ms(5000);
     }
 }
