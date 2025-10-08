@@ -57,8 +57,12 @@ void sramReadByte(uint8_t *c, uint32_t address){
 }
 
 
-void sramReadString(uint8_t *c, size_t len, uint32_t address){
-
+void sramReadString(uint8_t *data, size_t len, uint32_t address){
+    address = (SRAM_READ << 24) | address;
+    START_SPI;
+    sendInstruction(address); 
+    spiReadPoll_((uint8_t *)data, len);
+    STOP_SPI;
 }
 
 

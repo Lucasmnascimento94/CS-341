@@ -160,7 +160,11 @@ void spiReadPoll(char *data, uint16_t size){
 
 
 void spiReadPoll_(uint8_t *data, uint16_t len){
-    // To Do
+    for(uint16_t i=0; i<len; i++){
+        SPDR = 0x00;
+        while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
+        data[i] = SPDR;                       // Get data from buffer
+    }
 }
 /*=============================================================================
  * SPI Protocol – Read (Polling)
