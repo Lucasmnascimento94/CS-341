@@ -1230,6 +1230,167 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Device:Buzzer"
+			(pin_names
+				(offset 0.0254)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "BZ"
+				(at 3.81 1.27 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "Buzzer"
+				(at 3.81 -1.27 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at -0.635 2.54 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at -0.635 2.54 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Buzzer, polarized"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "quartz resonator ceramic"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*Buzzer*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Buzzer_0_1"
+				(polyline
+					(pts
+						(xy -1.651 1.905) (xy -1.143 1.905)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.397 2.159) (xy -1.397 1.651)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 0 3.175)
+					(mid 3.1612 0)
+					(end 0 -3.175)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 3.175) (xy 0 -3.175)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "Buzzer_1_1"
+				(pin passive line
+					(at -2.54 2.54 0)
+					(length 2.54)
+					(name "+"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -2.54 -2.54 0)
+					(length 2.54)
+					(name "-"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Device:C"
 			(pin_numbers
 				(hide yes)
@@ -4648,6 +4809,16 @@
 		)
 		(uuid "056f034a-bd77-4aca-a98a-f021a7b63859")
 	)
+	(label "VIBRATOR"
+		(at 44.45 166.37 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "10dd21f3-22aa-4b13-9f3c-66fb5f180ae5")
+	)
 	(label "PC2"
 		(at 15.24 99.06 90)
 		(effects
@@ -4687,6 +4858,16 @@
 			(justify left bottom)
 		)
 		(uuid "19909517-71de-43fb-9eb5-eab1d85e9e24")
+	)
+	(label "VIBRATOR"
+		(at 170.18 129.54 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "1b4f4a44-216c-4d1b-980b-e9709ee02530")
 	)
 	(label "WP"
 		(at 48.26 102.87 0)
@@ -4757,6 +4938,16 @@
 			(justify left bottom)
 		)
 		(uuid "47985ca6-7418-4f41-ab54-c9c151087d97")
+	)
+	(label "BUZZER_PWM"
+		(at 160.02 110.49 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "48fce4a4-3891-41e1-a346-842d065ce4e5")
 	)
 	(label "B_SELECT"
 		(at 160.02 77.47 0)
@@ -4908,26 +5099,6 @@
 		)
 		(uuid "89898b8b-6e89-43a3-963e-35d687093473")
 	)
-	(label "PC3"
-		(at 44.45 166.37 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "8fb44521-a9da-4723-bdef-d7f04f36ddd6")
-	)
-	(label "PC2"
-		(at 44.45 168.91 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "98b3f7bf-f02f-4d25-899a-6a8c0d624d42")
-	)
 	(label "B_START"
 		(at 160.02 113.03 0)
 		(effects
@@ -4998,6 +5169,16 @@
 		)
 		(uuid "b15ec3b7-a894-4c48-9339-0362f8ae8048")
 	)
+	(label "J_RIGHT"
+		(at 44.45 168.91 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "bc1705d2-7e13-4b2e-91d7-50e53a2ed5b6")
+	)
 	(label "B_SELECT"
 		(at 231.14 34.29 0)
 		(effects
@@ -5008,7 +5189,7 @@
 		)
 		(uuid "bd868bd8-2375-4d42-9bbb-403a1772fa82")
 	)
-	(label "PC3"
+	(label "VIBRATOR"
 		(at 160.02 85.09 0)
 		(effects
 			(font
@@ -5088,6 +5269,16 @@
 		)
 		(uuid "d22f0aa6-8863-43a0-8cc0-fde672bddb73")
 	)
+	(label "J_RIGHT"
+		(at 160.02 82.55 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d8d55f4c-99ed-478b-8a88-e679d171a54b")
+	)
 	(label "PB2"
 		(at 45.72 185.42 0)
 		(effects
@@ -5098,16 +5289,6 @@
 		)
 		(uuid "da9bae68-8630-4a90-b4fb-e61f95314864")
 	)
-	(label "J_RIGHT"
-		(at 160.02 110.49 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "dbc0cff6-879c-4607-a604-03863334769b")
-	)
 	(label "J_UP"
 		(at 44.45 148.59 0)
 		(effects
@@ -5117,16 +5298,6 @@
 			(justify left bottom)
 		)
 		(uuid "dbe1df13-402e-4147-ac72-c0ac1f638a75")
-	)
-	(label "PC2"
-		(at 160.02 82.55 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "e4efd2a0-bec5-4327-910f-5551956af41a")
 	)
 	(label "PC2"
 		(at 15.24 55.88 90)
@@ -5167,6 +5338,16 @@
 			(justify left bottom)
 		)
 		(uuid "f40bc427-3423-4b71-b2b8-db45e232e996")
+	)
+	(label "BUZZER_PWM"
+		(at 185.42 124.46 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "fcfca3d5-b225-456f-b7fd-0e32b75cdd14")
 	)
 	(label "HOLD"
 		(at 46.99 62.23 0)
@@ -6150,6 +6331,72 @@
 			(project "snake_pcb"
 				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/c7e4b739-ed77-4340-aaf0-bcfada810b11"
 					(reference "R16")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 172.72 137.16 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "23116028-0bcd-4d41-a5b4-1de253deb111")
+		(property "Reference" "#PWR0106"
+			(at 172.72 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 172.72 142.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 172.72 137.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 172.72 137.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 172.72 137.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d34ba4cb-e085-4fa5-976e-e2686dd37f6d")
+		)
+		(instances
+			(project "snake_pcb"
+				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/c7e4b739-ed77-4340-aaf0-bcfada810b11"
+					(reference "#PWR0106")
 					(unit 1)
 				)
 			)
@@ -8682,6 +8929,141 @@
 	)
 	(symbol
 		(lib_id "power:GND")
+		(at 190.5 132.08 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "845faa76-7cd1-4542-b1ef-c0534121c75b")
+		(property "Reference" "#PWR0105"
+			(at 190.5 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 190.5 137.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 190.5 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 190.5 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 190.5 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "bbd06ea5-cf9e-4124-a543-4b49043bc1f7")
+		)
+		(instances
+			(project "snake_pcb"
+				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/c7e4b739-ed77-4340-aaf0-bcfada810b11"
+					(reference "#PWR0105")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Conn_01x02_Pin")
+		(at 172.72 124.46 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "85cfd514-9c36-4d3f-936a-68be3d5d98b0")
+		(property "Reference" "J8"
+			(at 173.99 123.8249 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Vibrator"
+			(at 173.99 126.3649 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+			(at 172.72 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 172.72 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x02, script generated"
+			(at 172.72 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ecf2cfcb-d792-493e-8a25-788ac6d4c12b")
+		)
+		(pin "2"
+			(uuid "945da0af-bd8e-4d0e-a013-f23f192181b2")
+		)
+		(instances
+			(project "snake_pcb"
+				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/c7e4b739-ed77-4340-aaf0-bcfada810b11"
+					(reference "J8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
 		(at 85.09 167.64 90)
 		(unit 1)
 		(exclude_from_sim no)
@@ -8808,6 +9190,73 @@
 			(project "snake_pcb"
 				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/c7e4b739-ed77-4340-aaf0-bcfada810b11"
 					(reference "#PWR060")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 190.5 128.27 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "96599cbb-3827-473b-a472-c5c1eec42be2")
+		(property "Reference" "R40"
+			(at 195.072 128.27 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "200"
+			(at 192.532 128.27 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
+			(at 188.722 128.27 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 190.5 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 190.5 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "1b80a0dd-29c4-44e5-8c9a-010aeb87e8d3")
+		)
+		(pin "2"
+			(uuid "633c2cf3-04cd-4e4f-9870-f259122be123")
+		)
+		(instances
+			(project "snake_pcb"
+				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/c7e4b739-ed77-4340-aaf0-bcfada810b11"
+					(reference "R40")
 					(unit 1)
 				)
 			)
@@ -9480,6 +9929,143 @@
 			(project "snake_pcb"
 				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/c7e4b739-ed77-4340-aaf0-bcfada810b11"
 					(reference "SW3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:Buzzer")
+		(at 187.96 121.92 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b6cfb57e-5ff6-4690-b738-27020886a61a")
+		(property "Reference" "BZ1"
+			(at 191.77 119.8948 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "Buzzer"
+			(at 191.77 122.4348 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 185.42 122.555 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 185.42 122.555 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Buzzer, polarized"
+			(at 187.96 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c31d25e4-7695-4986-95f3-892328414b62")
+		)
+		(pin "2"
+			(uuid "ccf5950d-0a15-4351-8a9d-49380abbbb17")
+		)
+		(instances
+			(project ""
+				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/c7e4b739-ed77-4340-aaf0-bcfada810b11"
+					(reference "BZ1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 172.72 133.35 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b752759b-e06b-47eb-a477-d6acb479b319")
+		(property "Reference" "R41"
+			(at 177.292 133.35 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "200"
+			(at 174.752 133.35 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
+			(at 170.942 133.35 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 172.72 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 172.72 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a133fbb3-77aa-4434-ad7f-3a25a99e84c2")
+		)
+		(pin "2"
+			(uuid "168344aa-909f-473e-b046-e2724959e40a")
+		)
+		(instances
+			(project "snake_pcb"
+				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/c7e4b739-ed77-4340-aaf0-bcfada810b11"
+					(reference "R41")
 					(unit 1)
 				)
 			)
