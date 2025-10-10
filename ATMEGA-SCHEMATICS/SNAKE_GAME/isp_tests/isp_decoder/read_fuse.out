@@ -1,0 +1,5 @@
+PRG_EN
+READ_SIGNATURE_BYTE:       __ __ 00 00
+READ_SIGNATURE_BYTE:       __ __ 01 00
+READ_SIGNATURE_BYTE:       __ __ 02 00
+READ_FUSE_BITS:            __ __ __ 00
