@@ -1,5 +1,4 @@
 #include "isp.h"
-#include "spi.h"
 #include <avr/sfr_defs.h>
 #include <stdint.h>
 #include <util/delay.h>
@@ -34,7 +33,7 @@ uint8_t ispProgrammingEnable() {
       return 0;
     }
 
-    // if failed, retry
+    // if failed pulse CS and retry
     _delay_us(320);
     STOP_ISP;
     _delay_us(320);
@@ -65,7 +64,6 @@ void ispPowerUp() {
 
   // pulse RESET high two clock cycles
   DDRB &= _BV(ISP_CS);
-
   // see: asm-gcc inline assembler cookbook
   __asm__ volatile("nop\n\t"
                    "nop\n\t" ::);
