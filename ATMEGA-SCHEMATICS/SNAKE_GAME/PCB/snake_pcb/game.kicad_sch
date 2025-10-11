@@ -3774,12 +3774,6 @@
 		(uuid "4dcdee14-01eb-4c1f-8054-e6648137a0f9")
 	)
 	(junction
-		(at 82.55 45.72)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "4f4c304f-3adf-4c71-9754-b9e64e187409")
-	)
-	(junction
 		(at 176.53 50.8)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3826,6 +3820,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "72645e80-6f07-44b4-877e-587933c7dcd8")
+	)
+	(junction
+		(at 26.67 96.52)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "76b6d845-233a-448a-9757-03dc97f6090e")
 	)
 	(junction
 		(at 265.43 40.64)
@@ -3904,6 +3904,24 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "c44184c7-69bd-4af7-9dae-29be56a2efd2")
+	)
+	(junction
+		(at 25.4 33.02)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "cc152c38-f713-467b-9715-f0fe881819c7")
+	)
+	(junction
+		(at 25.4 53.34)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "cdd3f969-140a-4d0a-ae64-7c436d5d361b")
+	)
+	(junction
+		(at 25.4 74.93)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "d28f1356-deef-447a-b0d0-f020c7dd1031")
 	)
 	(junction
 		(at 166.37 57.15)
@@ -4836,16 +4854,6 @@
 			(type default)
 		)
 		(uuid "a7aa9261-48c0-4a84-a1cb-623ea5964b75")
-	)
-	(wire
-		(pts
-			(xy 82.55 45.72) (xy 82.55 48.26)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a7f527ea-66e0-481f-bff7-f0efbec94025")
 	)
 	(wire
 		(pts
@@ -5985,6 +5993,28 @@
 	)
 	(global_label "3.3V"
 		(shape output)
+		(at 62.23 87.63 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "cec34ff7-adf6-486e-a3c2-16fd9b0e0fc4")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 62.23 94.7276 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "3.3V"
+		(shape output)
 		(at 50.8 74.93 0)
 		(fields_autoplaced yes)
 		(effects
@@ -5996,6 +6026,28 @@
 		(uuid "fbd191ef-160f-4b8f-9c62-6d17e7b61501")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 57.8976 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "3.3V"
+		(shape output)
+		(at 82.55 45.72 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "fe4a3cce-4a70-4285-8fcb-615494112eb6")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 82.55 38.6224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6517,72 +6569,6 @@
 	)
 	(symbol
 		(lib_id "power:VCC")
-		(at 62.23 87.63 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "1a8fd435-e285-4579-9264-8aae7477fcc4")
-		(property "Reference" "#PWR058"
-			(at 62.23 83.82 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "VCC"
-			(at 62.23 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 62.23 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 62.23 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"VCC\""
-			(at 62.23 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "7c9eb11b-b6cf-4edb-ad85-ccfa4b0177ec")
-		)
-		(instances
-			(project "snake_pcb"
-				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/c7e4b739-ed77-4340-aaf0-bcfada810b11"
-					(reference "#PWR058")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:VCC")
 		(at 248.92 40.64 180)
 		(unit 1)
 		(exclude_from_sim no)
@@ -6675,7 +6661,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 141.9352 36.83 0)
 			(effects
 				(font
@@ -7739,7 +7725,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 108.9152 36.83 0)
 			(effects
 				(font
@@ -7942,7 +7928,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 27.6352 88.9 0)
 			(effects
 				(font
@@ -8045,6 +8031,73 @@
 			(project "snake_pcb"
 				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/c7e4b739-ed77-4340-aaf0-bcfada810b11"
 					(reference "#PWR026")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:VCC")
+		(at 25.4 33.02 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "3cddfbcc-1ee4-4286-99ec-0539469387a5")
+		(property "Reference" "#PWR052"
+			(at 29.21 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "VCC"
+			(at 21.59 33.0199 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 25.4 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 25.4 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VCC\""
+			(at 25.4 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "54f48fbe-d23a-46e9-bcce-acd3e6a7a229")
+		)
+		(instances
+			(project "snake_pcb"
+				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/c7e4b739-ed77-4340-aaf0-bcfada810b11"
+					(reference "#PWR052")
 					(unit 1)
 				)
 			)
@@ -8617,7 +8670,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 49.8348 25.4 0)
 			(effects
 				(font
@@ -8687,7 +8740,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 26.3652 67.31 0)
 			(effects
 				(font
@@ -9389,72 +9442,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:VCC")
-		(at 82.55 45.72 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "7742256b-b442-44f2-a203-a387feebfdee")
-		(property "Reference" "#PWR052"
-			(at 82.55 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "VCC"
-			(at 82.55 40.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 82.55 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 82.55 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"VCC\""
-			(at 82.55 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "9ad163f2-d7a4-4904-881f-186818c5b3de")
-		)
-		(instances
-			(project "snake_pcb"
-				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/c7e4b739-ed77-4340-aaf0-bcfada810b11"
-					(reference "#PWR052")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R")
 		(at 179.07 59.69 270)
 		(unit 1)
@@ -9693,7 +9680,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 26.3652 25.4 0)
 			(effects
 				(font
@@ -9730,6 +9717,73 @@
 			(project "snake_pcb"
 				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/c7e4b739-ed77-4340-aaf0-bcfada810b11"
 					(reference "C36")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:VCC")
+		(at 26.67 96.52 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "80a66680-d3c3-49ee-a38b-d33e1c85d72e")
+		(property "Reference" "#PWR085"
+			(at 30.48 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "VCC"
+			(at 22.86 96.5199 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 26.67 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 26.67 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VCC\""
+			(at 26.67 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5bd323e8-d989-4914-8a53-bccfdd07b6ff")
+		)
+		(instances
+			(project "snake_pcb"
+				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/c7e4b739-ed77-4340-aaf0-bcfada810b11"
+					(reference "#PWR085")
 					(unit 1)
 				)
 			)
@@ -10289,6 +10343,73 @@
 		)
 	)
 	(symbol
+		(lib_id "power:VCC")
+		(at 25.4 53.34 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "99d76f87-e511-49bf-ac6b-071f30a74f85")
+		(property "Reference" "#PWR058"
+			(at 29.21 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "VCC"
+			(at 21.59 53.3399 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 25.4 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 25.4 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VCC\""
+			(at 25.4 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "47035f21-4b2f-45f1-a591-17d2f2ba6ed1")
+		)
+		(instances
+			(project "snake_pcb"
+				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/c7e4b739-ed77-4340-aaf0-bcfada810b11"
+					(reference "#PWR058")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 78.74 187.96 0)
 		(unit 1)
@@ -10382,7 +10503,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 26.3652 45.72 0)
 			(effects
 				(font
@@ -10894,6 +11015,73 @@
 		)
 	)
 	(symbol
+		(lib_id "power:VCC")
+		(at 25.4 74.93 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b6525f4c-0069-4103-bae0-868d5043e47a")
+		(property "Reference" "#PWR083"
+			(at 29.21 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "VCC"
+			(at 21.59 74.9299 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 25.4 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 25.4 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VCC\""
+			(at 25.4 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b3a46c2c-77c2-42dd-97a6-98aed7d58e0f")
+		)
+		(instances
+			(project "snake_pcb"
+				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/c7e4b739-ed77-4340-aaf0-bcfada810b11"
+					(reference "#PWR083")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:Buzzer")
 		(at 187.96 121.92 90)
 		(unit 1)
@@ -11124,7 +11312,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 49.8348 67.31 0)
 			(effects
 				(font
@@ -11612,7 +11800,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 49.8348 45.72 0)
 			(effects
 				(font
@@ -11682,7 +11870,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 133.0452 36.83 0)
 			(effects
 				(font
@@ -12505,7 +12693,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 120.3452 36.83 0)
 			(effects
 				(font
@@ -13004,7 +13192,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 61.9252 38.1 0)
 			(effects
 				(font
@@ -13140,7 +13328,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 51.1048 88.9 0)
 			(effects
 				(font
@@ -13353,7 +13541,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 73.3552 38.1 0)
 			(effects
 				(font

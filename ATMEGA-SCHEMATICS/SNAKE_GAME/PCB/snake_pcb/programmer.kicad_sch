@@ -6139,17 +6139,6 @@
 	)
 	(hierarchical_label "FLASH_CS"
 		(shape input)
-		(at 72.39 101.6 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "6f39aff1-2423-4f4e-b28c-f290a0f966b8")
-	)
-	(hierarchical_label "FLASH_CS"
-		(shape input)
 		(at 72.39 77.47 0)
 		(effects
 			(font
@@ -6257,6 +6246,17 @@
 			(justify left)
 		)
 		(uuid "cbd1e071-3812-4fcb-b7fe-8790bf6aa5a8")
+	)
+	(hierarchical_label "XCK"
+		(shape input)
+		(at 72.39 101.6 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "cd33e82e-1cf3-49df-8b64-c5516356dea4")
 	)
 	(hierarchical_label "RTS_PROG"
 		(shape input)
@@ -6626,7 +6626,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 121.6152 54.61 0)
 			(effects
 				(font
@@ -6696,7 +6696,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 252.4252 44.45 0)
 			(effects
 				(font
@@ -7711,7 +7711,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 261.3152 44.45 0)
 			(effects
 				(font
@@ -7850,7 +7850,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 252.4252 16.51 0)
 			(effects
 				(font
@@ -9238,7 +9238,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 112.7252 54.61 0)
 			(effects
 				(font
@@ -10541,7 +10541,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 252.4252 73.66 0)
 			(effects
 				(font
@@ -10875,7 +10875,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 130.5052 54.61 0)
 			(effects
 				(font
@@ -11180,7 +11180,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 261.3152 16.51 0)
 			(effects
 				(font
@@ -11316,7 +11316,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm"
 			(at 261.3152 73.66 0)
 			(effects
 				(font

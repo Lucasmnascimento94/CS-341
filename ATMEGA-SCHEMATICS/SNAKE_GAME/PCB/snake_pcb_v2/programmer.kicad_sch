@@ -9699,7 +9699,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9885e20d-ccc3-45e5-9ef8-1ef315c4e191")
-		(property "Reference" "J5"
+		(property "Reference" "CONV_UART1"
 			(at 281.94 182.8799 0)
 			(effects
 				(font
@@ -9756,7 +9756,7 @@
 		(instances
 			(project ""
 				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/070e247b-fc65-48a1-a34b-7b6bc28073d9"
-					(reference "J5")
+					(reference "CONV_UART1")
 					(unit 1)
 				)
 			)
