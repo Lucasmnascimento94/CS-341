@@ -27,10 +27,8 @@ void writeBlinky();
 int main() {
   ispInit();
   ispPowerUp();
-  START_ISP;
   ispProgrammingEnable();
   writeBlinky();
-  STOP_ISP;
   while (1)
     ;
 }
