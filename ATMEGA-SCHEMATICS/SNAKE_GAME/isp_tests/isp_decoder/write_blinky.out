@@ -1,228 +1,228 @@
-4.0653532000    PRG_EN                        __ __ __ __    40 04 53 00
-4.0692129000    CHIP_ERASE                    __ __ __ __    00 AC 80 00
-4.0800544500    PRG_EN                        __ __ __ __    00 AC 53 00
-4.0821537000    LOAD_PRG_MEM_PAGE_LO_BYTE:    __ __ 00 94    00 40 00 00
-4.0842328000    LOAD_PRG_MEM_PAGE_HI_BYTE:    __ __ 00 0C    94 48 00 00
-4.0863236000    LOAD_PRG_MEM_PAGE_LO_BYTE:    __ __ 01 00    0C 40 00 01
-4.0884018500    LOAD_PRG_MEM_PAGE_HI_BYTE:    __ __ 01 34    00 48 00 01
-4.0904949000    LOAD_PRG_MEM_PAGE_LO_BYTE:    __ __ 02 94    34 40 00 02
-4.0925741000    LOAD_PRG_MEM_PAGE_HI_BYTE:    __ __ 02 0C    94 48 00 02
-4.0946662500    LOAD_PRG_MEM_PAGE_LO_BYTE:    __ __ 03 00    0C 40 00 03
-4.0967445000    LOAD_PRG_MEM_PAGE_HI_BYTE:    __ __ 03 3E    00 48 00 03
-4.0988365500    LOAD_PRG_MEM_PAGE_LO_BYTE:    __ __ 04 12    3E 40 00 25
-Unknown command: 00 01 03 10
-Unknown command: 00 01 40 12
-Unknown command: 00 01 4F 90
-Unknown command: 00 01 A5 12
-Unknown command: 00 01 83 10
-Unknown command: 00 01 C0 12
-Unknown command: 00 01 CF 90
-Unknown command: 00 02 25 12
-Unknown command: 00 02 03 10
-Unknown command: 00 02 40 12
-Unknown command: 00 02 4F 90
-Unknown command: 00 02 A5 12
-Unknown command: 00 02 83 10
-Unknown command: 00 02 C0 12
-Unknown command: 00 02 CF 90
-Unknown command: 00 03 25 12
-Unknown command: 00 03 03 10
-Unknown command: 00 03 40 12
-Unknown command: 00 03 4F 90
-Unknown command: 00 03 A5 12
-Unknown command: 00 03 83 10
-Unknown command: 00 03 C0 12
-Unknown command: 00 03 CF 90
-Unknown command: 00 04 44 80
-Unknown command: 01 00 C4 00
-Unknown command: 01 10 04 80
-Unknown command: 01 13 44 00
-Unknown command: 01 29 44 80
-Unknown command: 01 20 C4 00
-Unknown command: 01 30 04 80
-Unknown command: 01 33 E4 00
-Unknown command: 01 49 44 80
-Unknown command: 01 40 C4 00
-Unknown command: 01 50 04 80
-Unknown command: 01 53 E4 00
-Unknown command: 01 69 44 80
-Unknown command: 01 60 C4 00
-Unknown command: 01 70 04 80
-Unknown command: 01 73 E4 00
-Unknown command: 01 89 44 80
-Unknown command: 01 80 C4 00
-Unknown command: 01 90 04 80
-Unknown command: 01 93 E4 00
-Unknown command: 01 A9 44 80
-Unknown command: 01 A0 C4 00
-Unknown command: 01 B0 04 80
-Unknown command: 01 B3 E4 00
-Unknown command: 01 C9 44 80
-Unknown command: 01 C0 10 00
-Unknown command: 07 40 12 00
-Unknown command: 07 4F 90 00
-Unknown command: 07 A5 12 00
-Unknown command: 07 83 10 00
-Unknown command: 07 C0 12 00
-Unknown command: 07 CF 90 00
-Unknown command: 08 25 12 00
-Unknown command: 08 03 10 00
-Unknown command: 08 40 12 00
-Unknown command: 08 4D 10 00
-Unknown command: 08 A5 12 00
-Unknown command: 08 83 10 00
-Unknown command: 08 C0 12 00
-Unknown command: 08 CF 90 00
-Unknown command: 09 25 12 00
-Unknown command: 09 03 10 00
-Unknown command: 09 40 12 00
-Unknown command: 09 4F 90 00
-Unknown command: 09 A5 12 00
-Unknown command: 09 83 10 00
-Unknown command: 09 C0 12 00
-Unknown command: 09 CF 90 00
-Unknown command: 0A 25 12 00
-Unknown command: 0A 03 10 00
-Unknown command: 0A 40 12 00
-Unknown command: 0A 4F 90 00
-Unknown command: 0A A5 12 00
-Unknown command: 0A 83 10 00
-Unknown command: 0A C0 12 00
-Unknown command: 0A CF 90 00
-Unknown command: 0B 25 12 00
-Unknown command: 0B 03 10 00
-Unknown command: 0B 40 12 00
-Unknown command: 0B 4F 90 00
-Unknown command: 0B A5 12 00
-Unknown command: 0B 83 10 00
-Unknown command: 0B C0 12 00
-Unknown command: 0B CF 90 00
-Unknown command: 0C 25 12 00
-Unknown command: 0C 03 10 00
-Unknown command: 0C 40 12 00
-Unknown command: 0C 4F 90 00
-Unknown command: 0C A5 12 00
-Unknown command: 0C 83 10 00
-Unknown command: 0C C0 12 00
-Unknown command: 0C CF 90 00
-Unknown command: 0D 09 12 00
-Unknown command: 0D 14 00 03
-Unknown command: 5B E4 80 03
-Unknown command: 51 F4 00 03
-Unknown command: 6E F4 80 03
-Unknown command: 6C F4 00 03
-Unknown command: 7E 04 80 03
-Unknown command: 7D 00 00 E2
-Unknown command: FD 20 00 1B
-4.3197182500    READ_PRG_MEM_LO_BYTE:         __ 00 1C DF    6F 20 00 1C
-4.3220251000    READ_PRG_MEM_LO_BYTE:         __ 00 E7 35    FD 20 00 E7
-Unknown command: 00 00 EA 51
-4.3261954500    READ_PRG_MEM_LO_BYTE:         __ 00 E8 39    51 20 00 E8
-Unknown command: 00 00 EC 01
-4.3303668500    READ_PRG_MEM_LO_BYTE:         __ 00 ED 01    01 20 00 ED
-Unknown command: 00 00 F2 51
-4.3345298000    READ_PRG_MEM_LO_BYTE:         __ 00 F0 31    51 20 00 F0
-Unknown command: 00 00 F4 01
-4.3386909500    READ_PRG_MEM_LO_BYTE:         __ 00 F5 59    01 20 00 F5
-Unknown command: 00 00 FA 51
-4.3428595500    READ_PRG_MEM_LO_BYTE:         __ 00 F8 31    51 20 00 F8
-Unknown command: 00 00 FC 01
-4.3470292000    READ_PRG_MEM_LO_BYTE:         __ 00 FC 01    01 20 00 FC
-Unknown command: 30 0C FC 01
-Unknown command: 00 01 02 69
-4.3576732000    READ_PRG_MEM_LO_BYTE:         __ 01 01 41    69 20 01 01
-Unknown command: 00 01 06 61
-4.3618466500    READ_PRG_MEM_LO_BYTE:         __ 01 05 61    61 20 01 05
-Unknown command: 00 01 0B BD
-4.3660162500    READ_PRG_MEM_LO_BYTE:         __ 01 08 BD    BD 20 01 08
-Unknown command: 00 01 0F 99
-4.3701831500    READ_PRG_MEM_LO_BYTE:         __ 01 0E 25    99 20 01 0E
-Unknown command: 00 01 13 85
-4.3743552000    READ_PRG_MEM_LO_BYTE:         __ 01 12 61    85 20 01 12
-Unknown command: 00 01 15 41
-4.3785306000    READ_PRG_MEM_LO_BYTE:         __ 01 14 85    41 20 01 14
-Unknown command: 00 01 19 01
-4.3827011000    READ_PRG_MEM_LO_BYTE:         __ 01 1A 01    01 20 01 1A
-Unknown command: 00 01 1D 01
-4.3868702500    READ_PRG_MEM_LO_BYTE:         __ 01 1E 41    01 20 01 1E
-Unknown command: 00 01 23 DD
-4.3910396500    READ_PRG_MEM_LO_BYTE:         __ 01 23 85    DD 20 01 23
-Unknown command: 00 01 27 01
-4.3952110500    READ_PRG_MEM_LO_BYTE:         __ 01 24 01    01 20 01 24
-Unknown command: 00 01 28 01
-4.3993812500    READ_PRG_MEM_LO_BYTE:         __ 01 28 01    01 20 01 28
-Unknown command: 00 01 2E 69
-Unknown command: 00 09 6B 08
-Unknown command: 00 09 9D E9
-Unknown command: 00 09 7A 00
-Unknown command: 02 6F 32 40
-Unknown command: 02 6C 4A 00
-Unknown command: 02 77 0A 40
-Unknown command: 02 74 C2 00
-Unknown command: 02 7A 82 40
-Unknown command: 02 79 0A 00
-Unknown command: 02 82 02 40
-Unknown command: 02 84 02 00
-Unknown command: 02 8A 02 40
-Unknown command: 02 8C 82 00
-Unknown command: 4B DD 20 01
-Unknown command: 4B 85 00 01
-Unknown command: 4F 01 20 01
-Unknown command: 4C 01 00 01
+0.7793294000    PRG_EN                        __ __ __ __    40 20 53 00
+0.7814297500    CHIP_ERASE                    __ __ __ __    00 AC 80 00
+0.7932610500    PRG_EN                        __ __ __ __    00 AC 53 00
+0.7953579000    LOAD_PRG_MEM_PAGE_LO_BYTE:    __ __ 00 0C    00 40 00 00
+0.7974426000    LOAD_PRG_MEM_PAGE_HI_BYTE:    __ __ 00 94    0C 48 00 00
+0.7995332000    LOAD_PRG_MEM_PAGE_LO_BYTE:    __ __ 01 34    94 40 00 01
+0.8016185500    LOAD_PRG_MEM_PAGE_HI_BYTE:    __ __ 01 00    34 48 00 01
+0.8037048500    LOAD_PRG_MEM_PAGE_LO_BYTE:    __ __ 02 0C    00 40 00 02
+0.8057899000    LOAD_PRG_MEM_PAGE_HI_BYTE:    __ __ 02 94    0C 48 00 02
+0.8078794500    LOAD_PRG_MEM_PAGE_LO_BYTE:    __ __ 03 3E    94 40 00 03
+0.8099645000    LOAD_PRG_MEM_PAGE_HI_BYTE:    __ __ 03 00    3E 48 00 03
+0.8120548000    LOAD_PRG_MEM_PAGE_LO_BYTE:    __ __ 04 0C    00 40 00 04
+0.8141415500    LOAD_PRG_MEM_PAGE_HI_BYTE:    __ __ 04 94    0C 48 00 04
+0.8162322500    LOAD_PRG_MEM_PAGE_LO_BYTE:    __ __ 05 3E    94 40 00 05
+0.8183183500    LOAD_PRG_MEM_PAGE_HI_BYTE:    __ __ 05 00    3E 48 00 05
+0.8204079500    LOAD_PRG_MEM_PAGE_LO_BYTE:    __ __ 06 0C    00 40 00 06
+0.8224935000    LOAD_PRG_MEM_PAGE_HI_BYTE:    __ __ 06 94    0C 48 00 06
+0.8245833500    LOAD_PRG_MEM_PAGE_LO_BYTE:    __ __ 07 3E    94 40 00 07
+0.8266674000    LOAD_PRG_MEM_PAGE_HI_BYTE:    __ __ 07 00    3E 48 00 07
+0.8287584000    LOAD_PRG_MEM_PAGE_LO_BYTE:    __ __ 08 0C    00 40 00 08
+0.8308454000    LOAD_PRG_MEM_PAGE_HI_BYTE:    __ __ 08 94    0C 48 00 08
+0.8329363000    LOAD_PRG_MEM_PAGE_LO_BYTE:    __ __ 09 3E    94 40 00 09
+0.8350223500    LOAD_PRG_MEM_PAGE_HI_BYTE:    __ __ 09 00    3E 48 00 09
+0.8371097500    LOAD_PRG_MEM_PAGE_LO_BYTE:    __ __ 0A 0C    00 40 00 0A
+0.8391949000    LOAD_PRG_MEM_PAGE_HI_BYTE:    __ __ 0A 94    0C 48 00 0A
+0.8412850500    LOAD_PRG_MEM_PAGE_LO_BYTE:    __ __ 0B 3E    94 40 00 0B
+0.8433690500    LOAD_PRG_MEM_PAGE_HI_BYTE:    __ __ 0B 00    3E 48 00 0B
+0.8454576500    LOAD_PRG_MEM_PAGE_LO_BYTE:    __ __ 0C 0C    00 40 00 0C
+0.8475413000    LOAD_PRG_MEM_PAGE_HI_BYTE:    __ __ 0C 10    0C 48 00 25
+Unknown command: 00 03 4F 92
+Unknown command: 00 03 40 10
+Unknown command: 00 03 83 12
+Unknown command: 00 03 A5 10
+Unknown command: 00 03 CF 92
+Unknown command: 00 03 C0 10
+Unknown command: 00 04 03 12
+Unknown command: 00 04 25 10
+Unknown command: 00 04 4D 12
+Unknown command: 00 04 40 10
+Unknown command: 00 04 83 12
+Unknown command: 00 04 44 00
+Unknown command: 01 33 E4 80
+Unknown command: 01 30 04 00
+Unknown command: 01 40 C4 80
+Unknown command: 01 49 10 00
+Unknown command: 05 4F 92 00
+Unknown command: 05 40 10 00
+Unknown command: 05 83 12 00
+Unknown command: 05 A5 10 00
+Unknown command: 05 CF 92 00
+Unknown command: 05 C0 10 00
+Unknown command: 06 03 12 00
+Unknown command: 06 25 10 00
+Unknown command: 06 4F 92 00
+Unknown command: 06 40 10 00
+Unknown command: 06 83 12 00
+Unknown command: 06 A5 10 00
+Unknown command: 06 CF 92 00
+Unknown command: 06 C0 10 00
+Unknown command: 07 03 12 00
+Unknown command: 07 25 10 00
+Unknown command: 07 4F 92 00
+Unknown command: 07 40 10 00
+Unknown command: 07 83 12 00
+Unknown command: 07 A5 10 00
+Unknown command: 07 CF 92 00
+Unknown command: 07 C0 10 00
+Unknown command: 08 03 12 00
+Unknown command: 08 25 10 00
+Unknown command: 08 4D 12 00
+Unknown command: 08 40 10 00
+Unknown command: 08 83 12 00
+Unknown command: 08 A5 10 00
+Unknown command: 08 CF 92 00
+Unknown command: 08 C0 10 00
+Unknown command: 09 03 12 00
+Unknown command: 09 25 10 00
+Unknown command: 09 4F 92 00
+Unknown command: 09 40 10 00
+Unknown command: 09 83 12 00
+Unknown command: 09 A5 10 00
+Unknown command: 09 CF 92 00
+Unknown command: 09 C0 10 00
+Unknown command: 0A 03 12 00
+Unknown command: 0A 25 10 00
+Unknown command: 0A 4F 92 00
+Unknown command: 0A 40 10 00
+Unknown command: 0A 83 12 00
+Unknown command: 0A A5 10 00
+Unknown command: 0A CF 92 00
+Unknown command: 0A C0 10 00
+Unknown command: 0B 03 12 00
+Unknown command: 0B 25 10 00
+Unknown command: 0B 4F 92 00
+Unknown command: 0B 40 10 00
+Unknown command: 0B 83 12 00
+Unknown command: 0B A5 10 00
+Unknown command: 0B CF 92 00
+Unknown command: 0B C0 10 00
+Unknown command: 0C 03 12 00
+Unknown command: 0C 25 10 00
+Unknown command: 0C 4F 92 00
+Unknown command: 0C 40 10 00
+Unknown command: 0C 83 12 00
+Unknown command: 0C A5 10 00
+Unknown command: 0C CF 92 00
+Unknown command: 0C C0 10 00
+Unknown command: 0D 14 80 03
+Unknown command: 42 10 00 0D
+Unknown command: 47 D2 00 0D
+Unknown command: 6F 90 00 0D
+Unknown command: B3 D2 00 0D
+Unknown command: BB D0 00 0D
+1.0270540500    READ_PRG_MEM_LO_BYTE:         __ 00 DF 81    51 20 00 DF
+Unknown command: 00 00 E3 79
+1.0312261500    READ_PRG_MEM_LO_BYTE:         __ 00 E2 FD    79 20 00 E2
+Unknown command: 00 00 E7 35
+1.0353999000    READ_PRG_MEM_LO_BYTE:         __ 00 E6 FD    35 20 00 E6
+Unknown command: 00 00 E8 39
+1.0395704500    READ_PRG_MEM_LO_BYTE:         __ 00 EA 51    39 20 00 EA
+Unknown command: 00 00 ED 01
+1.0437447500    READ_PRG_MEM_LO_BYTE:         __ 00 EC 01    01 20 00 EC
+Unknown command: 00 00 F0 12
+Unknown command: 00 0F 25 10
+Unknown command: 00 0F 55 92
+Unknown command: 00 0F 40 10
+Unknown command: 00 0F 83 12
+Unknown command: 00 0F A5 10
+Unknown command: 00 0F C0 12
+Unknown command: 00 0F C0 13
+Unknown command: 00 CF C0 10
+Unknown command: 00 10 41 20
+Unknown command: 01 02 69 00
+Unknown command: 01 05 61 20
+Unknown command: 01 06 61 00
+Unknown command: 01 08 BD 20
+Unknown command: 01 0B BD 00
+Unknown command: 01 0E 25 20
+Unknown command: 01 0F 99 00
+Unknown command: 01 12 61 20
+Unknown command: 01 13 85 00
+Unknown command: 01 14 85 20
+Unknown command: 01 15 41 00
+Unknown command: 01 1A 01 20
+Unknown command: 01 19 01 00
+Unknown command: 01 1E 41 20
+Unknown command: 01 1D 01 00
+Unknown command: 01 23 85 20
+Unknown command: 01 23 DD 00
+Unknown command: 01 24 01 20
+Unknown command: 01 27 01 00
+Unknown command: 01 28 01 20
+Unknown command: 01 28 01 00
+Unknown command: 01 2D 61 00
+Unknown command: 09 73 48 00
+Unknown command: 09 85 E9 00
+Unknown command: 09 9D E8 00
+Unknown command: 09 B1 29 00
+Unknown command: 09 BC C8 00
+Unknown command: 09 D3 09 00
+Unknown command: 09 DC 28 00
+Unknown command: 09 E4 29 00
+Unknown command: 09 EA 08 00
+Unknown command: 0A 10 09 00
+Unknown command: 0A 08 08 00
+Unknown command: 0A 32 09 00
+Unknown command: 0A 01 00 01
+Unknown command: 4B 85 20 01
+Unknown command: 4B DD 00 01
+Unknown command: 4C 01 20 01
+Unknown command: 4F 01 00 01
 Unknown command: 50 01 20 01
 Unknown command: 50 01 00 01
-Unknown command: 57 3D 20 01
-Unknown command: 57 AD 00 01
-Unknown command: 5A 51 20 01
-Unknown command: 5B E1 00 01
-Unknown command: 5F 3D 20 01
-Unknown command: 5F FD 00 01
-Unknown command: 63 FD 20 01
-Unknown command: 63 FD 00 01
-Unknown command: 67 FD 20 01
-Unknown command: 67 FD 00 01
-Unknown command: 6B FD 20 01
-Unknown command: 6B FD 00 01
-Unknown command: 6F FD 20 01
-Unknown command: 6F FD 00 01
-Unknown command: 73 FD 20 01
-Unknown command: 73 FD 00 01
-Unknown command: 77 FD 20 01
-Unknown command: 77 FD 00 01
-Unknown command: 7B FD 20 01
-Unknown command: 7B FD 00 01
-Unknown command: 7F FD 20 01
-Unknown command: 7F FD 00 01
-Unknown command: 83 FD 20 01
-Unknown command: 83 FD 00 01
-Unknown command: 87 FD 20 01
-Unknown command: 87 FD 00 01
-Unknown command: 8B FD 20 01
-Unknown command: 8B FD 00 01
-Unknown command: 8F FD 20 01
-Unknown command: 8F FD 00 01
-Unknown command: 93 FD 20 01
-Unknown command: 93 FD 00 01
-Unknown command: 97 FD 20 01
-Unknown command: 2F FA 00 03
-Unknown command: 37 FA 40 03
-Unknown command: 37 FA 00 03
-Unknown command: 3F FA 40 03
-Unknown command: 3F FA 00 03
-Unknown command: 47 FA 40 03
-Unknown command: 47 FA 00 03
-Unknown command: 4F FA 40 03
-Unknown command: 4F FA 00 03
-Unknown command: 57 FA 40 03
-Unknown command: 57 FA 00 03
-Unknown command: 5F FA 40 03
-Unknown command: 5F FA 00 03
-Unknown command: 67 FA 40 03
-Unknown command: 67 FA 00 03
-Unknown command: 6F FA 40 03
-Unknown command: 6F FA 00 03
-Unknown command: 77 FA 40 03
-Unknown command: 77 00 01 BF
+Unknown command: 57 AD 20 01
+Unknown command: 57 3D 00 01
+Unknown command: 5B E1 20 01
+Unknown command: 5A 44 00 05
+Unknown command: 7F F4 80 05
+Unknown command: 3D 00 01 63
+Unknown command: FD 20 01 63
+Unknown command: FD 00 01 67
+Unknown command: FD 20 01 67
+Unknown command: FD 00 01 6B
+Unknown command: FD 20 01 6B
+Unknown command: FD 00 01 6F
+Unknown command: FD 20 01 6F
+Unknown command: FD 00 01 73
+Unknown command: FD 20 01 73
+Unknown command: FD 00 01 77
+Unknown command: FD 20 01 77
+Unknown command: FD 00 01 7B
+Unknown command: FD 20 01 7B
+Unknown command: FD 00 01 7F
+Unknown command: FD 20 01 7F
+Unknown command: FD 00 01 83
+Unknown command: FD 20 01 83
+Unknown command: FD 00 01 87
+Unknown command: FD 20 01 87
+Unknown command: FD 00 01 8B
+Unknown command: FD 20 01 8B
+Unknown command: FD 00 01 8F
+Unknown command: FD 20 01 8F
+Unknown command: FD 00 01 93
+Unknown command: FD 20 01 93
+Unknown command: FD 00 01 97
+Unknown command: FD 20 01 97
+Unknown command: FD 00 01 9B
+Unknown command: FD 20 01 9B
+Unknown command: FD 00 01 9F
+Unknown command: FD 20 01 9F
+Unknown command: FD 00 01 A3
+Unknown command: FD 20 01 A3
+Unknown command: FD 00 01 A7
+Unknown command: FD 20 01 A7
+Unknown command: FD 00 01 AB
+Unknown command: FD 20 01 AB
+Unknown command: FD 00 01 AF
+Unknown command: FD 20 01 AF
+Unknown command: FD 00 01 B3
+Unknown command: FD 20 01 B3
+Unknown command: FD 00 01 B7
+Unknown command: FD 20 01 B7
+Unknown command: FD 00 01 BB
+Unknown command: FD 20 01 BB
+Unknown command: FD 00 01 BF
 Unknown command: FD 20 01 BF
 Unknown command: FD 00 01 C3
 Unknown command: FD 20 01 C3

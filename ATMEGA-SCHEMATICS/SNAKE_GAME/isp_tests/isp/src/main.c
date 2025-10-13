@@ -25,8 +25,8 @@ uint16_t PAGE2[64] = {
 void writeBlinky();
 
 int main() {
-  ispPowerUp();
   ispInit();
+  ispPowerUp();
   START_ISP;
   ispProgrammingEnable();
   writeBlinky();
