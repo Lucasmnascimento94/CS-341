@@ -1,0 +1,6 @@
+compile_commands.json
+.cache
+src/*.d
+src/*.o
+# *.hex
+*.elf
