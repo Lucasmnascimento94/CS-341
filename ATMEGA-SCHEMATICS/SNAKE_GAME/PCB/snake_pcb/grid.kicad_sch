@@ -3347,6 +3347,16 @@
 	)
 	(wire
 		(pts
+			(xy 146.05 95.25) (xy 152.4 95.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "55e09c79-42f4-4f6a-85dc-d85a64ed5ed6")
+	)
+	(wire
+		(pts
 			(xy 162.56 54.61) (xy 162.56 55.88)
 		)
 		(stroke
@@ -3554,6 +3564,16 @@
 			(type default)
 		)
 		(uuid "a638526c-6dab-44ee-80ea-366f8cb04624")
+	)
+	(wire
+		(pts
+			(xy 92.71 115.57) (xy 100.33 115.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a96a5243-5d80-484e-937d-d5c71fa09f1a")
 	)
 	(wire
 		(pts
@@ -3905,16 +3925,6 @@
 		)
 		(uuid "8887b023-d7e9-46d9-8442-5372b81a5864")
 	)
-	(label "PC1"
-		(at 92.71 115.57 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "8e03585a-10f6-4b2e-be30-85fc0b2a67d7")
-	)
 	(label "PC2"
 		(at 92.71 113.03 0)
 		(effects
@@ -4045,16 +4055,6 @@
 		)
 		(uuid "fb0b983b-60a8-499c-84eb-97e92adbae42")
 	)
-	(label "PC1"
-		(at 146.05 95.25 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "fd7859c2-a73a-445f-8eb0-e0039ff2984e")
-	)
 	(label "USART_CLK"
 		(at 92.71 96.52 0)
 		(effects
@@ -4064,6 +4064,50 @@
 			(justify left bottom)
 		)
 		(uuid "fe819074-01f7-4566-bacc-26b089049141")
+	)
+	(global_label "REG_EN_LOW"
+		(shape input)
+		(at 100.33 115.57 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "507d2107-a76e-4c69-837a-2dc3dd65af49")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 115.2289 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "REG_EN_LOW"
+		(shape input)
+		(at 152.4 95.25 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "75dc92e8-01d1-4e8d-a945-3427b7d7ea87")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 167.2989 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
 	)
 	(global_label "VCC_LED_GRID"
 		(shape input)

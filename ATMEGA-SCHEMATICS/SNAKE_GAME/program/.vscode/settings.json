@@ -10,7 +10,8 @@
     "colors.h": "c",
     "sram.h": "c",
     "snake.h": "c",
-    "ws2812b.h": "c"
+    "ws2812b.h": "c",
+    "string.h": "c"
   },
   "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "clang",

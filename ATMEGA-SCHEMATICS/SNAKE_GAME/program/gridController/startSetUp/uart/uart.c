@@ -10,6 +10,15 @@ void uartWrite(char *c, uint16_t size){
     }
 }
 
+
+void uartWrite_(char *c){
+    for(uint16_t i=0; i<strlen(c); i++){
+        while(!( UCSR0A & (1<<UDRE0))){
+            __builtin_avr_delay_cycles(1);
+        }
+        UDR0 = ((uint8_t)c[i]);
+    }
+}
 void uartRead(char *c){
     
 }
