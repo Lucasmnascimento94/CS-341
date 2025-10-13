@@ -1,5 +1,5 @@
 MCU := atmega168a
-F_CPU = 8000000UL
+F_CPU = 1000000UL
 TARGET := main
 
 SRC_DIRS = src
