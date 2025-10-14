@@ -4,8 +4,14 @@
 
 #define I2C_PRESCALER 4
 #define I2C_SCL(twbr) (uint32_t)(F_CPU / (16 + 2*(twbr)*I2C_PRESCALER))
-#define PCB8574_ADDR_READ  (0x4F >> 1)
+#define slave_count 1
+
+#define PCF8574_ADDR_READ  (0x4F >> 1)
 #define PCF8574_ADDR_WRITE (0X4E >> 1)
+#define PCF8574_INDEX       0
+#define I2C_WRITE 0
+#define I2C_READ  1
+#define I2C_TWSR_FLAG_MASK 0XF8
 
 /*==============================================================================
  *  I2C Flags Opcodes
@@ -86,12 +92,6 @@ becomes freeWSR & 0xF8
 */
 #define ARBITRATION_LOST                0X38
 
-
-
-
-#define I2C_WRITE 0
-#define I2C_READ  1
-#define I2C_TWSR_FLAG_MASK 0XF8
 
 /*==============================================================================
  *  Registers bitMap

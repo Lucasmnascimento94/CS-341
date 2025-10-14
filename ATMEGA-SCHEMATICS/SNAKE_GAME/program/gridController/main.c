@@ -4,6 +4,7 @@
 #include "ws2812b/colors.h"
 #include "startSetUp/sram/sram.h"
 #include "i2c.h"
+#include "screen.h"
 
 SnakeBelly belly = {
     .color = COLOR_GOLD,
@@ -38,10 +39,10 @@ DDRX -> DIRECTION
 
 */
 
-    I2C_SLAVE i2c_slave = {
-        .addr = PCF8574_ADDR_WRITE,
-        .count = 2
-    };
+I2C_SLAVE i2c_slave = {
+    .addr = PCF8574_ADDR_WRITE,
+    .count = slave_count
+};
 
 I2C_CONF i2c_conf = {
     .data = {0},
@@ -52,6 +53,11 @@ I2C_CONF i2c_conf = {
     .prescaler = 1,
     .read_mode = false,
 };
+
+SCREEN_CONF screen = {
+    .pcf8574_addr = PCF8574_ADDR_WRITE
+};
+
 
 int main(void){
     //char c[20];
@@ -64,7 +70,7 @@ int main(void){
 
 
     //print("STARTING\n", 1);
-    gameInit(&belly, &food);
+   /* gameInit(&belly, &food);
     _delay_ms(500);
     initSnake(&belly, &food);
     belly.begin = true;
@@ -80,17 +86,18 @@ int main(void){
     sramReadModeRegister();
     sramWriteStringPoll(0x00, 0xFF, len);
     _delay_ms(10);
-    i2c_conf.slave = malloc(sizeof(I2C_SLAVE)*i2c_slave.count);
-    i2c_conf.slave[0] = &i2c_slave;
+    */
     
     i2cConfig(&i2c_conf);
-        char *data = "HELLO WORLD";
-        i2c_conf.data = (char *)data;
+    screenInit(&i2c_conf, &i2c_slave, &screen);
+
+
     char c[50];
     sprintf(c, "THIS IS ADDR IN SLAVE: %X\n", i2c_slave.addr);
     uartWrite_(c);
-    sprintf(c, "THIS IS ADDR IN CONF: %X\n", i2c_conf.slave[0]->addr);
-    uartWrite_(c);
+    //sprintf(c, "THIS IS ADDR IN CONF: %X\n", i2c_conf.slave[0]->addr);
+   // uartWrite_(c);
+
     while(1){
         //uartWrite(msg,  len_msg);
         //uartWrite(c, len_text);
@@ -106,7 +113,7 @@ int main(void){
         //uartWrite((const char*)buffer, len_text);
         uartWrite("lOOPING\n", 9);
 
-        i2cMasterWrite_POL(&i2c_conf, 0);
+        (&i2c_conf, 0);
         _delay_ms(5000);
     }
 }

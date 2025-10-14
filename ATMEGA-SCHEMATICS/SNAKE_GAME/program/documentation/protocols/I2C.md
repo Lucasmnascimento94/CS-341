@@ -30,35 +30,25 @@ The goal is to provide a clear reference so other teams can understand SPI opera
     GPIO #17 (PB3): **MOSI**    > Master-out-Slave-in
     GPIO #16 (PB2): **SS**      > Slave select
 
-    **Clock** >> Defines the speed of the communication and is given by the MCU clock divided by the prescaler
-    **MISO** >> Income data from the slave into the master
-    **MOSI** >> Outgoing data from the master into the slave
-    **SS** >> Chip Select. It is part of the protocol and initializes the communication
+    **Clock** >> 
+    **MISO** >> 
+    **MOSI** >> Oe
+    **SS** >> C
 
 
 - **Wiring**
 
-    MISO (master) <<<<<<>>>>>> MISO  (slave)
-    MOSI (master) <<<<<<>>>>>> MOSI  (slave)
-    SCK  (master) <<<<<<>>>>>> SCK   (slave)
-    SS   (master) <<<<<<>>>>>> SS/CS (slave)
+    
 - **Modes of Operation**:
 
-    - **Slave Mode**: In this mode, the Atmega will not be responsible for driving the clock and it will be reading data in the MOSI and writing data into MISO.
-    When the SPI is configured as a Slave, the Slave Select (SS) pin is always input. When SS is held low, it works as a signal for the Atmega start the protocol, which is being initiated by the master.
+    - **Slave Mode**: 
 
-    - **Master Mode**: In this mode, the Atmega will be responsible for driving the clock and it will be sending data in the MOSI and reading it in the MISO.
+    - **Master Mode**: I
 
 
 
 ### Data Modes (CPOL/CPHA)
 
-| SPI Mode | CPOL | CPHA | Leading Edge | Trailing Edge |
-|----------|------|------|--------------|---------------|
-| 0        | 0    | 0    | Rising (Sample) | Falling (Setup) |
-| 1        | 0    | 1    | Rising (Setup)  | Falling (Sample) |
-| 2        | 1    | 0    | Falling (Sample)| Rising (Setup)  |
-| 3        | 1    | 1    | Falling (Setup) | Rising (Sample) |
 
 # --------------------------------------------------------------------------------------------------------------- #
 ### Software SetUp **Registers**

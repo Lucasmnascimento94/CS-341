@@ -11,7 +11,8 @@
     "sram.h": "c",
     "snake.h": "c",
     "ws2812b.h": "c",
-    "string.h": "c"
+    "string.h": "c",
+    "i2c.h": "c"
   },
   "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "clang",
