@@ -1,6 +1,7 @@
 #include "i2c.h"
 #include "string.h"
 #include "uart.h"
+#include "stdio.h"
 
 
 char flag[40];
@@ -76,8 +77,6 @@ uint8_t masterStart_POL(I2C_CONF *conf, uint8_t slave_index){
     }
 
     if(tries >= 10) return;
-    sprintf(flag, "size: %d\n", strlen(conf->data));
-    uartWrite_(flag);
     for(uint16_t i=0; i<strlen(conf->data); i++){
         while(!(TWCR & (1<<TWINT)));
         TWDR = conf->data[i];
@@ -86,8 +85,44 @@ uint8_t masterStart_POL(I2C_CONF *conf, uint8_t slave_index){
     }
     
     TWCR |= (1<<TWSTO) | (1<<TWINT) | (1<<TWEN); // Send a Stop condition*/
+    conf->data = NULL;
  }
 
- void i2cMasterRead_POL(I2C_CONF *conf, char *data, int size){
 
+void i2cMasterWrite_POL_START(I2C_CONF *conf, uint8_t slave_index){
+    uartWrite_("START 1\n");
+    uint8_t tries = 0;
+    uint8_t status = 0;
+    if(conf->data == NULL)return;
+    uartWrite_("START 2\n");
+    while(status != SLA_PLUS_W_ACK && tries++<10){
+        uartWrite_("Search for Target\n");
+        status = masterStart_POL(conf, slave_index);
+        if(status == SLA_PLUS_W_ACK) break;
+        sprintf(flag, "%X\n", status);
+        uartWrite_(flag);
+        TWCR |= (1<<TWSTO) | (1<<TWINT) | (1<<TWEN);
+        _delay_ms(1);
+    }
+
+    if(tries >= 10) return;
+    sprintf(flag, "size: %d\n", strlen(conf->data));
+    uartWrite_(flag);
  }
+void i2cMasterWrite_POL_SEND(I2C_CONF *conf, uint8_t slave_index){
+    uartWrite_("START SEND\n");
+    for(uint16_t i=0; i<strlen(conf->data); i++){
+        while(!(TWCR & (1<<TWINT)));
+        TWDR = conf->data[i];
+        TWCR = (1<<TWINT) | (1<<TWEN); 
+        while(TWSR != DATA_BYTE_TRANSMITTED_ACK){TWDR = conf->data[i];}
+    }
+ }
+void i2cMasterWrite_POL_STOP(I2C_CONF *conf, uint8_t slave_index){
+    uartWrite_("STOP\n");
+    TWCR |= (1<<TWSTO) | (1<<TWINT) | (1<<TWEN); // Send a Stop condition*/
+    conf->data = NULL;
+}
+ /*void i2cMasterRead_POL(I2C_CONF *conf, char *data, int size){
+
+ }*/

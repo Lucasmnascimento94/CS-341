@@ -117,6 +117,7 @@ typedef struct{
 
 typedef struct{
     char *data;
+    char *instruction;
     uint16_t twbr;
     uint8_t prescaler;
     bool read_mode;
@@ -150,4 +151,8 @@ typedef struct{
  uint8_t i2cMasterStart_POL(I2C_CONF *conf);
  void i2cMasterWrite_POL(I2C_CONF *conf, uint8_t slave_index);
  void i2cMasterRead_POL(I2C_CONF *conf, char *data, int size);
+
+ void i2cMasterWrite_POL_START(I2C_CONF *conf, uint8_t slave_index);
+ void i2cMasterWrite_POL_SEND(I2C_CONF *conf, uint8_t slave_index);
+ void i2cMasterWrite_POL_STOP(I2C_CONF *conf, uint8_t slave_index);
 #endif

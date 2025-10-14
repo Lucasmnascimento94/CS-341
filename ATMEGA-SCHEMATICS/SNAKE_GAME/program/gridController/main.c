@@ -88,13 +88,18 @@ int main(void){
     _delay_ms(10);
     */
     
+    screen.instruction = malloc(sizeof(char)*6);
     i2cConfig(&i2c_conf);
     screenInit(&i2c_conf, &i2c_slave, &screen);
 
 
-    char c[50];
-    sprintf(c, "THIS IS ADDR IN SLAVE: %X\n", i2c_slave.addr);
+    char c[20];
+    sprintf(c, "HELLO WORLD SNAKE PROJECT:", i2c_slave.addr);
     uartWrite_(c);
+    _delay_ms(100);
+    memset(i2c_conf.data, 0, sizeof(i2c_conf.data));
+    i2c_conf.data = c;
+    screenWrite(&i2c_conf, &screen);
     //sprintf(c, "THIS IS ADDR IN CONF: %X\n", i2c_conf.slave[0]->addr);
    // uartWrite_(c);
 
@@ -112,8 +117,6 @@ int main(void){
         //uartWrite(msg2, len_msg2);
         //uartWrite((const char*)buffer, len_text);
         uartWrite("lOOPING\n", 9);
-
-        (&i2c_conf, 0);
         _delay_ms(5000);
     }
 }

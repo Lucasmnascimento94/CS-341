@@ -228,3 +228,19 @@ Step-by-step description of how this feature is implemented:
 |------------|---------|------------|---------------|
 | MM/DD/YYYY | v0.1    | [Name]     | Initial draft |
 | MM/DD/YYYY | v0.2    | [Name]     | Updates/fixes |
+
+
+
+
+
+
+
+
+
+
+
+
+0b0010 1000
+
+1 - 0010 1100
+2 - 1000 1100
