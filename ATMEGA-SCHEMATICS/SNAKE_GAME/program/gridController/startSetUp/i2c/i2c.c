@@ -10,24 +10,44 @@ char flag[40];
 /*==============================================================================
  *  I2C Initial Configuration
  *==============================================================================*/
-uint8_t i2cConf(I2C_PORT *port, I2C_TARGET *target){
-    /*Sanity Check*/
+void i2cConf(I2C_TARGET *target){
     switch (target->mode){
         case MODE_MASTER_POL:
+            i2cConfMaster_POL();
             break;
         case MODE_MASTER_INT:
+            i2cConfMaster_INT();
             break;
         case MODE_SLAVE_POL:
+            i2cConfSlave_POL();
             break;
         case MODE_SLAVE_INT:
-            break;
+            i2cConfSlave_INT();
+            break
         default:
             uartWrite_("Err..i2cConf<Invalid Mode>");
-            return 0x01;
+            return
     }
 }
 
-uint8_t i2cConf_
+/*==============================================================================
+ *  i2cConf Helpers
+ *==============================================================================*/
+void i2cConfMaster_POL(){
+    /*to do*/
+}
+
+void i2cConfMaster_INT(){
+    /*to do*/
+}
+
+void i2cConfSlave_POL(){
+    /*to do*/
+}
+
+void i2cConfSlave_INT(){
+    /*to do*/
+}
 
 /*==============================================================================
  *  I2C Clock Configuration
@@ -70,8 +90,9 @@ void i2cClockConfig(I2C_TARGET *target){
     *  Transmit Start in Polling Mode and return the status
 *==============================================================================*/
 uint8_t start_POL(I2C_TARGET *target){
-    uint8_t mode = target->mode & 0x01;                 // Polling::0 | Interrupt::1
-    uint8_t address = (target->addr << 1) | mode;       // Modify address byte on I2C protocol (SLA+W)
+    /* Modify address byte on I2C protocol (SLA+W)
+       Writing::direction==0 | Reading::direction==1*/
+    uint8_t address = (target->addr << 1) | (target->direction & 0x01);
 
     TWCR |= (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);        // Send Start Signal on SDA bus
     while(!(TWCR & (1<<TWINT)));                        // Check for hardware feedback
@@ -88,8 +109,7 @@ uint8_t start_POL(I2C_TARGET *target){
     *  Transmit Start in Iterrupt Mode and return the status
 *==============================================================================*/
 uint8_t start_INT(I2C_TARGET *target){
-    uint8_t mode = target->mode & 0x01;                 // Polling::0 | Interrupt::1
-    uint8_t address = (target->addr << 1) | mode;       // Modify address byte on I2C protocol (SLA+W)
+    uint8_t address = (target->addr << 1) | (target->direction & 0x01);       // Modify address byte on I2C protocol (SLA+W)
 
     return TWSR & I2C_TWSR_FLAG_MASK;                   // Return status flag
 }
@@ -111,22 +131,10 @@ uint8_t i2cSTOP(){
  *==============================================================================*/
  uint8_t i2cWrite_POL(I2C_PORT *port, I2C_TARGET *target){
     /*Sanity Check*/
-    if(port == NULL || port->data == NULL || target == NULL) return;
-
-    uint8_t tries = 0;                                    // Counter
-    uint8_t status = 0;                                   // status flag
-    if(conf->data == NULL)return;
-
-
-    for(;status != SLA_PLUS_W_ACK; tries++){              // Check for flag in polling mode
-        if(tries>=10) return status;                      // Return if it failed 10 times.
-        status = start_POL(target);                 // Start I2C protocol and wait for ACK
-        
-        if(status == SLA_PLUS_W_ACK) break;               // break loop if ACK is received
-        TWCR |= (1<<TWSTO) | (1<<TWINT) | (1<<TWEN);      // Reset and send STOP signal, to start over.
-        _delay_us(100);
-    }
-
+    if(port == NULL || port->data == NULL || target == NULL) return 0x01;
+    
+    /*Mode Adjustment*/
+    i2cWrite_POL_Helper(port, target);
 
     for(size_t i=0; i<port->data_size; i++){
         while(!(TWCR & (1<<TWINT)));                      // Wait for Hardware flag
@@ -137,6 +145,25 @@ uint8_t i2cSTOP(){
     
     TWCR |= (1<<TWSTO) | (1<<TWINT) | (1<<TWEN);          // Send a Stop condition 
     return TWSR & I2C_TWSR_FLAG_MASK;  ;                              
+ }
+
+ uint8_t i2cWrite_POL_Helper(I2C_PORT *port, I2C_TARGET *target){
+
+    if(port->current_mode != target->mode) i2cConf(port, target);
+    if(port->current_target_addr != target->addr) i2cClockConfig(target);
+
+    uint8_t tries = 0;                                    // Counter
+    uint8_t status = 0;                                   // status flag
+
+    for(;status != SLA_PLUS_W_ACK; tries++){              // Check for flag in polling mode
+        if(tries>=10) return status;                      // Return if it failed 10 times.
+        status = start_POL(target);                 // Start I2C protocol and wait for ACK
+        
+        if(status == SLA_PLUS_W_ACK) break;               // break loop if ACK is received
+        TWCR |= (1<<TWSTO) | (1<<TWINT) | (1<<TWEN);      // Reset and send STOP signal, to start over.
+        _delay_us(1);
+    }
+    return 0x00;
  }
 
 /*==============================================================================
