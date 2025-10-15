@@ -5,58 +5,12 @@
 #include "startSetUp/sram/sram.h"
 #include "i2c.h"
 #include "screen.h"
+#include "allocation.h"
 
-SnakeBelly belly = {
-    .color = COLOR_GOLD,
-    .color_food = COLOR_GREEN,
-    .count = 0,
-    .direction =LEFT,
-    .head = NULL,
-    .tail = NULL,
-    .walk = false,
-    .end = false,
-    .begin = false,
-    .pt = 0
-};
-
-struct Cell food = {
-    .i = 8,
-    .j = 5,
-    .next = NULL,
-    .poison = false,
-    .prev = NULL,
-    .val = PIXEL_ADDRESS(8, 5, 2) 
-};
-
-static char c[]= "In a small coastal town, the rhythm of life followed the tides. "
-                    "Every morning, fishermen set sail before sunrise, "
-                    "their boats cutting through the mist as gulls cried overhead.";
-static char msg[]  = "MESSAGE SENT\r\n";
-static const char msg2[] = "MESSAGE READ\r\n";
 /*
 DDRX -> DIRECTION
-
-
 */
 
-I2C_SLAVE i2c_slave = {
-    .addr = PCF8574_ADDR_WRITE,
-    .count = slave_count
-};
-
-I2C_CONF i2c_conf = {
-    .data = {0},
-    .interrupt_mode = false,
-    .master = {0},
-    .master_mode = true,
-    .polling_mode = true,
-    .prescaler = 1,
-    .read_mode = false,
-};
-
-SCREEN_CONF screen = {
-    .pcf8574_addr = PCF8574_ADDR_WRITE
-};
 
 
 int main(void){
@@ -104,18 +58,7 @@ int main(void){
    // uartWrite_(c);
 
     while(1){
-        //uartWrite(msg,  len_msg);
-        //uartWrite(c, len_text);
-        //uartWrite("\r\n\r\n\r\n", 6);   // exactly 6 bytes
-        //_delay_ms(5);
 
-        // (Re)write then read back
-        //sramWriteStringPoll(c, 0xFF, len_text);
-        //_delay_ms(5);
-        //sramReadString(buffer, len_text, 0xFF);
-
-        //uartWrite(msg2, len_msg2);
-        //uartWrite((const char*)buffer, len_text);
         uartWrite("lOOPING\n", 9);
         _delay_ms(5000);
     }

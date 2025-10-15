@@ -4,51 +4,6 @@
 #include "stdio.h"
 
 
-char flag[40];
-
-/*#######################################___I2C INITIALIZERS___#################################*/
-/*==============================================================================
- *  I2C Initial Configuration
- *==============================================================================*/
-void i2cConf(I2C_TARGET *target){
-    switch (target->mode){
-        case MODE_MASTER_POL:
-            i2cConfMaster_POL();
-            break;
-        case MODE_MASTER_INT:
-            i2cConfMaster_INT();
-            break;
-        case MODE_SLAVE_POL:
-            i2cConfSlave_POL();
-            break;
-        case MODE_SLAVE_INT:
-            i2cConfSlave_INT();
-            break
-        default:
-            uartWrite_("Err..i2cConf<Invalid Mode>");
-            return
-    }
-}
-
-/*==============================================================================
- *  i2cConf Helpers
- *==============================================================================*/
-void i2cConfMaster_POL(){
-    /*to do*/
-}
-
-void i2cConfMaster_INT(){
-    /*to do*/
-}
-
-void i2cConfSlave_POL(){
-    /*to do*/
-}
-
-void i2cConfSlave_INT(){
-    /*to do*/
-}
-
 /*==============================================================================
  *  I2C Clock Configuration
  *==============================================================================*/
@@ -57,9 +12,8 @@ void i2cClockConfig(I2C_TARGET *target){
     Slave operation does not depend on Bit Rate or Prescaler settings, but the CPU clock 
     frequency in the Slave must be at least 16 times higher than the SCL frequency. 
     */
-        conf->frequency = F_CPU/16;
     
-        switch (conf->prescaler){
+        switch (target->prescaler){
             case 1:
                 TWSR &= ~(1<<TWPS1) & ~(1<<TWPS0);
                 break;
@@ -86,6 +40,49 @@ void i2cClockConfig(I2C_TARGET *target){
         TWBR = (uint8_t) ((twbr_num - 16)/twbr_den);
     }
     
+/*#######################################___I2C INITIALIZERS___#################################*/
+/*==============================================================================
+ *  I2C Mode Configuration
+ *==============================================================================*/
+void i2cModeConf(I2C_TARGET *target){
+    switch (target->mode){
+        case MODE_MASTER_POL:
+            i2cConfMaster_POL();
+            break;
+        case MODE_MASTER_INT:
+            i2cConfMaster_INT();
+            break;
+        case MODE_SLAVE_POL:
+            i2cConfSlave_POL();
+            break;
+        case MODE_SLAVE_INT:
+            i2cConfSlave_INT();
+            break;
+        default:
+            uartWrite_("Err..i2cConf<Invalid Mode>");
+            return;
+    }
+}
+
+/*==============================================================================
+ *  i2cConf Helpers
+ *==============================================================================*/
+void i2cConfMaster_POL(){
+    /*to do*/
+}
+
+void i2cConfMaster_INT(){
+    /*to do*/
+}
+
+void i2cConfSlave_POL(){
+    /*to do*/
+}
+
+void i2cConfSlave_INT(){
+    /*to do*/
+}
+
 /*==============================================================================
     *  Transmit Start in Polling Mode and return the status
 *==============================================================================*/
@@ -135,12 +132,16 @@ uint8_t i2cSTOP(){
     
     /*Mode Adjustment*/
     i2cWrite_POL_Helper(port, target);
-
-    for(size_t i=0; i<port->data_size; i++){
+    if((TWSR & I2C_TWSR_FLAG_MASK) != SLA_PLUS_W_ACK){
+        twsrFlagHandler(target, "i2cWrite_Pol");
+    }
+    else{
+        for(size_t i=0; i<port->data_size; i++){
         while(!(TWCR & (1<<TWINT)));                      // Wait for Hardware flag
-        TWDR = conf->data[i];                             // Write data to I2C register
+        TWDR = port->data[i];                             // Write data to I2C register
         TWCR = (1<<TWINT) | (1<<TWEN);                    // Send data
-        while(TWSR != DATA_BYTE_TRANSMITTED_ACK){TWDR = conf->data[i];} // Wait for hardware flag
+        while(TWSR != DATA_BYTE_TRANSMITTED_ACK){} // Wait for hardware flag
+    }
     }
     
     TWCR |= (1<<TWSTO) | (1<<TWINT) | (1<<TWEN);          // Send a Stop condition 
@@ -149,21 +150,21 @@ uint8_t i2cSTOP(){
 
  uint8_t i2cWrite_POL_Helper(I2C_PORT *port, I2C_TARGET *target){
 
-    if(port->current_mode != target->mode) i2cConf(port, target);
-    if(port->current_target_addr != target->addr) i2cClockConfig(target);
+    if(port->current_mode != target->mode) i2cModeConf(port);               // Update Mode if needed
+    if(port->current_target_addr != target->addr) i2cClockConfig(target);   // Adjust clock based on the target if neeeded
 
-    uint8_t tries = 0;                                    // Counter
-    uint8_t status = 0;                                   // status flag
+    uint8_t tries = 0;                                                      // Counter
+    uint8_t status = 0;                                                     // status flag
 
-    for(;status != SLA_PLUS_W_ACK; tries++){              // Check for flag in polling mode
-        if(tries>=10) return status;                      // Return if it failed 10 times.
-        status = start_POL(target);                 // Start I2C protocol and wait for ACK
+    for(;status != SLA_PLUS_W_ACK; tries++){                                // Check for flag in polling mode
+        if(tries>=10) return status;                                        // Return if it failed 10 times.
+        status = start_POL(target);                                         // Start I2C protocol and wait for ACK
         
-        if(status == SLA_PLUS_W_ACK) break;               // break loop if ACK is received
-        TWCR |= (1<<TWSTO) | (1<<TWINT) | (1<<TWEN);      // Reset and send STOP signal, to start over.
+        if(status == SLA_PLUS_W_ACK) break;                                 // break loop if ACK is received
+        TWCR |= (1<<TWSTO) | (1<<TWINT) | (1<<TWEN);                        // Reset and send STOP signal, to start over.
         _delay_us(1);
     }
-    return 0x00;
+    return status;
  }
 
 /*==============================================================================
@@ -175,7 +176,7 @@ uint8_t i2cWriteNoCtrl_POL(I2C_PORT *port, I2C_TARGET *target){
         while(!(TWCR & (1<<TWINT)));
         TWDR = port->data[i];
         TWCR = (1<<TWINT) | (1<<TWEN); 
-        while(TWSR != DATA_BYTE_TRANSMITTED_ACK){TWDR = conf->data[i];}
+        while(TWSR != DATA_BYTE_TRANSMITTED_ACK){}
     }
  }
 
@@ -200,4 +201,40 @@ return TWSR & I2C_TWSR_FLAG_MASK;  ;
     - This function gives Control of START/STOP to the caller
 *==============================================================================*/
 uint8_t i2cReadNoCtrl_POL(I2C_PORT *port, I2C_TARGET *target){
+}
+
+
+/*#######################################___I2C FLAG HANDLERS___#################################*/
+
+void twsrFlagHandler(I2C_TARGET *target, char *msg){
+    char str[60] = {0};
+    strcat(str, msg);
+    switch (TWSR & I2C_TWSR_FLAG_MASK){
+        case START_TRANSMITTED:
+            strcat(str, "... Flag <START_RETRANSMITTED>\n");
+            uartWrite_(str);
+            break;
+        case SLA_PLUS_W_ACK:
+            strcat(str, "... Flag <SLA_PLUS_W_ACK>\n");
+            uartWrite_(str);
+            break;
+        case SLA_PLUS_W_NOT_ACK:
+            strcat(str, "... ErrorFlag <SLA_PLUS_W_NOT_ACK>\n");
+            uartWrite_(str);
+            break;
+        case DATA_BYTE_TRANSMITTED_ACK:
+            strcat(str, "... Flag <DATA_BYTE_TRANSMITTED_ACK>\n");
+            uartWrite_(str);
+            break;
+        case DATA_BYTE_TRANSMITTED_NO_ACK:
+            strcat(str, "... ErrorFlag <DATA_BYTE_TRANSMITTED_NO_ACK>\n");
+            uartWrite_(str);
+            break;
+        case ARBITRATION_LOST:
+            strcat(str, "... ErrorFlag <ARBITRATION_LOST>\n");
+            uartWrite_(str);
+            break;
+        default:
+            uartWrite_("Unknown FLag\n");
+    }
 }

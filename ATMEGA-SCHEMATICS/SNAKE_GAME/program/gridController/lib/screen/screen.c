@@ -3,8 +3,8 @@
 #include "string.h"
 #include "stdio.h"
 char c[50];
-void buildCommand(SCREEN_CONF *screen, uint16_t command){
-    memset(screen->instruction, 0, 6);
+void buildCommand(I2C_PORT *port, uint16_t command){
+    memset(port->instruction, 0, 6);
     uint8_t control_nibble = 0x00;
     if(command != READ_BUSY_FLAG && \
        command != WRITE_TO_RAM && \
@@ -32,12 +32,12 @@ void buildCommand(SCREEN_CONF *screen, uint16_t command){
     uint8_t hi_nibble = (((uint8_t)command) & 0xF0);
     uint8_t lo_nibble = ((((uint8_t)command) & 0x0F) << 4);
 
-    screen->instruction[0] = hi_nibble | control_nibble;
-    screen->instruction[1] = screen->instruction[0] & ~(1<<E);
+    port->instruction[0] = hi_nibble | control_nibble;
+    port->instruction[1] = port->instruction[0] & ~(1<<E);
     _delay_ms(2);
-    screen->instruction[2] = lo_nibble | control_nibble;
-    screen->instruction[3] = screen->instruction[2] & ~(1<<E);
-    screen->instruction[4] = '\0';
+    port->instruction[2] = lo_nibble | control_nibble;
+    port->instruction[3] = port->instruction[2] & ~(1<<E);
+    port->instruction[4] = '\0';
 }
 
 void screenInit(I2C_CONF *i2c_conf, I2C_SLAVE *i2c_slave, SCREEN_CONF *screen_conf){
@@ -84,12 +84,12 @@ void screenInit(I2C_CONF *i2c_conf, I2C_SLAVE *i2c_slave, SCREEN_CONF *screen_co
     memset(screen_conf->instruction, 0, 6);
 }
 
-void writeBytes(I2C_CONF *i2c_conf){
+void writeBytes(I2C_PORT *port){
     // Fixed: 'static' makes this memory permanent (non-dangling)
     static char instruction[5] = {0}; 
     uint8_t control_nibble = (1 << RS_BIT); // <-- FIXED: Set RS=1
-    char *temp = i2c_conf->data; // User string pointer is saved
-    uint16_t size = strlen(i2c_conf->data);
+    char *temp = port->data; // User string pointer is saved
+    uint16_t size = strlen(port->data);
     for(uint16_t i=0; i<size; i++){
         
         // This calculates the control byte *with* E=1
@@ -105,7 +105,7 @@ void writeBytes(I2C_CONF *i2c_conf){
         instruction[4] = '\0'; // Not necessary for I2C transfer
 
         // Set the I2C pointer to the 4-byte instruction buffer
-        i2c_conf->data = instruction;
+        port->data = instruction;
         
         // Send the 4 bytes for one character
         i2cMasterWrite_POL_SEND(i2c_conf, PCF8574_INDEX);
