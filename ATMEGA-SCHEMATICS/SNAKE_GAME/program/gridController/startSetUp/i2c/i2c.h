@@ -139,9 +139,9 @@ uint8_t i2cSTOP();
 
 /*______________Writing______________*/
 uint8_t i2cWrite_POL(I2C_PORT *port, I2C_TARGET *target);
-uint8_t i2cWriteNoCtrl_POL(I2C_PORT *port, I2C_TARGET *target);
+uint8_t i2cWriteNoCtrl_POL(I2C_PORT *port);
 uint8_t i2cWrite_INT(I2C_PORT *port, I2C_TARGET *target);
-uint8_t i2cWriteNoCtrl_INT(I2C_PORT *port, I2C_TARGET *target);
+uint8_t i2cWriteNoCtrl_INT(I2C_PORT *port);
 
 /*______________Reading______________*/
 uint8_t i2cRead_POL(I2C_PORT *port, I2C_TARGET *target);

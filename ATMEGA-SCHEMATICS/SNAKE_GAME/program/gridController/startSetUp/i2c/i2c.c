@@ -3,7 +3,12 @@
 #include "uart.h"
 #include "stdio.h"
 
-
+void i2cConfMaster_POL();
+void i2cConfMaster_INT();
+void i2cConfSlave_POL();
+void i2cConfSlave_INT();
+ uint8_t i2cWrite_POL_Helper(I2C_PORT *port, I2C_TARGET *target);
+ void twsrFlagHandler(I2C_TARGET *target, char *msg);
 /*==============================================================================
  *  I2C Clock Configuration
  *==============================================================================*/
@@ -106,7 +111,7 @@ uint8_t start_POL(I2C_TARGET *target){
     *  Transmit Start in Iterrupt Mode and return the status
 *==============================================================================*/
 uint8_t start_INT(I2C_TARGET *target){
-    uint8_t address = (target->addr << 1) | (target->direction & 0x01);       // Modify address byte on I2C protocol (SLA+W)
+    //uint8_t address = (target->addr << 1) | (target->direction & 0x01);       // Modify address byte on I2C protocol (SLA+W)
 
     return TWSR & I2C_TWSR_FLAG_MASK;                   // Return status flag
 }
@@ -150,7 +155,7 @@ uint8_t i2cSTOP(){
 
  uint8_t i2cWrite_POL_Helper(I2C_PORT *port, I2C_TARGET *target){
 
-    if(port->current_mode != target->mode) i2cModeConf(port);               // Update Mode if needed
+    if(port->current_mode != target->mode) i2cModeConf(target);               // Update Mode if needed
     if(port->current_target_addr != target->addr) i2cClockConfig(target);   // Adjust clock based on the target if neeeded
 
     uint8_t tries = 0;                                                      // Counter
@@ -171,7 +176,7 @@ uint8_t i2cSTOP(){
  * Send data buffer in port to the target
  - This function gives Control of START/STOP to the caller
  *==============================================================================*/
-uint8_t i2cWriteNoCtrl_POL(I2C_PORT *port, I2C_TARGET *target){
+uint8_t i2cWriteNoCtrl_POL(I2C_PORT *port){
     for(size_t i=0; i<port->data_size; i++){
         while(!(TWCR & (1<<TWINT)));
         TWDR = port->data[i];
@@ -179,9 +184,6 @@ uint8_t i2cWriteNoCtrl_POL(I2C_PORT *port, I2C_TARGET *target){
         while(TWSR != DATA_BYTE_TRANSMITTED_ACK){}
     }
  }
-
-
-
 
 /*#######################################___I2C READING FUNCTIONS___#################################*/
 

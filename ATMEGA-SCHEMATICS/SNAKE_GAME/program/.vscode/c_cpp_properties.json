@@ -19,6 +19,7 @@
                 "${workspaceFolder}/gridController/startSetUp/spi",
                 "${workspaceFolder}/gridController/startSetUp/isr",
                 "${workspaceFolder}/gridController/startSetUp/flash",
+                "${workspaceFolder}/gridController/startSetUp/allocation",
                 "${workspaceFolder}/gridController/snake",
                 "${workspaceFolder}/gridController/libC"
             ],

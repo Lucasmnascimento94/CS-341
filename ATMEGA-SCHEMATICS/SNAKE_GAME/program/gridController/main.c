@@ -42,18 +42,16 @@ int main(void){
     _delay_ms(10);
     */
     
-    screen.instruction = malloc(sizeof(char)*6);
-    i2cConfig(&i2c_conf);
-    screenInit(&i2c_conf, &i2c_slave, &screen);
+    screenInit(&i2c_port, &i2c_target);
 
 
-    char c[20];
-    sprintf(c, "HELLO WORLD SNAKE PROJECT:", i2c_slave.addr);
+    char c[30];
+    sprintf(c, "HELLO WORLD SNAKE PROJECT");
     uartWrite_(c);
     _delay_ms(100);
-    memset(i2c_conf.data, 0, sizeof(i2c_conf.data));
-    i2c_conf.data = c;
-    screenWrite(&i2c_conf, &screen);
+    memset(i2c_port.data, 0, strlen(i2c_port.data));
+    i2c_port.data = c;
+    screenWrite(&i2c_port, &i2c_target, &screen);
     //sprintf(c, "THIS IS ADDR IN CONF: %X\n", i2c_conf.slave[0]->addr);
    // uartWrite_(c);
 

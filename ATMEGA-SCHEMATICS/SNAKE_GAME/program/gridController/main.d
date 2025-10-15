@@ -3,7 +3,8 @@ main.o: main.c startSetUp/start.h includes.h startSetUp/spi/spi.h \
  libC/DataStructures.h snake/snake.h \
  snake/../startSetUp/ws2812b/WS2812B.h startSetUp/ws2812b/colors.h \
  startSetUp/ws2812b/colors.h startSetUp/sram/sram.h startSetUp/i2c/i2c.h \
- lib/screen/screen.h
+ lib/screen/screen.h startSetUp/allocation/allocation.h \
+ startSetUp/ws2812b/WS2812B.h snake/snake.h
 
 startSetUp/start.h:
 
@@ -30,3 +31,9 @@ startSetUp/sram/sram.h:
 startSetUp/i2c/i2c.h:
 
 lib/screen/screen.h:
+
+startSetUp/allocation/allocation.h:
+
+startSetUp/ws2812b/WS2812B.h:
+
+snake/snake.h:

@@ -4,7 +4,7 @@
 #include "stdio.h"
 char c[50];
 void buildCommand(I2C_PORT *port, uint16_t command){
-    memset(port->instruction, 0, 6);
+    memset(port->instruction, 0, port->intruction_size);
     uint8_t control_nibble = 0x00;
     if(command != READ_BUSY_FLAG && \
        command != WRITE_TO_RAM && \
@@ -40,48 +40,45 @@ void buildCommand(I2C_PORT *port, uint16_t command){
     port->instruction[4] = '\0';
 }
 
-void screenInit(I2C_CONF *i2c_conf, I2C_SLAVE *i2c_slave, SCREEN_CONF *screen_conf){
+void screenInit(I2C_PORT *port, I2C_TARGET *target){
     // Change the screen to 4 bit mode operatiyeson
-    i2c_conf->slave = malloc(sizeof(I2C_SLAVE*)*i2c_slave->count);
-    i2c_conf->slave[PCF8574_INDEX] = i2c_slave;
 
-
-    buildCommand(screen_conf, FUNCTION_SET);
-    i2c_conf->data = screen_conf->instruction;
-    i2cMasterWrite_POL(i2c_conf, PCF8574_INDEX);
+    buildCommand(port, FUNCTION_SET);
+    port->data = port->instruction;
+    i2cWrite_POL(port, target);
     _delay_us(100);
 
-    buildCommand(screen_conf, FUNCTION_SET);
-    i2c_conf->data = screen_conf->instruction;
-    i2cMasterWrite_POL(i2c_conf, PCF8574_INDEX);
+    buildCommand(port, FUNCTION_SET);
+    port->data = port->instruction;
+    i2cWrite_POL(port, target);
     _delay_us(100);
 
-    buildCommand(screen_conf, CLEAR_DISPLAY);
-    i2c_conf->data = screen_conf->instruction;
-    i2cMasterWrite_POL(i2c_conf, PCF8574_INDEX);
+    buildCommand(port, CLEAR_DISPLAY);
+    port->data = port->instruction;
+    i2cWrite_POL(port, target);
     _delay_ms(3);
 
-    buildCommand(screen_conf, ENTRY_MODE);
-    i2c_conf->data = screen_conf->instruction;
-    i2cMasterWrite_POL(i2c_conf, PCF8574_INDEX);
+    buildCommand(port, ENTRY_MODE);
+    port->data = port->instruction;
+    i2cWrite_POL(port, target);
     _delay_us(100);
 
-    buildCommand(screen_conf, DISPLAY_ON_OFF);
-    i2c_conf->data = screen_conf->instruction;
-    i2cMasterWrite_POL(i2c_conf, PCF8574_INDEX);
+    buildCommand(port, DISPLAY_ON_OFF);
+    port->data = port->instruction;
+    i2cWrite_POL(port, target);
     _delay_us(100);
 
-    buildCommand(screen_conf, CURSOR);
-    i2c_conf->data = screen_conf->instruction;
-    i2cMasterWrite_POL(i2c_conf, PCF8574_INDEX);
+    buildCommand(port, CURSOR);
+    port->data = port->instruction;
+    i2cWrite_POL(port, target);
     _delay_us(100);
 
-    buildCommand(screen_conf, HOME);
-    i2c_conf->data = screen_conf->instruction;
-    i2cMasterWrite_POL(i2c_conf, PCF8574_INDEX);
+    buildCommand(port, HOME);
+    port->data = port->instruction;
+    i2cWrite_POL(port, target);
     _delay_ms(3);
 
-    memset(screen_conf->instruction, 0, 6);
+    memset(port->instruction, 0, 6);
 }
 
 void writeBytes(I2C_PORT *port){
@@ -108,26 +105,26 @@ void writeBytes(I2C_PORT *port){
         port->data = instruction;
         
         // Send the 4 bytes for one character
-        i2cMasterWrite_POL_SEND(i2c_conf, PCF8574_INDEX);
+        i2cWriteNoCtrl_POL(port);
         _delay_us(60); 
     }
 }
 
-void screenWrite(I2C_CONF *i2c_conf, SCREEN_CONF *screen_conf){
-    if(i2c_conf->data == NULL) return;
+void screenWrite(I2C_PORT *port, I2C_TARGET *target, SCREEN_CONF *screen){
+    if(port->data == NULL) return;
 
-    char *temp = i2c_conf->data;
-    buildCommand(screen_conf, ((DDRAM<<RAM_BIT) | 0X00));
-    i2c_conf->data = screen_conf->instruction;
-    i2cMasterWrite_POL(i2c_conf, PCF8574_INDEX);
+    char *temp = port->data;
+    buildCommand(port, ((DDRAM<<RAM_BIT) | 0X00));
+    port->data = port->instruction;
+    i2cWrite_POL(port, target);
     _delay_us(100);
 
-    buildCommand(screen_conf, WRITE_TO_RAM);
-    i2c_conf->data = screen_conf->instruction;
-    i2cMasterWrite_POL_START(i2c_conf, PCF8574_INDEX);
-    i2cMasterWrite_POL_SEND(i2c_conf, PCF8574_INDEX);
-    i2c_conf->data = temp;
-    writeBytes(i2c_conf);
-    i2cMasterWrite_POL_STOP(i2c_conf, PCF8574_INDEX);
-    memset(screen_conf->instruction, 0, 6);
+    buildCommand(port, WRITE_TO_RAM);
+    port->data = port->instruction;
+    start_POL(target);
+    i2cWriteNoCtrl_POL(port);
+    port->data = temp;
+    writeBytes(port);
+    i2cSTOP();
+    memset(port->instruction, 0, 6);
 }

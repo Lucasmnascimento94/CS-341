@@ -63,6 +63,6 @@ typedef struct{
     char *instruction;
 }SCREEN_CONF;
 
-void screenInit(I2C_CONF *i2c_conf, I2C_SLAVE *i2c_slave, SCREEN_CONF *screen_conf);
-void screenWrite(I2C_CONF *i2c_conf, SCREEN_CONF *screen_conf);
+void screenInit(I2C_PORT *port, I2C_TARGET *target);
+void screenWrite(I2C_PORT *port, I2C_TARGET *target, SCREEN_CONF *screen);
 #endif
