@@ -1,6 +1,7 @@
 #include "isp.h"
 #include <util/delay.h>
 
+// raw bytes of blinky program
 uint16_t PAGE1[64] = {
     0x0C94, 0x3400, 0x0C94, 0x3E00, 0x0C94, 0x3E00, 0x0C94, 0x3E00,
     0x0C94, 0x3E00, 0x0C94, 0x3E00, 0x0C94, 0x3E00, 0x0C94, 0x3E00,
@@ -21,29 +22,43 @@ uint16_t PAGE2[64] = {
     0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,
     0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF};
 
-
 void writeBlinky();
 
 int main() {
   ispInit();
-  ispPowerUp();
-  ispProgrammingEnable();
+  // not sure if this is actually needed - will return to it: see 28.8.2, p304
+  // ispPowerUp();
+  START_ISP;
+  _delay_ms(100); // avrdude / usbasp seems to do this
   writeBlinky();
+  STOP_ISP;
   while (1)
     ;
 }
 
-
 void writeBlinky() {
-  ispChipErase();
-  _delay_ms(10);
   ispProgrammingEnable();
+  ispChipErase();
+  _delay_ms(10); // see minimum delays 28.8.2 p305
+
+  // arvdude / usbasp seems to do this
+  STOP_ISP;
+  _delay_us(100);
+  START_ISP;
+  _delay_ms(100);
+
+  ispProgrammingEnable();
+
+  // have to load a full page using Load Program Memory Page Low/High Byte...
   for (uint8_t i = 0; i < 64; ++i) {
     ispLoadProgramMemoryPageLowByte(PAGE1[i] >> 8, 0x00 + i);
     ispLoadProgramMemoryPageHighByte(PAGE1[i] & 0xFF, 0x00 + i);
   }
+  // ...then write it with address of final byte (maybe the page's address?)
   ispWriteProgramMemoryPage(0x003F);
-  _delay_ms(5);
+
+  _delay_ms(5); // see minimum delays 28.8.2 p305
+
   for (uint8_t i = 0; i < 64; ++i) {
     ispLoadProgramMemoryPageLowByte(PAGE2[i] >> 8, 0x40 + i);
     ispLoadProgramMemoryPageHighByte(PAGE2[i] & 0xFF, 0x40 + i);
