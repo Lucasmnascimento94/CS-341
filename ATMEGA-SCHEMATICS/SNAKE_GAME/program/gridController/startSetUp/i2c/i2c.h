@@ -13,6 +13,11 @@
 #define I2C_READ  1
 #define I2C_TWSR_FLAG_MASK 0XF8
 
+
+#define MODE_MASTER_POL 0X00
+#define MODE_MASTER_INT 0X01
+#define MODE_SLAVE_POL  0X10
+#define MODE_SLAVE_INT  0X11
 /*==============================================================================
  *  I2C Flags Opcodes
  *==============================================================================
@@ -21,28 +26,22 @@
 
 
  /*
-SLA+W will be transmitted;
-ACK or NOT ACK will be received
+SLA+W will be transmitted;ACK or NOT ACK will be received
  */
 #define START_TRANSMITTED               0X08
 
 
 /*
-SLA+W will be transmitted;
-ACK or NOT ACK will be received
-SLA+R will be transmitted;
-Logic will switch to Master Receiver mode
+SLA+W will be transmitted; ACK or NOT ACK will be received
+SLA+R will be transmitted; Logic will switch to Master Receiver mode
 */
 #define START_RETRANSMITTED             0X10
 
 
 /*
-Data byte will be transmitted and ACK or NOT ACK will
-be received
-Repeated START will be transmitted
-STOP condition will be transmitted and
-TWSTO Flag will be reset
-STOP condition followed by a START condition will be
+Data byte will be transmitted and ACK or NOT ACK will be received
+Repeated START will be transmitted STOP condition will be transmitted and
+TWSTO Flag will be reset STOP condition followed by a START condition will be
 transmitted and TWSTO Flag will be reset
 */
 #define SLA_PLUS_W_ACK          0X18
@@ -50,10 +49,8 @@ transmitted and TWSTO Flag will be reset
 
 /*
 Data byte will be transmitted and ACK or NOT ACK will
-be received
-Repeated START will be transmitted
-STOP condition will be transmitted and
-TWSTO Flag will be reset
+be received Repeated START will be transmitted
+STOP condition will be transmitted and TWSTO Flag will be reset
 STOP condition followed by a START condition will be
 transmitted and TWSTO Flag will be reset
 */
@@ -62,10 +59,8 @@ transmitted and TWSTO Flag will be reset
 
 /*
 Data byte will be transmitted and ACK or NOT ACK will
-be received
-Repeated START will be transmitted
-STOP condition will be transmitted and
-TWSTO Flag will be reset
+be received Repeated START will be transmitted
+STOP condition will be transmitted and TWSTO Flag will be reset
 STOP condition followed by a START condition will be
 transmitted and TWSTO Flag will be reset
 */
@@ -74,11 +69,9 @@ transmitted and TWSTO Flag will be reset
 
 /*
 Data byte will be transmitted and ACK or NOT ACK will
-be received
-Repeated START will be transmitted
+be received Repeated START will be transmitted
 STOP condition will be transmitted and
-TWSTO Flag will be reset
-STOP condition followed by a START condition will be
+TWSTO Flag will be reset STOP condition followed by a START condition will be
 transmitted and TWSTO Flag will be reset
 */
 #define DATA_BYTE_TRANSMITTED_NO_ACK    0X30
@@ -86,8 +79,7 @@ transmitted and TWSTO Flag will be reset
 
 /*
 2-wire Serial Bus will be released and not addressed
-Slave mode entered
-A START condition will be transmitted when the bus
+Slave mode entered A START condition will be transmitted when the bus
 becomes freeWSR & 0xF8
 */
 #define ARBITRATION_LOST                0X38
@@ -106,29 +98,22 @@ becomes freeWSR & 0xF8
  *
  *============================================================================*/
 typedef struct{
+    uint32_t TWBR_VAL; /*value for the clock generator*/
+    uint32_t frequency; /*Maximum Speed frequency for the clock generator*/
+    uint8_t prescaler; /**/
     uint8_t addr;
-    uint8_t count;
-}I2C_MASTER;
-
-typedef struct{
-    uint8_t addr;
-    uint8_t count;
-}I2C_SLAVE;
+    uint8_t direction;
+    uint8_t mode;
+}I2C_TARGET;
 
 typedef struct{
     char *data;
+    size_t data_size;
     char *instruction;
-    uint16_t twbr;
-    uint8_t prescaler;
-    bool read_mode;
-    bool master_mode;
-    bool interrupt_mode;
-    bool polling_mode;
-    I2C_MASTER **master;
-    I2C_SLAVE **slave;
-    uint32_t frequency;
-    uint32_t TWBR_VAL;
-}I2C_CONF;
+    size_t intruction_size;
+    uint8_t current_target_addr;
+    uint8_t current_mode;
+}I2C_PORT;
 
 // TWDR -> data register
 
@@ -147,12 +132,18 @@ typedef struct{
  *============================================================================*/
 
 
- void i2cConfig(I2C_CONF *conf);
- uint8_t i2cMasterStart_POL(I2C_CONF *conf);
- void i2cMasterWrite_POL(I2C_CONF *conf, uint8_t slave_index);
- void i2cMasterRead_POL(I2C_CONF *conf, char *data, int size);
+/*___________ProtocolControl____________*/
+uint8_t start_POL(I2C_TARGET *target);
+uint8_t start_INT(I2C_TARGET *target);
+uint8_t i2cSTOP();
 
- void i2cMasterWrite_POL_START(I2C_CONF *conf, uint8_t slave_index);
- void i2cMasterWrite_POL_SEND(I2C_CONF *conf, uint8_t slave_index);
- void i2cMasterWrite_POL_STOP(I2C_CONF *conf, uint8_t slave_index);
+/*______________Writing______________*/
+uint8_t i2cWrite_POL(I2C_PORT *port, I2C_TARGET *target);
+uint8_t i2cWriteNoCtrl_POL(I2C_PORT *port, I2C_TARGET *target);
+uint8_t i2cWrite_INT(I2C_PORT *port, I2C_TARGET *target);
+uint8_t i2cWriteNoCtrl_INT(I2C_PORT *port, I2C_TARGET *target);
+
+/*______________Reading______________*/
+uint8_t i2cRead_POL(I2C_PORT *port, I2C_TARGET *target);
+uint8_t i2cReadNoCtrl_POL(I2C_PORT *port, I2C_TARGET *target);
 #endif
