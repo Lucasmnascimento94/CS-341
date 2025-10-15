@@ -21,5 +21,6 @@
 
 
 void uartWrite(char *c, uint16_t size);
+void uartWrite_(char *c);
 
 #endif

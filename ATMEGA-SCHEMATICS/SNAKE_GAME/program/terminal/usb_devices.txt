@@ -1,2 +1,3 @@
 total 0
-lrwxrwxrwx 1 root root 13 Oct  8 09:21 usb-Silicon_Labs_CP2102_USB_to_UART_Bridge_Controller_0001-if00-port0 -> ../../ttyUSB0
+lrwxrwxrwx 1 root root 13 Oct 13 09:18 usb-FTDI_FT232R_USB_UART_A50285BI-if00-port0 -> ../../ttyUSB0
+lrwxrwxrwx 1 root root 13 Oct 13 13:00 usb-Silicon_Labs_CP2102_USB_to_UART_Bridge_Controller_0001-if00-port0 -> ../../ttyUSB1

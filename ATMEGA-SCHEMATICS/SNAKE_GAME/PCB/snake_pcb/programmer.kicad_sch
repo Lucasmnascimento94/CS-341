@@ -6139,17 +6139,6 @@
 	)
 	(hierarchical_label "FLASH_CS"
 		(shape input)
-		(at 72.39 101.6 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "6f39aff1-2423-4f4e-b28c-f290a0f966b8")
-	)
-	(hierarchical_label "FLASH_CS"
-		(shape input)
 		(at 72.39 77.47 0)
 		(effects
 			(font
@@ -6257,6 +6246,17 @@
 			(justify left)
 		)
 		(uuid "cbd1e071-3812-4fcb-b7fe-8790bf6aa5a8")
+	)
+	(hierarchical_label "XCK"
+		(shape input)
+		(at 72.39 101.6 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "cd33e82e-1cf3-49df-8b64-c5516356dea4")
 	)
 	(hierarchical_label "RTS_PROG"
 		(shape input)

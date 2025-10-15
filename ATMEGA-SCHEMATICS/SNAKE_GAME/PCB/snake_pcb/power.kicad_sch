@@ -1621,6 +1621,12 @@
 		)
 	)
 	(junction
+		(at 120.65 142.24)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "15da7cb4-778d-493d-a790-741d89fdeac9")
+	)
+	(junction
 		(at 57.15 43.18)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1693,10 +1699,10 @@
 		(uuid "428ba132-01a3-4af8-ae21-e7b84aad66b3")
 	)
 	(junction
-		(at 71.12 76.2)
+		(at 62.23 49.53)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "49fa0e93-2f50-451c-aa92-4172fdb15591")
+		(uuid "63c1deb7-4513-4536-a51d-e4c25cc77ba8")
 	)
 	(junction
 		(at 66.04 50.8)
@@ -1777,12 +1783,6 @@
 		(uuid "aa994c0b-dae1-4aa1-9470-22d086b013d3")
 	)
 	(junction
-		(at 120.65 142.24)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "adc40ff9-f121-4bcb-8fc5-3a0895252b42")
-	)
-	(junction
 		(at 158.75 143.51)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1793,12 +1793,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "b3e4cd55-66cd-45f9-be1a-7ee88c5f0059")
-	)
-	(junction
-		(at 68.58 50.8)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "c2db5a29-c052-4b33-885e-371ffb0e441f")
 	)
 	(junction
 		(at 250.19 151.13)
@@ -1874,16 +1868,6 @@
 	)
 	(wire
 		(pts
-			(xy 71.12 72.39) (xy 71.12 76.2)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "11ec2789-dcc1-46d4-9286-28cbad2c8406")
-	)
-	(wire
-		(pts
 			(xy 57.15 160.02) (xy 57.15 166.37)
 		)
 		(stroke
@@ -1954,7 +1938,7 @@
 	)
 	(wire
 		(pts
-			(xy 68.58 50.8) (xy 82.55 50.8)
+			(xy 66.04 50.8) (xy 82.55 50.8)
 		)
 		(stroke
 			(width 0)
@@ -1984,7 +1968,7 @@
 	)
 	(wire
 		(pts
-			(xy 63.5 50.8) (xy 60.96 48.26)
+			(xy 63.5 50.8) (xy 62.23 49.53)
 		)
 		(stroke
 			(width 0)
@@ -2121,16 +2105,6 @@
 			(type default)
 		)
 		(uuid "57e184d2-d8a2-4e3b-91b3-26888bc487ae")
-	)
-	(wire
-		(pts
-			(xy 66.04 50.8) (xy 68.58 50.8)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "615758c0-dc0a-49f8-8257-2962e6d38247")
 	)
 	(wire
 		(pts
@@ -2424,6 +2398,16 @@
 	)
 	(wire
 		(pts
+			(xy 62.23 49.53) (xy 60.96 48.26)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b06e134a-1d60-4b52-91a6-8ae762366f46")
+	)
+	(wire
+		(pts
 			(xy 53.34 43.18) (xy 57.15 43.18)
 		)
 		(stroke
@@ -2594,16 +2578,6 @@
 	)
 	(wire
 		(pts
-			(xy 120.65 118.11) (xy 120.65 142.24)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e6947b60-43d7-468b-9f16-ac2d35d43c56")
-	)
-	(wire
-		(pts
 			(xy 161.29 151.13) (xy 153.67 151.13)
 		)
 		(stroke
@@ -2651,6 +2625,16 @@
 			(type default)
 		)
 		(uuid "f829ab79-9213-4165-bcdc-891e643439fe")
+	)
+	(wire
+		(pts
+			(xy 120.65 137.16) (xy 120.65 142.24)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "faaabf2d-0860-440a-b50f-c33e59b3c8f0")
 	)
 	(global_label "VCC_LED_GRID"
 		(shape input)
@@ -2762,28 +2746,6 @@
 			)
 		)
 	)
-	(global_label "3.3V"
-		(shape output)
-		(at 71.12 72.39 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "8e4bb003-74c2-4dd4-ac7c-2587eae84561")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 71.12 65.2924 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "REG_EN_LOW"
 		(shape input)
 		(at 209.55 137.16 90)
@@ -2797,6 +2759,28 @@
 		(uuid "a3e3645d-fb81-4348-a285-8f86e4a2fbd2")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 209.55 122.2611 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "3.3V"
+		(shape output)
+		(at 69.85 76.2 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "cd9e0543-bb2b-41de-b20c-e3fb6f7d6ac8")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 69.85 69.1024 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3157,72 +3141,6 @@
 			(project "snake_pcb"
 				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/f45a2180-d4ef-4236-8e82-25b6011e1113"
 					(reference "C48")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:PWR_FLAG")
-		(at 68.58 50.8 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "0e56e2c9-07bf-4b68-96d8-91a29387d94f")
-		(property "Reference" "#FLG03"
-			(at 68.58 52.705 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "PWR_FLAG"
-			(at 68.58 55.88 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 68.58 50.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 68.58 50.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Special symbol for telling ERC where power comes from"
-			(at 68.58 50.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "1e78239d-970c-467b-aecc-9c6055179136")
-		)
-		(instances
-			(project "snake_pcb"
-				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/f45a2180-d4ef-4236-8e82-25b6011e1113"
-					(reference "#FLG03")
 					(unit 1)
 				)
 			)
@@ -3764,6 +3682,72 @@
 			(project "snake_pcb"
 				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/f45a2180-d4ef-4236-8e82-25b6011e1113"
 					(reference "#PWR0102")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 62.23 49.53 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "2aae8e58-56d2-453b-aa94-8bba423447b3")
+		(property "Reference" "#FLG03"
+			(at 62.23 51.435 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 62.23 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 62.23 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 62.23 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 62.23 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "21a283af-60f4-4090-9c1c-16b0203be8af")
+		)
+		(instances
+			(project "snake_pcb"
+				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/f45a2180-d4ef-4236-8e82-25b6011e1113"
+					(reference "#FLG03")
 					(unit 1)
 				)
 			)

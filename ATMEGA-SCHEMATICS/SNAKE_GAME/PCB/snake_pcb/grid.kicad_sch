@@ -3347,6 +3347,16 @@
 	)
 	(wire
 		(pts
+			(xy 146.05 95.25) (xy 152.4 95.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "55e09c79-42f4-4f6a-85dc-d85a64ed5ed6")
+	)
+	(wire
+		(pts
 			(xy 162.56 54.61) (xy 162.56 55.88)
 		)
 		(stroke
@@ -3554,6 +3564,16 @@
 			(type default)
 		)
 		(uuid "a638526c-6dab-44ee-80ea-366f8cb04624")
+	)
+	(wire
+		(pts
+			(xy 92.71 115.57) (xy 100.33 115.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a96a5243-5d80-484e-937d-d5c71fa09f1a")
 	)
 	(wire
 		(pts
@@ -3905,16 +3925,6 @@
 		)
 		(uuid "8887b023-d7e9-46d9-8442-5372b81a5864")
 	)
-	(label "PC1"
-		(at 92.71 115.57 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "8e03585a-10f6-4b2e-be30-85fc0b2a67d7")
-	)
 	(label "PC2"
 		(at 92.71 113.03 0)
 		(effects
@@ -4045,16 +4055,6 @@
 		)
 		(uuid "fb0b983b-60a8-499c-84eb-97e92adbae42")
 	)
-	(label "PC1"
-		(at 146.05 95.25 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "fd7859c2-a73a-445f-8eb0-e0039ff2984e")
-	)
 	(label "USART_CLK"
 		(at 92.71 96.52 0)
 		(effects
@@ -4064,6 +4064,72 @@
 			(justify left bottom)
 		)
 		(uuid "fe819074-01f7-4566-bacc-26b089049141")
+	)
+	(global_label "REG_EN_LOW"
+		(shape input)
+		(at 100.33 115.57 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "507d2107-a76e-4c69-837a-2dc3dd65af49")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 115.2289 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "REG_EN_LOW"
+		(shape input)
+		(at 152.4 95.25 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "75dc92e8-01d1-4e8d-a945-3427b7d7ea87")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 167.2989 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VCC_LED_GRID"
+		(shape input)
+		(at 237.49 115.57 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "7ba15030-745b-4311-83c5-d48f8a01881c")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 237.49 99.1591 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
 	)
 	(hierarchical_label "MISO_GRID"
 		(shape input)
@@ -4800,6 +4866,82 @@
 			(project "snake_pcb"
 				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/5fd9a7fb-d9b8-4dd1-97f8-12c5ea1daca5"
 					(reference "#PWR036")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Conn_01x04_Pin")
+		(at 242.57 120.65 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "34c051bf-21db-4e54-8cf3-0e4b2a1bcd97")
+		(property "Reference" "J29"
+			(at 243.84 118.1099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "GRID"
+			(at 243.84 120.6499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
+			(at 242.57 120.65 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 242.57 120.65 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x04, script generated"
+			(at 242.57 120.65 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "87ee8653-e9fa-45e2-9a8c-380f4e1a1f64")
+		)
+		(pin "4"
+			(uuid "252434df-facf-440b-a9ee-1e8b56e034f4")
+		)
+		(pin "2"
+			(uuid "33a4c1d1-3449-4b7f-a89f-5fbfd2857c02")
+		)
+		(pin "3"
+			(uuid "97e19a5d-e70d-4838-9237-194781731b86")
+		)
+		(instances
+			(project ""
+				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/5fd9a7fb-d9b8-4dd1-97f8-12c5ea1daca5"
+					(reference "J29")
 					(unit 1)
 				)
 			)
@@ -6183,79 +6325,6 @@
 			(project "snake_pcb"
 				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/5fd9a7fb-d9b8-4dd1-97f8-12c5ea1daca5"
 					(reference "#PWR033")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:Conn_01x03_Pin")
-		(at 242.57 120.65 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "d8f8aba2-a11b-499e-a531-679aeace2fa1")
-		(property "Reference" "J2"
-			(at 243.84 119.3799 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "GRID"
-			(at 243.84 121.9199 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical"
-			(at 242.57 120.65 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 242.57 120.65 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic connector, single row, 01x03, script generated"
-			(at 242.57 120.65 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "30aed169-473b-4b43-b524-6fcc3d16d245")
-		)
-		(pin "2"
-			(uuid "48e91cab-b763-481f-88c2-8dc03f3c7e71")
-		)
-		(pin "3"
-			(uuid "591891e6-d4d5-4fe5-8ac0-fda6a8ec1182")
-		)
-		(instances
-			(project "snake_pcb"
-				(path "/071b2fc6-d65a-411c-93b6-4a9f90a11c3f/5fd9a7fb-d9b8-4dd1-97f8-12c5ea1daca5"
-					(reference "J2")
 					(unit 1)
 				)
 			)

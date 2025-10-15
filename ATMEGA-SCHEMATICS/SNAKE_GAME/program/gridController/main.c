@@ -3,39 +3,16 @@
 #include "snake/snake.h"
 #include "ws2812b/colors.h"
 #include "startSetUp/sram/sram.h"
+#include "i2c.h"
+#include "screen.h"
+#include "allocation.h"
 
-SnakeBelly belly = {
-    .color = COLOR_GOLD,
-    .color_food = COLOR_GREEN,
-    .count = 0,
-    .direction =LEFT,
-    .head = NULL,
-    .tail = NULL,
-    .walk = false,
-    .end = false,
-    .begin = false,
-    .pt = 0
-};
-
-struct Cell food = {
-    .i = 8,
-    .j = 5,
-    .next = NULL,
-    .poison = false,
-    .prev = NULL,
-    .val = PIXEL_ADDRESS(8, 5, 2) 
-};
-
-static char c[]= "In a small coastal town, the rhythm of life followed the tides. "
-                    "Every morning, fishermen set sail before sunrise, "
-                    "their boats cutting through the mist as gulls cried overhead.";
-static char msg[]  = "MESSAGE SENT\r\n";
-static const char msg2[] = "MESSAGE READ\r\n";
 /*
 DDRX -> DIRECTION
-
-
 */
+
+
+
 int main(void){
     //char c[20];
     LED_DDR |= (1 << LED_PIN);   // data pin as output
@@ -47,7 +24,7 @@ int main(void){
 
 
     //print("STARTING\n", 1);
-    gameInit(&belly, &food);
+   /* gameInit(&belly, &food);
     _delay_ms(500);
     initSnake(&belly, &food);
     belly.begin = true;
@@ -63,21 +40,24 @@ int main(void){
     sramReadModeRegister();
     sramWriteStringPoll(0x00, 0xFF, len);
     _delay_ms(10);
+    */
+    
+    screenInit(&i2c_port, &i2c_target);
+
+
+    char c[30];
+    sprintf(c, "HELLO WORLD SNAKE PROJECT");
+    uartWrite_(c);
+    _delay_ms(100);
+    memset(i2c_port.data, 0, strlen(i2c_port.data));
+    i2c_port.data = c;
+    screenWrite(&i2c_port, &i2c_target, &screen);
+    //sprintf(c, "THIS IS ADDR IN CONF: %X\n", i2c_conf.slave[0]->addr);
+   // uartWrite_(c);
 
     while(1){
-        uartWrite(msg,  len_msg);
-        uartWrite(c, len_text);
-        uartWrite("\r\n\r\n\r\n", 6);   // exactly 6 bytes
-        _delay_ms(5);
 
-        // (Re)write then read back
-        sramWriteStringPoll(c, 0xFF, len_text);
-        _delay_ms(5);
-        sramReadString(buffer, len_text, 0xFF);
-
-        uartWrite(msg2, len_msg2);
-        uartWrite((const char*)buffer, len_text);
-        uartWrite("\r\n\r\n\r\n", 6);
+        uartWrite("lOOPING\n", 9);
         _delay_ms(5000);
     }
 }
