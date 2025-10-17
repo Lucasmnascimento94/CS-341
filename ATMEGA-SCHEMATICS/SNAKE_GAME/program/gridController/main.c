@@ -52,6 +52,62 @@ void test(){
             sendZero();
         }
         for(int j=0; j<8; j++){
+            sendZero();
+        }
+    }
+
+    for(int i=0; i<32;i++){
+        sendOne();
+    }
+
+      _delay_ms(1000);
+
+
+
+
+      for(int i=0; i<32;i++){
+        sendZero();
+    }
+
+    for(int i=0; i<196; i++){
+        sendBright();
+        for(int j=0; j<8; j++){
+            sendZero();
+        }
+        for(int j=0; j<8; j++){
+            sendOne();
+        }
+        for(int j=0; j<8; j++){
+            sendZero();
+        }
+    }
+
+    for(int i=0; i<32;i++){
+        sendOne();
+    }
+
+      _delay_ms(1000);
+
+
+
+
+
+
+
+
+      for(int i=0; i<32;i++){
+        sendZero();
+    }
+
+    for(int i=0; i<196; i++){
+        sendBright();
+        for(int j=0; j<8; j++){
+            sendZero();
+        }
+        for(int j=0; j<8; j++){
+            sendZero();
+        }
+        for(int j=0; j<8; j++){
             sendOne();
         }
     }
