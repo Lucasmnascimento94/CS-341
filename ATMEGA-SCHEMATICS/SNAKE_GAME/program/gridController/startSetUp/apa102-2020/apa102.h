@@ -156,6 +156,10 @@ static inline uint32_t gridXYToLinear(uint16_t x, uint16_t y)
  *===========================================================================*/
 void apa102Init(void);
 void gridSetBrightness(uint8_t gb);
+
+/*
+    Clear does not have colors, so you do not need rgb.
+*/
 void gridClear(uint8_t r, uint8_t g, uint8_t b);           // fill framebuffer
 void gridSetXY(uint16_t x, uint16_t y,                       // update one pixel
                  uint8_t r, uint8_t g, uint8_t b);          
