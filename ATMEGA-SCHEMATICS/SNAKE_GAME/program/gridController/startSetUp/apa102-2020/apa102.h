@@ -59,6 +59,11 @@
 #   define APA102_DEFAULT_GB 31
 #endif
 
+/* Comentator: Lucas Nascimento
+The header file is used for declaring functions that will be accessed by other files... it the equivalent
+of "where your public functions are exposed to the callers".. you do not execute logic in header files.
+
+*/
 /*===========================================================================
  * 2) MAPPING HELPERS - 2D(x,y) -> linear index in SPI stream.
  *===========================================================================*/
@@ -68,6 +73,49 @@ static inline uint16_t tileIndexFromXY(uint16_t x, uint16_t y)
 {
     uint16_t tx = x / TILE_W; // tile x
     uint16_t ty = y / TILE_H; // tile y
+
+
+/* Commentator: Lucas Nascimento
+-> tx = x/TILE_W (tx >= TILE_COLUMNS will probably always false becuase even if you try to access
+a coordinate greater than the width, x/TILE_W will be smaller than width size... it Will not protect against
+the out of bounds error... Try to check if x>=TILE_W at the begining of the function and y >= TILE_H)
+
+
+-> if x and y are the coordinates, the return statement is also not returning the correct value..
+    0 < ty * TILE_COLUMNS  < TILE_COLUMNS
+
+-> the reuturn statement is not considering the pixels you walked through when you jump to the next row..
+    it should be a multiplacation.. I see that ty seems to be trying to do that but it is actually a double < 1.
+
+    The grid will work with this pattern:
+    i
+j   (1,1).................................(w,1) 
+      .
+      .
+      .
+      .
+      .
+      .
+    (1,h).................................(w,h)
+
+    in the odd rows the address increases to the right >>
+    in the even rows the address increases to the left <<
+    so you need two functions, one for odd rows and another for even rows.. (like what you are trying to do)
+
+    so the function to get an address from i j in the odd rows would be:
+
+    addr = i + (j-1)*w, where 1 <= i <= w and 1 <= y <= h
+    so doing this patterns:
+    
+    First row:
+    addr = i + (1-1)*w -> addr = i
+
+    Third tow:
+    addr = i + (3-1)*w -> addr = i + 2*w (so now it is counting the amount of pixels you already passed before the third row
+    plus the pixels you passed in the current row...)
+*/
+
+
     if (tx >= TILE_COLUMNS || ty >= TILE_ROWS) return 0; // out of bounds
 
     /* linear tile order */
