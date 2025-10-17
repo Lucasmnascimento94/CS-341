@@ -24,7 +24,7 @@ const uint16_t PAGE2[64] = {
     0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,
 };
 
-void writePage(uint16_t base_adr, uint16_t data[64]);
+void writePage(uint16_t base_adr, const uint16_t data[64]);
 void verifyPage(uint16_t base_adr);
 void writeBlinky();
 
@@ -55,14 +55,14 @@ int main() {
     ;
 }
 
-void writePage(uint16_t base_adr, uint16_t data[64]) {
+void writePage(uint16_t base_adr, const uint16_t data[64]) {
   // have to load a full page using Load Program Memory Page Low/High Byte...
   for (uint8_t i = 0; i < 64; ++i) {
     ispLoadProgramMemoryPageLowByte(data[i] >> 8, base_adr + i);
     ispLoadProgramMemoryPageHighByte(data[i] & 0xFF, base_adr + i);
   }
   // ...then write it with address of final byte
-  ispWriteProgramMemoryPage(base_adr + 64);
+  ispWriteProgramMemoryPage(base_adr + 63);
 
 }
 
@@ -89,7 +89,7 @@ void writeBlinky() {
   writePage(0x00, PAGE1);
   verifyPage(0x00);
   _delay_ms(5); // see minimum delays 28.8.2 p305
-  writePage(0x40, PAGE1);
+  writePage(0x40, PAGE2);
   verifyPage(0x40);
 }
 
