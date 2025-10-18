@@ -17,14 +17,13 @@ void ispInit();
 void ispPowerUp();
 uint8_t ispTransmitByte(uint8_t data);
 uint8_t ispProgrammingEnable();
-void ispReadSignatureByte();
-void ispReadFuseBits();
-
-void ispReadProgramMemoryHighByte(uint16_t adr);
-void ispReadProgramMemoryLowByte(uint16_t adr);
+void ispChipErase();
 void ispLoadProgramMemoryPageHighByte(uint8_t data, uint16_t adr);
 void ispLoadProgramMemoryPageLowByte(uint8_t data, uint16_t adr);
+void ispReadProgramMemoryHighByte(uint16_t adr);
+void ispReadProgramMemoryLowByte(uint16_t adr);
+void ispReadSignatureByte(uint8_t adr);
+void ispReadFuseBits();
 void ispWriteProgramMemoryPage(uint16_t adr);
-void ispChipErase();
 
 #endif

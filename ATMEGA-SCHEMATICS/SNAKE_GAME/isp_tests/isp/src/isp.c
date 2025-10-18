@@ -7,7 +7,10 @@
 
 void ispInit() {
   // enable SCK, MOSI, CS as output
-  DDRB = _BV(SCK) | _BV(MOSI) | _BV(CS);
+  DDRB = _BV(SCK) | _BV(MISO) | _BV(MOSI) | _BV(CS);
+
+  // set MISO high until slave sets as output
+  PORTB |= _BV(MISO);
 
   // set SS high so master doesn't get overwritten
   PORTB |= _BV(PB2);
@@ -17,35 +20,6 @@ void ispInit() {
 
   // enable SPE, re-enable master, set pre-scaler to 64
   SPCR = _BV(SPE) | _BV(MSTR) | _BV(SPR1) | _BV(SPR0);
-}
-
-uint8_t ispTransmitByte(uint8_t data) {
-  SPDR = data;
-  while (!(SPSR & (1 << SPIF)))
-    ;
-  return SPDR;
-}
-
-uint8_t ispProgrammingEnable() {
-  ispTransmitByte(0xAC);
-  ispTransmitByte(0x53);
-  ispTransmitByte(0x00);
-  ispTransmitByte(0x00);
-  return 0;
-}
-
-void ispReadSignatureByte() {
-  ispTransmitByte(0x30);
-  ispTransmitByte(0x00);
-  ispTransmitByte(0x00);
-  ispTransmitByte(0x00);
-}
-
-void ispReadFuseBits() {
-  ispTransmitByte(0x50);
-  ispTransmitByte(0x00);
-  ispTransmitByte(0x00);
-  ispTransmitByte(0x00);
 }
 
 // following powerup protocl described in 28.8.2, p304
@@ -63,17 +37,25 @@ void ispPowerUp() {
   _delay_ms(20);
 }
 
-void ispReadProgramMemoryHighByte(uint16_t adr) {
-  ispTransmitByte(0x28);
-  ispTransmitByte(adr >> 8);
-  ispTransmitByte(adr & 0xFF);
-  ispTransmitByte(0x00);
+uint8_t ispTransmitByte(uint8_t data) {
+  SPDR = data;
+  while (!(SPSR & (1 << SPIF)))
+    ;
+  return SPDR;
 }
 
-void ispReadProgramMemoryLowByte(uint16_t adr) {
-  ispTransmitByte(0x20);
-  ispTransmitByte(adr >> 8);
-  ispTransmitByte(adr & 0xFF);
+uint8_t ispProgrammingEnable() {
+  ispTransmitByte(0xAC);
+  ispTransmitByte(0x53);
+  ispTransmitByte(0x00);
+  ispTransmitByte(0x00);
+  return 0;
+}
+
+void ispChipErase() {
+  ispTransmitByte(0xAC);
+  ispTransmitByte(0x80);
+  ispTransmitByte(0x00);
   ispTransmitByte(0x00);
 }
 
@@ -91,16 +73,37 @@ void ispLoadProgramMemoryPageLowByte(uint8_t data, uint16_t adr) {
   ispTransmitByte(data);
 }
 
-void ispWriteProgramMemoryPage(uint16_t adr) {
-  ispTransmitByte(0x4C);
+void ispReadProgramMemoryHighByte(uint16_t adr) {
+  ispTransmitByte(0x28);
   ispTransmitByte(adr >> 8);
   ispTransmitByte(adr & 0xFF);
   ispTransmitByte(0x00);
 }
 
-void ispChipErase() {
-  ispTransmitByte(0xAC);
-  ispTransmitByte(0x80);
+void ispReadProgramMemoryLowByte(uint16_t adr) {
+  ispTransmitByte(0x20);
+  ispTransmitByte(adr >> 8);
+  ispTransmitByte(adr & 0xFF);
   ispTransmitByte(0x00);
+}
+
+void ispReadSignatureByte(uint8_t adr) {
+  ispTransmitByte(0x30);
+  ispTransmitByte(0x00);
+  ispTransmitByte(adr);
+  ispTransmitByte(0x00);
+}
+
+void ispReadFuseBits() {
+  ispTransmitByte(0x50);
+  ispTransmitByte(0x00);
+  ispTransmitByte(0x00);
+  ispTransmitByte(0x00);
+}
+
+void ispWriteProgramMemoryPage(uint16_t adr) {
+  ispTransmitByte(0x4C);
+  ispTransmitByte(adr >> 8);
+  ispTransmitByte(adr & 0xFF);
   ispTransmitByte(0x00);
 }
