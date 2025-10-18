@@ -15,7 +15,8 @@
     "i2c.h": "c",
     "screen.h": "c",
     "stdio.h": "c",
-    "uart.h": "c"
+    "uart.h": "c",
+    "isp_opcodes.h": "c"
   },
   "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "clang",
