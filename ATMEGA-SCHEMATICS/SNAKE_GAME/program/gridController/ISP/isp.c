@@ -2,7 +2,10 @@
 #include "isp.h"
 #include "spi.h"
 #include "uart.h"
+#include "avr/pgmspace.h"
 
+char c[100] = {0};
+void ispChipErase();
 
 uint8_t ispInit(TARGET *target){
   uint8_t try = 0x00;
@@ -78,20 +81,37 @@ void ispReadFuseBits(TARGET *target, uint8_t fuse) {
 }
 
 void ispLoadProgramMemoryPage(PROGRAMMER *programmer) {
+  uartWrite_("entering load\n");
   if(programmer->buffer_size == 0 || programmer->buffer == NULL) return;
+  uartWrite_("passed load guard\n");
 
+  sprintf(c, "counter: %d | size: %d | number: %d \n", programmer->page_counter , programmer->buffer_size, programmer->page_number);
+  uartWrite_(c);
+
+  programmer->page_counter = 0;
   while(programmer->page_counter < 64 && \
     programmer->page_counter < programmer->buffer_size && \
     programmer->page_number < 128){
+
+    uint16_t word = pgm_read_word(&((const uint16_t*)programmer->buffer)[programmer->page_counter]);
+    uint8_t low_byte = 0x00;
+    uint8_t high_byte = 0x00;
     spiWritePollByte_(0x40);
     spiWritePollByte_(0x00);
     spiWritePollByte_(programmer->page_counter);
-    spiWritePollByte_((uint8_t)(programmer->buffer[programmer->page_counter]));
+    spiWritePollByte_((uint8_t)pgm_read_word(&((const uint16_t*)programmer->buffer)[programmer->page_counter]));
 
     spiWritePollByte_(0x48);
     spiWritePollByte_(0x00);
     spiWritePollByte_(programmer->page_counter);
-    spiWritePollByte_((uint8_t)(programmer->buffer[programmer->page_counter++] >> 8));
+    spiWritePollByte_((uint8_t)(pgm_read_word(&((const uint16_t*)programmer->buffer)[programmer->page_counter++]) >> 8));
+
+    low_byte = word & 0x00FF;
+    high_byte = (word >>8);
+
+    sprintf(c, "Wrote high_byte: %X | low_byte: %X | Word: %X\n", high_byte, low_byte, word);
+    uartWrite_(c);
+    _delay_us(100);
   }
 
   programmer->current_page = ((uint16_t)programmer->page_number << 6);
@@ -102,8 +122,50 @@ void ispLoadProgramMemoryPage(PROGRAMMER *programmer) {
   spiWritePollByte_(0x00);
 
   programmer->page_number++; 
-  programmer->page_counter = 0;
+
+  sprintf(c, "PAGE NUMBER >>>>>>> %d | PAGE_COUNTER: %d \n", programmer->page_number, programmer->page_counter);
+  uartWrite_(c);
   _delay_ms(20); // SAFE WAIT
+}
+
+void ispVerifyProgramMemoryPage(PROGRAMMER *programmer, uint16_t page_addr) {
+  uartWrite_("entering verify\n");
+  if(programmer->buffer_size == 0 || programmer->buffer == NULL) return;
+  uartWrite_("passed verify guard\n");
+  sprintf(c, "veryfying page addr: %X\n", page_addr);
+  uartWrite_(c);
+
+  programmer->page_counter = 0;
+  while(programmer->page_counter < 64 && \
+    programmer->page_counter < programmer->buffer_size && \
+    programmer->page_number < 128){
+    uint16_t word = 0x00;
+    uint8_t low_byte = 0x00;
+    uint8_t high_byte = 0x00;
+
+    spiWritePollByte_(0x28);
+    spiWritePollByte_((page_addr & 0xFF00) >> 8);
+    spiWritePollByte_((page_addr & 0x00FF) | programmer->page_counter);
+    spiReadPollByte_(&high_byte);
+
+    spiWritePollByte_(0x20);
+    spiWritePollByte_((page_addr & 0xFF00) >> 8);
+    spiWritePollByte_((page_addr & 0x00FF) | programmer->page_counter++);
+    spiReadPollByte_(&low_byte);
+
+    word = ((uint16_t)high_byte << 8) | low_byte;
+    sprintf(c, "Expected: %lX  |  Verified: %lX\n", (unsigned long)pgm_read_word(&((const uint16_t*)programmer->buffer)[programmer->page_counter - 1]), (unsigned long)word);
+    uartWrite_(c);
+    _delay_us(100);
+  }
+  _delay_ms(20); // SAFE WAIT
+}
+
+void ispChipErase() {
+  spiWritePollByte_(0xAC);
+  spiWritePollByte_(0x80);
+  spiWritePollByte_(0x00);
+  spiWritePollByte_(0x00);
 }
 
 /*
@@ -118,34 +180,6 @@ void ispReadProgramMemoryLowByte(uint16_t adr) {
   ispTransmitByte(0x20);
   ispTransmitByte(adr >> 8);
   ispTransmitByte(adr & 0xFF);
-  ispTransmitByte(0x00);
-}
-
-void ispLoadProgramMemoryPageHighByte(uint8_t data, uint16_t adr) {
-  ispTransmitByte(0x48);
-  ispTransmitByte(0x00);
-  ispTransmitByte(adr & 0xFF);
-  ispTransmitByte(data);
-}
-
-void ispLoadProgramMemoryPageLowByte(uint8_t data, uint16_t adr) {
-  ispTransmitByte(0x40);
-  ispTransmitByte(0x00);
-  ispTransmitByte(adr & 0xFF);
-  ispTransmitByte(data);
-}
-
-void ispWriteProgramMemoryPage(uint16_t adr) {
-  ispTransmitByte(0x4C);
-  ispTransmitByte(adr >> 8);
-  ispTransmitByte(adr & 0xFF);
-  ispTransmitByte(0x00);
-}
-
-void ispChipErase() {
-  ispTransmitByte(0xAC);
-  ispTransmitByte(0x80);
-  ispTransmitByte(0x00);
   ispTransmitByte(0x00);
 }
 

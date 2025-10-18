@@ -48,6 +48,7 @@
 #define MISO            PB4
 #define MOSI            PB3
 #define CS              PB0
+#define SS              PB2
 
 #define START_SPI       (PORTB &= ~(1<<CS))
 #define STOP_SPI        (PORTB |=  (1<<CS))

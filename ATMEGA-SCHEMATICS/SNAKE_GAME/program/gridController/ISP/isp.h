@@ -52,7 +52,7 @@ typedef struct {
     uint16_t current_page;
     uint16_t current_addr;
     PROGRAMMER_CONF *conf;
-    uint16_t *buffer;
+    const uint16_t *buffer;
     size_t buffer_size;
     uint8_t status;
     uint8_t page_counter;
@@ -66,4 +66,7 @@ void powerUp();
 void ispProgrammingEnable(TARGET *target) ;
 void ispReadSignatureByte(TARGET *target, uint8_t signature);
 void ispReadFuseBits(TARGET *target, uint8_t fuse);
+void ispLoadProgramMemoryPage(PROGRAMMER *programmer);
+void ispChipErase();
+void ispVerifyProgramMemoryPage(PROGRAMMER *programmer, uint16_t page_addr);
 #endif

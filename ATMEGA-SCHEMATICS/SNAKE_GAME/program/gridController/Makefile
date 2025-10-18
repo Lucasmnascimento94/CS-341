@@ -69,12 +69,9 @@ ifeq ($(INIT), INIT_UBUNTU)
 # Add any source directories here
 SRC_DIRS = \
   . \
-  lib lib/console lib/esp lib/screen \
-  libC \
-  snake \
   startSetUp \
-  startSetUp/flash startSetUp/i2c startSetUp/isr startSetUp/spi \
-  startSetUp/sram startSetUp/timer startSetUp/uart startSetUp/ws2812b startSetUp/allocation \
+  startSetUp/spi \
+  startSetUp/uart \
   ISP
 
 # Auto-discover sources/headers

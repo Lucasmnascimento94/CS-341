@@ -97,16 +97,16 @@ grid_read_elf: # Read elf file
 
 # ===== Game controller MCU =====
 game: # Build files
-	$(MAKE) -C ./gridController 
+	$(MAKE) -C ./gameController 
 
 game_flash: # Flash files built with the above command
-	$(MAKE) -C ./gridController flash
+	$(MAKE) -C ./gameController  flash
 
 game_clean: # Clean old files
-	$(MAKE) -C ./gridController clean
+	$(MAKE) -C ./gameController  clean
 
 game_read_fuse: # Read fuses in the MCU
-	$(MAKE) -C ./gridController readfuse
+	$(MAKE) -C ./gameController  readfuse
 
 game_read_obj: # Read object file
 
@@ -205,16 +205,16 @@ grid_read_fuse: # Read fuses in the MCU
 
 # ===== Game controller MCU =====
 game: # Build files
-	& "$(MAKE)" -C ./gridController 
+	& "$(MAKE)" -C ./gameController 
 
 game_flash: # Flash files built with the above command
-	& "$(MAKE)" -C ./gridController flash
+	& "$(MAKE)" -C ./gameController  flash
 
 game_clean: # Clean old files
-	& "$(MAKE)" -C ./gridController clean
+	& "$(MAKE)" -C ./gameController  clean
 
 game_read_fuse: # Read fuses in the MCU
-	& "$(MAKE)" -C ./gridController readfuse
+	& "$(MAKE)" -C ./gameController  readfuse
 
 
 # ===== Install dependencies out of the dependencies.txt file =====
