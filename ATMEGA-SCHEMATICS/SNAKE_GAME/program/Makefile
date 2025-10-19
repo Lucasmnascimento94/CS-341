@@ -22,7 +22,6 @@
                                  
 
 # ===== Project =====
-F_CPU    = 16000000UL
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
 
 #######################################################################################################################################################                                                                            
@@ -128,6 +127,8 @@ isp_clean: # Clean old files
 isp_read_fuse: # Read fuses in the MCU
 	$(MAKE) -C ./ISP  readfuse
 
+isp_dirs:
+	$(MAKE) -C ./ISP  DIRS
 isp_read_obj: # Read object file
 
 

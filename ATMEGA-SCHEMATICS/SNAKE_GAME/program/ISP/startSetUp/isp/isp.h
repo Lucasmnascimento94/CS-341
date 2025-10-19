@@ -4,7 +4,9 @@
 #include "isp_opcodes.h"
 #include "stdint.h"
 #include "stdio.h"
-
+#include "spi.h"
+#include "uart.h"
+#include "avr/pgmspace.h"
 #define PAGE_SIZE 32
 
 
@@ -61,8 +63,8 @@ typedef struct {
 
 
 
-uint8_t ispInit(TARGET *target);
-void powerUp();
+uint8_t ispInit(SPI *spi, TARGET *target);
+void powerUp(SPI *spi);
 void ispProgrammingEnable(TARGET *target) ;
 void ispReadSignatureByte(TARGET *target, uint8_t signature);
 void ispReadFuseBits(TARGET *target, uint8_t fuse);

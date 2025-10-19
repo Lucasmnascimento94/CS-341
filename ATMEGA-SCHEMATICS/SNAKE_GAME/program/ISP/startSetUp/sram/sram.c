@@ -16,12 +16,12 @@ void sendInstruction(uint32_t address){
 >> 3bytes: 24 bit address
 >> 1byte: Data out
 */
-void sramWriteByte(uint8_t c, uint32_t address){
+void sramWriteByte(SPI *spi, uint8_t c, uint32_t address){
     address = (SRAM_WRITE << 24) | address; // Combine Command instruction to the address data
-    START_SPI;
+    spiStart(spi);
     sendInstruction(address); 
     spiWritePoll_(&c, 1);
-    STOP_SPI;
+    spiStop(spi); 
 }
 
 
@@ -30,12 +30,12 @@ void sramWriteByte(uint8_t c, uint32_t address){
 >> 3bytes: 24 bit address
 >> 1byte: Data Stream
 */
-void sramWriteStringPoll(char *data, uint32_t address, uint16_t size){
+void sramWriteStringPoll(SPI *spi, char *data, uint32_t address, uint16_t size){
     address = (SRAM_WRITE << 24) | address;
-    START_SPI;
+    spiStart(spi);
     sendInstruction(address); 
     spiWritePoll_((uint8_t *)data, size);
-    STOP_SPI;
+    spiStop(spi); 
 }
 
 
@@ -44,51 +44,51 @@ void sramWriteStringPoll(char *data, uint32_t address, uint16_t size){
 >> 3bytes: 24 bit address
 >> 1byte: Data out
 */
-void sramReadByte(uint8_t *c, uint32_t address){
+void sramReadByte(SPI *spi, uint8_t *c, uint32_t address){
     address = (SRAM_READ << 24) | address; // Combine Command instruction to the address data
     *c = 0x00;
 
-    START_SPI;                         // CS low
+    spiStart(spi);                        // CS low
     sendInstruction(address);          // Send instruction + address
     SPDR = 0x00;
     while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
     *c = SPDR;                       // Get data from buffer
-    STOP_SPI;   
+    spiStop(spi);   
 }
 
 
-void sramReadString(uint8_t *data, size_t len, uint32_t address){
+void sramReadString(SPI *spi, uint8_t *data, size_t len, uint32_t address){
     address = (SRAM_READ << 24) | address;
-    START_SPI;
+    spiStart(spi);
     sendInstruction(address); 
     spiReadPoll_((uint8_t *)data, len);
-    STOP_SPI;
+    spiStop(spi); 
 }
 
 
-void sramReadModeRegister(){
+void sramReadModeRegister(SPI *spi){
     uint8_t data = 0x00;
-    START_SPI;                         // CS low
+    spiStart(spi);                         // CS low
     SPDR = (uint8_t)(SRAM_RDMR & 0xFF);
     while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
     SPDR = 0xFF;
     while(!(SPSR & (1<<SPIF))){}
     data = SPDR;                       // Get data from buffer
-    STOP_SPI;   
+    spiStop(spi);    
 }
 
-void sramWriteModeRegister(uint8_t mode){
+void sramWriteModeRegister(SPI *spi, uint8_t mode){
     uint8_t data = 0x00;
 
     if(mode != SRAM_MODE_BYTE && mode != SRAM_MODE_PAGE \
        && mode != SRAM_MODE_SEQU && mode != SRAM_MODE_RESE){
         return;
     }
-    START_SPI;                         // CS low
+    spiStart(spi);                         // CS low
     SPDR = (uint8_t)SRAM_WRMR;
     while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
     SPDR = mode;
     while(!(SPSR & (1<<SPIF))){}
     data = SPDR;                       // Get data from buffer
-    STOP_SPI;   
+    spiStop(spi);   
 }

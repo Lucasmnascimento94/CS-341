@@ -36,101 +36,75 @@
  *    usage patterns) are documented in the application notes listed above.
  *
  *============================================================================*/
-#define SPI_MODE        0       // 0,1,2,3  (SRAM likes 0)
+#define SPI_MODEuu        0       // 0,1,2,3  (SRAM likes 0)
 #define SPI_MSBFIRST    0       // 1=MSB first, 0=LSB first
 #define SPI_PRESCALER   64       // 2,4,8,16,32,64,128
 #define SPI_USE_IRQ     0       // 1=use SPI interrupt, 0=poll
 #define SPI_SPE         1       // SPI Enable(1) Disable(0)
 #define SPI_MSTR        1       // MSTR: Master(1)/Slave Select(0)
 
-#define SPI_PORT        PORTB
-#define SCK             PB5
-#define MISO            PB4
-#define MOSI            PB3
-#define CS              PB0
-#define SS              PB2
 
-#define START_SPI       (PORTB &= ~(1<<CS))
-#define STOP_SPI        (PORTB |=  (1<<CS))
+typedef struct {
+  volatile uint8_t  *SCK_DDR;
+  volatile uint8_t  *SCK_PORT;
+  uint8_t            SCK_PIN;
 
+  volatile uint8_t  *MOSI_DDR;
+  volatile uint8_t  *MOSI_PORT;
+  uint8_t            MOSI_PIN;
 
-// ---- mode -> CPOL/CPHA ----
-#if   (SPI_MODE==0)
-  #define SPI_CPOL 0
-  #define SPI_CPHA 0
-#elif (SPI_MODE==1)
-  #define SPI_CPOL 0
-  #define SPI_CPHA 1
-#elif (SPI_MODE==2)
-  #define SPI_CPOL 1
-  #define SPI_CPHA 0
-#elif (SPI_MODE==3)
-  #define SPI_CPOL 1
-  #define SPI_CPHA 1
-#else
-  #error "SPI_MODE must be 0..3"
-#endif
+  volatile uint8_t  *MISO_DDR;
+  volatile uint8_t  *MISO_PORT;
+  uint8_t            MISO_PIN;
 
-// ---- prescaler -> SPR1/SPR0 + SPI2X ----
-#if   (SPI_PRESCALER==2)
-  #define SPI_SPR1 0
-  #define SPI_SPR0 0
-  #define SPI_SPI2X 1
-#elif (SPI_PRESCALER==4)
-  #define SPI_SPR1 0
-  #define SPI_SPR0 0
-  #define SPI_SPI2X 0
-#elif (SPI_PRESCALER==8)
-  #define SPI_SPR1 0
-  #define SPI_SPR0 1
-  #define SPI_SPI2X 1
-#elif (SPI_PRESCALER==16)
-  #define SPI_SPR1 0
-  #define SPI_SPR0 1
-  #define SPI_SPI2X 0
-#elif (SPI_PRESCALER==32)
-  #define SPI_SPR1 1
-  #define SPI_SPR0 0
-  #define SPI_SPI2X 1
-#elif (SPI_PRESCALER==64)
-  #define SPI_SPR1 1
-  #define SPI_SPR0 0
-  #define SPI_SPI2X 0
-#elif (SPI_PRESCALER==128)
-  #define SPI_SPR1 1
-  #define SPI_SPR0 1
-  #define SPI_SPI2X 0
-#else
-  #error "SPI_PRESCALER must be one of {2,4,8,16,32,64,128}"
-#endif
+  volatile uint8_t  *CS_DDR;
+  volatile uint8_t  *CS_PORT;
+  uint8_t            CS_PIN;
 
-// ---- Interrupt Enable----
-#if (SPI_USE_IRQ == 0)
-    #define SPI_SPIE 0
-#else
-    #define SPI_SPIE 1
-#endif
+  volatile uint8_t  *SS_DDR;
+  volatile uint8_t  *SS_PORT;
+  uint8_t            SS_PIN;
+}SPI_REG;
 
-#if (SPI_MSBFIRST == 0)
-    #define SPI_DORD 0
-#else
-    #define SPI_DORD 1
-#endif
+typedef struct{
+  uint8_t mode; // 0,1,2,3  (SRAM likes 0)
+  uint8_t lsbfirst; // 1=MSB first, 0=LSB first
+  uint8_t prescaler; // 2,4,8,16,32,64,128
+  uint8_t irq; // 1=use SPI interrupt, 0=poll 
+  uint8_t en;  // SPI Enable(1) Disable(0)
+  uint8_t mstr; // MSTR: Master(1)/Slave Select(0) 
+}SPI_MODE;
+
+typedef struct{
+  uint8_t cpol;
+  uint8_t cpha;
+  uint8_t spr2x;
+  uint8_t spr1;
+  uint8_t spr0;
+  SPI_MODE *mode_conf;
+}SPI_CONF;
+
+typedef struct {
+  SPI_REG  *reg;
+  SPI_CONF *conf;
+}SPI;
+
 /*==============================================================================
  *  END OF SPI MODULE CONFIGURATION
 *==============================================================================*/
 
 
-void spiInitPoll();
-void spiInitInt();
-void spiWritePoll(char *data);
+void spiInit(SPI *spi);
+void spiStart(SPI *spi);
+void spiStop(SPI *spi);
+void spiWritePoll(SPI *spi, char *data);
 void spiWritePoll_(uint8_t *data, uint16_t len);
 void spiWritePollByte_(uint8_t data);
-void spiWriteInt(char *data);
-void spiReadPoll(char *data, uint16_t size);
+void spiWriteInt(SPI *spi, char *data);
+void spiReadPoll(SPI *spi, char *data, uint16_t size);
 void spiReadPoll_(uint8_t *data, uint16_t len);
 void spiReadPollByte_(uint8_t *data);
-void spiReadInt(char *data, uint16_t size);
+void spiReadInt(SPI *spi, char *data, uint16_t size);
 
 
 uint8_t spiWriteCheckPollByte_(uint8_t data);

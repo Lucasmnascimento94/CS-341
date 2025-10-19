@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build ISP",
+      "type": "shell",
+      "command": "make -C ${workspaceFolder:ROOT} ISP",
+      "problemMatcher": "$gcc"
+    },
+    {
+      "label": "Build Grid Controller",
+      "type": "shell",
+      "command": "make -C ${workspaceFolder:ROOT} grid",
+      "problemMatcher": "$gcc"
+    },
+    {
+      "label": "Build Game Controller",
+      "type": "shell",
+      "command": "make -C ${workspaceFolder:ROOT} game",
+      "problemMatcher": "$gcc"
+    }
+  ]
+}

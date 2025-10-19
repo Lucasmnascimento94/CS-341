@@ -11,7 +11,7 @@
 //#include "i2c.h"
 //#include "screen.h"
 //#include "allocation.h"
-#define F_CPU 16000000UL // CHANGE THIS to your AVR's actual clock speed
+#define F_CPU 8000000UL // CHANGE THIS to your AVR's actual clock speed
 const uint16_t page0[64] PROGMEM = {
 0x940C, 0x0034, 0x940C, 0x003E, 0x940C, 0x003E, 0x940C, 0x003E, 
 0x940C, 0x003E, 0x940C, 0x003E, 0x940C, 0x003E, 0x940C, 0x003E, 
@@ -31,29 +31,23 @@ const uint16_t page1[64] PROGMEM = {
 0x9731, 0xF7F1, 0xC000, 0x0000, 0xB18B, 0x2789, 0xB98B, 0xE8E7, 
 0xE1F3, 0x9731, 0xF7F1, 0xC000, 0x0000, 0xCFE4, 0x94F8, 0xCFFF
 };
+void initVars();
 
+SPI spi;
+SPI_CONF spi_conf;
+SPI_REG spi_reg;
+SPI_MODE spi_mode;
+TARGET target;
+PROGRAMMER  programmer;
 
-TARGET target = {
-    .mc = 0,
-    .status = 0xFF,
-    .signature = 0x00,
-};
-
-PROGRAMMER  programmer = {
-    .buffer_size = 0,
-    .conf = NULL,
-    .current_addr = 0x00,
-    .current_page = 0x00,
-    .page_counter = 0x00,
-    .page_number = 0x00,
-};
 
 int main(void){
     char c[100] = {0};
+    initVars();
     setUpUART();
-    spiInitPoll();
+    spiInit(&spi);
 
-    if(ispInit(&target)){
+    if(ispInit(&spi, &target)){
         ispProgrammingEnable(&target);
         ispReadSignatureByte(&target, SIGNATURE_VENDOR);
         ispReadSignatureByte(&target, SIGNATURE_FAMILY);
@@ -85,7 +79,7 @@ int main(void){
 
         _delay_ms(100);
 
-        ispChipErase();
+        ispChipErase(&spi);
         uartWrite_("ERASED PAGE\n");
         _delay_ms(20);
         programmer.buffer_size = sizeof(page0)/sizeof(page0[0]);
@@ -111,7 +105,7 @@ int main(void){
         uartWrite_("Failed to Sync\n");
     }
 
-    PORTB |= (1<<CS);
+    *spi.reg->CS_PORT |= (1<<spi.reg->CS_PIN);
     while(1){
         //test();
         uartWrite_("lOOPING\n");
@@ -119,6 +113,47 @@ int main(void){
     }
 }
 
+
+void initVars(){
+    target.mc = 0;
+    target.status = 0xFF;
+    target.signature = 0x00;
+
+    programmer.buffer_size = 0;
+    programmer.buffer_size = 0;
+    programmer.conf = NULL;
+    programmer.current_addr = 0x00;
+    programmer.current_page = 0x00;
+    programmer.page_counter = 0x00;
+    programmer.page_number = 0x00;
+
+    spi.conf = &spi_conf;
+    spi.reg = &spi_reg;
+    spi.conf->mode_conf = &spi_mode;
+
+    spi_mode.en = true;
+    spi_mode.irq = false;
+    spi_mode.mode = 0;
+    spi_mode.lsbfirst = false;
+    spi_mode.prescaler = 64;
+    spi_mode.mstr = true;
+
+    spi_reg.CS_DDR = &DDRC;
+    spi_reg.CS_PORT = &PORTC;
+    spi_reg.CS_PIN = PC0;
+    spi_reg.MISO_DDR = &DDRB;
+    spi_reg.MISO_PORT = &PORTB;
+    spi_reg.MISO_PIN = PB4;
+    spi_reg.MOSI_DDR = &DDRB;
+    spi_reg.MOSI_PORT = &PORTB;
+    spi_reg.MOSI_PIN = PB3;
+    spi_reg.SCK_DDR = &DDRB;
+    spi_reg.SCK_PORT = &PORTB;
+    spi_reg.SCK_PIN = PB5;
+    spi_reg.SS_DDR = &DDRB;
+    spi_reg.SS_PORT = &PORTB;
+    spi_reg.SS_PIN = PB2;
+}
 
 /*
 

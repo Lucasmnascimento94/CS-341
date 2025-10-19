@@ -3,8 +3,8 @@
 
 
 /*=============================================================================
- * SPI Protocol – Polling-Mode Initialization
- *
+ * SPI Protocol Initialization
+ * SPI struct needs to be configured before calling this function
  * @summary
  *   Configures SPI hardware for master mode with polling (no interrupts).
  *   Sets GPIO directions, default chip-select idle state, and SPI registers.
@@ -13,65 +13,104 @@
  * is binded to the header file. To configure the SPI to your specific communication
  * change the parameters in the header: spi.h
  *============================================================================*/
-void spiInitPoll(){
-
+void spiConf(SPI *spi);
+void spiInit(SPI *spi){
+    spiConf(spi);
     // Set SCK, MOSI and CS direction as Output
-    DDRB |= (1<<SCK) | (1<<MOSI) | (1<<CS) | (1<<MSTR);
+    *spi->reg->SS_DDR        |= (1<<spi->reg->SS_PIN);                // Master/Slave Mode
+    *spi->reg->SS_PORT       |= (1<<spi->reg->SS_PIN);    
 
-    // Set SS pin HIGH (otherwise the master mode will be overwritten)
-    PORTB |= (1<<PB2);
+    *spi->reg->MOSI_DDR      |= (1<<spi->reg->MOSI_PIN);         
+    *spi->reg->MOSI_PORT     |= (1<<spi->reg->MOSI_PIN); 
 
-    // Set MISO direction as input (Driven by the slave)
-    DDRB &= ~(1<<MISO) ;
+    *spi->reg->MISO_DDR      &= ~(1<<spi->reg->MISO_PIN); 
+    *spi->reg->MISO_PORT     |= (1<<spi->reg->MISO_PIN); 
 
-    // Set CS HIGH (SPI protocol in idle mode)
-    PORTB |= (1<<CS);
+    *spi->reg->SCK_DDR       |= (1<<spi->reg->SCK_PIN);
+    *spi->reg->SCK_PORT      |= (1<<spi->reg->SCK_PIN);
+
+    *spi->reg->CS_DDR        |= (1<<spi->reg->CS_PIN);
+    *spi->reg->CS_PORT       |= (1<<spi->reg->CS_PIN);
 
     
-    SPCR &= ~(SPI_SPIE << SPIE);    // Enable/Disable Interrupt Mode
-    SPCR |=  (SPI_SPE << SPE);      // Enable/Disable SPI
-    SPCR |=  (SPI_DORD << DORD);    // Set Data Orientation
-    SPCR |=  (SPI_MSTR << MSTR);    // Enable/Disable Master Mode
-    SPCR |=  (SPI_CPOL << CPOL);    // Set Orientation for clock indle
-    SPCR |=  (SPI_CPHA << CPHA);    // Set clock phase
-    SPCR |=  (SPI_SPR1 << SPR1);    // Adjust prescaler 
-    SPCR |=  (SPI_SPR0 << SPR0);    // Adjust prescaler 
-    SPSR &= ~(SPI_SPI2X << SPI2X);  // Adjust prescaler 
+    SPCR =  (SPCR & ~_BV(SPIE)) | ((spi->conf->mode_conf->irq& 1u) << SPIE);       // Enable/Disable Interrupt Mode
+    SPCR =  (SPCR & ~_BV(DORD)) | ((spi->conf->mode_conf->lsbfirst & 1u)<< DORD);                  // Set Data Orientation
+    SPCR =  (SPCR & ~_BV(MSTR)) | ((spi->conf->mode_conf->mstr & 1u)<< MSTR);       // Enable/Disable Master Mode
+    SPCR =  (SPCR & ~_BV(CPOL)) | ((spi->conf->cpol & 1u)<< CPOL);                  // Set Orientation for clock indle
+    SPCR =  (SPCR & ~_BV(CPHA)) | ((spi->conf->cpha & 1u)<< CPHA);                  // Set clock phase
+    SPCR =  (SPCR & ~_BV(SPR1)) | ((spi->conf->spr1 & 1u)<< SPR1);                  // Adjust prescaler 
+    SPCR =  (SPCR & ~_BV(SPR0)) | ((spi->conf->spr0 & 1u)<< SPR0);                  // Adjust prescaler 
+    SPSR =  (SPSR & ~_BV(SPI2X)) | ((spi->conf->spr2x & 1u) << SPI2X);              // Adjust prescaler 
+
+    SPCR =  (SPCR & ~_BV(SPE))  | ((spi->conf->mode_conf->en & 1u)<< SPE);           // Enable/Disable SPI
 }
 
-
-/*=============================================================================
- * SPI Protocol – Interrupt-Driven Initialization
- *
- * @summary
- *   Configures SPI hardware for master mode using the SPI interrupt.
- *   Same electrical setup as polling, but enables SPIE for ISR-driven I/O.
- *============================================================================*/
-void spiInitInt(){
-    // Set SCK, MOSI and CS direction as Output
-    DDRB |= (1<<SCK) | (1<<MOSI) | (1<<CS) | (1<<SS);
-
-    // Set SS pin HIGH (otherwise the master mode will be overwritten)
-    PORTB |= (1<<PB2);
-
-    // Set MISO direction as input (Driven by the slave)
-    DDRB &= ~(1<<MISO) ;
-
-    // Set CS HIGH (SPI protocol in idle mode)
-    PORTB |= (1<<CS);
-
-    
-    SPCR &= ~(SPI_SPIE << SPIE);    // Enable/Disable Interrupt Mode
-    SPCR |=  (SPI_SPE << SPE);      // Enable/Disable SPI
-    SPCR |=  (SPI_DORD << DORD);    // Set Data Orientation
-    SPCR |=  (SPI_MSTR << MSTR);    // Enable/Disable Master Mode
-    SPCR |=  (SPI_CPOL << CPOL);    // Set Orientation for clock indle
-    SPCR |=  (SPI_CPHA << CPHA);    // Set clock phase
-    SPCR |=  (SPI_SPR1 << SPR1);    // Adjust prescaler 
-    SPCR |=  (SPI_SPR0 << SPR0);    // Adjust prescaler 
-    SPSR &= ~(SPI_SPI2X << SPI2X);  // Adjust prescaler 
+void spiStart(SPI *spi){
+    *spi->reg->CS_PORT |= (1<<spi->reg->CS_PIN);
 }
 
+void spiStop(SPI *spi){
+    *spi->reg->CS_PORT &= ~(1<<spi->reg->CS_PIN);
+}
+
+void spiConf(SPI *spi){
+    switch (spi->conf->mode_conf->mode){
+        case 0:
+            spi->conf->cpol = 0;
+            spi->conf->cpha = 0;
+            break;
+        case 1:
+            spi->conf->cpol = 0;
+            spi->conf->cpha = 1;
+            break;
+        case 2:
+            spi->conf->cpol = 1;
+            spi->conf->cpha = 0;
+            break;
+        case 3:
+            spi->conf->cpol = 1;
+            spi->conf->cpha = 1;
+            break;
+    }
+
+    switch (spi->conf->mode_conf->prescaler){
+        case 2:
+            spi->conf->spr1 = 0;
+            spi->conf->spr0 = 0;
+            spi->conf->spr2x = 1;
+            break;
+        case 4:
+            spi->conf->spr1 = 0;
+            spi->conf->spr0 = 0;
+            spi->conf->spr2x = 0;
+            break;
+        case 8:
+            spi->conf->spr1 = 0;
+            spi->conf->spr0 = 1;
+            spi->conf->spr2x = 1;
+            break;
+        case 16:
+            spi->conf->spr1 = 0;
+            spi->conf->spr0 = 1;
+            spi->conf->spr2x = 0;
+            break;
+        case 32:
+            spi->conf->spr1 = 1;
+            spi->conf->spr0 = 0;
+            spi->conf->spr2x = 1;
+            break;
+        case 64:
+            spi->conf->spr1 = 1;
+            spi->conf->spr0 = 0;
+            spi->conf->spr2x = 0;
+            break;
+        case 128:
+            spi->conf->spr1 = 1;
+            spi->conf->spr0 = 1;
+            spi->conf->spr2x = 0;
+            break;
+    }
+}
 
 /*=============================================================================
  * SPI Protocol – Write (Polling)
@@ -86,14 +125,14 @@ void spiInitInt(){
  *   - SPI initialized (spiInitPoll()).
  *   - CS is asserted low by caller before write; deasserted after.
  *============================================================================*/
-void spiWritePoll(char *data){
+void spiWritePoll(SPI *spi, char *data){
 
-    START_SPI;                         // CS low
+    spiStart(spi);                         // CS low
     for(uint16_t i=0; i< strlen(data); i++){
         SPDR = (uint8_t)data[i];        
         while(!(SPSR & (1<<SPIF))){}
     }
-    STOP_SPI;        
+    spiStop(spi);             
 }
 
 
@@ -107,7 +146,6 @@ void spiWritePoll(char *data){
 
  *============================================================================*/
 void spiWritePoll_(uint8_t *data, uint16_t len){
-
     for(uint16_t i=0; i< len; i++){
         SPDR = (uint8_t)data[i];        
         while(!(SPSR & (1<<SPIF))){}
@@ -139,9 +177,9 @@ uint8_t spiWriteCheckPollByte_(uint8_t data){
  *   - SPI initialized (spiInitInt()).
  *   - CS is asserted low by caller before write; deasserted after.
  *============================================================================*/
-void spiWriteInt(char *data){
+/*void spiWriteInt(SPI *spi, char *data){
     // TO DO
-}
+}*/
 
 /*=============================================================================
  * SPI Protocol – Read (Polling)
@@ -158,19 +196,19 @@ void spiWriteInt(char *data){
  *   - CS is asserted low by caller before read; deasserted after.
  *   - Slave prepared to shift data out (master will clock by writing dummy 0xFF).
  *============================================================================*/
-void spiReadPoll(char *data, uint16_t size){
+void spiReadPoll(SPI *spi, char *data, uint16_t size){
 
-    START_SPI;
+    spiStart(spi);
     for(uint16_t i=0; i<size; i++){
         SPDR = 0x00;
         while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
         data[i] = SPDR;                       // Get data from buffer
     }
-    STOP_SPI;   
+    spiStop(spi);   
 }
 
 
-void spiReadPoll_(uint8_t *data, uint16_t len){
+void spiReadPoll_( uint8_t *data, uint16_t len){
     for(uint16_t i=0; i<len; i++){
         SPDR = 0x00;
         while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
@@ -199,6 +237,6 @@ void spiReadPollByte_(uint8_t *data){
  *   - CS is asserted low by caller before read; deasserted after.
  *   - Slave prepared to shift data out (master will clock by writing dummy 0xFF).
  *============================================================================*/
-void spiReadInt(char *data, uint16_t size){
+/*void spiReadInt(SPI *spi, char *data, uint16_t size){
     // TO DO
-}
+}*/

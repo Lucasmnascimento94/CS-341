@@ -8,7 +8,7 @@ void i2cConfMaster_INT();
 void i2cConfSlave_POL();
 void i2cConfSlave_INT();
  uint8_t i2cWrite_POL_Helper(I2C_PORT *port, I2C_TARGET *target);
- void twsrFlagHandler(I2C_TARGET *target, char *msg);
+ void twsrFlagHandler(char *msg);
 /*==============================================================================
  *  I2C Clock Configuration
  *==============================================================================*/
@@ -110,11 +110,12 @@ uint8_t start_POL(I2C_TARGET *target){
 /*==============================================================================
     *  Transmit Start in Iterrupt Mode and return the status
 *==============================================================================*/
+/*
 uint8_t start_INT(I2C_TARGET *target){
     //uint8_t address = (target->addr << 1) | (target->direction & 0x01);       // Modify address byte on I2C protocol (SLA+W)
 
     return TWSR & I2C_TWSR_FLAG_MASK;                   // Return status flag
-}
+}*/
 
 /*==============================================================================
  * Helper function to Stop the protocol
@@ -138,7 +139,7 @@ uint8_t i2cSTOP(){
     /*Mode Adjustment*/
     i2cWrite_POL_Helper(port, target);
     if((TWSR & I2C_TWSR_FLAG_MASK) != SLA_PLUS_W_ACK){
-        twsrFlagHandler(target, "i2cWrite_Pol");
+        twsrFlagHandler("i2cWrite_Pol");
     }
     else{
         for(size_t i=0; i<port->data_size; i++){
@@ -183,6 +184,7 @@ uint8_t i2cWriteNoCtrl_POL(I2C_PORT *port){
         TWCR = (1<<TWINT) | (1<<TWEN); 
         while(TWSR != DATA_BYTE_TRANSMITTED_ACK){}
     }
+    return 0x00;
  }
 
 /*#######################################___I2C READING FUNCTIONS___#################################*/
@@ -192,7 +194,7 @@ uint8_t i2cWriteNoCtrl_POL(I2C_PORT *port){
 *==============================================================================*/
 uint8_t i2cRead_POL(I2C_PORT *port, I2C_TARGET *target){
 /*Sanity Check*/
-if(port == NULL || port->data == NULL || target == NULL) return;
+if(port == NULL || port->data == NULL || target == NULL) return 0X00;
 
 TWCR |= (1<<TWSTO) | (1<<TWINT) | (1<<TWEN);          // Send a Stop condition 
 return TWSR & I2C_TWSR_FLAG_MASK;  ;                              
@@ -202,13 +204,13 @@ return TWSR & I2C_TWSR_FLAG_MASK;  ;
     * Send data buffer in port to the target
     - This function gives Control of START/STOP to the caller
 *==============================================================================*/
+/*
 uint8_t i2cReadNoCtrl_POL(I2C_PORT *port, I2C_TARGET *target){
 }
-
-
+*/
 /*#######################################___I2C FLAG HANDLERS___#################################*/
 
-void twsrFlagHandler(I2C_TARGET *target, char *msg){
+void twsrFlagHandler(char *msg){
     char str[60] = {0};
     strcat(str, msg);
     switch (TWSR & I2C_TWSR_FLAG_MASK){

@@ -1,22 +1,10 @@
 {
   "files.associations": {
-    "delay.h": "c",
-    "ws2812b.C": "cpp",
-    "datastructures.h": "c",
-    "interrupt.h": "c",
-    "includes.h": "c",
+    "isp.h": "c",
     "start.h": "c",
-    "stdint.h": "c",
-    "colors.h": "c",
-    "sram.h": "c",
-    "snake.h": "c",
-    "ws2812b.h": "c",
-    "string.h": "c",
-    "i2c.h": "c",
-    "screen.h": "c",
-    "stdio.h": "c",
-    "uart.h": "c",
-    "isp_opcodes.h": "c"
+    "spi.h": "c",
+    "pgmspace.h": "c",
+    "string.h": "c"
   },
   "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "clang",

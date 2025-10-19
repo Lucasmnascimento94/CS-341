@@ -1,16 +1,14 @@
-#include "includes.h"
 #include "isp.h"
-#include "spi.h"
-#include "uart.h"
-#include "avr/pgmspace.h"
+
 
 char c[100] = {0};
 void ispChipErase();
 
-uint8_t ispInit(TARGET *target){
+uint8_t ispInit(SPI *spi, TARGET *target){
   uint8_t try = 0x00;
   do{
-      powerUp();
+      powerUp(spi);
+      spiStart(spi);
       ispProgrammingEnable(target);
       
   }
@@ -19,12 +17,14 @@ uint8_t ispInit(TARGET *target){
   return (target->status == 0x53 )?0x01:0x00;
 }
 
-void powerUp(){
-  SPI_PORT &= ~(1<<CS) & ~(1<<SCK);
+void powerUp(SPI *spi){
+  *spi->reg->CS_PORT &= ~(1<<spi->reg->CS_PIN);
+  *spi->reg->SCK_PORT &= ~(1<<spi->reg->SCK_PIN);
+
   __builtin_avr_delay_cycles(10);
-  SPI_PORT |= (1<<CS);
+  *spi->reg->CS_PORT |= (1<<spi->reg->CS_PIN);
   __builtin_avr_delay_cycles(10);
-  SPI_PORT &= ~(1<<CS);
+  *spi->reg->CS_PORT &= ~(1<<spi->reg->CS_PIN);
   _delay_ms(100);
 }
 
