@@ -33,10 +33,13 @@ const uint16_t page1[64] PROGMEM = {
 };
 void initVars();
 
+/*SPI vars*/
 SPI spi;
 SPI_CONF spi_conf;
 SPI_REG spi_reg;
 SPI_MODE spi_mode;
+
+/*ISP vars*/
 TARGET target;
 PROGRAMMER  programmer;
 
@@ -154,19 +157,3 @@ void initVars(){
     spi_reg.SS_PORT = &PORTB;
     spi_reg.SS_PIN = PB2;
 }
-
-/*
-
-avrdude: AVR device initialized and ready to accept instructions
-avrdude: device signature = 0x1e9406 (probably m168)
-avrdude: reading lfuse memory ...
-avrdude: writing output file <stdout>
-0xe7
-avrdude: reading hfuse memory ...
-avrdude: writing output file <stdout>
-0xd9
-
-avrdude done.  Thank you.
-
-
-*/

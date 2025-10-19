@@ -46,11 +46,11 @@ void spiInit(SPI *spi){
 }
 
 void spiStart(SPI *spi){
-    *spi->reg->CS_PORT |= (1<<spi->reg->CS_PIN);
+    *spi->reg->CS_PORT &= ~(1<<spi->reg->CS_PIN);
 }
 
 void spiStop(SPI *spi){
-    *spi->reg->CS_PORT &= ~(1<<spi->reg->CS_PIN);
+    *spi->reg->CS_PORT |= (1<<spi->reg->CS_PIN);
 }
 
 void spiConf(SPI *spi){
