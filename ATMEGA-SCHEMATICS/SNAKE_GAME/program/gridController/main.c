@@ -1,137 +1,187 @@
 #include "start.h"
-#include "spi.h"
-#include "uart.h"
-#include "avr/pgmspace.h"
-#include "../ISP/isp.h"
-#include "string.h"
-//#include "./startSetUp/ws2812b/WS2812B.h"
-//#include "snake/snake.h"
-//#include "ws2812b/colors.h"
-//#include "startSetUp/sram/sram.h"
-//#include "i2c.h"
-//#include "screen.h"
-//#include "allocation.h"
-#define F_CPU 16000000UL // CHANGE THIS to your AVR's actual clock speed
-const uint16_t page0[64] PROGMEM = {
-0x940C, 0x0034, 0x940C, 0x003E, 0x940C, 0x003E, 0x940C, 0x003E, 
-0x940C, 0x003E, 0x940C, 0x003E, 0x940C, 0x003E, 0x940C, 0x003E, 
-0x940C, 0x003E, 0x940C, 0x003E, 0x940C, 0x003E, 0x940C, 0x003E, 
-0x940C, 0x003E, 0x940C, 0x003E, 0x940C, 0x003E, 0x940C, 0x003E, 
-0x940C, 0x003E, 0x940C, 0x003E, 0x940C, 0x003E, 0x940C, 0x003E, 
-0x940C, 0x003E, 0x940C, 0x003E, 0x940C, 0x003E, 0x940C, 0x003E, 
-0x940C, 0x003E, 0x940C, 0x003E, 0x2411, 0xBE1F, 0xEFCF, 0xE0D4, 
-0xBFDE, 0xBFCD, 0x940E, 0x0040, 0x940C, 0x0066, 0x940C, 0x0000
-};
+#include "./startSetUp/ws2812b/WS2812B.h"
+#include "snake/snake.h"
+#include "ws2812b/colors.h"
+#include "startSetUp/sram/sram.h"
+#include "i2c.h"
+#include "screen.h"
+#include "allocation.h"
 
+/*
+DDRX -> DIRECTION
+*/
 
-const uint16_t page1[64] PROGMEM = {
-0x9A20, 0x9A28, 0xB18A, 0x6C80, 0xB98A, 0xB18B, 0x6C80, 0xB98B, 
-0xE021, 0xE490, 0xB185, 0x2782, 0xB985, 0xE8E7, 0xE1F3, 0x9731, 
-0xF7F1, 0xC000, 0x0000, 0xB18B, 0x5880, 0xB98B, 0xE8E7, 0xE1F3, 
-0x9731, 0xF7F1, 0xC000, 0x0000, 0xB18B, 0x2789, 0xB98B, 0xE8E7, 
-0xE1F3, 0x9731, 0xF7F1, 0xC000, 0x0000, 0xCFE4, 0x94F8, 0xCFFF
-};
+void sendOne(){
+    PORTC |= (1<<PC5) | (1<<PC4);
+    _delay_us(1);
+    PORTC &= ~(1<<PC5);
+    _delay_us(1);
+}
 
+void sendZero(){
+    PORTC &= ~(1<<PC4);
+    PORTC |= (1<<PC5);
+    _delay_us(1);
+    PORTC &= ~(1<<PC5);
+    _delay_us(1);
+}
 
-TARGET target = {
-    .mc = 0,
-    .status = 0xFF,
-    .signature = 0x00,
-};
+void sendBright(){
+    sendOne();
+    sendOne();
+    sendOne();
 
-PROGRAMMER  programmer = {
-    .buffer_size = 0,
-    .conf = NULL,
-    .current_addr = 0x00,
-    .current_page = 0x00,
-    .page_counter = 0x00,
-    .page_number = 0x00,
-};
-
-int main(void){
-    char c[100] = {0};
-    setUpUART();
-    spiInitPoll();
-
-    if(ispInit(&target)){
-        ispProgrammingEnable(&target);
-        ispReadSignatureByte(&target, SIGNATURE_VENDOR);
-        ispReadSignatureByte(&target, SIGNATURE_FAMILY);
-        ispReadSignatureByte(&target, SIGNATURE_NUMBER);
-        ispReadFuseBits(&target, LFUSE);
-        ispReadFuseBits(&target, HFUSE);
-        ispReadFuseBits(&target, EXTFUSE);
-
-        target.signature = \
-            ((uint32_t)target.signature_vendor << 16) | \
-            ((uint16_t)target.signature_family << 8)  | \
-            (target.signature_number);
-        
-        sprintf(c, "Device Vendor: %X\n", (unsigned)target.signature_vendor);
-        uartWrite_(c);
-        sprintf(c, "Device Family: %X\n", (unsigned)target.signature_family);
-        uartWrite_(c);
-        sprintf(c, "Device Number: %X\n", (unsigned)target.signature_number);
-        uartWrite_(c);
-        sprintf(c, "Device Signature: %lX\n", (unsigned long)target.signature);
-        uartWrite_(c);
-
-        sprintf(c, "Device lfuse: %lX\n", (unsigned long)target.lfuse);
-        uartWrite_(c);
-        sprintf(c, "Device hfuse: %lX\n", (unsigned long)target.hfuse);
-        uartWrite_(c);
-        sprintf(c, "Device extfuse: %lX\n", (unsigned long)target.exfuse);
-        uartWrite_(c);
-
-        _delay_ms(100);
-
-        ispChipErase();
-        uartWrite_("ERASED PAGE\n");
-        _delay_ms(20);
-        programmer.buffer_size = sizeof(page0)/sizeof(page0[0]);
-        sprintf(c, "this is size_0: %d\n", programmer.buffer_size);
-        uartWrite_(c);
-        programmer.buffer = page0;
-        ispLoadProgramMemoryPage(&programmer);
-
-        _delay_ms(100);
-        ispVerifyProgramMemoryPage(&programmer, programmer.current_page);
-
-        _delay_ms(300);
-        programmer.buffer_size = sizeof(page1)/sizeof(page1[0]);
-        sprintf(c, "this is size_1: %d\n", programmer.buffer_size);
-        uartWrite_(c);
-        programmer.buffer = page1;
-        ispLoadProgramMemoryPage(&programmer);
-        _delay_ms(100);
-        ispVerifyProgramMemoryPage(&programmer, programmer.current_page);
-
-    }
-    else{
-        uartWrite_("Failed to Sync\n");
+    sendZero();
+    sendZero();
+    sendZero();
+    sendOne();
+    sendOne();
+    
+}
+void test(){
+    for(int i=0; i<32;i++){
+        sendZero();
     }
 
-    PORTB |= (1<<CS);
-    while(1){
-        //test();
-        uartWrite_("lOOPING\n");
-        _delay_ms(20000);
+    for(int i=0; i<196; i++){
+        sendBright();
+        for(int j=0; j<8; j++){
+            sendOne();
+        }
+        for(int j=0; j<8; j++){
+            sendZero();
+        }
+        for(int j=0; j<8; j++){
+            sendZero();
+        }
+    }
+
+    for(int i=0; i<32;i++){
+        sendOne();
+    }
+
+      _delay_ms(1000);
+
+
+
+
+      for(int i=0; i<32;i++){
+        sendZero();
+    }
+
+    for(int i=0; i<196; i++){
+        sendBright();
+        for(int j=0; j<8; j++){
+            sendZero();
+        }
+        for(int j=0; j<8; j++){
+            sendOne();
+        }
+        for(int j=0; j<8; j++){
+            sendZero();
+        }
+    }
+
+    for(int i=0; i<32;i++){
+        sendOne();
+    }
+
+      _delay_ms(1000);
+
+
+
+
+
+
+
+
+      for(int i=0; i<32;i++){
+        sendZero();
+    }
+
+    for(int i=0; i<196; i++){
+        sendBright();
+        for(int j=0; j<8; j++){
+            sendZero();
+        }
+        for(int j=0; j<8; j++){
+            sendZero();
+        }
+        for(int j=0; j<8; j++){
+            sendOne();
+        }
+    }
+
+    for(int i=0; i<32;i++){
+        sendOne();
+    }
+
+      _delay_ms(1000);
+
+    for(int i=0; i<32;i++){
+        sendZero();
+    }
+    
+    for(int i=0; i<196; i++){
+        sendBright();
+        for(int j=0; j<24; j++){
+            sendZero();
+        }
+    }
+    for(int i=0; i<32;i++){
+        sendOne();
     }
 }
 
 
-/*
+int main(void){
+    DDRC |= (1<<PC5) | (1<<PC4);
+    PORTC |= (1<<PC5) | (1<<PC4);
 
-avrdude: AVR device initialized and ready to accept instructions
-avrdude: device signature = 0x1e9406 (probably m168)
-avrdude: reading lfuse memory ...
-avrdude: writing output file <stdout>
-0xe7
-avrdude: reading hfuse memory ...
-avrdude: writing output file <stdout>
-0xd9
-
-avrdude done.  Thank you.
+    //char c[20];
+    LED_DDR |= (1 << LED_PIN);   // data pin as output
+    //DDRB |= (1<<PB1);
+    //PORTB &= ~(1<<PB1);
+    //seed_prng();
+    //gpioConfig();
+    clear();
 
 
-*/
+    //print("STARTING\n", 1);
+   /* gameInit(&belly, &food);
+    _delay_ms(500);
+    initSnake(&belly, &food);
+    belly.begin = true;
+    push(&belly, PIXEL_ADDRESS(8, 5, 2), 8, 5, false);
+    uint32_t addr = 0X00;
+
+    uint16_t len_text = (uint16_t)(sizeof(c) - 1);
+    uint16_t len_msg  = (uint16_t)(sizeof(msg)  - 1);
+    uint16_t len_msg2 = (uint16_t)(sizeof(msg2) - 1);
+    uint8_t buffer[300];         
+    uint16_t len = sizeof(c);
+    sramWriteModeRegister(SRAM_MODE_SEQU);
+    sramReadModeRegister();
+    sramWriteStringPoll(0x00, 0xFF, len);
+    _delay_ms(10);
+    */
+    
+    //screenInit(&i2c_port, &i2c_target);
+
+
+    char c[30];
+    sprintf(c, "HELLO WORLD SNAKE PROJECT");
+    uartWrite_(c);
+    _delay_ms(100);
+    memset(i2c_port.data, 0, strlen(i2c_port.data));
+    i2c_port.data = c;
+    //screenWrite(&i2c_port, &i2c_target, &screen);
+    //sprintf(c, "THIS IS ADDR IN CONF: %X\n", i2c_conf.slave[0]->addr);
+   // uartWrite_(c);
+
+    while(1){
+        test();
+        uartWrite("lOOPING\n", 9);
+        _delay_ms(500);
+    }
+}

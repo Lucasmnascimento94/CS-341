@@ -12,6 +12,8 @@ int main(){
     DDRD |= (1<<PD7) | (1<<PD6);
     PORTD |= (1<<PD7) | (1<<PD6);
 
+    char msg = "HELLO WORLD WHERE AM I?\n";
+
     while(1){
         PORTB ^= (1<<PB0);
         _delay_ms(1);

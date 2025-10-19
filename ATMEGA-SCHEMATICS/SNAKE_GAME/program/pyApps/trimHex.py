@@ -1,6 +1,6 @@
 import sys
 
-def parseFIle(file, file_out):
+def parseFIle(file):
     page_count = 0
     byte_count = 0
     page_array = [[]]
@@ -55,15 +55,11 @@ def parseFIle(file, file_out):
     full_out.close()
     
 def main():
-    if len(sys.argv) > 1:
+    #if len(sys.argv) > 1:
         filePath = sys.argv[1]
-        fileOut = sys.argv[2]
 
         file = open(filePath, 'r')
-        parseFIle(file, fileOut)
-
-    else:
-        print("Arguments: file_target --- output_name")
+        parseFIle(file)
 
 if __name__ == "__main__":
     main()

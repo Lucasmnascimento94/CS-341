@@ -115,6 +115,33 @@ game_read_elf: # Read elf file
 
 
 
+# ===== ISP controller MCU =====
+isp: # Build files
+	$(MAKE) -C ./ISP
+
+isp_flash: # Flash files built with the above command
+	$(MAKE) -C ./ISP  flash
+
+isp_clean: # Clean old files
+	$(MAKE) -C ./ISP  clean
+
+isp_read_fuse: # Read fuses in the MCU
+	$(MAKE) -C ./ISP  readfuse
+
+isp_read_obj: # Read object file
+
+
+isp_read_elf: # Read elf file
+
+
+hex_grid: grid
+	python3 $(DIR)/pyApps/trimHex.py $(DIR)/gridController/.hex
+
+hex_game: game
+	python3 $(DIR)/pyApps/trimHex.py $(DIR)/gameController/.hex
+
+hex_clean:
+	rm $(DIR)/file_out $(DIR)/trimmed_out
 # ===== Install dependencies out of the dependencies.txt file =====
 install_deps: 
 	@$(SHELL) $(DEP) -v
