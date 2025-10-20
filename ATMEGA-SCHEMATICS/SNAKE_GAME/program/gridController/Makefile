@@ -22,7 +22,7 @@
 
 
 # ===== Project =====
-MCU := atmega328p
+MCU := ATmega168A
 F_CPU    = 16000000UL
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
 TARGET := main
@@ -91,7 +91,7 @@ CFLAGS  = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra -std=c11 $(INCS) -MMD 
 LDFLAGS = -mmcu=$(MCU)
 
 PROGRAMMER    = usbasp
-AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m328p
+AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m168
 
 # ===== Build =====
 all: $(TARGET).hex size

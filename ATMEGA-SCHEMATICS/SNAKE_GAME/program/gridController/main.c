@@ -1,4 +1,4 @@
-#include "start.h"
+#include "startSetUp/start.h"
 #include "./startSetUp/ws2812b/WS2812B.h"
 #include "snake/snake.h"
 #include "ws2812b/colors.h"
@@ -123,7 +123,7 @@ int main(void){
     //screenWrite(&i2c_port, &i2c_target, &screen);
     //sprintf(c, "THIS IS ADDR IN CONF: %X\n", i2c_conf.slave[0]->addr);
    // uartWrite_(c);
-   
+
     //setCursorAt(&i2c_port, &i2c_target, 0, 0);
 
     screenPrintAt(&i2c_port, &i2c_target, 0, 0, "HELLO SNAKE");
