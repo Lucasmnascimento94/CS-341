@@ -128,3 +128,54 @@ void screenWrite(I2C_PORT *port, I2C_TARGET *target, SCREEN_CONF *screen){
     i2cSTOP();
     memset(port->instruction, 0, 6);
 }
+
+void setCursorAt(I2C_PORT *port, I2C_TARGET *target, uint8_t row, uint8_t col){
+    if (row > 3 || col > 19) return;
+
+    uint8_t addr;
+    switch (row) {
+        case 0: addr = 0x00 + col; 
+                break;
+        case 1: addr = 0x40 + col;
+             break;
+        case 2: addr = 0x14 + col;
+             break;
+        case 3: addr = 0x54 + col;
+             break;
+        default:
+            break;
+    } 
+
+    buildCommand(port, ((DDRAM << RAM_BIT) | addr));
+    port->data = port->instruction;
+    i2cWrite_POL(port, target);
+    _delay_us(100);
+}
+
+void screenPrintAt(I2C_PORT *port, I2C_TARGET *target, uint8_t row, uint8_t col, const char *text) {
+    if (text == NULL) return;
+
+    setCursorAt(port, target, row, col);
+
+    buildCommand(port, WRITE_TO_RAM);
+    port->data = port->instruction;
+    start_POL(target);
+    i2cWriteNoCtrl_POL(port);
+    port->data = (char *)text;
+    writeBytes(port);
+    i2cSTOP();
+
+    memset(port->instruction, 0, 6);
+}
+
+void screenClearAt(I2C_PORT *port, I2C_TARGET *target, uint8_t row, uint8_t col, uint8_t length){
+    char blank[21]; 
+    for (uint8_t i = 0; i < length; i++) {
+        blank[i] = ' ';
+    }
+    blank[length] = '\0';
+
+    screenPrintAt(port, target, row, col, blank);
+}
+
+

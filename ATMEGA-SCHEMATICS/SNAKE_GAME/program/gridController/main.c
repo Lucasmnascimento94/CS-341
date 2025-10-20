@@ -79,16 +79,17 @@ void test(){
 
 
 int main(void){
+    //allocateVar();
     DDRC |= (1<<PC5) | (1<<PC4);
     PORTC |= (1<<PC5) | (1<<PC4);
 
     //char c[20];
-    LED_DDR |= (1 << LED_PIN);   // data pin as output
+    //LED_DDR |= (1 << LED_PIN);   // data pin as output
     //DDRB |= (1<<PB1);
     //PORTB &= ~(1<<PB1);
     //seed_prng();
     //gpioConfig();
-    clear();
+    //clear();
 
 
     //print("STARTING\n", 1);
@@ -110,21 +111,25 @@ int main(void){
     _delay_ms(10);
     */
     
-    //screenInit(&i2c_port, &i2c_target);
+    screenInit(&i2c_port, &i2c_target);
 
 
-    char c[30];
+    /*char c[30];
     sprintf(c, "HELLO WORLD SNAKE PROJECT");
     uartWrite_(c);
     _delay_ms(100);
     memset(i2c_port.data, 0, strlen(i2c_port.data));
-    i2c_port.data = c;
+    i2c_port.data = c; */
     //screenWrite(&i2c_port, &i2c_target, &screen);
     //sprintf(c, "THIS IS ADDR IN CONF: %X\n", i2c_conf.slave[0]->addr);
    // uartWrite_(c);
+    setCursorAt(&i2c_port, &i2c_target, 0, 0);
+    screenPrintAt(&i2c_port, &i2c_target, 0, 0, "HELLO SNAKE");
+    screenClearAt(&i2c_port, &i2c_target, 0, 0, 11)
+    _delay_ms(500);
 
     while(1){
-        test();
+        //test();
         uartWrite("lOOPING\n", 9);
         _delay_ms(500);
     }

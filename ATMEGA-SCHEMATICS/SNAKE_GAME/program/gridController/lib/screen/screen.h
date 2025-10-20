@@ -65,4 +65,7 @@ typedef struct{
 
 void screenInit(I2C_PORT *port, I2C_TARGET *target);
 void screenWrite(I2C_PORT *port, I2C_TARGET *target, SCREEN_CONF *screen);
+void setCursorAt(I2C_PORT *port, I2C_TARGET *target, uint8_t row, uint8_t col);
+void screenPrintAt(I2C_PORT *port, I2C_TARGET *target, uint8_t row, uint8_t col, const char *text);
+void screenClearAt(I2C_PORT *port, I2C_TARGET *target, uint8_t row, uint8_t col, uint8_t length);
 #endif
