@@ -14,4 +14,5 @@ extern I2C_TARGET       i2c_target;
 extern I2C_PORT         i2c_port;
 extern SCREEN_CONF      screen;
 
+uint8_t allocateVar();
 #endif
