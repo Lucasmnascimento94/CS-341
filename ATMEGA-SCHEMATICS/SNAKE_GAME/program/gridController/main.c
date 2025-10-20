@@ -125,7 +125,8 @@ int main(void){
    // uartWrite_(c);
     setCursorAt(&i2c_port, &i2c_target, 0, 0);
     screenPrintAt(&i2c_port, &i2c_target, 0, 0, "HELLO SNAKE");
-    screenClearAt(&i2c_port, &i2c_target, 0, 0, 11)
+    _delay_ms(500);
+    screenClearAt(&i2c_port, &i2c_target, 0, 0, 5);
     _delay_ms(500);
 
     while(1){
