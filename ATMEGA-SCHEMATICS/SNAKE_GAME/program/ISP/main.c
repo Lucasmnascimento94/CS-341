@@ -144,6 +144,8 @@ void initVars(){
     spi_reg.CS_DDR = &DDRC;
     spi_reg.CS_PORT = &PORTC;
     spi_reg.CS_PIN = PC0;
+
+    
     spi_reg.MISO_DDR = &DDRB;
     spi_reg.MISO_PORT = &PORTB;
     spi_reg.MISO_PIN = PB4;

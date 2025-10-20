@@ -15,6 +15,7 @@
  *============================================================================*/
 void spiConf(SPI *spi);
 void spiInit(SPI *spi){
+    
     spiConf(spi);
     // Set SCK, MOSI and CS direction as Output
     *spi->reg->SS_DDR        |= (1<<spi->reg->SS_PIN);                // Master/Slave Mode

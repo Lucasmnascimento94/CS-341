@@ -49,7 +49,8 @@ void spiInitPoll(){
  *============================================================================*/
 void spiInitInt(){
     // Set SCK, MOSI and CS direction as Output
-    DDRB |= (1<<SCK) | (1<<MOSI) | (1<<CS) | (1<<SS);
+    DDRB |= (1<<SCK) | (1<<MOSI) | (1<<SS);
+    DDRC |= (1<<CS);
 
     // Set SS pin HIGH (otherwise the master mode will be overwritten)
     PORTB |= (1<<PB2);

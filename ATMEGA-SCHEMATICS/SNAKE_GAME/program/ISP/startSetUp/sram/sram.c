@@ -2,6 +2,9 @@
 #include "string.h"
 #include "spi.h"
 
+
+void sramInit(SPI *spi) {
+}
 void sendInstruction(uint32_t address){
     uint8_t byte[4] = {};
      for(int i=0; i<4; i++){
