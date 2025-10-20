@@ -123,7 +123,9 @@ int main(void){
     //screenWrite(&i2c_port, &i2c_target, &screen);
     //sprintf(c, "THIS IS ADDR IN CONF: %X\n", i2c_conf.slave[0]->addr);
    // uartWrite_(c);
-    setCursorAt(&i2c_port, &i2c_target, 0, 0);
+   
+    //setCursorAt(&i2c_port, &i2c_target, 0, 0);
+
     screenPrintAt(&i2c_port, &i2c_target, 0, 0, "HELLO SNAKE");
     _delay_ms(500);
     screenClearAt(&i2c_port, &i2c_target, 0, 0, 5);
