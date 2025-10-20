@@ -42,7 +42,7 @@ typedef struct {
     uint8_t status;
     uint8_t mc;
 
-}TARGET;
+}ISP_TARGET;
 
 typedef struct {
     uint8_t signature_0;
@@ -63,11 +63,11 @@ typedef struct {
 
 
 
-uint8_t ispInit(SPI *spi, TARGET *target);
+uint8_t ispInit(SPI *spi, ISP_TARGET *target);
 void powerUp(SPI *spi);
-void ispProgrammingEnable(TARGET *target) ;
-void ispReadSignatureByte(TARGET *target, uint8_t signature);
-void ispReadFuseBits(TARGET *target, uint8_t fuse);
+void ispProgrammingEnable(ISP_TARGET *target) ;
+void ispReadSignatureByte(ISP_TARGET *target, uint8_t signature);
+void ispReadFuseBits(ISP_TARGET *target, uint8_t fuse);
 void ispLoadProgramMemoryPage(PROGRAMMER *programmer);
 void ispChipErase();
 void ispVerifyProgramMemoryPage(PROGRAMMER *programmer, uint16_t page_addr);

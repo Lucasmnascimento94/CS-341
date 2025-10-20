@@ -30,12 +30,12 @@
 #define GRID_DDR           DDRC
 
 /* Game Conf. target*/
-#define FLASH_CS_PIN        PD3
-#define FLASH_CS_PORT       PORTD
-#define FLASH_CS_DDR        DDRD
-#define FLASH_PIN           PC1
-#define FLASH_PORT          PORTC       
-#define FLASH_DDR           DDRC
+#define GAME_CS_PIN        PD3
+#define GAME_CS_PORT       PORTD
+#define GAME_CS_DDR        DDRD
+#define GAME_PIN           PC1
+#define GAME_PORT          PORTC       
+#define GAME_DDR           DDRC
 
 typedef struct {
     volatile uint8_t  *SIGNAL_DDR;
@@ -47,7 +47,7 @@ typedef struct {
     SPI_CONF        *spi_conf;
     SPI_CS_TARGET   *cs_reg;
     TARGET_SIGNAL   *signal;
-}TARGET;
+}TARGET_CONF;
 
-void targetUpdate(SPI *spi, TARGET *new_target);
+void targetUpdate(SPI *spi, TARGET_CONF *new_target);
 #endif

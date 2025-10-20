@@ -4,6 +4,8 @@
 #include "avr/pgmspace.h"
 #include "isp.h"
 #include "string.h"
+#include "target.h"
+
 //#include "./startSetUp/ws2812b/WS2812B.h"
 //#include "snake/snake.h"
 //#include "ws2812b/colors.h"
@@ -12,6 +14,14 @@
 //#include "screen.h"
 //#include "allocation.h"
 #define F_CPU 8000000UL // CHANGE THIS to your AVR's actual clock speed
+
+
+void sramVarsInit(TARGET_CONF *target);
+void flashVarsInit(TARGET_CONF *target);
+void gridVarsInit(TARGET_CONF *target);
+void gameVarsInit(TARGET_CONF *target);
+void programmerVarsInit();
+
 const uint16_t page0[64] PROGMEM = {
 0x940C, 0x0034, 0x940C, 0x003E, 0x940C, 0x003E, 0x940C, 0x003E, 
 0x940C, 0x003E, 0x940C, 0x003E, 0x940C, 0x003E, 0x940C, 0x003E, 
@@ -31,53 +41,66 @@ const uint16_t page1[64] PROGMEM = {
 0x9731, 0xF7F1, 0xC000, 0x0000, 0xB18B, 0x2789, 0xB98B, 0xE8E7, 
 0xE1F3, 0x9731, 0xF7F1, 0xC000, 0x0000, 0xCFE4, 0x94F8, 0xCFFF
 };
-void initVars();
 
 /*SPI vars*/
 SPI spi;
-SPI_CONF spi_conf;
-SPI_CS_TARGET spi_cs;
-SPI_MODE spi_mode;
 
-/*ISP vars*/
-TARGET target;
+/*Targets*/
+TARGET_CONF sram_conf;
+TARGET_CONF flash_conf;
+TARGET_CONF grid_conf;
+TARGET_CONF game_conf;
+
+ISP_TARGET sram;
+ISP_TARGET flash;
+ISP_TARGET grid;
+ISP_TARGET game;
+
+/*Isp*/
 PROGRAMMER  programmer;
 
 
 int main(void){
     char c[100] = {0};
-    initVars();
+    sramVarsInit(&sram_conf);
+    flashVarsInit(&flash_conf);
+    gridVarsInit(&grid_conf);
+    gameVarsInit(&game_conf);
+    programmerVarsInit();
     setUpUART();
     spiInit(&spi);
 
-    if(ispInit(&spi, &target)){
-        ispProgrammingEnable(&target);
-        ispReadSignatureByte(&target, SIGNATURE_VENDOR);
-        ispReadSignatureByte(&target, SIGNATURE_FAMILY);
-        ispReadSignatureByte(&target, SIGNATURE_NUMBER);
-        ispReadFuseBits(&target, LFUSE);
-        ispReadFuseBits(&target, HFUSE);
-        ispReadFuseBits(&target, EXTFUSE);
+    targetSpiUpdate(&spi, &flash_conf);
 
-        target.signature = \
-            ((uint32_t)target.signature_vendor << 16) | \
-            ((uint16_t)target.signature_family << 8)  | \
-            (target.signature_number);
+
+    if(ispInit(&spi, &grid)){
+        ispProgrammingEnable(&grid);
+        ispReadSignatureByte(&grid, SIGNATURE_VENDOR);
+        ispReadSignatureByte(&grid, SIGNATURE_FAMILY);
+        ispReadSignatureByte(&grid, SIGNATURE_NUMBER);
+        ispReadFuseBits(&grid, LFUSE);
+        ispReadFuseBits(&grid, HFUSE);
+        ispReadFuseBits(&grid, EXTFUSE);
+
+        grid.signature = \
+            ((uint32_t)grid.signature_vendor << 16) | \
+            ((uint16_t)grid.signature_family << 8)  | \
+            (grid.signature_number);
         
-        sprintf(c, "Device Vendor: %X\n", (unsigned)target.signature_vendor);
+        sprintf(c, "Device Vendor: %X\n", (unsigned)grid.signature_vendor);
         uartWrite_(c);
-        sprintf(c, "Device Family: %X\n", (unsigned)target.signature_family);
+        sprintf(c, "Device Family: %X\n", (unsigned)grid.signature_family);
         uartWrite_(c);
-        sprintf(c, "Device Number: %X\n", (unsigned)target.signature_number);
+        sprintf(c, "Device Number: %X\n", (unsigned)grid.signature_number);
         uartWrite_(c);
-        sprintf(c, "Device Signature: %lX\n", (unsigned long)target.signature);
+        sprintf(c, "Device Signature: %lX\n", (unsigned long)grid.signature);
         uartWrite_(c);
 
-        sprintf(c, "Device lfuse: %lX\n", (unsigned long)target.lfuse);
+        sprintf(c, "Device lfuse: %lX\n", (unsigned long)grid.lfuse);
         uartWrite_(c);
-        sprintf(c, "Device hfuse: %lX\n", (unsigned long)target.hfuse);
+        sprintf(c, "Device hfuse: %lX\n", (unsigned long)grid.hfuse);
         uartWrite_(c);
-        sprintf(c, "Device extfuse: %lX\n", (unsigned long)target.exfuse);
+        sprintf(c, "Device extfuse: %lX\n", (unsigned long)grid.exfuse);
         uartWrite_(c);
 
         _delay_ms(100);
@@ -108,7 +131,7 @@ int main(void){
         uartWrite_("Failed to Sync\n");
     }
 
-    *spi.reg->CS_PORT |= (1<<spi.reg->CS_PIN);
+    *spi.cs_reg->CS_PORT |= (1<<spi.cs_reg->CS_PIN);
     while(1){
         //test();
         uartWrite_("lOOPING\n");
@@ -116,11 +139,118 @@ int main(void){
     }
 }
 
+void sramVarsInit(TARGET_CONF *target){
+    static SPI_CS_TARGET cs_reg;
+    static TARGET_SIGNAL signal;
+    static SPI_CONF spi_conf;
+    static SPI_MODE spi_mode;
 
-void initVars(){
-    target.mc = 0;
-    target.status = 0xFF;
-    target.signature = 0x00;
+    spi_mode.en = true;
+    spi_mode.irq = false;
+    spi_mode.mode = 0;
+    spi_mode.lsbfirst = false;
+    spi_mode.prescaler = 64;
+    spi_mode.mstr = true;
+    spi_conf.mode_conf = &spi_mode;
+
+    cs_reg.CS_DDR = &SRAM_CS_DDR;
+    cs_reg.CS_PORT = &SRAM_CS_PORT;
+    cs_reg.CS_PIN = SRAM_CS_PIN;
+
+    signal.SIGNAL_DDR = &SRAM_DDR;
+    signal.SIGNAL_PORT = &SRAM_PORT;
+    signal.SIGNAL_PIN = SRAM_PIN;
+
+    target->cs_reg = &cs_reg;
+    target->signal = &signal;
+    target->spi_conf = &spi_conf;
+}
+
+void flashVarsInit(TARGET_CONF *target){
+    static SPI_CS_TARGET cs_reg;
+    static TARGET_SIGNAL signal;
+    static SPI_CONF spi_conf;
+    static SPI_MODE spi_mode;
+
+    spi_mode.en = true;
+    spi_mode.irq = false;
+    spi_mode.mode = 0;
+    spi_mode.lsbfirst = false;
+    spi_mode.prescaler = 64;
+    spi_mode.mstr = true;
+    spi_conf.mode_conf = &spi_mode;
+
+    cs_reg.CS_DDR = &FLASH_CS_DDR;
+    cs_reg.CS_PORT = &FLASH_CS_PORT;
+    cs_reg.CS_PIN = FLASH_CS_PIN;
+
+    signal.SIGNAL_DDR = &FLASH_DDR;
+    signal.SIGNAL_PORT = &FLASH_PORT;
+    signal.SIGNAL_PIN = FLASH_PIN; 
+    
+    target->cs_reg = &cs_reg;
+    target->signal = &signal;
+    target->spi_conf = &spi_conf;
+}
+
+void gridVarsInit(TARGET_CONF *target){
+    static SPI_CS_TARGET cs_reg;
+    static TARGET_SIGNAL signal;
+    static SPI_CONF spi_conf;
+    static SPI_MODE spi_mode;
+
+    spi_mode.en = true;
+    spi_mode.irq = false;
+    spi_mode.mode = 0;
+    spi_mode.lsbfirst = false;
+    spi_mode.prescaler = 64;
+    spi_mode.mstr = true;
+    spi_conf.mode_conf = &spi_mode;
+
+    cs_reg.CS_DDR = &GRID_CS_DDR;
+    cs_reg.CS_PORT = &GRID_CS_PORT;
+    cs_reg.CS_PIN = GRID_CS_PIN;
+
+    signal.SIGNAL_DDR = &GRID_DDR;
+    signal.SIGNAL_PORT = &GRID_PORT;
+    signal.SIGNAL_PIN = GRID_PIN;  
+    
+    target->cs_reg = &cs_reg;
+    target->signal = &signal;
+    target->spi_conf = &spi_conf;
+}
+
+void gameVarsInit(TARGET_CONF *target){
+    static SPI_CS_TARGET cs_reg;
+    static TARGET_SIGNAL signal;
+    static SPI_CONF spi_conf;
+    static SPI_MODE spi_mode;
+
+    spi_mode.en = true;
+    spi_mode.irq = false;
+    spi_mode.mode = 0;
+    spi_mode.lsbfirst = false;
+    spi_mode.prescaler = 64;
+    spi_mode.mstr = true;
+    spi_conf.mode_conf = &spi_mode;
+
+    cs_reg.CS_DDR = &GAME_CS_DDR;
+    cs_reg.CS_PORT = &GAME_CS_PORT;
+    cs_reg.CS_PIN = GAME_CS_PIN;
+
+    signal.SIGNAL_DDR = &GAME_DDR;
+    signal.SIGNAL_PORT = &GAME_PORT;
+    signal.SIGNAL_PIN = GAME_PIN; 
+    
+    target->cs_reg = &cs_reg;
+    target->signal = &signal;
+    target->spi_conf = &spi_conf;
+}
+
+void programmerVarsInit(){
+    grid.mc = 0;
+    grid.status = 0xFF;
+    grid.signature = 0x00;
 
     programmer.buffer_size = 0;
     programmer.buffer_size = 0;
@@ -129,19 +259,5 @@ void initVars(){
     programmer.current_page = 0x00;
     programmer.page_counter = 0x00;
     programmer.page_number = 0x00;
-
-    spi.conf = &spi_conf;
-    spi.reg = &spi_cs;
-    spi.conf->mode_conf = &spi_mode;
-
-    spi_mode.en = true;
-    spi_mode.irq = false;
-    spi_mode.mode = 0;
-    spi_mode.lsbfirst = false;
-    spi_mode.prescaler = 64;
-    spi_mode.mstr = true;
-
-    spi_cs.CS_DDR = &DDRC;
-    spi_cs.CS_PORT = &PORTC;
-    spi_cs.CS_PIN = PC0;
 }
+

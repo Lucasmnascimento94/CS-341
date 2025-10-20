@@ -4,7 +4,7 @@
 char c[100] = {0};
 void ispChipErase();
 
-uint8_t ispInit(SPI *spi, TARGET *target){
+uint8_t ispInit(SPI *spi, ISP_TARGET *target){
   uint8_t try = 0x00;
   do{
       powerUp(spi);
@@ -27,14 +27,14 @@ void powerUp(SPI *spi){
   _delay_ms(100);
 }
 
-void ispProgrammingEnable(TARGET *target) {
+void ispProgrammingEnable(ISP_TARGET *target) {
   spiWritePollByte_(0xAC);
   spiWritePollByte_(0x53);
   spiReadPollByte_(&(target->status));
   spiWritePollByte_(0x00);
 }
 
-void ispReadSignatureByte(TARGET *target, uint8_t signature) {
+void ispReadSignatureByte(ISP_TARGET *target, uint8_t signature) {
   spiWritePollByte_(0x30);
   spiWritePollByte_(0x00);
   spiWritePollByte_(signature);
@@ -53,7 +53,7 @@ void ispReadSignatureByte(TARGET *target, uint8_t signature) {
 }
 
 
-void ispReadFuseBits(TARGET *target, uint8_t fuse) {
+void ispReadFuseBits(ISP_TARGET *target, uint8_t fuse) {
     uint8_t bytes[2];
 
     if(fuse == HFUSE){bytes[0] = 0x58;}
