@@ -18,13 +18,12 @@ uint8_t ispInit(SPI *spi, TARGET *target){
 }
 
 void powerUp(SPI *spi){
-  *spi->reg->CS_PORT &= ~(1<<spi->reg->CS_PIN);
-  *spi->reg->SCK_PORT &= ~(1<<spi->reg->SCK_PIN);
-
+  PORTB &= ~(1<<PB5);
+  *spi->cs_reg->CS_PORT &= ~(1<<spi->cs_reg->CS_PIN);
   __builtin_avr_delay_cycles(10);
-  *spi->reg->CS_PORT |= (1<<spi->reg->CS_PIN);
+  *spi->cs_reg->CS_PORT |= (1<<spi->cs_reg->CS_PIN);
   __builtin_avr_delay_cycles(10);
-  *spi->reg->CS_PORT &= ~(1<<spi->reg->CS_PIN);
+  *spi->cs_reg->CS_PORT &= ~(1<<spi->cs_reg->CS_PIN);
   _delay_ms(100);
 }
 

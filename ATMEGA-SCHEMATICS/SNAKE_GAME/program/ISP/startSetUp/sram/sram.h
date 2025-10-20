@@ -17,13 +17,15 @@
 #define SRAM_MODE_SEQU      (uint8_t)(0x00 | (0x01<<6))
 #define SRAM_MODE_RESE      (uint8_t)(0x00 | (0x03<<6))
 
+#define SRAM_CS_PIN         PD0
+#define SRAM_CS_PORT        
+#define SRAM_CS_DDR
 /* Data Sample TIming
 
 Data Sample -> Rising
 SetUp       -> Falling
 
 */
-
 
 
 /*#########################-- READING FROM SRAM --############################

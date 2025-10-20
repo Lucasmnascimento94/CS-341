@@ -17,21 +17,14 @@ void spiConf(SPI *spi);
 void spiInit(SPI *spi){
     
     spiConf(spi);
-    // Set SCK, MOSI and CS direction as Output
-    *spi->reg->SS_DDR        |= (1<<spi->reg->SS_PIN);                // Master/Slave Mode
-    *spi->reg->SS_PORT       |= (1<<spi->reg->SS_PIN);    
+    DDRB |= (1<<PB5) | (1<<PB3) | (1<<PB2);
+    DDRB &= ~(1<<PB4);
 
-    *spi->reg->MOSI_DDR      |= (1<<spi->reg->MOSI_PIN);         
-    *spi->reg->MOSI_PORT     |= (1<<spi->reg->MOSI_PIN); 
+    PORTB |= (1<<PB5) | (1<<PB4) | (1<<PB3) | (1<<PB2);
 
-    *spi->reg->MISO_DDR      &= ~(1<<spi->reg->MISO_PIN); 
-    *spi->reg->MISO_PORT     |= (1<<spi->reg->MISO_PIN); 
-
-    *spi->reg->SCK_DDR       |= (1<<spi->reg->SCK_PIN);
-    *spi->reg->SCK_PORT      |= (1<<spi->reg->SCK_PIN);
-
-    *spi->reg->CS_DDR        |= (1<<spi->reg->CS_PIN);
-    *spi->reg->CS_PORT       |= (1<<spi->reg->CS_PIN);
+    /*CS not static to accomodate different targets based on package command*/
+    *spi->cs_reg->CS_DDR        |= (1<<spi->cs_reg->CS_PIN);
+    *spi->cs_reg->CS_PORT       |= (1<<spi->cs_reg->CS_PIN);
 
     
     SPCR =  (SPCR & ~_BV(SPIE)) | ((spi->conf->mode_conf->irq& 1u) << SPIE);       // Enable/Disable Interrupt Mode
@@ -47,11 +40,11 @@ void spiInit(SPI *spi){
 }
 
 void spiStart(SPI *spi){
-    *spi->reg->CS_PORT &= ~(1<<spi->reg->CS_PIN);
+    *spi->cs_reg->CS_PORT &= ~(1<<spi->cs_reg->CS_PIN);
 }
 
 void spiStop(SPI *spi){
-    *spi->reg->CS_PORT |= (1<<spi->reg->CS_PIN);
+    *spi->cs_reg->CS_PORT |= (1<<spi->cs_reg->CS_PIN);
 }
 
 void spiConf(SPI *spi){

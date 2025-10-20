@@ -45,26 +45,10 @@
 
 
 typedef struct {
-  volatile uint8_t  *SCK_DDR;
-  volatile uint8_t  *SCK_PORT;
-  uint8_t            SCK_PIN;
-
-  volatile uint8_t  *MOSI_DDR;
-  volatile uint8_t  *MOSI_PORT;
-  uint8_t            MOSI_PIN;
-
-  volatile uint8_t  *MISO_DDR;
-  volatile uint8_t  *MISO_PORT;
-  uint8_t            MISO_PIN;
-
   volatile uint8_t  *CS_DDR;
   volatile uint8_t  *CS_PORT;
   uint8_t            CS_PIN;
-
-  volatile uint8_t  *SS_DDR;
-  volatile uint8_t  *SS_PORT;
-  uint8_t            SS_PIN;
-}SPI_REG;
+}SPI_CS_TARGET;
 
 typedef struct{
   uint8_t mode; // 0,1,2,3  (SRAM likes 0)
@@ -85,8 +69,8 @@ typedef struct{
 }SPI_CONF;
 
 typedef struct {
-  SPI_REG  *reg;
   SPI_CONF *conf;
+  SPI_CS_TARGET  *cs_reg;
 }SPI;
 
 /*==============================================================================

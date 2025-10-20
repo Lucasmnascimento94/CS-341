@@ -2,7 +2,7 @@
 #include "spi.h"
 #include "uart.h"
 #include "avr/pgmspace.h"
-#include "startSetUp/isp/isp.h"
+#include "isp.h"
 #include "string.h"
 //#include "./startSetUp/ws2812b/WS2812B.h"
 //#include "snake/snake.h"
@@ -36,7 +36,7 @@ void initVars();
 /*SPI vars*/
 SPI spi;
 SPI_CONF spi_conf;
-SPI_REG spi_reg;
+SPI_CS_TARGET spi_cs;
 SPI_MODE spi_mode;
 
 /*ISP vars*/
@@ -131,7 +131,7 @@ void initVars(){
     programmer.page_number = 0x00;
 
     spi.conf = &spi_conf;
-    spi.reg = &spi_reg;
+    spi.reg = &spi_cs;
     spi.conf->mode_conf = &spi_mode;
 
     spi_mode.en = true;
@@ -141,21 +141,7 @@ void initVars(){
     spi_mode.prescaler = 64;
     spi_mode.mstr = true;
 
-    spi_reg.CS_DDR = &DDRC;
-    spi_reg.CS_PORT = &PORTC;
-    spi_reg.CS_PIN = PC0;
-
-    
-    spi_reg.MISO_DDR = &DDRB;
-    spi_reg.MISO_PORT = &PORTB;
-    spi_reg.MISO_PIN = PB4;
-    spi_reg.MOSI_DDR = &DDRB;
-    spi_reg.MOSI_PORT = &PORTB;
-    spi_reg.MOSI_PIN = PB3;
-    spi_reg.SCK_DDR = &DDRB;
-    spi_reg.SCK_PORT = &PORTB;
-    spi_reg.SCK_PIN = PB5;
-    spi_reg.SS_DDR = &DDRB;
-    spi_reg.SS_PORT = &PORTB;
-    spi_reg.SS_PIN = PB2;
+    spi_cs.CS_DDR = &DDRC;
+    spi_cs.CS_PORT = &PORTC;
+    spi_cs.CS_PIN = PC0;
 }
