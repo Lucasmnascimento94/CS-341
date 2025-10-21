@@ -141,7 +141,8 @@ SRC_DIRS = \
   snake \
   startSetUp \
   startSetUp/flash startSetUp/i2c startSetUp/isr startSetUp/spi \
-  startSetUp/sram startSetUp/timer startSetUp/uart startSetUp/ws2812b startSetUp/allocation
+  startSetUp/sram startSetUp/timer startSetUp/uart startSetUp/ws2812b startSetUp/allocation \
+  ISP
   
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))

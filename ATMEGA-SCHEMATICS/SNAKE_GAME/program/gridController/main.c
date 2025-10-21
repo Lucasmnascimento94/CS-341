@@ -135,15 +135,12 @@ void test(){
 
 
 int main(void){
-    DDRC |= (1<<PC5) | (1<<PC4);
-    PORTC |= (1<<PC5) | (1<<PC4);
 
-    //char c[20];
-    LED_DDR |= (1 << LED_PIN);   // data pin as output
+    LED_DDR |= (1 << LED_PIN);  
     //DDRB |= (1<<PB1);
     //PORTB &= ~(1<<PB1);
     //seed_prng();
-    //gpioConfig();
+    gpioConfig();
     clear();
 
 
@@ -165,8 +162,8 @@ int main(void){
     sramWriteStringPoll(0x00, 0xFF, len);
     _delay_ms(10);
     */
-    
-    //screenInit(&i2c_port, &i2c_target);
+    allocateVar();
+    screenInit(&i2c_port, &i2c_target);
 
 
     char c[30];
@@ -175,7 +172,7 @@ int main(void){
     _delay_ms(100);
     memset(i2c_port.data, 0, strlen(i2c_port.data));
     i2c_port.data = c;
-    //screenWrite(&i2c_port, &i2c_target, &screen);
+    screenWrite(&i2c_port, &i2c_target, &screen);
     //sprintf(c, "THIS IS ADDR IN CONF: %X\n", i2c_conf.slave[0]->addr);
    // uartWrite_(c);
 

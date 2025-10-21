@@ -73,65 +73,8 @@ int main(void){
     targetSpiUpdate(&spi, &flash_conf);
 
 
-    if(ispInit(&spi, &grid)){
-        ispProgrammingEnable(&grid);
-        ispReadSignatureByte(&grid, SIGNATURE_VENDOR);
-        ispReadSignatureByte(&grid, SIGNATURE_FAMILY);
-        ispReadSignatureByte(&grid, SIGNATURE_NUMBER);
-        ispReadFuseBits(&grid, LFUSE);
-        ispReadFuseBits(&grid, HFUSE);
-        ispReadFuseBits(&grid, EXTFUSE);
+    if(ispInit(&spi, &grid)){}
 
-        grid.signature = \
-            ((uint32_t)grid.signature_vendor << 16) | \
-            ((uint16_t)grid.signature_family << 8)  | \
-            (grid.signature_number);
-        
-        sprintf(c, "Device Vendor: %X\n", (unsigned)grid.signature_vendor);
-        uartWrite_(c);
-        sprintf(c, "Device Family: %X\n", (unsigned)grid.signature_family);
-        uartWrite_(c);
-        sprintf(c, "Device Number: %X\n", (unsigned)grid.signature_number);
-        uartWrite_(c);
-        sprintf(c, "Device Signature: %lX\n", (unsigned long)grid.signature);
-        uartWrite_(c);
-
-        sprintf(c, "Device lfuse: %lX\n", (unsigned long)grid.lfuse);
-        uartWrite_(c);
-        sprintf(c, "Device hfuse: %lX\n", (unsigned long)grid.hfuse);
-        uartWrite_(c);
-        sprintf(c, "Device extfuse: %lX\n", (unsigned long)grid.exfuse);
-        uartWrite_(c);
-
-        _delay_ms(100);
-
-        ispChipErase(&spi);
-        uartWrite_("ERASED PAGE\n");
-        _delay_ms(20);
-        programmer.buffer_size = sizeof(page0)/sizeof(page0[0]);
-        sprintf(c, "this is size_0: %d\n", programmer.buffer_size);
-        uartWrite_(c);
-        programmer.buffer = page0;
-        ispLoadProgramMemoryPage(&programmer);
-
-        _delay_ms(100);
-        ispVerifyProgramMemoryPage(&programmer, programmer.current_page);
-
-        _delay_ms(300);
-        programmer.buffer_size = sizeof(page1)/sizeof(page1[0]);
-        sprintf(c, "this is size_1: %d\n", programmer.buffer_size);
-        uartWrite_(c);
-        programmer.buffer = page1;
-        ispLoadProgramMemoryPage(&programmer);
-        _delay_ms(100);
-        ispVerifyProgramMemoryPage(&programmer, programmer.current_page);
-
-    }
-    else{
-        uartWrite_("Failed to Sync\n");
-    }
-
-    *spi.cs_reg->CS_PORT |= (1<<spi.cs_reg->CS_PIN);
     while(1){
         //test();
         uartWrite_("lOOPING\n");
@@ -261,3 +204,67 @@ void programmerVarsInit(){
     programmer.page_number = 0x00;
 }
 
+
+
+
+
+
+
+        /*ispProgrammingEnable(&grid);
+        ispReadSignatureByte(&grid, SIGNATURE_VENDOR);
+        ispReadSignatureByte(&grid, SIGNATURE_FAMILY);
+        ispReadSignatureByte(&grid, SIGNATURE_NUMBER);
+        ispReadFuseBits(&grid, LFUSE);
+        ispReadFuseBits(&grid, HFUSE);
+        ispReadFuseBits(&grid, EXTFUSE);
+
+        grid.signature = \
+            ((uint32_t)grid.signature_vendor << 16) | \
+            ((uint16_t)grid.signature_family << 8)  | \
+            (grid.signature_number);
+        
+        sprintf(c, "Device Vendor: %X\n", (unsigned)grid.signature_vendor);
+        uartWrite_(c);
+        sprintf(c, "Device Family: %X\n", (unsigned)grid.signature_family);
+        uartWrite_(c);
+        sprintf(c, "Device Number: %X\n", (unsigned)grid.signature_number);
+        uartWrite_(c);
+        sprintf(c, "Device Signature: %lX\n", (unsigned long)grid.signature);
+        uartWrite_(c);
+
+        sprintf(c, "Device lfuse: %lX\n", (unsigned long)grid.lfuse);
+        uartWrite_(c);
+        sprintf(c, "Device hfuse: %lX\n", (unsigned long)grid.hfuse);
+        uartWrite_(c);
+        sprintf(c, "Device extfuse: %lX\n", (unsigned long)grid.exfuse);
+        uartWrite_(c);
+
+        _delay_ms(100);
+
+        ispChipErase(&spi);
+        uartWrite_("ERASED PAGE\n");
+        _delay_ms(20);
+        programmer.buffer_size = sizeof(page0)/sizeof(page0[0]);
+        sprintf(c, "this is size_0: %d\n", programmer.buffer_size);
+        uartWrite_(c);
+        programmer.buffer = page0;
+        ispLoadProgramMemoryPage(&programmer);
+
+        _delay_ms(100);
+        ispVerifyProgramMemoryPage(&programmer, programmer.current_page);
+
+        _delay_ms(300);
+        programmer.buffer_size = sizeof(page1)/sizeof(page1[0]);
+        sprintf(c, "this is size_1: %d\n", programmer.buffer_size);
+        uartWrite_(c);
+        programmer.buffer = page1;
+        ispLoadProgramMemoryPage(&programmer);
+        _delay_ms(100);
+        ispVerifyProgramMemoryPage(&programmer, programmer.current_page);
+
+    }
+    else{
+        uartWrite_("Failed to Sync\n");
+    }
+
+    *spi.cs_reg->CS_PORT |= (1<<spi.cs_reg->CS_PIN);*/

@@ -1,4 +1,4 @@
-# Data Types
+##### DATA TYPES ######
 
 **I2C_PORT**
     This struct holds the data from where the reading/writing function will read/write data from/into
@@ -73,5 +73,47 @@
         Therefore, Call a starter function before using this function and call a stopper afterwards.
     
 
-    
+##### METHODS ######
 
+
+**_uint8_t i2cStartPOL(uint8_t address, uint8_t Mode)_** 
+
+-   Starts I2C protocol in Polling mode. To initialize the protocol, the first instrucion has to be the target address + W/R command, 
+    usually refered to SLA+W.
+
+    <uint8_t address>   Target Address
+    <uint8_t Mode>      O to write, 1 to read.
+
+**_uint8_t i2cStartInt(uint8_t address, uint8_t Mode)_** 
+
+-   Starts I2C protocol in Interrupt mode. To initialize the protocol, the first instrucion has to be the target address + W/R command, 
+    usually refered to SLA+W.
+
+    <uint8_t address>   Target Address
+    <uint8_t Mode>      O to write, 1 to read.
+
+
+**_uint8_t i2cSTOP()_**
+
+-   Sends a stop signal to the I2C bus line. It is necessary to ensure that a Stop signal is sent to the bus line, otherwise the target
+    will never free the bus.
+
+
+
+**_uint8_t i2cWritePOL(char *buffer, size_t size, uint8_t address)_**
+
+-   Sends a data buffer in polling mode to the a target address;
+
+    <char *buffer>    Data being sent
+    <size_t size>     Length of bytes being sent
+    <uint8_t address> Target address
+    <return:: (WSR & I2C_TWSR_FLAG_MASK)  > Returns the flag to indicate the status of the communication
+
+
+**_uint8_t i2cWritePOL_(char *buffer, size_t size)_**
+
+-   Send a data buffer in polling modewithout managing the I2C start signal. For some applications, the start/stop signal has to be 
+    handled more loosely. Therefore, you can use this method combined with i2cStart() and i2cStop() to control the flow externally
+
+    <char *buffer>    Data being sent
+    <size_t size>     Length of bytes being sent

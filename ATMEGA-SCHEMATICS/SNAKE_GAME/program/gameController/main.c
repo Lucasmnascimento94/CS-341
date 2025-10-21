@@ -1,16 +1,22 @@
 #include <avr/io.h>
-#include <avr/interrupt.h>
 #include <stdint.h>
-#include <util/delay.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <avr/interrupt.h>
+#include "screen.h"
+#include "i2c.h"
+#include "spi.h"
+
+/* I2C Vars */
+I2C_TARGET  screen;
+I2C_PORT    i2c;
+
+/*SPI Vars*/
+SPI_CS_TARGET spi_cs_flash;
+
+
 
 int main(){
-    DDRB |= (1<<PB0);
-    PORTB |= (1<<PB0);
-    DDRD |= (1<<PD7) | (1<<PD6);
-    PORTD |= (1<<PD7) | (1<<PD6);
+
 
     char msg = "HELLO WORLD WHERE AM I?\n";
 
@@ -22,4 +28,10 @@ int main(){
         PORTD ^= (1<<PD6);
         _delay_ms(1);
     }
+}
+
+
+void screenInitVars(I2C_PORT *port, I2C_TARGET *screen){
+    static uint8_t instruction[] = {0};
+
 }
