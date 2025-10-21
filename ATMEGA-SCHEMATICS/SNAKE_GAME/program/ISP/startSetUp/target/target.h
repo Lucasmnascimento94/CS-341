@@ -49,5 +49,5 @@ typedef struct {
     TARGET_SIGNAL   *signal;
 }TARGET_CONF;
 
-void targetUpdate(SPI *spi, TARGET_CONF *new_target);
+void targetSpiUpdate(SPI *spi, TARGET_CONF *new_target);
 #endif
