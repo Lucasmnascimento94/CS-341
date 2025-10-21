@@ -1,4 +1,3 @@
-#include "start.h"
 #include "spi.h"
 #include "uart.h"
 #include "avr/pgmspace.h"
@@ -71,9 +70,9 @@ int main(void){
     setUpUART();
     spiInit(&spi);
 
-    DDRC |= (1<<PC0);
-    PORTC |= (1<<PC0);
-    targetSpiUpdate(&spi, &grid_conf);
+    DDRC |= (1<<PC1);
+    PORTC |= (1<<PC1);
+    targetSpiUpdate(&spi, &game_conf);
 
 
     if(ispInit(&spi, &grid)){

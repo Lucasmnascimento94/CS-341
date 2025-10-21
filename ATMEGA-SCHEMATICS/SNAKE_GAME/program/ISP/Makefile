@@ -70,8 +70,6 @@ ifeq ($(INIT), INIT_UBUNTU)
 # Add any source directories here
 SRC_DIRS = \
   . \
-  lib \
-  libC \
   startSetUp \
   startSetUp/flash startSetUp/spi \
   startSetUp/sram startSetUp/uart \
