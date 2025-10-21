@@ -72,8 +72,8 @@ int main(void){
 
     DDRC |= (1<<PC1);
     PORTC |= (1<<PC1);
-    targetSpiUpdate(&spi, &game_conf);
-
+    targetSpiUpdate(&spi, &flash_conf);
+    PORTD &= ~(1<<PD3);
 
     if(ispInit(&spi, &grid)){
         ispProgrammingEnable(&grid);
