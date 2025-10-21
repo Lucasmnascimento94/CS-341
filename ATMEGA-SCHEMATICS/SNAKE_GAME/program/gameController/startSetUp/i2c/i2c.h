@@ -9,7 +9,16 @@
 
 #ifndef I2C_H
 #define I2C_H
-#include "includes.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <stdint.h>
+#include <util/delay.h>
+#include "stddef.h"
+#include <stdbool.h>
 
 /*──────────── Macros ────────────*/
 #define I2C_WRITE 0
@@ -40,22 +49,25 @@ typedef struct {
 }I2C_CONF;
 
 /*___________CLOCK & GPIO ____________*/
- void i2cInit(I2C_CONF *conf)
+ void i2cInit(I2C_CONF *conf);
  void i2cClockConfig(I2C_CONF *conf);
  void i2cModeConf(I2C_CONF *conf);
 
 
 /*______________HELPERS_______________*/
-uint8_t i2cStartPOL(uint8_t address, uint8_t mode);
-uint8_t i2cSTOP();
+uint8_t i2cStartPol(uint8_t address, uint8_t mode);
+uint8_t i2cStop();
 
 /*_________Writing Polling___________*/
-uint8_t i2cWritePOL(char *buffer, size_t size, uint8_t address);
-uint8_t i2cWritePOL_(char *buffer, size_t size);
+uint8_t i2cWritePol(char *buffer, size_t size, uint8_t address);
+uint8_t i2cWritePol_(char *buffer, size_t size);
 
 /*_________Reading Polling___________*/
 uint8_t i2cReadPol(char *data, size_t size, uint8_t address);
-uint8_t i2cReadPOL_(char *buffer, size_t size);
+uint8_t i2cReadPol_(char *buffer, size_t size);
 
 
+#ifdef __cplusplus
+}
+#endif
 #endif

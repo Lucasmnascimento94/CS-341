@@ -5,11 +5,7 @@
  *  Author: <you>
  *  Notes: Target: ATmega168/328-class, uses TWBR/TWSR/TWCR/TWDR registers.
  *==============================================================================*/
-
 #include "i2c.h"
-#include "string.h"
-#include "uart.h"
-#include "stdio.h"
 
 /*==============================================================================
  *  SECTION: CLOCK & GPIO INITIALIZATION
@@ -78,19 +74,18 @@ frequency in the Slave must be at least 16 times higher than the SCL frequency.
 void i2cModeConf(I2C_CONF *conf){
     switch (conf->mode){
         case MODE_MASTER_POL:
-            i2cConfMaster_POL();
+            i2cConfMasterPol();
             break;
         case MODE_MASTER_INT:
-            i2cConfMaster_INT();
+            i2cConfMasterInt();
             break;
         case MODE_SLAVE_POL:
-            i2cConfSlave_POL();
+            i2cConfSlavePol();
             break;
         case MODE_SLAVE_INT:
-            i2cConfSlave_INT();
+            i2cConfSlaveInt();
             break;
         default:
-            uartWrite_("Err..i2cConf<Invalid Mode>");
             return;
     }
 }
@@ -102,13 +97,13 @@ void i2cModeConf(I2C_CONF *conf){
  *  Purpose: Small helpers for repeated bus patterns (START/STOP/RETRY/STATUS).
  *  Includes: i2cPolHelper(), twsrFlagHandler(), and status decoding.
  *==============================================================================*/
-uint8_t i2cStartPOL(uint8_t address, uint8_t mode){
+uint8_t i2cStartPol(uint8_t address, uint8_t mode){
     /* Modify address byte on I2C protocol (SLA+W)
        Writing::direction==0 | Reading::direction==1*/
+    uint8_t instruction = (address << 1) | mode;
     TWCR |= (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);        // Send Start Signal on SDA bus
     while(!(TWCR & (1<<TWINT)));                        // Check for hardware feedback
-
-    TWDR=address;                                       // Write SLA+W onto data register
+    TWDR=instruction;                                       // Write SLA+W onto data register
     TWCR &= ~(1<<TWSTA);                                // Clear STA bit
     TWCR |= (1<<TWINT) | (1<<TWEN);                     // Clear flag
     while(!(TWCR & (1<<TWINT)));                        // Wait for hardware flag
@@ -116,7 +111,7 @@ uint8_t i2cStartPOL(uint8_t address, uint8_t mode){
     return TWSR & I2C_TWSR_FLAG_MASK;                   // Return status flag
 }
 
-uint8_t i2cSTOP(){
+uint8_t i2cStop(){
     TWCR |= (1<<TWSTO) | (1<<TWINT) | (1<<TWEN); // Send a Stop condition*/
     return TWSR & I2C_TWSR_FLAG_MASK; 
 }
@@ -128,7 +123,7 @@ uint8_t i2cPolHelper(uint8_t address, uint8_t mode){
     for(;status != SLA_PLUS_W_ACK; tries++){                                // Check for flag in polling mode
         if(tries>=10) return status;                                        // Return if it failed 10 times.
         status = (mode == I2C_READ)? \
-        i2cStartPOL(address, I2C_READ):i2cStartPOL(address, I2C_WRITE);     
+        i2cStartPol(address, I2C_READ):i2cStartPol(address, I2C_WRITE);     
     
         if(status == SLA_PLUS_W_ACK) break;                                 // break loop if ACK is received
         TWCR |= (1<<TWSTO) | (1<<TWINT) | (1<<TWEN);                        // Reset and send STOP signal, to start over.
@@ -137,36 +132,29 @@ uint8_t i2cPolHelper(uint8_t address, uint8_t mode){
     return status;
  }
 
-void twsrFlagHandler(char *msg){
-    char str[60] = {0};
-    strcat(str, msg);
+void twsrFlagHandler(){
     switch (TWSR & I2C_TWSR_FLAG_MASK){
         case START_TRANSMITTED:
-            strcat(str, "... Flag <START_RETRANSMITTED>\n");
-            uartWrite_(str);
+            /*TO DO*/
             break;
         case SLA_PLUS_W_ACK:
-            strcat(str, "... Flag <SLA_PLUS_W_ACK>\n");
-            uartWrite_(str);
+            /*TO DO*/
             break;
         case SLA_PLUS_W_NOT_ACK:
-            strcat(str, "... ErrorFlag <SLA_PLUS_W_NOT_ACK>\n");
-            uartWrite_(str);
+            /*TO DO*/
             break;
         case DATA_BYTE_TRANSMITTED_ACK:
-            strcat(str, "... Flag <DATA_BYTE_TRANSMITTED_ACK>\n");
-            uartWrite_(str);
+            /*TO DO*/
             break;
         case DATA_BYTE_TRANSMITTED_NO_ACK:
-            strcat(str, "... ErrorFlag <DATA_BYTE_TRANSMITTED_NO_ACK>\n");
-            uartWrite_(str);
+            /*TO DO*/
             break;
         case ARBITRATION_LOST:
-            strcat(str, "... ErrorFlag <ARBITRATION_LOST>\n");
-            uartWrite_(str);
+            /*TO DO*/
             break;
         default:
-            uartWrite_("Unknown FLag\n");
+            break;
+            /*TO DO*/
     }
 }
 
@@ -177,13 +165,13 @@ void twsrFlagHandler(char *msg){
  *  Purpose: Routines that *send* bytes/buffers on the I²C bus in polling mode.
  *  Includes: i2cStartPOL(), i2cWritePOL(), i2cWritePOL_(), i2cSTOP().
  *==============================================================================*/
-uint8_t i2cWritePOL(char *buffer, size_t size, uint8_t address){
+uint8_t i2cWritePol(char *buffer, size_t size, uint8_t address){
     /*Sanity Check*/
     if(buffer == NULL) return 0x01;
     
     /*Mode Adjustment*/
-    if(i2cPolHelper(address) != SLA_PLUS_W_ACK){
-        twsrFlagHandler("i2cWrite_Pol");
+    if(i2cPolHelper(address, I2C_WRITE) != SLA_PLUS_W_ACK){
+        twsrFlagHandler();
     }
     else{
         for(size_t i=0; i<size; i++){
@@ -194,11 +182,10 @@ uint8_t i2cWritePOL(char *buffer, size_t size, uint8_t address){
         }
     }
     
-    TWCR |= (1<<TWSTO) | (1<<TWINT) | (1<<TWEN);          // Send a Stop condition 
-    return TWSR & I2C_TWSR_FLAG_MASK;                             
+    return i2cStop();         // Send a Stop condition                            
  }
 
- uint8_t i2cWritePOL_(char *buffer, size_t size){
+ uint8_t i2cWritePol_(char *buffer, size_t size){
     if(buffer == NULL) return 0x01;
     for(size_t i=0; i<size; i++){
         while(!(TWCR & (1<<TWINT)));
@@ -209,13 +196,21 @@ uint8_t i2cWritePOL(char *buffer, size_t size, uint8_t address){
     return TWSR != DATA_BYTE_TRANSMITTED_ACK;
  }
 
- uint8_t i2cReadPol(buffer *data, size_t size, uint8_t address){
+
+ /*==============================================================================
+ *  SECTION: READ  / RX  (POLLING)
+ *------------------------------------------------------------------------------
+ *  Purpose: Routines that *read* bytes/buffers from the I²C bus in polling mode.
+ *  Includes: i2cReadPol(), i2cReadPOL_(), <future read helpers>.
+ *==============================================================================*/
+
+ uint8_t i2cReadPol(char *buffer, size_t size, uint8_t address){
     /*Sanity Check*/
     if(buffer == NULL) return 0x01;
     
     /*Mode Adjustment*/
-    if(i2cPolHelper(address) != SLA_PLUS_W_ACK){
-        twsrFlagHandler("i2cRead_Pol");
+    if(i2cPolHelper(address, I2C_READ) != SLA_PLUS_W_ACK){
+        twsrFlagHandler();
     }
     else{
         for(size_t i=0; i<size; i++){
@@ -230,7 +225,7 @@ uint8_t i2cWritePOL(char *buffer, size_t size, uint8_t address){
     return TWSR & I2C_TWSR_FLAG_MASK;                                
 }
 
-uint8_t i2cReadPOL_(char *buffer, size_t size){
+uint8_t i2cReadPol_(char *buffer, size_t size){
     if(buffer == NULL) return 0x01;
     for(size_t i=0; i<size; i++){
         while(!(TWCR & (1<<TWINT)));

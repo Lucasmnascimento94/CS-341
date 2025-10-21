@@ -7,20 +7,28 @@
 #include "spi.h"
 
 /* I2C Vars */
-I2C_TARGET  screen;
-I2C_PORT    i2c;
+//I2C_TARGET  screen;
+//I2C_PORT    i2c;
 
 /*SPI Vars*/
 SPI_CS_TARGET spi_cs_flash;
+SCREEN screen;
 
+I2C_CONF i2c = {
+    .f_cpu = 16000000,
+    .frequency = 1000000,
+    .mode = MODE_MASTER_POL,
+    .prescaler = 1
+};
 
 
 int main(){
+    i2cInit(&i2c);
+    screenInit(&screen);
 
-
-    char msg = "HELLO WORLD WHERE AM I?\n";
-
+    screenWrite(&screen, "Hello You");
     while(1){
+        screenWrite(&screen, "Hello You");
         PORTB ^= (1<<PB0);
         _delay_ms(1);
         PORTD ^= (1<<PD7);
@@ -31,7 +39,7 @@ int main(){
 }
 
 
-void screenInitVars(I2C_PORT *port, I2C_TARGET *screen){
-    static uint8_t instruction[] = {0};
+//void screenInitVars(I2C_PORT *port, I2C_TARGET *screen){
+ //   static uint8_t instruction[] = {0};
 
-}
+//}

@@ -1,5 +1,7 @@
 #ifndef SCREEN_H
 #define SCREEN_H
+#include <avr/io.h>
+#include <avr/interrupt.h>
 #include "includes.h"
 #include "i2c.h"
 
@@ -63,6 +65,6 @@ typedef struct{
     char *instruction;
 }SCREEN_CONF;
 
-void screenInit(I2C_PORT *port, I2C_TARGET *target);
+void screenInit(I2C_CONF *i2c_conf);
 void screenWrite(I2C_PORT *port, I2C_TARGET *target, SCREEN_CONF *screen);
 #endif
