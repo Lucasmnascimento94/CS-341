@@ -1,4 +1,4 @@
-# [TOPIC] APPLICATION NOTE
+# SCREEN APPLICATION NOTE
 
 **Author(s):** Lucas Nascimento
 **Date:** 10/13/2025 
