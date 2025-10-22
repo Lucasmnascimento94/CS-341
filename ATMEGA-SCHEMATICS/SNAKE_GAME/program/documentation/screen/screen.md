@@ -196,27 +196,54 @@ Address counter auto-increments/decrements after each read.
 
 ## Implementation Flow
 
-Step-by-step description of how this feature is implemented:  
-1. Initialization  
-2. Data flow / command handling  
-3. Error handling  
-4. Interaction with other modules  
+This section describes how the LCD driver is organized and how control/data moves through the system.
+
+### 1) Initialization
+
+1. **Create globals**
+   - `I2C_CONF i2c;`
+   - `SCREEN screen;`
+
+2. **Initialize I²C**
+   - `i2cInit(&i2c, /*default_conf=*/true);`
+   - Programs TWBR/TWPS based on `f_cpu`, target SCL, and prescaler.
+
+3. **Initialize LCD**
+   - `screenInit(&screen);`
+   - Loads defaults (`screenDefault`), sends:
+     - `FUNCTION_SET`
+     - `CLEAR_DISPLAY` (≥1.52 ms)
+     - `ENTRY_MODE` (I/D, SH)
+     - `DISPLAY_ON_OFF` (D/C/B)
+     - `HOME`
+   - Sets software cursor: `current_row = 0`, `current_column = 0`.
 
 ---
 
-## Testing & Validation
+### 2) Data flow / command handling
 
-- Recommended test methods (logic analyzer, oscilloscope, UART logs, etc.).  
-- Expected outcomes
-- Known limitations
+**High-level API:**
+- `screenWrite(&screen, const char *buf)`
+  - For each character:
+    1. Compute DDRAM address with `newAddrLine4()` (returns *current* address, then advances internal `(row,col)` for next char).
+    2. `setCursor(addr, screen.pcf8574_addr)` → issues `SET_DDRAM_ADDR`.
+    3. Pack the byte into two 4-bit writes via `buildDataNibbles()` (RS=1, R/W=0, E high→low for each nibble).
+    4. `i2cWritePol(pkt, 4, screen.pcf8574_addr)` with inter-char delay (≥37 µs).
+
+**Address helpers:**
+- `getAddress(row, column)` → returns DDRAM address for `(row, col)`.
+- `newAddrLine4()` → uses internal `current_row/current_column` to maintain the “next write” position and wrap across lines.
+
+**Command packing:**
+- `buildInstruction(opcode)` (RS=0 path) → emits 4 bytes (hi nibble with E, hi without E, lo with E, lo without E).
+- `buildDataNibbles(byte)` (RS=1 path) → same pattern for data writes.
 
 ---
 
 ## References
 
-- Datasheets used  
-- External application notes or guides  
-- Internal cross-references (e.g., link to related AN docs in this repo)
+- [Datasheets used](https://github.com/Lucasmnascimento94/CS-341/tree/SNAKE_V4_PROGRAMMER_LUCAS/ATMEGA-SCHEMATICS/SNAKE_GAME/datasheet/SCREEN)
+- [Internal cross-references](https://github.com/Lucasmnascimento94/CS-341/tree/SNAKE_V4_PROGRAMMER_LUCAS/ATMEGA-SCHEMATICS/SNAKE_GAME/program/documentation/protocols/i2c)
 
 ---
 
@@ -224,8 +251,7 @@ Step-by-step description of how this feature is implemented:
 
 | Date       | Version | Author     | Notes/Changes |
 |------------|---------|------------|---------------|
-| MM/DD/YYYY | v0.1    | [Name]     | Initial draft |
-| MM/DD/YYYY | v0.2    | [Name]     | Updates/fixes |
+| MM/DD/YYYY | v1.1    | [Lucas_Nascimento]     | Initial draft |
 
 
 
