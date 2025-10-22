@@ -36,17 +36,19 @@ It is intended to provide a clear reference for other teams so they can understa
     **K(LED-)** : LED KATHOD
 
 - Hardware settings.
-    The LCD screen is controlled by a GPIO expander (PCF8574), which is controlled through I2C protocol.
-    Since the PCF8574 only has 8 pins, the screen will be used in 4-bit mode operation with the following wiring:
+    The LCD screen is driven by a **PCF8574 GPIO expander**, which communicates with the microcontroller via the **I²C protocol**.  
+    Because the PCF8574 provides only 8 GPIO pins, the LCD operates in **4-bit mode**.
 
-    P0 (PCF8574) <<<<<<>>>>>> RS  (SCREEN)
-    P1 (PCF8574) <<<<<<>>>>>> R/W (SCREEN)
-    P2 (PCF8574) <<<<<<>>>>>> E   (SCREEN)
-    P3 (PCF8574) <<<<<<>>>>>> B   (SCREEN)
-    P4 (PCF8574) <<<<<<>>>>>> D4  (SCREEN)
-    P5 (PCF8574) <<<<<<>>>>>> D5  (SCREEN)
-    P6 (PCF8574) <<<<<<>>>>>> D6  (SCREEN)
-    P7 (PCF8574) <<<<<<>>>>>> D7  (SCREEN)
+    | PCF8574 Pin | LCD Pin | Description |
+    |--------------|----------|-------------|
+    | P0 | RS | Register Select |
+    | P1 | R/W | Read / Write control |
+    | P2 | E | Enable signal |
+    | P3 | B | Backlight control |
+    | P4 | D4 | Data bit 4 |
+    | P5 | D5 | Data bit 5 |
+    | P6 | D6 | Data bit 6 |
+    | P7 | D7 | Data bit 7 |
 
 - Writing Wave Form:
     RS   [0-1]
@@ -55,15 +57,6 @@ It is intended to provide a clear reference for other teams so they can understa
     DATA [D4-D7]
     E    [0]
     ...
-
-- Writing Wave Form:
-    RS   [0-1]
-    R/W  [1]
-    E    [1]
-    DATA [D4-D7]
-    E    [0]
-    ...
-
 
 - Opcodes:
     **CLEAR_DISPLAY** : Clear Display (2ms)
