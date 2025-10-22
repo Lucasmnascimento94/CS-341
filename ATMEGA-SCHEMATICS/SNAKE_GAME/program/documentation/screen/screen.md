@@ -50,13 +50,17 @@ It is intended to provide a clear reference for other teams so they can understa
     | P6 | D6 | Data bit 6 |
     | P7 | D7 | Data bit 7 |
 
-- Writing Wave Form:
-    RS   [0-1]
-    R/W  [0]
-    E    [1]
-    DATA [D4-D7]
-    E    [0]
-    ...
+- Writing Wave Form: 
+    The LCD operates in **4-bit mode**, so each byte is sent as two 4-bit nibbles.  
+    A typical **write cycle** follows this sequence:
+
+    | Signal | State | Description |
+    |---------|--------|-------------|
+    | RS | 0 → 1 | Selects data register (1 = data, 0 = command) |
+    | R/W | 0 | Write mode (read disabled) |
+    | E | 1 | Enable high — data latched on falling edge |
+    | DATA | D4–D7 | 4-bit data sent to LCD |
+    | E | 0 | Enable low — completes data transfer |
 
 - Opcodes:
     **CLEAR_DISPLAY** : Clear Display (2ms)
