@@ -18,7 +18,7 @@ I2C_CONF i2c;
 
 int main(){
     i2cInit(&i2c, true);
-    screenInit(&screen);
+    screenInit(&screen, true);
     _delay_ms(100);
 
     while(1){

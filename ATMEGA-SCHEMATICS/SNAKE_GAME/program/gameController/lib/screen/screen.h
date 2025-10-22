@@ -49,14 +49,15 @@ typedef struct {
 
 typedef struct{
     uint8_t pcf8574_addr;
-    uint8_t current_addr;
     uint8_t current_row;
     uint8_t current_column;
     SCREEN_CONF conf;
 }SCREEN;
 
-void screenInit(SCREEN *screen);
+void screenInit(SCREEN *screen, bool default_conf);
 void screenWrite(SCREEN *screen, char *buffer);
+void setCursor(uint8_t pos, uint8_t pcf_address);
+uint8_t getAddress(uint8_t row, uint8_t column);
 
 #ifdef __cplusplus
 }

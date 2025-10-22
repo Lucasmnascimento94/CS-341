@@ -57,8 +57,8 @@ uint8_t *buildInstrucion(uint16_t command){
     return instruction;
 }
 
-void screenInit(SCREEN *screen){
-    screenDefault(screen);
+void screenInit(SCREEN *screen, bool default_conf){
+    if(default_conf) screenDefault(screen);
     i2cWritePol(\
         (char *)buildInstrucion(FUNCTION_SET(screen->conf.DL, screen->conf.N, screen->conf.F)), 4, screen->pcf8574_addr);
         _delay_us(100);
@@ -87,29 +87,20 @@ void screenInit(SCREEN *screen){
         _delay_ms(2);
 }
 
-uint8_t newAddrLine4(SCREEN *screen){
-    uint8_t addr = 0;
-    uint8_t current = screen->current_column;
-    uint8_t base = 0x00;
 
-    if(current < 20){
-        addr = current;
+uint8_t newAddrLine4(SCREEN *screen){
+    uint8_t current_column = screen->current_column;
+
+    if(current_column < 20){
         screen->current_column++;
     }
     else{
-        addr = 0;
+        current_column = 0;
         screen->current_row = (screen->current_row<3)?screen->current_row + 1:0;
         screen->current_column = 1;
     }
 
-    switch (screen->current_row){
-        case 0: base = 0x00; break;
-        case 1: base = 0x40; break;
-        case 2: base = 0x14; break;
-        case 3: base = 0x54; break;
-    }
-
-    return addr+base;
+    return getAddress(screen->current_row, current_column);
 }
 
 uint8_t newAddrLine2(SCREEN *screen){
@@ -127,6 +118,18 @@ uint8_t newAddrLine2(SCREEN *screen){
     screen->current_column = (current < 19)? current+ 1: 0;
     screen->current_row= (current < 1)? screen->current_row+ 1: 0;
     return addr;
+}
+
+uint8_t getAddress(uint8_t row, uint8_t column){
+    uint8_t base = 0;
+    switch (row){
+        case 0: base = 0x00; break;
+        case 1: base = 0x40; break;
+        case 2: base = 0x14; break;
+        case 3: base = 0x54; break;
+    }
+
+    return base + column;
 }
 
 void buildBytes(uint8_t *buffer, uint8_t byte){
@@ -147,8 +150,9 @@ void buildBytes(uint8_t *buffer, uint8_t byte){
     buffer[4] = '\0'; // Not necessary for I2C transfer
 }
 
-void setCursor(uint8_t pos, uint8_t address){
-    i2cWritePol((char *)buildInstrucion(((1<<RAM_BIT) | pos)), 4, address); // Set Address
+
+void setCursor(uint8_t pos, uint8_t pcf_address){
+    i2cWritePol((char *)buildInstrucion(((1<<RAM_BIT) | pos)), 4, pcf_address); // Set Address
     _delay_us(100);
 }
 
