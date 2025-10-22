@@ -51,16 +51,23 @@ It is intended to provide a clear reference for other teams so they can understa
     | P7 | D7 | Data bit 7 |
 
 - Writing Wave Form: 
-    The LCD operates in **4-bit mode**, so each byte is sent as two 4-bit nibbles.  
-    A typical **write cycle** follows this sequence:
+    Each byte is sent in **two 4-bit transfers** — first the high nibble, then the low nibble.  
+    During each transfer, the **Enable (E)** line toggles high–low while **RS**, **R/W**, and **DATA[4–7]** remain stable.
 
-    | Signal | State | Description |
-    |---------|--------|-------------|
-    | RS | 0 → 1 | Selects data register (1 = data, 0 = command) |
-    | R/W | 0 | Write mode (read disabled) |
-    | E | 1 | Enable high — data latched on falling edge |
-    | DATA | D4–D7 | 4-bit data sent to LCD |
-    | E | 0 | Enable low — completes data transfer |
+
+
+| Phase | RS | R/W | E (Enable) | DATA Lines | Description |
+|--------|----|-----|-------------|-------------|--------------|
+| 1 | Set (0 = Command, 1 = Data) | 0 (Write) | Low | D7–D4 = High nibble | Prepare high nibble |
+| 2 | Hold | Hold | **High → Low** | D7–D4 = High nibble | Latch high nibble on **falling edge of E** |
+| 3 | Hold | Hold | Low | D7–D4 = Low nibble | Prepare low nibble |
+| 4 | Hold | Hold | **High → Low** | D7–D4 = Low nibble | Latch low nibble on **falling edge of E** |
+
+> ⚙️ **Summary:**  
+> - `RS` determines whether you’re sending a **command** (`RS = 0`) or **data** (`RS = 1`).  
+> - `R/W` remains **0** for writing.  
+> - Each nibble is latched when **E transitions from HIGH to LOW**.  
+> - Timing between nibbles must meet the LCD’s setup/hold requirements (typically a few microseconds).
 
 - Opcodes:
     **CLEAR_DISPLAY** : Clear Display (2ms)
