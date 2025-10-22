@@ -252,19 +252,3 @@ This section describes how the LCD driver is organized and how control/data move
 | Date       | Version | Author     | Notes/Changes |
 |------------|---------|------------|---------------|
 | MM/DD/YYYY | v1.1    | [Lucas_Nascimento]     | Initial draft |
-
-
-
-
-
-
-
-
-
-
-
-
-0b0010 1000
-
-1 - 0010 1100
-2 - 1000 1100
