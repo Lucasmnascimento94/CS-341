@@ -8,7 +8,7 @@ JoysStick - RIGHT >>  PD5
 */
 
 extern SnakeBelly belly;
-char c[30];
+static char c[30];
 ISR(PCINT2_vect){
     static uint8_t prev = 0xFF;
     uint8_t now = PIND;

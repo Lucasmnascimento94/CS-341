@@ -112,7 +112,7 @@ uint8_t start_POL(I2C_TARGET *target){
 *==============================================================================*/
 uint8_t start_INT(I2C_TARGET *target){
     //uint8_t address = (target->addr << 1) | (target->direction & 0x01);       // Modify address byte on I2C protocol (SLA+W)
-
+    
     return TWSR & I2C_TWSR_FLAG_MASK;                   // Return status flag
 }
 
@@ -183,6 +183,7 @@ uint8_t i2cWriteNoCtrl_POL(I2C_PORT *port){
         TWCR = (1<<TWINT) | (1<<TWEN); 
         while(TWSR != DATA_BYTE_TRANSMITTED_ACK){}
     }
+    return 1;
  }
 
 /*#######################################___I2C READING FUNCTIONS___#################################*/
@@ -191,24 +192,25 @@ uint8_t i2cWriteNoCtrl_POL(I2C_PORT *port){
     * Send data buffer in port to the target
 *==============================================================================*/
 uint8_t i2cRead_POL(I2C_PORT *port, I2C_TARGET *target){
-/*Sanity Check*/
-if(port == NULL || port->data == NULL || target == NULL) return;
+    /*Sanity Check*/
+    if(port == NULL || port->data == NULL || target == NULL) return 0;
 
-TWCR |= (1<<TWSTO) | (1<<TWINT) | (1<<TWEN);          // Send a Stop condition 
-return TWSR & I2C_TWSR_FLAG_MASK;  ;                              
+    TWCR |= (1<<TWSTO) | (1<<TWINT) | (1<<TWEN);          // Send a Stop condition 
+    return TWSR & I2C_TWSR_FLAG_MASK;  ;                              
 }
 
 /*==============================================================================
     * Send data buffer in port to the target
     - This function gives Control of START/STOP to the caller
 *==============================================================================*/
-uint8_t i2cReadNoCtrl_POL(I2C_PORT *port, I2C_TARGET *target){
-}
+/*uint8_t i2cReadNoCtrl_POL(I2C_PORT *port, I2C_TARGET *target){
+}*/
 
 
 /*#######################################___I2C FLAG HANDLERS___#################################*/
 
 void twsrFlagHandler(I2C_TARGET *target, char *msg){
+    (void)target;
     char str[60] = {0};
     strcat(str, msg);
     switch (TWSR & I2C_TWSR_FLAG_MASK){

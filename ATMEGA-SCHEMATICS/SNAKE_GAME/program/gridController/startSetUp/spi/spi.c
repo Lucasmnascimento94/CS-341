@@ -181,6 +181,6 @@ void spiReadPoll_(uint8_t *data, uint16_t len){
  *   - CS is asserted low by caller before read; deasserted after.
  *   - Slave prepared to shift data out (master will clock by writing dummy 0xFF).
  *============================================================================*/
-void spiReadInt(char *data, uint16_t size){
+/*void spiReadInt(char *data, uint16_t size){
     // TO DO
-}
+}*/

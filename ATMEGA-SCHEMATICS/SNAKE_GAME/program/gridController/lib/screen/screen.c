@@ -2,7 +2,7 @@
 #include "uart.h"
 #include "string.h"
 #include "stdio.h"
-char c[50];
+static char c[50];
 void buildCommand(I2C_PORT *port, uint16_t command){
     memset(port->instruction, 0, port->intruction_size);
     uint8_t control_nibble = 0x00;
@@ -111,6 +111,8 @@ void writeBytes(I2C_PORT *port){
 }
 
 void screenWrite(I2C_PORT *port, I2C_TARGET *target, SCREEN_CONF *screen){
+    (void)screen;
+
     if(port->data == NULL) return;
 
     char *temp = port->data;

@@ -3,10 +3,10 @@
     "configurations": [
         {
             "name": "macos-clang-arm64",
-            "compilerPath": "/usr/bin/avr-gcc",
+            "compilerPath": "C:/Users/mhuyn/AppData/Local/Microsoft/WinGet/Packages/ZakKemble.avr-gcc_Microsoft.Winget.Source_8wekyb3d8bbwe/avr-gcc-14.1.0-x64-windows/bin/avr-gcc.exe",
             "compilerArgs": [
-                "-mmcu=atmega168",
-                "-DF_CPU=8000000UL"
+                "-mmcu=atmega328p",
+                "-DF_CPU=16000000UL"
             ],
             "includePath": [
                 "${workspaceFolder}/**",
@@ -24,11 +24,11 @@
                 "${workspaceFolder}/gridController/libC"
             ],
             "defines": [
-                "__AVR_ATmega168__"
+                "__AVR_ATmega328P__"
             ],
             "cStandard": "${default}",
             "cppStandard": "${default}",
-            "intelliSenseMode": "macos-clang-arm64"
+            "intelliSenseMode": "${default}"
         }
     ]
 }

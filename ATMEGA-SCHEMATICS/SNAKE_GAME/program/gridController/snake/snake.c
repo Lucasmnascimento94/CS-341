@@ -126,7 +126,7 @@ bool ruleCheck(SnakeBelly *belly, uint16_t food){
     uint8_t z;
     uint16_t val;
 
-    char c[30];
+    static char c[30];
     if(address == food->val){
         *eatFood = true;
         push(belly, food->val, food->i, food->j, food->poison);
