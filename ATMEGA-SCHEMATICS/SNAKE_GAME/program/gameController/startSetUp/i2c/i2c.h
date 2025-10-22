@@ -49,7 +49,7 @@ typedef struct {
 }I2C_CONF;
 
 /*___________CLOCK & GPIO ____________*/
- void i2cInit(I2C_CONF *conf);
+ void i2cInit(I2C_CONF *conf, bool default_conf);
  void i2cClockConfig(I2C_CONF *conf);
  void i2cModeConf(I2C_CONF *conf);
 

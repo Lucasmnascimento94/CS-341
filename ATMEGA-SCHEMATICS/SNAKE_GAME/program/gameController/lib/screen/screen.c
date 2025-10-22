@@ -2,19 +2,20 @@
 #include "string.h"
 
 void screenDefault(SCREEN *screen){
-    screen->conf->I_D = 1;
-    screen->conf->SH = 0;
-    screen->conf->D = 1;
-    screen->conf->C = 1;
-    screen->conf->B = 1;
-    screen->conf->S_C = 0;
-    screen->conf->R_L = 1;
-    screen->conf->DL = 0;
-    screen->conf->N = 1;
-    screen->conf->F = 0;
+    screen->conf.I_D = 1;
+    screen->conf.SH = 0;
+    screen->conf.D = 1;
+    screen->conf.C = 0;
+    screen->conf.B = 0;
+    screen->conf.S_C = 0;
+    screen->conf.R_L = 1;
+    screen->conf.DL = 0;
+    screen->conf.N = 1;
+    screen->conf.F = 0;
 
     screen->current_column = 0;
-    screen->current_row = 0X4E >> 1;
+    screen->current_row = 0;
+    screen->pcf8574_addr = 0x4E>>1;
 }
 
 uint8_t *buildInstrucion(uint16_t command){
@@ -43,14 +44,14 @@ uint8_t *buildInstrucion(uint16_t command){
         }
     }
 
-    control_nibble |= (1<<BT) | (1<<E);
+    control_nibble |= (1<<BT_BIT) | (1<<E_BIT);
     uint8_t hi_nibble = (((uint8_t)command) & 0xF0);
     uint8_t lo_nibble = ((((uint8_t)command) & 0x0F) << 4);
 
     instruction[0] = hi_nibble | control_nibble;
-    instruction[1] = instruction[0] & ~(1<<E);
+    instruction[1] = instruction[0] & ~(1<<E_BIT);
     instruction[2] = lo_nibble | control_nibble;
-    instruction[3] = instruction[2] & ~(1<<E);
+    instruction[3] = instruction[2] & ~(1<<E_BIT);
     instruction[4] = '\0';
 
     return instruction;
@@ -59,54 +60,56 @@ uint8_t *buildInstrucion(uint16_t command){
 void screenInit(SCREEN *screen){
     screenDefault(screen);
     i2cWritePol(\
-        (char *)buildInstrucion(FUNCTION_SET(screen->conf->DL, screen->conf->N, screen->conf->F)), 4, screen->pcf8574_addr);
+        (char *)buildInstrucion(FUNCTION_SET(screen->conf.DL, screen->conf.N, screen->conf.F)), 4, screen->pcf8574_addr);
         _delay_us(100);
 
     i2cWritePol(\
-        (char *)buildInstrucion(FUNCTION_SET(screen->conf->DL, screen->conf->N, screen->conf->F)), 4, screen->pcf8574_addr);
+        (char *)buildInstrucion(FUNCTION_SET(screen->conf.DL, screen->conf.N, screen->conf.F)), 4, screen->pcf8574_addr);
         _delay_us(100);
     
     i2cWritePol((char *)buildInstrucion(CLEAR_DISPLAY), 4, screen->pcf8574_addr);
-    _delay_us(100);
+    _delay_ms(2);
 
     i2cWritePol(\
-        (char *)buildInstrucion(ENTRY_MODE(screen->conf->I_D, screen->conf->SH)), 4, screen->pcf8574_addr);
+        (char *)buildInstrucion(ENTRY_MODE(screen->conf.I_D, screen->conf.SH)), 4, screen->pcf8574_addr);
         _delay_us(100);
 
     i2cWritePol(\
-        (char *)buildInstrucion(DISPLAY_ON_OFF(screen->conf->D, screen->conf->C, screen->conf->B)), 4, screen->pcf8574_addr);
+        (char *)buildInstrucion(DISPLAY_ON_OFF(screen->conf.D, screen->conf.C, screen->conf.B)), 4, screen->pcf8574_addr);
         _delay_us(100);
 
     i2cWritePol(\
-        (char *)buildInstrucion(CURSOR(screen->conf->S_C, screen->conf->R_L)), 4, screen->pcf8574_addr);
+        (char *)buildInstrucion(CURSOR(screen->conf.S_C, screen->conf.R_L)), 4, screen->pcf8574_addr);
         _delay_us(100);
 
     i2cWritePol(\
         (char *)buildInstrucion(HOME), 4, screen->pcf8574_addr);
-        _delay_us(100);
+        _delay_ms(2);
 }
 
 uint8_t newAddrLine4(SCREEN *screen){
-    static uint8_t addr = 0;
+    uint8_t addr = 0;
     uint8_t current = screen->current_column;
+    uint8_t base = 0x00;
+
+    if(current < 20){
+        addr = current;
+        screen->current_column++;
+    }
+    else{
+        addr = 0;
+        screen->current_row = (screen->current_row<3)?screen->current_row + 1:0;
+        screen->current_column = 1;
+    }
 
     switch (screen->current_row){
-        case 0:
-            addr = current+1;
-            break;
-        case 1:
-            addr = 0x40 + current + 1;
-            break;
-        case 2:
-            addr = 0x14 + current + 1;
-            break;
-        case 3:
-            addr = 0x54 + current + 1;
-            break;
+        case 0: base = 0x00; break;
+        case 1: base = 0x40; break;
+        case 2: base = 0x14; break;
+        case 3: base = 0x54; break;
     }
-    screen->current_column = (current < 19)? current+ 1: 0;
-    screen->current_row= (current < 3)? screen->current_row+ 1: 0;
-    return addr;
+
+    return addr+base;
 }
 
 uint8_t newAddrLine2(SCREEN *screen){
@@ -126,41 +129,40 @@ uint8_t newAddrLine2(SCREEN *screen){
     return addr;
 }
 
-void writeBytes(char *buffer){
+void buildBytes(uint8_t *buffer, uint8_t byte){
     // Fixed: 'static' makes this memory permanent (non-dangling)
-    static char instruction[5] = {0}; 
+    if(buffer == NULL) return;
     uint8_t control_nibble = (1 << RS_BIT); // <-- FIXED: Set RS=1
-    uint16_t size = strlen(buffer);
 
-    for(uint16_t i=0; i<size; i++){
-        // This calculates the control byte *with* E=1
-        uint8_t control_e_high = control_nibble | (1<<BT) | (1<<E); 
-        
-        uint8_t hi_nibble = (buffer[i] & 0xF0);
-        uint8_t lo_nibble = ((buffer[i] & 0x0F) << 4);
+    // This calculates the control byte *with* E=1
+    uint8_t control_e_high = control_nibble | (1<<BT_BIT) | (1<<E_BIT) | (1<<RS_BIT); 
+    
+    uint8_t hi_nibble = (byte & 0xF0);
+    uint8_t lo_nibble = ((byte & 0x0F) << 4);
 
-        instruction[0] = hi_nibble | control_e_high;
-        instruction[1] = instruction[0] & ~(1<<E); // E=0
-        instruction[2] = lo_nibble | control_e_high;
-        instruction[3] = instruction[2] & ~(1<<E); // E=0
-        instruction[4] = '\0'; // Not necessary for I2C transfer
-        
-        // Send the 4 bytes for one character
-        i2cWritePol_(instruction, 4);
-        _delay_us(60); 
-    }
+    buffer[0] = hi_nibble | control_e_high;
+    buffer[1] = buffer[0] & ~(1<<E_BIT); // E=0
+    buffer[2] = lo_nibble | control_e_high;
+    buffer[3] = buffer[2] & ~(1<<E_BIT); // E=0
+    buffer[4] = '\0'; // Not necessary for I2C transfer
+}
+
+void setCursor(uint8_t pos, uint8_t address){
+    i2cWritePol((char *)buildInstrucion(((1<<RAM_BIT) | pos)), 4, address); // Set Address
+    _delay_us(100);
 }
 
 void screenWrite(SCREEN *screen, char *buffer){
     if(buffer == NULL) return;
 
-    // Set address to start writing on DDRAM
-    uint8_t next_addr = (screen->conf->N)?newAddrLine4(screen):newAddrLine2(screen);
-    i2cWritePol((char *)buildInstrucion(((1<<RAM_BIT) | next_addr)), 4, screen->pcf8574_addr);
-    _delay_us(100);
+    for(uint16_t i=0; i<strlen(buffer); i++){
+        uint8_t next_addr = (screen->conf.N)?newAddrLine4(screen):newAddrLine2(screen);
+        setCursor(next_addr, screen->pcf8574_addr); // Set Address
 
-    i2cStartPol(screen->pcf8574_addr, I2C_WRITE); // Start protocl with no auto control
-    _delay_us(1);
-    writeBytes(buffer);
-    i2cStop();
+        // This calculates the control byte *with* E=1
+        uint8_t bytes[5] = {0};
+        buildBytes(bytes, (uint8_t)buffer[i]);
+        i2cWritePol((char *)bytes, 4, screen->pcf8574_addr);
+        _delay_us(45); 
+    }
 }

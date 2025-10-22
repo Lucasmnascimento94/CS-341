@@ -4,7 +4,7 @@
     "configurations": [
         {
             "name": "macos-clang-arm64",
-            "compilerPath": "/opt/homebrew/bin/avr-gcc",
+            "compilerPath": "/usr/bin/avr-gcc",
             "compilerArgs": [
                 "-mmcu=atmega168",
                 "-DF_CPU=8000000UL"

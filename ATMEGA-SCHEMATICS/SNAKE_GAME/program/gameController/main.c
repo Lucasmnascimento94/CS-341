@@ -13,35 +13,16 @@
 /*SPI Vars*/
 SPI_CS_TARGET spi_cs_flash;
 SCREEN screen;
-
-I2C_CONF i2c = {
-    .f_cpu = 16000000,
-    .frequency = 1000000,
-    .mode = MODE_MASTER_POL,
-    .prescaler = 1
-};
+I2C_CONF i2c; 
 
 
 int main(){
-    i2cInit(&i2c);
-    //screenInit(&screen);
+    i2cInit(&i2c, true);
+    screenInit(&screen);
+    _delay_ms(100);
 
-    //screenWrite(&screen, "Hello You");
     while(1){
-        //i2cWritePol("hello world", 12, 0x078);
-        i2cStartPol(0x4E, I2C_WRITE);
-        //screenWrite(&screen, "Hello You");
-        PORTB ^= (1<<PB0);
-        _delay_ms(1);
-        PORTD ^= (1<<PD7);
-        _delay_ms(1);
-        PORTD ^= (1<<PD6);
-        _delay_ms(1);
+        screenWrite(&screen, "HELLO WORLD ");
+        _delay_ms(2000);
     }
 }
-
-
-//void screenInitVars(I2C_PORT *port, I2C_TARGET *screen){
- //   static uint8_t instruction[] = {0};
-
-//}

@@ -7,10 +7,10 @@ extern "C" {
 #include "i2c.h"
 
 // default values.
-#define RS      0
-#define RW      1
-#define E       2
-#define BT      3
+#define RS_BIT      0
+#define RW_BIT      1
+#define E_BIT       2
+#define BT_BIT      3
 
 #define DL_BIT  4
 #define N_BIT   3
@@ -41,16 +41,10 @@ extern "C" {
 #define ENTRY_MODE_  
 
 typedef struct {
-    uint8_t I_D;
-    uint8_t SH;
-    uint8_t D;
-    uint8_t C;
-    uint8_t B;
-    uint8_t S_C;
-    uint8_t R_L;
-    uint8_t DL;
-    uint8_t N;
-    uint8_t F;
+    uint8_t I_D, SH;   // Entry mode
+    uint8_t D, C, B;   // Display on/off, cursor, blink
+    uint8_t S_C, R_L;  // Shift command fields (rarely used at init)
+    uint8_t DL, N, F;  // Function set
 }SCREEN_CONF;
 
 typedef struct{
@@ -58,7 +52,7 @@ typedef struct{
     uint8_t current_addr;
     uint8_t current_row;
     uint8_t current_column;
-    SCREEN_CONF *conf;
+    SCREEN_CONF conf;
 }SCREEN;
 
 void screenInit(SCREEN *screen);
@@ -68,25 +62,3 @@ void screenWrite(SCREEN *screen, char *buffer);
 }
 #endif
 #endif
-
-
-
-
-
-
-
-
-
-
-/*
-//#define I_D     1
-//#define SH      0
-//#define D       1
-//#define C       1
-//#define B       1
-//#define S_C     0
-//#define R_L     1
-//#define DL      0   // 4-bits mode
-//#define N       1   // 2 lines mode
-//#define F       0   // small font
-*/

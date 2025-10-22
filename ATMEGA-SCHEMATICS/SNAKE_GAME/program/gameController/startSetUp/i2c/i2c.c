@@ -6,6 +6,14 @@
  *  Notes: Target: ATmega168/328-class, uses TWBR/TWSR/TWCR/TWDR registers.
  *==============================================================================*/
 #include "i2c.h"
+#include "math.h"
+
+void i2cdefault(I2C_CONF *conf){
+    conf->f_cpu = 8000000;
+    conf->frequency = 400000;
+    conf->mode = MODE_MASTER_POL;
+    conf->prescaler = 1;
+}
 
 /*==============================================================================
  *  SECTION: CLOCK & GPIO INITIALIZATION
@@ -31,9 +39,10 @@ void i2cConfSlaveInt(){
     /*to do*/
 }
 
-void i2cInit(I2C_CONF *conf){
-    DDRC |= (1<<PC5) | (1<<PC4);
+void i2cInit(I2C_CONF *conf, bool default_conf){
+    DDRC  &= ~((1<<PC5) | (1<<PC4)); 
     PORTC |= (1<<PC5) | (1<<PC4);
+    if(default_conf) i2cdefault(conf);
     i2cClockConfig(conf);
     i2cModeConf(conf);
 }
@@ -68,7 +77,10 @@ frequency in the Slave must be at least 16 times higher than the SCL frequency.
 
     uint32_t twbr_num = (conf->f_cpu / conf->frequency);
     uint32_t twbr_den = 2*(conf->prescaler);
-    TWBR = (uint8_t) ((twbr_num - 16)/twbr_den);
+
+    uint8_t twbr = (uint8_t)((twbr_num - 16)/twbr_den);
+    TWBR = (twbr < 2)?2U:twbr;
+    conf->TWBR_VAL = TWBR;
 }
 
 void i2cModeConf(I2C_CONF *conf){
@@ -178,7 +190,7 @@ uint8_t i2cWritePol(char *buffer, size_t size, uint8_t address){
         while(!(TWCR & (1<<TWINT)));                      // Wait for Hardware flag
         TWDR = buffer[i];                             // Write data to I2C register
         TWCR = (1<<TWINT) | (1<<TWEN);                    // Send data
-        while(TWSR != DATA_BYTE_TRANSMITTED_ACK){} // Wait for hardware flag
+        while((TWSR & I2C_TWSR_FLAG_MASK) != DATA_BYTE_TRANSMITTED_ACK){} // Wait for hardware flag
         }
     }
     
@@ -191,9 +203,9 @@ uint8_t i2cWritePol(char *buffer, size_t size, uint8_t address){
         while(!(TWCR & (1<<TWINT)));
         TWDR = buffer[i];
         TWCR = (1<<TWINT) | (1<<TWEN); 
-        while(TWSR != DATA_BYTE_TRANSMITTED_ACK){}
+        while((TWSR & I2C_TWSR_FLAG_MASK) != DATA_BYTE_TRANSMITTED_ACK){}
     }
-    return TWSR != DATA_BYTE_TRANSMITTED_ACK;
+    return (I2C_TWSR_FLAG_MASK) != DATA_BYTE_TRANSMITTED_ACK;
  }
 
 
@@ -217,7 +229,7 @@ uint8_t i2cWritePol(char *buffer, size_t size, uint8_t address){
         while(!(TWCR & (1<<TWINT)));                      // Wait for Hardware flag
         TWDR = buffer[i];                             // Write data to I2C register
         TWCR = (1<<TWINT) | (1<<TWEN);                    // Send data
-        while(TWSR != DATA_BYTE_TRANSMITTED_ACK){} // Wait for hardware flag
+        while((TWSR & I2C_TWSR_FLAG_MASK) != DATA_BYTE_TRANSMITTED_ACK){} // Wait for hardware flag
         }
     }
     
@@ -231,9 +243,9 @@ uint8_t i2cReadPol_(char *buffer, size_t size){
         while(!(TWCR & (1<<TWINT)));
         TWDR = buffer[i];
         TWCR = (1<<TWINT) | (1<<TWEN); 
-        while(TWSR != DATA_BYTE_TRANSMITTED_ACK){}
+        while((TWSR & I2C_TWSR_FLAG_MASK) != DATA_BYTE_TRANSMITTED_ACK){}
     }
-    return TWSR != DATA_BYTE_TRANSMITTED_ACK;
+    return (TWSR & I2C_TWSR_FLAG_MASK) != DATA_BYTE_TRANSMITTED_ACK;
  }
 
 
