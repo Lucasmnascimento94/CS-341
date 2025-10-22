@@ -5,6 +5,7 @@
 #include <math.h>
 #include <ftd2xx.h>
 
+/*
 // CBUS function definitions
 #define FT_232R_CBUS_TXDEN     0x00    // Tx Data Enable
 #define FT_232R_CBUS_PWRON     0x01    // Power On
@@ -15,22 +16,15 @@
 #define FT_232R_CBUS_CLK48     0x06    // 48MHz clock
 #define FT_232R_CBUS_CLK24     0x07    // 24MHz clock
 #define FT_232R_CBUS_CLK12     0x08    // 12MHz clock
-#define FT_232R_CBUS_CLK6      0x09    // 6MHz clock
 #define FT_232R_CBUS_IOMODE    0x0A    // IO Mode for CBUS bit-bang
 #define FT_232R_CBUS_BITBANG_WR 0x0B   // Bit-bang write strobe
 #define FT_232R_CBUS_BITBANG_RD 0x0C   // Bit-bang read strobe
+*/
+
 
 int main() {
     FT_STATUS ftStatus;
     DWORD numDevices;
-    DWORD devIndex = 0;
-    char DeviceName[32];
-    char Description[64];
-    char* DescriptionPtr[2];
-    
-    // Initialize the device description pointer
-    DescriptionPtr[0] = Description;
-    DescriptionPtr[1] = NULL;
 
     // Device information list
     FT_DEVICE_LIST_INFO_NODE *devInfo;
@@ -42,22 +36,22 @@ int main() {
     // EEPROM data structure
     FT_EEPROM_232R ft_eeprom_232r;
     
-    // Initialize the structure to zero first (GPT SUGGESTED)
+    // Initialize the structure to zero first
     memset(&ft_eeprom_232r, 0, sizeof(FT_EEPROM_232R));
     
-    // Set the device type (GPT SUGGESTED)
+    // Set the device type
     ft_eeprom_232r.common.deviceType = FT_DEVICE_232R;
     
     // Set required common header fields 
-    ft_eeprom_232r.common.VendorId = 0x0403;        // Vendor ID 
-    ft_eeprom_232r.common.ProductId = 0x6001;       // Product ID
-    ft_eeprom_232r.common.MaxPower = 90;            
-    ft_eeprom_232r.common.PullDownEnable = 0;       
-    ft_eeprom_232r.common.RemoteWakeup = 0;         
+    ft_eeprom_232r.common.VendorId = 0x0403;        // FTDI Vendor ID
+    ft_eeprom_232r.common.ProductId = 0x6001;       // FT232R Product ID
+    ft_eeprom_232r.common.MaxPower = 90;            // Max power in mA
+    ft_eeprom_232r.common.PullDownEnable = 0;       // Pull down enable
+    ft_eeprom_232r.common.RemoteWakeup = 0;         // Remote wakeup capability
     ft_eeprom_232r.common.SerNumEnable = 1;         // Enable serial number
-    ft_eeprom_232r.common.SelfPowered = 1;         // Self powered
+    ft_eeprom_232r.common.SelfPowered = 1;          // Self powered
     
-    // Set FT232R specific fields (GPT SUGGESTED)
+    // Set FT232R specific fields
     ft_eeprom_232r.IsHighCurrent = 0;               // Not high current
     ft_eeprom_232r.UseExtOsc = 0;                   // Use internal oscillator
     ft_eeprom_232r.DriverType = 0;                 // Use VCP driver (0) or D2XX driver (1)
@@ -114,7 +108,21 @@ int main() {
         strncpy(EEPROMDescription, "Custom FT232R Device", sizeof(EEPROMDescription) - 1);
         strncpy(SerialNumber, "A50285BI", sizeof(SerialNumber) - 1);
 
-        
+        FT_PROGRAM_DATA ftData;
+        char ManufactureBuf[32];
+        char ManufacturerIdBuf[16]; 
+        char DescriptionBuf[64]; 
+        char SerialNumberBuf[16]; 
+        ftData.Signature1 = 0x00000000; // Header - must be 0x00000000
+        ftData.Signature2 = 0xFFFFFFFF; // Header - must be 0xffffffff
+        ftData.Version = 2; // FT232R extensions
+        ftData.VendorId = 0x0403; // Vendor ID - 0x0403
+        ftData.ProductId = 0x6001; // Product ID - 0x6001
+        ftData.Manufacturer = ManufactureBuf;
+        ftData.ManufacturerId = ManufacturerIdBuf;
+        ftData.Description = DescriptionBuf;
+        ftData.SerialNumber = SerialNumberBuf;
+        ftData.InvertTXD = 1;
         
         printf("Configure settings\n");
         
@@ -156,31 +164,34 @@ int main() {
         
         // Program EEPROM
         printf("Programming EEPROM...\n");
-        ftStatus1 = FT_EEPROM_Program(ftHandle, &ft_eeprom_232r, sizeof(ft_eeprom_232r), Manufacture, ManufacturerId, EEPROMDescription, SerialNumber);
+        // ftStatus1 = FT_EEPROM_Program(ftHandle, &ft_eeprom_232r, sizeof(ft_eeprom_232r), Manufacture, ManufacturerId, EEPROMDescription, SerialNumber);
+        // if (ftStatus1 == FT_OK) {
+        //     printf("EEPROM programmed successfully\n");
+        //     printf("Manufacturer: %s\n", Manufacture);
+        //     printf("Manufacturer ID: %s\n", ManufacturerId);
+        //     printf("Description: %s\n", EEPROMDescription);
+        //     printf("Serial Number: %s\n", SerialNumber);
+
+        //     printf("--------------------------------\n");
+        //     printf("New Settings:\n");
+        //     printf("--------------------------------\n");
+        //     printf("Self Powered: %d\n", ft_eeprom_232r.common.SelfPowered);
+        //     printf("Serial Number: %d\n", ft_eeprom_232r.common.SerNumEnable);
+        //     printf("InvertTXD: %d\n", ft_eeprom_232r.InvertTXD);
+        //     printf("InvertRXD: %d\n", ft_eeprom_232r.InvertRXD);
+        //     printf("InvertRTS: %d\n", ft_eeprom_232r.InvertRTS);
+        //     printf("InvertCTS: %d\n", ft_eeprom_232r.InvertCTS);
+        //     printf("Cbus0: %d\n", ft_eeprom_232r.Cbus0);
+        //     printf("Cbus1: %d\n", ft_eeprom_232r.Cbus1);
+        //     printf("Cbus2: %d\n", ft_eeprom_232r.Cbus2);
+        //     printf("Cbus3: %d\n", ft_eeprom_232r.Cbus3);
+        //     printf("Cbus4: %d\n", ft_eeprom_232r.Cbus4);
+        //     printf("--------------------------------\n");
+        ftStatus1 = FT_EE_Program(ftHandle, &ftData);
         if (ftStatus1 == FT_OK) {
             printf("EEPROM programmed successfully\n");
-            printf("Manufacturer: %s\n", Manufacture);
-            printf("Manufacturer ID: %s\n", ManufacturerId);
-            printf("Description: %s\n", EEPROMDescription);
-            printf("Serial Number: %s\n", SerialNumber);
-
-            printf("--------------------------------\n");
-            printf("New Settings:\n");
-            printf("--------------------------------\n");
-            printf("Self Powered: %d\n", ft_eeprom_232r.common.SelfPowered);
-            printf("Serial Number: %d\n", ft_eeprom_232r.common.SerNumEnable);
-            printf("InvertTXD: %d\n", ft_eeprom_232r.InvertTXD);
-            printf("InvertRXD: %d\n", ft_eeprom_232r.InvertRXD);
-            printf("InvertRTS: %d\n", ft_eeprom_232r.InvertRTS);
-            printf("InvertCTS: %d\n", ft_eeprom_232r.InvertCTS);
-            printf("Cbus0: %d\n", ft_eeprom_232r.Cbus0);
-            printf("Cbus1: %d\n", ft_eeprom_232r.Cbus1);
-            printf("Cbus2: %d\n", ft_eeprom_232r.Cbus2);
-            printf("Cbus3: %d\n", ft_eeprom_232r.Cbus3);
-            printf("Cbus4: %d\n", ft_eeprom_232r.Cbus4);
-            printf("--------------------------------\n");
-            
-        } else {
+        }
+        else {
             printf("Error: Could not program EEPROM. Error code: %d\n", ftStatus1);
             return 1;
         }

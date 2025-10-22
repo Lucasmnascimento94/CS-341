@@ -71,9 +71,9 @@ int main() {
     FT_STATUS ftStatus;
     DWORD numDevices;
     DWORD devIndex = 0; // Index of the device to open
-    char DeviceName[32]; // Device name 
-    char Description[64]; // Device description
-    char* DescriptionPtr[2]; // Buffer for the device description
+    // char DeviceName[32]; // Device name 
+    // char Description[64]; // Device description
+    // char* DescriptionPtr[2]; // Buffer for the device description
     
     // Initialize the device description pointer
     DescriptionPtr[0] = Description;
