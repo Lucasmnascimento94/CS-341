@@ -24,11 +24,13 @@ I2C_CONF i2c = {
 
 int main(){
     i2cInit(&i2c);
-    screenInit(&screen);
+    //screenInit(&screen);
 
-    screenWrite(&screen, "Hello You");
+    //screenWrite(&screen, "Hello You");
     while(1){
-        screenWrite(&screen, "Hello You");
+        //i2cWritePol("hello world", 12, 0x078);
+        i2cStartPol(0x4E, I2C_WRITE);
+        //screenWrite(&screen, "Hello You");
         PORTB ^= (1<<PB0);
         _delay_ms(1);
         PORTD ^= (1<<PD7);
