@@ -5,7 +5,7 @@ int main() {
     FT_HANDLE ftHandle;
     FT_STATUS ftStatus;
     DWORD BytesWritten;
-    char TxBuffer[] = "I'm gay";
+    char TxBuffer[] = "Bitcoin!";
 
 
     // Open the first FTDI device
