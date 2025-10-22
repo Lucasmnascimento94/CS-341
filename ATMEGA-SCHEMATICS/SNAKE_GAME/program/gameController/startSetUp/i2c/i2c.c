@@ -6,7 +6,6 @@
  *  Notes: Target: ATmega168/328-class, uses TWBR/TWSR/TWCR/TWDR registers.
  *==============================================================================*/
 #include "i2c.h"
-#include "math.h"
 
 void i2cdefault(I2C_CONF *conf){
     conf->f_cpu = 8000000;
