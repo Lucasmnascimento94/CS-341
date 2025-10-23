@@ -3,13 +3,14 @@
   "configurations": [
     {
       "name": "macos-clang-arm64",
-      "compilerPath": "/usr/bin/clang",
+      "compilerPath": "/usr/bin/gcc",
       "cStandard": "${default}",
       "cppStandard": "${default}",
       "intelliSenseMode": "macos-clang-arm64",
       "includePath": [
         "${workspaceFolder}/**",
-        "/usr/local/include/"
+        "/usr/local/include/",
+        "/usr/local/lib/linux-x86_64"
       ],
       "defines": [
         "LINUX",

@@ -2,7 +2,7 @@
 #                                        MAKEFILE — TOP-LEVEL (MULTI-MCU)                                  #
 ############################################################################################################
 #  Project     : Snake                                                                                     #
-#  Subprojects : gridController (grid/ISRs), gameController (game/UI/audio)                                #
+#  Subprojects : PROGRAMMER                                                                                #
 #  MCUs/Board  : ATmega168A (x2)  |  F_CPU: 20 MHz                                                         #
 #  Toolchain   : avr-gcc | avr-libc | avrdude | make                                                       #
 #  Author      : Lucas Nascimento                                                                          #
@@ -64,11 +64,90 @@ endif
 
 ifeq ($(INIT), INIT_UBUNTU)
 SHELL := /usr/bin/env bash
-ROOT = $(HOME)/
-DIR := $(CURDIR)
-BUILD := $(DIR)/
-DEP := dependencies/dependencies_ubuntu.sh
 
+# ===== Config =====
+CC          := /usr/bin/gcc
+OUT         := main
+
+# FTDI IDs (lsusb shows "ID 0403:6001")
+FTD_VID     := 0403
+FTD_PID     := 6001
+
+# FTDI headers / libs
+FTD_INC_DIR := /usr/local/include
+FTD_LIB_DIR := /usr/local/lib
+FTD_LIB     := ftd2xx
+
+SRC := \
+    ./main.c \
+    ./utils/ft_opcodes_utils.c
+
+INC_DIRS := \
+    $(FTD_INC_DIR) \
+    ./utils
+
+CFLAGS  += -Wall -Wextra -O2 $(addprefix -I,$(INC_DIRS))
+LDFLAGS += -L$(FTD_LIB_DIR) \
+           -Wl,-rpath,'$$ORIGIN' \
+           -Wl,-rpath,'$(FTD_LIB_DIR)'
+LDLIBS  += -l$(FTD_LIB) -lpthread -ldl
+
+OBJ := $(SRC:.c=.o)
+
+.PHONY: all clean usb_list whichlib run run-d2xx unbind-ftdi rebind-ftdi
+
+# ===== Build =====
+all: $(OUT)
+
+$(OUT): $(OBJ)
+	@echo ">>> Linking $(OUT)"
+	$(CC) $(OBJ) $(LDFLAGS) $(LDLIBS) -o $@
+
+# Explicit compile rule (more portable than relying on implicit ones)
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(OBJ) $(OUT)
+
+usb_list:
+	lsusb
+
+whichlib:
+	@echo "==> ldconfig:"
+	-ldconfig -p | grep -i ftd2xx || true
+	@echo "==> files:"
+	-ls -l $(FTD_LIB_DIR)/libftd2xx* || true
+	@echo "==> ldd on $(OUT):"
+	-ldd ./$(OUT) | grep -i ftd2xx || true
+
+# --- D2XX-friendly run: unbind FTDI if kernel grabbed it, then run
+run: $(OUT)
+	./$(OUT)
+
+# Find the interface path for this VID:PID and unbind it from ftdi_sio
+unbind-ftdi:
+	sudo rmmod ftdi_sio
+
+# Rebind the same interface to ftdi_sio (optional)
+rebind-ftdi:
+	@set -euo pipefail; \
+	echo ">> trying to rebind FTDI $(FTD_VID):$(FTD_PID) to ftdi_sio"; \
+	iface=$$(lsusb -t | awk -v vid=$(FTD_VID) -v pid=$(FTD_PID) \
+		'/ID '$$vid':'$$pid'/ {found=1} found && /Driver=ftdi_sio|Driver=none/ {print $$3; exit}'); \
+	if [[ -z $$iface ]]; then \
+	  echo "No matching FTDI interface found to rebind."; \
+	else \
+	  node="$${iface}:1.0"; \
+	  echo "Rebinding $$node to ftdi_sio..."; \
+	  echo -n $$node | sudo tee /sys/bus/usb/drivers/ftdi_sio/bind >/dev/null || true; \
+	fi
+
+# Convenience: unbind, run with D2XX, then (optionally) rebind back
+run-d2xx: $(OUT) unbind-ftdi
+	./$(OUT)
+	@# Uncomment next line if you want to rebind automatically after the run:
+	@# $(MAKE) rebind-ftdi
 
 endif
 
@@ -145,7 +224,6 @@ DIRS:
 	@echo "MY SYSTEM>> $(INIT)"
 	@echo "ROOT>> $(ROOT)"
 	@echo "DIR>> $(DIR)"
-	@echo "DEP>> $(DEP)"
 	@echo "MAKE >> $(MAKE)"
 
 
