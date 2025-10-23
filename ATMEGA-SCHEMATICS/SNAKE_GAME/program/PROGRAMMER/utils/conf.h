@@ -11,13 +11,4 @@ enum default_conf{
     flow_control    = FT_FLOW_NONE, 
 };
 
-enum eeprom_conf{
-    eeprom_header_0 = 0x00000000,       // must be 
-    eeprom_header_1 = 0xFFFFFFFF,      // must be
-    eeprom_header_2,                   // FT_PROGRAM_DATA version
-    eeprom_vid,                         
-    eeprom_pid,
-    
-};
-
 #endif

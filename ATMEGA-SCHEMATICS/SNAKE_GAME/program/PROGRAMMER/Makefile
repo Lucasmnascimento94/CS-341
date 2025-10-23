@@ -80,7 +80,7 @@ FTD_LIB     := ftd2xx
 
 SRC := \
     ./main.c \
-    ./utils/ft_opcodes_utils.c
+    ./utils/ft_utils.c
 
 INC_DIRS := \
     $(FTD_INC_DIR) \
