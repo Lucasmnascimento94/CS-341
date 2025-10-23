@@ -19,7 +19,7 @@
  *  END OF UART MODULE CONFIGURATION
 *==============================================================================*/
 
-
+void setUpUART();
 void uartWrite(char *c, uint16_t size);
 void uartWrite_(char *c);
 
