@@ -3,7 +3,10 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "includes.h"
+#include <avr/io.h>
+#include "string.h"
+#include "stdint.h"
+#include "stdbool.h"
 #include "i2c.h"
 
 // default values.
