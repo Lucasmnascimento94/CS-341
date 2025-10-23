@@ -5,7 +5,9 @@
 #include "stdint.h"
 #include "stdlib.h"
 
-#define MAX_BUFFER 48
+#define BUFFER_SIZE 64
+
+
 
 char *getStatusName(FT_STATUS status);
 char *getTypeName(FT_DEVICE type);
