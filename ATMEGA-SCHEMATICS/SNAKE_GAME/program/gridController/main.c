@@ -52,6 +52,62 @@ void test(){
             sendZero();
         }
         for(int j=0; j<8; j++){
+            sendZero();
+        }
+    }
+
+    for(int i=0; i<32;i++){
+        sendOne();
+    }
+
+      _delay_ms(1000);
+
+
+
+
+      for(int i=0; i<32;i++){
+        sendZero();
+    }
+
+    for(int i=0; i<196; i++){
+        sendBright();
+        for(int j=0; j<8; j++){
+            sendZero();
+        }
+        for(int j=0; j<8; j++){
+            sendOne();
+        }
+        for(int j=0; j<8; j++){
+            sendZero();
+        }
+    }
+
+    for(int i=0; i<32;i++){
+        sendOne();
+    }
+
+      _delay_ms(1000);
+
+
+
+
+
+
+
+
+      for(int i=0; i<32;i++){
+        sendZero();
+    }
+
+    for(int i=0; i<196; i++){
+        sendBright();
+        for(int j=0; j<8; j++){
+            sendZero();
+        }
+        for(int j=0; j<8; j++){
+            sendZero();
+        }
+        for(int j=0; j<8; j++){
             sendOne();
         }
     }
@@ -79,6 +135,7 @@ void test(){
 
 
 int main(void){
+<<<<<<< HEAD
     //allocateVar();
     DDRC |= (1<<PC5) | (1<<PC4);
     PORTC |= (1<<PC5) | (1<<PC4);
@@ -90,6 +147,15 @@ int main(void){
     //seed_prng();
     //gpioConfig();
     //clear();
+=======
+
+    LED_DDR |= (1 << LED_PIN);  
+    //DDRB |= (1<<PB1);
+    //PORTB &= ~(1<<PB1);
+    //seed_prng();
+    gpioConfig();
+    clear();
+>>>>>>> SNAKE_V4_PROGRAMMER_LUCAS
 
 
     //print("STARTING\n", 1);
@@ -110,7 +176,11 @@ int main(void){
     sramWriteStringPoll(0x00, 0xFF, len);
     _delay_ms(10);
     */
+<<<<<<< HEAD
     
+=======
+    allocateVar();
+>>>>>>> SNAKE_V4_PROGRAMMER_LUCAS
     screenInit(&i2c_port, &i2c_target);
 
 
@@ -119,8 +189,13 @@ int main(void){
     uartWrite_(c);
     _delay_ms(100);
     memset(i2c_port.data, 0, strlen(i2c_port.data));
+<<<<<<< HEAD
     i2c_port.data = c; */
     //screenWrite(&i2c_port, &i2c_target, &screen);
+=======
+    i2c_port.data = c;
+    screenWrite(&i2c_port, &i2c_target, &screen);
+>>>>>>> SNAKE_V4_PROGRAMMER_LUCAS
     //sprintf(c, "THIS IS ADDR IN CONF: %X\n", i2c_conf.slave[0]->addr);
    // uartWrite_(c);
 

@@ -1,2 +1,2 @@
 total 0
-lrwxrwxrwx 1 root root 13 Oct 15 18:34 usb-Silicon_Labs_CP2102_USB_to_UART_Bridge_Controller_0001-if00-port0 -> ../../ttyUSB0
+lrwxrwxrwx 1 root root 13 Oct 21 21:26 usb-Silicon_Labs_CP2102_USB_to_UART_Bridge_Controller_0001-if00-port0 -> ../../ttyUSB0

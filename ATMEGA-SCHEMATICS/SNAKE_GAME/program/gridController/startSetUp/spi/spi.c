@@ -49,7 +49,8 @@ void spiInitPoll(){
  *============================================================================*/
 void spiInitInt(){
     // Set SCK, MOSI and CS direction as Output
-    DDRB |= (1<<SCK) | (1<<MOSI) | (1<<CS) | (1<<MSTR);
+    DDRB |= (1<<SCK) | (1<<MOSI) | (1<<SS);
+    DDRC |= (1<<CS);
 
     // Set SS pin HIGH (otherwise the master mode will be overwritten)
     PORTB |= (1<<PB2);
@@ -114,6 +115,17 @@ void spiWritePoll_(uint8_t *data, uint16_t len){
     }     
 }
 
+void spiWritePollByte_(uint8_t data){
+    SPDR = data;        
+    while(!(SPSR & (1<<SPIF))){}
+}
+
+uint8_t spiWriteCheckPollByte_(uint8_t data){
+    SPDR = data;        
+    while(!(SPSR & (1<<SPIF))){}
+    return SPDR;
+}
+
 
 /*=============================================================================
  * SPI Protocol – Write (ISR)
@@ -165,6 +177,13 @@ void spiReadPoll_(uint8_t *data, uint16_t len){
         while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
         data[i] = SPDR;                       // Get data from buffer
     }
+}
+
+void spiReadPollByte_(uint8_t *data){
+    SPDR = 0x00;
+    while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
+    *data = SPDR;                       // Get data from buffer
+
 }
 /*=============================================================================
  * SPI Protocol – Read (Polling)

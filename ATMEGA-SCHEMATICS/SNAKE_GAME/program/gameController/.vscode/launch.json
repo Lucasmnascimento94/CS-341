@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/startSetUp",
+      "program": "/Users/lucasnascimenti/Documents/GitHub/CS-341/ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/startSetUp/build/Debug/outDebug"
+    }
+  ]
+}

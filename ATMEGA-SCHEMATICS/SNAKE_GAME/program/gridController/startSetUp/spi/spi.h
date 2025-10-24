@@ -43,10 +43,12 @@
 #define SPI_SPE         1       // SPI Enable(1) Disable(0)
 #define SPI_MSTR        1       // MSTR: Master(1)/Slave Select(0)
 
+#define SPI_PORT        PORTB
 #define SCK             PB5
 #define MISO            PB4
 #define MOSI            PB3
-#define CS              PB1
+#define CS              PB0
+#define SS              PB2
 
 #define START_SPI       (PORTB &= ~(1<<CS))
 #define STOP_SPI        (PORTB |=  (1<<CS))
@@ -123,9 +125,14 @@ void spiInitPoll();
 void spiInitInt();
 void spiWritePoll(char *data);
 void spiWritePoll_(uint8_t *data, uint16_t len);
+void spiWritePollByte_(uint8_t data);
 void spiWriteInt(char *data);
 void spiReadPoll(char *data, uint16_t size);
 void spiReadPoll_(uint8_t *data, uint16_t len);
+void spiReadPollByte_(uint8_t *data);
 void spiReadInt(char *data, uint16_t size);
+
+
+uint8_t spiWriteCheckPollByte_(uint8_t data);
 
 #endif

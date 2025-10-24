@@ -28,6 +28,15 @@ MCU := atmega168a
 F_CPU    = 20000000UL
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
 
+SRC_DIRS = \
+  . \
+  lib lib/console lib/esp lib/screen \
+  libC \
+  sram \
+  startSetUp \
+  startSetUp/flash startSetUp/i2c startSetUp/isr startSetUp/spi \
+  games/snake startSetUp/timer startSetUp/uart \
+
 #######################################################################################################################################################                                                                            
 #                               					 			GRID CONTROLLER MCU                                  	             				  #
 #######################################################################################################################################################
@@ -66,9 +75,6 @@ endif
 #  Author     : Lucas Nascimento                                               
 #  Date       : 09/22/2025                                                  
 ifeq ($(INIT), INIT_UBUNTU)
-
-# Add any source directories here
-SRC_DIRS = . StartSetUp lib libC snake
 
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
@@ -126,8 +132,6 @@ endif
 #  Author     : Lucas Nascimento                                               
 #  Date       : 09/22/2025  
 ifeq ($(INIT), INIT_POSIX)
-# Add any source directories here
-SRC_DIRS = . StartSetUp lib libC snake
 
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
@@ -179,7 +183,7 @@ endif
 
 
 #######################################################################################################################################################                                                                            
-#                               								MAKEFILE --- MAC OS                                  							      #
+#                               								MAKEFILE --- WINDOWS OS                                  							      #
 #######################################################################################################################################################                                                    
 #  Author     : Lucas Nascimento                                               
 #  Date       : 09/22/2025  

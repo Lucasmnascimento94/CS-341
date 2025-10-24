@@ -22,7 +22,6 @@
                                  
 
 # ===== Project =====
-F_CPU    = 16000000UL
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
 
 #######################################################################################################################################################                                                                            
@@ -97,16 +96,16 @@ grid_read_elf: # Read elf file
 
 # ===== Game controller MCU =====
 game: # Build files
-	$(MAKE) -C ./gridController 
+	$(MAKE) -C ./gameController 
 
 game_flash: # Flash files built with the above command
-	$(MAKE) -C ./gridController flash
+	$(MAKE) -C ./gameController  flash
 
 game_clean: # Clean old files
-	$(MAKE) -C ./gridController clean
+	$(MAKE) -C ./gameController  clean
 
 game_read_fuse: # Read fuses in the MCU
-	$(MAKE) -C ./gridController readfuse
+	$(MAKE) -C ./gameController  readfuse
 
 game_read_obj: # Read object file
 
@@ -115,6 +114,35 @@ game_read_elf: # Read elf file
 
 
 
+# ===== ISP controller MCU =====
+isp: # Build files
+	$(MAKE) -C ./ISP
+
+isp_flash: # Flash files built with the above command
+	$(MAKE) -C ./ISP  flash
+
+isp_clean: # Clean old files
+	$(MAKE) -C ./ISP  clean
+
+isp_read_fuse: # Read fuses in the MCU
+	$(MAKE) -C ./ISP  readfuse
+
+isp_dirs:
+	$(MAKE) -C ./ISP  DIRS
+isp_read_obj: # Read object file
+
+
+isp_read_elf: # Read elf file
+
+
+hex_grid: grid
+	python3 $(DIR)/pyApps/trimHex.py $(DIR)/gridController/.hex
+
+hex_game: game
+	python3 $(DIR)/pyApps/trimHex.py $(DIR)/gameController/.hex
+
+hex_clean:
+	rm $(DIR)/file_out $(DIR)/trimmed_out
 # ===== Install dependencies out of the dependencies.txt file =====
 install_deps: 
 	@$(SHELL) $(DEP) -v
@@ -205,16 +233,16 @@ grid_read_fuse: # Read fuses in the MCU
 
 # ===== Game controller MCU =====
 game: # Build files
-	& "$(MAKE)" -C ./gridController 
+	& "$(MAKE)" -C ./gameController 
 
 game_flash: # Flash files built with the above command
-	& "$(MAKE)" -C ./gridController flash
+	& "$(MAKE)" -C ./gameController  flash
 
 game_clean: # Clean old files
-	& "$(MAKE)" -C ./gridController clean
+	& "$(MAKE)" -C ./gameController  clean
 
 game_read_fuse: # Read fuses in the MCU
-	& "$(MAKE)" -C ./gridController readfuse
+	& "$(MAKE)" -C ./gameController  readfuse
 
 
 # ===== Install dependencies out of the dependencies.txt file =====

@@ -1,0 +1,38 @@
+{
+    "version": 4,
+    "configurations": [
+        {
+            "name": "macos-clang-arm64",
+<<<<<<< HEAD:ATMEGA-SCHEMATICS/SNAKE_GAME/program/.vscode/c_cpp_properties.json
+            "compilerPath": "C:/Users/mhuyn/AppData/Local/Microsoft/WinGet/Packages/ZakKemble.avr-gcc_Microsoft.Winget.Source_8wekyb3d8bbwe/avr-gcc-14.1.0-x64-windows/bin/avr-gcc.exe",
+=======
+            "compilerPath": "/opt/homebrew/bin/avr-gcc",
+>>>>>>> SNAKE_V4_PROGRAMMER_LUCAS:ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/.vscode/c_cpp_properties.json
+            "compilerArgs": [
+                "-mmcu=atmega328p",
+                "-DF_CPU=16000000UL"
+            ],
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/gridController",
+                "${workspaceFolder}/gridController/startSetUp",
+                "${workspaceFolder}/gridController/startSetUp/sram",
+                "${workspaceFolder}/gridController/startSetUp/timer",
+                "${workspaceFolder}/gridController/startSetUp/uart",
+                "${workspaceFolder}/gridController/startSetUp/ws2812b",
+                "${workspaceFolder}/gridController/startSetUp/spi",
+                "${workspaceFolder}/gridController/startSetUp/isr",
+                "${workspaceFolder}/gridController/startSetUp/flash",
+                "${workspaceFolder}/gridController/startSetUp/allocation",
+                "${workspaceFolder}/gridController/snake",
+                "${workspaceFolder}/gridController/libC"
+            ],
+            "defines": [
+                "__AVR_ATmega328P__"
+            ],
+            "cStandard": "${default}",
+            "cppStandard": "${default}",
+            "intelliSenseMode": "${default}"
+        }
+    ]
+}
