@@ -22,12 +22,44 @@
 #define SNAKE_H
 
 #include "includes.h"
-#include "DataStructures.h"
-#include "../startSetUp/ws2812b/WS2812B.h"
+#include "WS2812B.h"
 #include "stdio.h"
 #include "string.h"
-#include "./startSetUp/ws2812b/colors.h"
+#include "colors.h"
 
+typedef struct Cell {
+    struct Cell next; // -> 2bytes
+    struct Cell prev; // -> 2bytes
+    uint16_t val; // -> 2bytes
+    uint8_t i; // -> 1 byte
+    uint8_t j; // -> 1 byte
+    bool poison; // -> 1 byte -> TOTAL : 9bytes
+}Cell;
+
+typedef struct {
+    struct Cell head;
+    struct Cell tail;
+    struct Cell food;
+    uint16_t count;
+    uint8_t direction;
+    bool walk;
+    uint32_t color;
+    uint32_t color_food;
+    uint8_t pt;
+    bool end;
+    bool begin;
+}SnakeBelly;
+
+typedef struct {
+    struct Cell head;
+    struct Cell tail;
+    uint16_t count;
+}Queue;
+
+void push(SnakeBelly *belly, uint16_t val, uint8_t i, uint8_t j, bool poison);
+void pop(SnakeBelly *belly);
+void popAll(SnakeBelly *belly);
+void insertion_sort(uint16_t arr[], uint16_t n);
 
 
 /*============================================================================================*

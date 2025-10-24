@@ -4,7 +4,7 @@
     "configurations": [
         {
             "name": "macos-clang-arm64",
-            "compilerPath": "/opt/homebrew/bin/avr-gcc",
+            "compilerPath": "/usr/bin/avr-gcc",
             "compilerArgs": [
                 "-mmcu=atmega168",
                 "-DF_CPU=8000000UL"
@@ -13,7 +13,8 @@
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/",
                 "${workspaceFolder}/startSetUp",
-                "${workspaceFolder}/startSetUp/sram",
+                "${workspaceFolder}/sram",
+                "${workspaceFolder}/games/snake",
                 "${workspaceFolder}/startSetUp/timer",
                 "${workspaceFolder}/startSetUp/uart",
                 "${workspaceFolder}/startSetUp/spi",

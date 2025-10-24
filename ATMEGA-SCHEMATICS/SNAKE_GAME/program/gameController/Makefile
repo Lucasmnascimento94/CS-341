@@ -32,10 +32,10 @@ SRC_DIRS = \
   . \
   lib lib/console lib/esp lib/screen \
   libC \
-  snake \
+  sram \
   startSetUp \
   startSetUp/flash startSetUp/i2c startSetUp/isr startSetUp/spi \
-  startSetUp/sram startSetUp/timer startSetUp/uart \
+  games/snake startSetUp/timer startSetUp/uart \
 
 #######################################################################################################################################################                                                                            
 #                               					 			GRID CONTROLLER MCU                                  	             				  #

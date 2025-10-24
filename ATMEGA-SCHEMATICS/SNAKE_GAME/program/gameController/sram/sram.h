@@ -54,9 +54,13 @@ SetUp       -> Falling
 void sendInstruction(uint32_t address);
 
 void sramWriteByte(SPI *spi, uint8_t data, uint32_t address);
+void sramWriteU16(SPI *spi, uint16_t data, uint32_t address);
+void sramWriteU32(SPI *spi, uint32_t data, uint32_t address);
 void sramWriteStringPoll(SPI *spi, char *data, uint32_t address, uint16_t size);
 
 void sramReadByte(SPI *spi, uint8_t *data, uint32_t address);
+void sramReadU16(SPI *spi, uint16_t *data, uint32_t address);
+void sramReadU32(SPI *spi, uint32_t *data, uint32_t address);
 void sramReadString(SPI *spi, uint8_t *data, size_t len, uint32_t address);
 
 void sramReadModeRegister(SPI *spi);
