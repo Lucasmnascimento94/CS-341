@@ -7,25 +7,12 @@ uint8_t uartConf(FT_HANDLE ftHandle);
 FT_PROGRAM_DATA program;
 FT_STATUS status;
 FT_DEVICE_LIST_INFO_NODE *list;
-FT_EEPROM_HEADER header = {
-    .deviceType = FT_DEVICE_232R,
-};
-
-FT_EEPROM_232R ee232r = {
-    .common.deviceType = FT_DEVICE_232R,
-};
-
 
 DWORD n_devices;
 DWORD bytesWritten;
 DWORD vid;
 DWORD id;
 int main() {
-    program.Manufacturer = malloc(sizeof(char)*128);
-    program.ManufacturerId = malloc(sizeof(char)*128);
-    program.Description = malloc(sizeof(char)*128);
-    program.SerialNumber = malloc(sizeof(char)*128);
-
     /*_____________Create List of Devices______________*/
     status = FT_CreateDeviceInfoList(&n_devices);
     if(status!=FT_OK){printf("Error_CREATDEVICELIST.. <%s>\n", getStatusName(status)); return 1;}
@@ -58,12 +45,28 @@ int main() {
     if(status!=FT_OK){printf("Error_FT_EEREAD.. <%s>\n", getStatusName(status)); return 1;}
     displayEeprom(&program);
 
-    list[0].ftHandle-
-    status = FT_EEPROM_Program(list[0].ftHandle, &ee232r, sizeof(ee232r), program.Manufacturer, program.ManufacturerId, program.Description, program.SerialNumber);
+
+    FT_Purge(list[0].ftHandle, FT_PURGE_RX | FT_PURGE_TX);
+    FT_ResetDevice(list[0].ftHandle);
+
+    // (Optional) close and re-open to guarantee a quiet handle:
+    FT_Close(list[0].ftHandle);
+    FT_Open(0, &list[0].ftHandle);
+
+    if (!is_idle_for_eeprom(list[0].ftHandle)) {
+        // try a short sleep and retry, or bail out
+        printf("NOT IDLES\n");
+    }
+
+
+   program.Cbus4 = FT_232R_CBUS_RXLED;
+   // status = FT_EEPROM_Program(list[0].ftHandle, &ee232r, sizeof(ee232r), program.Manufacturer, program.ManufacturerId, program.Description, program.SerialNumber);
     if(status!=FT_OK){printf("Error_FT_EEPROGRAM.. <%s>\n", getStatusName(status)); return 1;}
 
-    /*
-    program.Cbus0 = FT_232R_CBUS_IOMODE;
+    FT_ResetDevice(list[0].ftHandle);
+    status = FT_ResetDevice(list[0].ftHandle);
+    if(status!=FT_OK){printf("Error_FT_RESET.. <%s>\n", getStatusName(status)); return 1;}
+    sleep(4);
     status = FT_EE_Program(list[0].ftHandle, &program);
     if(status!=FT_OK){printf("Error_FT_EEPROGRAM.. <%s>\n", getStatusName(status)); return 1;}
 
@@ -80,7 +83,7 @@ int main() {
 
         //sleep(3);
     //}
-*/
+
 
     status = FT_Close(list[0].ftHandle);
     if(status!=FT_OK){printf("Error_FT_CLOSE.. <%s>\n", getStatusName(status)); return 1;}

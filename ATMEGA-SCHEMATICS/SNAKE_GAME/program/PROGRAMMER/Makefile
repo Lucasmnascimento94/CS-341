@@ -24,6 +24,14 @@
 # ===== Project =====
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
 
+SRC := \
+    ./main.c \
+    ./utils/ft_utils.c
+
+INC_DIRS := \
+    $(FTD_INC_DIR) \
+    ./utils
+
 #######################################################################################################################################################                                                                            
 #                               					 			GRID CONTROLLER MCU                                  	             				  #
 #######################################################################################################################################################
@@ -77,14 +85,6 @@ FTD_PID     := 6001
 FTD_INC_DIR := /usr/local/include
 FTD_LIB_DIR := /usr/local/lib
 FTD_LIB     := ftd2xx
-
-SRC := \
-    ./main.c \
-    ./utils/ft_utils.c
-
-INC_DIRS := \
-    $(FTD_INC_DIR) \
-    ./utils
 
 CFLAGS  += -Wall -Wextra -O2 $(addprefix -I,$(INC_DIRS))
 LDFLAGS += -L$(FTD_LIB_DIR) \
@@ -172,12 +172,7 @@ CC      := /usr/bin/clang
 FTD_LIB_DIR := /usr/local/lib/
 FTD_LIB := ftd2xx
 DYLIB_PATH := /usr/local/lib/libftd2xx.1.4.30.dylib
-SRC := ./main.c
 OUT := main
-
-INC_DIRS := \
-/usr/local/include/ \
-./utils
 
 CFLAGS  += $(addprefix -I,$(INC_DIRS))
 # ===== Build =====

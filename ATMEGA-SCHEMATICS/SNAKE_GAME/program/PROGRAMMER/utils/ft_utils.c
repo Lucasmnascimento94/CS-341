@@ -6,12 +6,17 @@
 void eepromDataStructInit(FT_PROGRAM_DATA *eeprom, WORD vid, WORD id){
     eeprom->Signature1 = 0x00000000;
     eeprom->Signature2 = 0xffffffff;
-    eeprom->Manufacturer = malloc(sizeof(WORD)*BUFFER_SIZE);
-    eeprom->ManufacturerId = malloc(sizeof(WORD)*BUFFER_SIZE);
-    eeprom->Description = malloc(sizeof(WORD)*BUFFER_SIZE);
-    eeprom->SerialNumber = malloc(sizeof(WORD)*BUFFER_SIZE);
+    eeprom->Manufacturer   = (char*)malloc(STRBUF);
+    eeprom->ManufacturerId = (char*)malloc(8);
+    eeprom->Description    = (char*)malloc(STRBUF);
+    eeprom->SerialNumber   = (char*)malloc(32);
     eeprom->VendorId = vid;
     eeprom->ProductId = id;
+
+    memset(eeprom->Manufacturer,   0, STRBUF);
+    memset(eeprom->ManufacturerId, 0, 8);
+    memset(eeprom->Description,    0, STRBUF);
+    memset(eeprom->SerialNumber,   0, 32);
 }
 
 char *getStatusName(FT_STATUS status){
@@ -84,6 +89,35 @@ void displayInfoLists(FT_DEVICE_LIST_INFO_NODE *list, size_t n){
     }
 }
 
+char *displayFTFunction(UCHAR opcode){
+    switch (opcode){
+        case FT_X_SERIES_CBUS_TRISTATE:             return "FT_X_SERIES_CBUS_TRISTATE";
+        case FT_X_SERIES_CBUS_TXLED:                return "FT_X_SERIES_CBUS_TXLED";
+        case FT_X_SERIES_CBUS_RXLED:                return "FT_X_SERIES_CBUS_RXLED";
+        case FT_X_SERIES_CBUS_TXRXLED:              return "FT_X_SERIES_CBUS_TXRXLED";
+        case FT_X_SERIES_CBUS_PWREN:                return "FT_X_SERIES_CBUS_PWREN";
+        case FT_X_SERIES_CBUS_SLEEP:                return "FT_X_SERIES_CBUS_SLEEP";
+        case FT_X_SERIES_CBUS_DRIVE_0:              return "FT_X_SERIES_CBUS_DRIVE_0";
+        case FT_X_SERIES_CBUS_DRIVE_1:              return "FT_X_SERIES_CBUS_DRIVE_1";
+        case FT_X_SERIES_CBUS_IOMODE:               return "FT_X_SERIES_CBUS_IOMODE";
+        case FT_X_SERIES_CBUS_TXDEN:                return "FT_X_SERIES_CBUS_TXDEN";
+        case FT_X_SERIES_CBUS_CLK24:                return "FT_X_SERIES_CBUS_CLK24";
+        case FT_X_SERIES_CBUS_CLK12:                return "FT_X_SERIES_CBUS_CLK12";
+        case FT_X_SERIES_CBUS_CLK6:                 return "FT_X_SERIES_CBUS_CLK6";
+        case FT_X_SERIES_CBUS_BCD_CHARGER:          return "FT_X_SERIES_CBUS_BCD_CHARGER";
+        case FT_X_SERIES_CBUS_BCD_CHARGER_N:        return "FT_X_SERIES_CBUS_BCD_CHARGER_N";
+        case FT_X_SERIES_CBUS_I2C_TXE:              return "FT_X_SERIES_CBUS_I2C_TXE";
+        case FT_X_SERIES_CBUS_I2C_RXF:              return "FT_X_SERIES_CBUS_I2C_RXF";
+        case FT_X_SERIES_CBUS_VBUS_SENSE:           return "FT_X_SERIES_CBUS_VBUS_SENSE";
+        case FT_X_SERIES_CBUS_BITBANG_WR:           return "FT_X_SERIES_CBUS_BITBANG_WR";
+        case FT_X_SERIES_CBUS_BITBANG_RD:           return "FT_X_SERIES_CBUS_BITBANG_RD";
+        case FT_X_SERIES_CBUS_TIMESTAMP:            return "FT_X_SERIES_CBUS_TIMESTAMP";
+        case FT_X_SERIES_CBUS_KEEP_AWAKE:           return "FT_X_SERIES_CBUS_KEEP_AWAKE";
+        default:                                    return "UNKNOWN FUNCTION TYPE";
+    }
+}
+
+
 void displayEeprom(FT_PROGRAM_DATA *_p){                                                                                                  
     printf("EEPROM DATA:\n");                                                      
     /* --- Core header --- */                                                      
@@ -144,9 +178,10 @@ void displayEeprom(FT_PROGRAM_DATA *_p){
     printf("    InvertDSR:       %s\n", _p->InvertDSR ? "yes" : "no");            
     printf("    InvertDCD:       %s\n", _p->InvertDCD ? "yes" : "no");             
     printf("    InvertRI:        %s\n", _p->InvertRI ? "yes" : "no");              
-    printf("    Cbus0..4:        %u %u %u %u %u\n",                                
-           (unsigned)_p->Cbus0, (unsigned)_p->Cbus1, (unsigned)_p->Cbus2,           
-           (unsigned)_p->Cbus3, (unsigned)_p->Cbus4);                               
+    printf("    Cbus0:           %s\n", displayFTFunction((unsigned)_p->Cbus0)); 
+    printf("    Cbus1:           %s\n", displayFTFunction((unsigned)_p->Cbus1)); 
+    printf("    Cbus2:           %s\n", displayFTFunction((unsigned)_p->Cbus2)); 
+    printf("    Cbus3:           %s\n", displayFTFunction((unsigned)_p->Cbus3));  
+    printf("    Cbus4:           %s\n", displayFTFunction((unsigned)_p->Cbus4)); 
     printf("    RIsD2XX:         %s\n", _p->RIsD2XX ? "yes" : "no");                
-   
 }

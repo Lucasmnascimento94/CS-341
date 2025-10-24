@@ -4,8 +4,10 @@
 #include "ftd2xx.h"
 #include "stdint.h"
 #include "stdlib.h"
+#include "stddef.h"
+#include "string.h"
 
-#define BUFFER_SIZE 64
+#define STRBUF 40
 
 
 
