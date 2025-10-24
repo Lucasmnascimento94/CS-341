@@ -31,23 +31,11 @@ void verifyPage(uint16_t base_adr);
 void writeBlinky();
 
 int main() {
-  // skipping this powerup reset stuff for now... it works, ok...
-  // DDRB |= (1 << PB5);
-  // PORTB &= ~(1 << PB5);
-  //
-  // DDRB |= (1 << PB1);
-  // PORTB &= ~(1 << PB1);
-  // PORTB |= (1 << PB1);
-  // _delay_ms(5);
-  // PORTB &= ~(1 << PB1);
-  // _delay_ms(25);
   DDRB |= _BV(CS);
   PORTB &= ~_BV(CS);
   _delay_ms(1);
   ispInit();
 
-  // not sure if this is actually needed - will return to it: see 28.8.2, p304
-  // ispPowerUp();
   START_ISP;
   _delay_ms(100); // avrdude / usbasp seems to do this
   writeBlinky();
@@ -60,8 +48,9 @@ int main() {
 void writePage(uint16_t base_adr, uint16_t data[PAGESIZE]) {
   // have to load a full page using Load Program Memory Page Low/High Byte...
   for (uint8_t i = 0; i < PAGESIZE; ++i) {
-    ispLoadProgramMemoryPageLowByte(data[i] >> 8, base_adr + i);
-    ispLoadProgramMemoryPageHighByte(data[i] & 0xFF, base_adr + i);
+    // it looks like the values are swapped, but that's just how they're stored
+    ispLoadProgramMemoryPageLowByte(base_adr + i, data[i] >> 8);
+    ispLoadProgramMemoryPageHighByte(base_adr + i, data[i] & 0xFF);
   }
   // ...then write it with address of final byte
   ispWriteProgramMemoryPage(base_adr + PAGESIZE - 1);
@@ -69,6 +58,7 @@ void writePage(uint16_t base_adr, uint16_t data[PAGESIZE]) {
 }
 
 void verifyPage(uint16_t base_adr) {
+  // TODO: actually do something with this
   for (uint8_t i = 0; i < PAGESIZE; ++i) {
     ispReadProgramMemoryLowByte(base_adr + i);
     ispReadProgramMemoryHighByte(base_adr + i);

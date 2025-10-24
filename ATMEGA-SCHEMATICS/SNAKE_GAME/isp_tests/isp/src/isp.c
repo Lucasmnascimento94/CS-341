@@ -59,14 +59,14 @@ void ispChipErase() {
   ispTransmitByte(0x00);
 }
 
-void ispLoadProgramMemoryPageHighByte(uint8_t data, uint16_t adr) {
+void ispLoadProgramMemoryPageHighByte(uint16_t adr, uint8_t data) {
   ispTransmitByte(0x48);
   ispTransmitByte(0x00);
   ispTransmitByte(adr & 0xFF);
   ispTransmitByte(data);
 }
 
-void ispLoadProgramMemoryPageLowByte(uint8_t data, uint16_t adr) {
+void ispLoadProgramMemoryPageLowByte(uint16_t adr, uint8_t data) {
   ispTransmitByte(0x40);
   ispTransmitByte(0x00);
   ispTransmitByte(adr & 0xFF);
