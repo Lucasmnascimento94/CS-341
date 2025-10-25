@@ -1,5 +1,5 @@
 ############################################################################################################
-#                                        MAKEFILE — GAME_CONTROLLER (MULTI-MCU)                                  #
+#                                        MAKEFILE — GRID_CONTROLLER (MULTI-MCU)                                  #
 ############################################################################################################
 #  Project     : Snake                                                                                     #
 #  Subprojects : gridController (grid/ISRs), gameController (game/UI/audio)                                #
@@ -21,21 +21,11 @@
 ############################################################################################################
 
 
-
-
 # ===== Project =====
-MCU := atmega168a
-F_CPU    = 20000000UL
+MCU := atmega168
+F_CPU    = 16000000UL
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
-
-SRC_DIRS = \
-  . \
-  lib lib/console lib/esp lib/screen \
-  libC \
-  sram \
-  startSetUp \
-  startSetUp/flash startSetUp/i2c startSetUp/isr startSetUp/spi \
-  games/snake startSetUp/timer startSetUp/uart \
+TARGET := main
 
 #######################################################################################################################################################                                                                            
 #                               					 			GRID CONTROLLER MCU                                  	             				  #
@@ -75,6 +65,17 @@ endif
 #  Author     : Lucas Nascimento                                               
 #  Date       : 09/22/2025                                                  
 ifeq ($(INIT), INIT_UBUNTU)
+
+# Add any source directories here
+SRC_DIRS = \
+  . \
+  lib lib/console lib/esp lib/screen \
+  libC \
+  snake \
+  startSetUp \
+  startSetUp/flash startSetUp/i2c startSetUp/isr startSetUp/spi \
+  startSetUp/sram startSetUp/timer startSetUp/uart startSetUp/ws2812b startSetUp/allocation \
+  ISP
 
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
@@ -132,7 +133,17 @@ endif
 #  Author     : Lucas Nascimento                                               
 #  Date       : 09/22/2025  
 ifeq ($(INIT), INIT_POSIX)
-
+# Add any source directories here
+SRC_DIRS = \
+  . \
+  lib lib/console lib/esp lib/screen \
+  libC \
+  snake \
+  startSetUp \
+  startSetUp/flash startSetUp/i2c startSetUp/isr startSetUp/spi \
+  startSetUp/sram startSetUp/timer startSetUp/uart startSetUp/ws2812b startSetUp/allocation \
+  ISP
+  
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
 OBJS   := $(SRCS:.c=.o)
@@ -148,7 +159,7 @@ CFLAGS  = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra -std=c11 $(INCS) -MMD 
 LDFLAGS = -mmcu=$(MCU)
 
 PROGRAMMER    = usbasp
-AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m168
+AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m328p
 
 # ===== Build =====
 all: $(TARGET).hex size
@@ -188,6 +199,62 @@ endif
 #  Author     : Lucas Nascimento                                               
 #  Date       : 09/22/2025  
 ifeq ($(INIT), INIT_WIN)
+
+# Add any source directories here
+SRC_DIRS = \
+  . \
+  lib lib/console lib/esp lib/screen \
+  libC \
+  snake \
+  startSetUp \
+  startSetUp/flash startSetUp/i2c startSetUp/isr startSetUp/spi \
+  startSetUp/sram startSetUp/timer startSetUp/uart startSetUp/ws2812b
+
+# Auto-discover sources/headers
+SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
+OBJS   := $(SRCS:.c=.o)
+INCS   := $(addprefix -I,$(SRC_DIRS))
+
+# ===== Tools/Flags =====
+CC      = avr-gcc
+OBJCOPY = avr-objcopy
+SIZE    = avr-size
+AVRDUDE = avrdude
+
+CFLAGS  = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra -std=c11 $(INCS) -MMD -MP
+LDFLAGS = -mmcu=$(MCU)
+
+PROGRAMMER    = usbasp
+AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m168
+
+# ===== Build =====
+all: $(TARGET).hex size
+
+$(TARGET).elf: $(OBJS)
+	$(CC) $(LDFLAGS) $^ -o $@
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(TARGET).hex: $(TARGET).elf
+	$(OBJCOPY) -O ihex -R .eeprom $< $@
+
+size: $(TARGET).elf
+	$(SIZE) --format=sysv $<
+
+flash: $(TARGET).hex
+	$(AVRDUDE) $(AVRDUDE_FLAGS) -U flash:w:$<
+
+fuse:
+	$(AVRDUDE) $(AVRDUDE_FLAGS) -U lfuse:w:0xFF:m
+
+readfuse:
+	$(AVRDUDE) $(AVRDUDE_FLAGS) -U lfuse:r:-:h -U hfuse:r:-:h -U efuse:r:-:h
+
+clean:
+	rm -f $(OBJS) $(SRCS:.c=.d) $(TARGET).elf $(TARGET).hex
+
+-include $(SRCS:.c=.d)
 
 endif
 
