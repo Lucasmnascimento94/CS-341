@@ -24,18 +24,24 @@
 
 
 # ===== Project =====
-MCU := atmega168a
-F_CPU    = 20000000UL
+MCU := atmega328p
+F_CPU    = 16000000UL
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
 
 SRC_DIRS = \
   . \
-  lib lib/console lib/esp lib/screen \
-  libC \
   sram \
+  data_types\
+  libC \
+  shared_memory\
   startSetUp \
-  startSetUp/flash startSetUp/i2c startSetUp/isr startSetUp/spi \
-  games/snake startSetUp/timer startSetUp/uart \
+  startSetUp/flash \
+  startSetUp/spi \
+  games/snake \
+  startSetUp/timer \
+  startSetUp/uart \
+  startSetUp/ws2812b \
+  grid
 
 #######################################################################################################################################################                                                                            
 #                               					 			GRID CONTROLLER MCU                                  	             				  #
@@ -91,7 +97,7 @@ CFLAGS  = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra -std=c11 $(INCS) -MMD 
 LDFLAGS = -mmcu=$(MCU)
 
 PROGRAMMER    = usbasp
-AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m168
+AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m328p
 
 # ===== Build =====
 all: $(TARGET).hex size

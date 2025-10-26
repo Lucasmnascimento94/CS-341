@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <avr/interrupt.h>
-
+#include "stddef.h"
+#include "string.h"
 
 #endif

@@ -54,7 +54,7 @@
 #define SNAKE_MAX_COUNT 40
 
 void clear();
-void displayGrid(SnakeBelly *belly, struct Cell *food);
+void displayGrid();
 
 
 #endif

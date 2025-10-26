@@ -1,15 +1,23 @@
 #include "snake.h"
-#include "./ws2812b/WS2812B.h"
-#include "../startSetUp/uart/uart.h"
+#include "WS2812B.h"
+#include "uart.h"
 
 /*============================================================================================*
  * RENDER — framebuffer/bitset and scanout                                                     *
  *============================================================================================*/
+void wrap(uint8_t *i, uint8_t *j){
+    if(*i>GRID_W){*i=1;}
+    else if(*i == 0){*i=GRID_W;}
+
+    if(*j>GRID_H){*j=1;}
+    else if(*j == 0){*j=GRID_H;}
+}
+
 void walk(SnakeBelly *belly, struct Cell *food){
     if(belly == NULL || food == NULL) return;
 
-    uint8_t new_i = belly->head->i;
-    uint8_t new_j = belly->head->j;
+    uint8_t new_i = belly->head.i;
+    uint8_t new_j = belly->head.j;
     bool eatFood = false;
 
     switch (belly->direction){
@@ -18,76 +26,113 @@ void walk(SnakeBelly *belly, struct Cell *food){
         case LEFT:  new_i--; break;
         case RIGHT: new_i++; break;
     }
-
-    if(new_i>48){new_i=1;}
-    else if(new_i == 0){new_i=48;}
-
-    if(new_j>32){new_j=1;}
-    else if(new_j == 0){new_j=32;}
+    wrap(&new_i, &new_j);
 
     uint16_t k = CURRENT_PAD(new_i);
     uint16_t I = LOCAL_I(new_i, k);
 
-    if(!ruleCheck(belly, PIXEL_ADDRESS(I, new_j, k))){
+    if(!ruleCheck(PIXEL_ADDRESS(I, new_j, k))){
         belly->end = true;
         return;
     }
 
-    if(!foodCheck(belly, food, PIXEL_ADDRESS(I, new_j, k), &eatFood)){
+    if(!foodCheck(PIXEL_ADDRESS(I, new_j, k), &eatFood)){
         belly->end = true;
         return;
     }
 
-    struct Cell *temp;
+    if(!eatFood){ move(belly, new_i, new_j, k, I);}
+    else{move_grow(belly, new_i, new_j, k, I);}
+    //sort(belly);
+    eatFood = false;
+    //displayGrid(belly, food);
 
-    if(!eatFood){
-        for(temp= belly->tail; temp->prev != NULL; temp = temp->prev){
-        temp->i = temp->prev->i;
-        temp->j = temp->prev->j;
-        temp->val = temp->prev->val;
-        }
-        belly->head->i = new_i;
-        belly->head->j = new_j;
-        belly->head->val = PIXEL_ADDRESS(I, new_j, k);
+}
+
+void move(SnakeBelly *belly, uint8_t new_i, uint8_t new_j, uint8_t k, uint8_t I){
+    uint32_t tail_base = sram_map.cell.tail_base;
+    uint32_t current_addr = sram_map.cell.tail_base;
+    struct Cell prev_cell;
+    struct Cell current_cell;
+
+    readCell(&current_cell, tail_base);
+    for(;current_cell.prev_addr != NULL_PTR; readCell(&prev_cell, CELL_PREV(current_addr))){
+        
+        current_cell.i = prev_cell.i;
+        current_cell.j = prev_cell.j;
+        current_cell.val = prev_cell.val;
+        updateCell(&current_cell, current_addr);
+        current_addr = current_cell.prev_addr;
+        current_cell = prev_cell;
     }
 
-    else{
-        new_i = belly->head->i;
-        new_j = belly->head->j;
+    readCell(&current_cell, sram_map.cell.head_base);
+    current_cell.i = new_i;
+    current_cell.j = new_j;
+    current_cell.val = PIXEL_ADDRESS(I, new_j, k);
+    updateCell(&current_cell, sram_map.cell.head_base);
+}
 
-        switch (belly->direction){
+void move_grow(SnakeBelly *belly, uint8_t new_i, uint8_t new_j, uint8_t k, uint8_t I) {
+    struct Cell head_cell;
+    struct Cell current_cell;
+    struct Cell prev_cell;
+    uint32_t current_addr;
+
+    // ===== 1️⃣ Read HEAD from SRAM =====
+    readCell(&head_cell, sram_map.cell.head_base);
+
+    // ===== 2️⃣ Calculate new position (exactly as before) =====
+    new_i = head_cell.i;
+    new_j = head_cell.j;
+
+    switch (belly->direction) {
         case UP:    new_j++; break;
         case DOWN:  new_j--; break;
         case LEFT:  new_i--; break;
         case RIGHT: new_i++; break;
-        }
-
-        if(new_i>48){new_i=1;}
-        else if(new_i == 0){new_i=48;}
-
-        if(new_j>32){new_j=1;}
-        else if(new_j == 0){new_j=32;}
-
-        uint16_t k = CURRENT_PAD(new_i);
-        uint16_t I = LOCAL_I(new_i, k);
-
-        if(!ruleCheck(belly, PIXEL_ADDRESS(I, new_j, k))){
-            belly->end = true;
-            return;
-        }
-        for(temp= belly->tail; temp->prev != NULL; temp = temp->prev){
-        temp->i = temp->prev->i;
-        temp->j = temp->prev->j;
-        temp->val = temp->prev->val;
-        }
-        belly->head->i = new_i;
-        belly->head->j = new_j;
-        belly->head->val = PIXEL_ADDRESS(I, new_j, k);
     }
-    //sort(belly);
-    eatFood = false;
-    displayGrid(belly, food);
 
+    // ===== 3️⃣ Wrap around edges =====
+    if (new_i > GRID_W) new_i = 1;
+    else if (new_i == 0) new_i = GRID_W;
+
+    if (new_j > GRID_H) new_j = 1;
+    else if (new_j == 0) new_j = GRID_H;
+
+    // ===== 4️⃣ Compute pad and local index =====
+    k = CURRENT_PAD(new_i);
+    I = LOCAL_I(new_i, k);
+
+    // ===== 5️⃣ Collision / rule check =====
+    if (!ruleCheck(PIXEL_ADDRESS(I, new_j, k))) {
+        belly->end = true;
+        return;
+    }
+
+    // ===== 6️⃣ Move body: tail → head =====
+    current_addr = sram_map.cell.tail_base;
+    readCell(&current_cell, current_addr);
+
+    while (current_cell.prev_addr != NULL_PTR) {
+        readCell(&prev_cell, current_cell.prev_addr);
+
+        current_cell.i   = prev_cell.i;
+        current_cell.j   = prev_cell.j;
+        current_cell.val = prev_cell.val;
+
+        updateCell(&current_cell, current_addr);
+
+        current_addr = current_cell.prev_addr;
+        current_cell = prev_cell;
+    }
+
+    // ===== 7️⃣ Update head with new position =====
+    head_cell.i   = new_i;
+    head_cell.j   = new_j;
+    head_cell.val = PIXEL_ADDRESS(I, new_j, k);
+
+    updateCell(&head_cell, sram_map.cell.head_base);
 }
 
 void initSnake(SnakeBelly *belly, struct Cell *food){
@@ -101,136 +146,83 @@ void initSnake(SnakeBelly *belly, struct Cell *food){
         x--;
         z = CURRENT_PAD(x);
         i_ = LOCAL_I(x, z);
-        push(belly, PIXEL_ADDRESS(i_, y, z), x, y, false);
+        //push(belly, PIXEL_ADDRESS(i_, y, z), x, y, false);
     }
-    displayGrid(belly, food);
+    //displayGrid(belly, food);
 }
 
 /*============================================================================================*
  * RULES — collisions, growth, scoring, bounds, difficulty                                    *
  *============================================================================================*/
-bool ruleCheck(SnakeBelly *belly, uint16_t food){
-    struct Cell *temp;
+bool ruleCheck(uint16_t food_addr){
+    struct Cell cur;
+    uint32_t addr = sram_map.cell.head_base;
 
-    for(temp = belly->head; temp != NULL; temp = temp->next){
-        if(food == temp->val){
-            return false;
+    while (addr != NULL_PTR) {
+        readCell(&cur, addr);
+        if (food_addr == cur.val) {
+            return false;  // collision
         }
+        addr = cur.next_addr;
     }
-    return true;
+    return true; // no match anywhere
 }
 
- bool foodCheck(SnakeBelly *belly, struct Cell *food, uint16_t address, bool *eatFood){
-    uint8_t x;
-    uint8_t y;
-    uint8_t z;
+bool foodCheck(uint16_t address, bool *eatFood) {
+    struct Cell food;
+    struct Cell belly_cell;
+    uint8_t x, y, z;
     uint16_t val;
 
-    char c[30];
-    if(address == food->val){
-        *eatFood = true;
-        push(belly, food->val, food->i, food->j, food->poison);
-        sprintf(c, "Belly Count: %d\n", belly->count);
+    // ===== 1️⃣ Read the FOOD cell from SRAM =====
+    readCell(&food, sram_map.cell.food_base);
 
+    // ===== 2️⃣ Check if the snake's head reached the food =====
+    if (address == food.val) {
+        *eatFood = true;
+
+        // Push new cell for growth
+        pushCell(&food);
+
+        // ===== 3️⃣ Generate new food coordinates =====
         bool stop = false;
-        while(!stop){
-            struct Cell *temp;
+        while (!stop) {
             x = (rand() % 48) + 1;
             y = (rand() % 32) + 1;
             z = CURRENT_PAD(x);
             val = PIXEL_ADDRESS(x, y, z);
 
-            for(temp = belly->head; temp != NULL; temp = temp->next){
-                if(temp->val == val){
-                    stop = false;
+            // Walk the entire snake list in SRAM to ensure no overlap
+            uint32_t addr = sram_map.cell.head_base;
+            stop = true;
+            while (addr != NULL_PTR) {
+                readCell(&belly_cell, addr);
+                if (belly_cell.val == val) {
+                    stop = false; // overlap — regenerate
                     break;
                 }
-                stop = true;
+                addr = belly_cell.next_addr;
             }
         }
 
-        food->i = x;
-        food->j = y;
-        food->val = PIXEL_ADDRESS(LOCAL_I(x, z), y, z);
-        return !food->poison;
-    }
-    return true;
- }
+        // ===== 4️⃣ Store the new food cell back into SRAM =====
+        food.i = x;
+        food.j = y;
+        food.val = PIXEL_ADDRESS(LOCAL_I(x, z), y, z);
+        updateCell(&food, sram_map.cell.food_base);
 
+        return !food.poison; // same logic as your original
+    }
+
+    // ===== 5️⃣ No food eaten =====
+    return true;
+}
 /*============================================================================================*
  * EFFECTS — sound, LED flashes, animations                                                    *
  *============================================================================================*/
 
- void gameInit(SnakeBelly *belly, struct Cell *food){
-
-    /*Square coil*/
-    uint8_t x = FIRST_PIXEL_X;
-    uint8_t y = FIRST_PIXEL_Y;
-    uint8_t z = CURRENT_PAD(x);
-    uint8_t i_ = LOCAL_I(x, z);
-    uint16_t p = 2;
-
-    bool x_left = false;
-    bool y_up = false;
-    while(p<5){
-        
-        for(uint8_t i=0; i<p; i++){
-            if(!x_left){
-                x--;
-            }
-            else{
-                x++;
-            }
-            z = CURRENT_PAD(x);
-            i_ = LOCAL_I(x, z);
-            push(belly, PIXEL_ADDRESS(i_, y, z), x, y, false);
-            displayGrid(belly, food);
-            _delay_ms(50);
-        }
-        p++;
-
-        for(uint8_t j=0; j<p; j++){
-            if(!y_up){
-                y--;
-            }
-            else{
-                y++;
-            }
-            z = CURRENT_PAD(x);
-            i_ = LOCAL_I(x, z);
-            push(belly, PIXEL_ADDRESS(i_, y, z), x, y, false);
-            displayGrid(belly, food);
-            _delay_ms(50);
-        }
-        p++;
-
-        y_up = (!y_up)?true:false;
-        x_left = (!x_left)?true:false;
-
-        displayGrid(belly, food);
-         _delay_ms(50);
-    }
-
-    belly->color = COLOR_RED;
-
-    for(int i=0; i<4; i++){
-        clear();
-        displayGrid(belly, food);
-        _delay_ms(300);
-    }
-
-    clear();
-    popAll(belly);
+ void gameInit(){
  }
 
- void gameEnd(SnakeBelly *belly, struct Cell *food){
-    belly->color = COLOR_RED;
-
-    for(int i=0; i<10; i++){
-        clear();
-        displayGrid(belly, food);
-        _delay_ms(300);
-    }
-
-    popAll(belly);
+ void gameEnd(){
  }

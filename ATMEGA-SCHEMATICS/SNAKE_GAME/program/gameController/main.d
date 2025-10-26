@@ -1,10 +1,19 @@
-main.o: main.c lib/screen/screen.h includes.h startSetUp/i2c/i2c.h \
- startSetUp/spi/spi.h
-
-lib/screen/screen.h:
+main.o: main.c includes.h startSetUp/spi/spi.h includes.h \
+ shared_memory/shared_memory.h sram/sram.h startSetUp/start.h \
+ startSetUp/uart/uart.h data_types/data_types.h
 
 includes.h:
 
-startSetUp/i2c/i2c.h:
-
 startSetUp/spi/spi.h:
+
+includes.h:
+
+shared_memory/shared_memory.h:
+
+sram/sram.h:
+
+startSetUp/start.h:
+
+startSetUp/uart/uart.h:
+
+data_types/data_types.h:

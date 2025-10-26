@@ -22,7 +22,7 @@
 
 
 # ===== Project =====
-MCU := atmega168
+MCU := atmega328p
 F_CPU    = 16000000UL
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
 TARGET := main
@@ -69,12 +69,11 @@ ifeq ($(INIT), INIT_UBUNTU)
 # Add any source directories here
 SRC_DIRS = \
   . \
-  lib lib/console lib/esp lib/screen \
+  lib lib/console lib/esp \
   libC \
-  snake \
   startSetUp \
-  startSetUp/flash startSetUp/i2c startSetUp/isr startSetUp/spi \
-  startSetUp/sram startSetUp/timer startSetUp/uart startSetUp/ws2812b startSetUp/allocation \
+  startSetUp/spi \
+  startSetUp/timer startSetUp/uart \
   ISP
 
 # Auto-discover sources/headers
@@ -92,7 +91,7 @@ CFLAGS  = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra -std=c11 $(INCS) -MMD 
 LDFLAGS = -mmcu=$(MCU)
 
 PROGRAMMER    = usbasp
-AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m168
+AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m328p
 
 # ===== Build =====
 all: $(TARGET).hex size

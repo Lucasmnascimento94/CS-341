@@ -12,18 +12,14 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/",
+                "${workspaceFolder}/data_types",
                 "${workspaceFolder}/startSetUp",
                 "${workspaceFolder}/sram",
                 "${workspaceFolder}/games/snake",
-                "${workspaceFolder}/startSetUp/timer",
                 "${workspaceFolder}/startSetUp/uart",
                 "${workspaceFolder}/startSetUp/spi",
-                "${workspaceFolder}/startSetUp/isr",
                 "${workspaceFolder}/startSetUp/flash",
-                "${workspaceFolder}/startSetUp/allocation",
-                "${workspaceFolder}/libC",
-                "${workspaceFolder}/lib/screen",
-                "${workspaceFolder}/lib/consoler"
+                "${workspaceFolder}/libC"
             ],
             "defines": [
                 "__AVR_ATmega168__"

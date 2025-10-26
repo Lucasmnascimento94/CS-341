@@ -2,9 +2,9 @@
 
 
 void gpioConfig(){
-    joyStickConf();
+    //joyStickConf();
     setUpUART();
-    spiInitPoll();
+    //spiInitPoll();
 }
 
 
