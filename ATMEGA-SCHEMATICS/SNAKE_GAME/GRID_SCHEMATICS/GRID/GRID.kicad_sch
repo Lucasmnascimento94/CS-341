@@ -4818,6 +4818,14 @@
 		(color 0 0 0 0)
 		(uuid "fe9c2b3d-97b4-47c2-8a3b-5789c8227623")
 	)
+	(no_connect
+		(at 281.94 219.71)
+		(uuid "09ed2738-01ba-47ee-b50c-ad1396f81058")
+	)
+	(no_connect
+		(at 281.94 222.25)
+		(uuid "a37db8af-ad96-4b76-86a9-fa4480549f15")
+	)
 	(wire
 		(pts
 			(xy 304.8 184.15) (xy 304.8 189.23)
@@ -7030,16 +7038,6 @@
 	)
 	(wire
 		(pts
-			(xy 285.75 218.44) (xy 297.18 218.44)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4ee195e5-9778-4e9f-bf04-af91b24ebd41")
-	)
-	(wire
-		(pts
 			(xy 212.09 90.17) (xy 227.33 90.17)
 		)
 		(stroke
@@ -8490,16 +8488,6 @@
 	)
 	(wire
 		(pts
-			(xy 288.29 220.98) (xy 297.18 220.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "807ef08e-9f8d-4363-aa1c-3191d93cea3c")
-	)
-	(wire
-		(pts
 			(xy 487.68 132.08) (xy 472.44 132.08)
 		)
 		(stroke
@@ -8757,16 +8745,6 @@
 			(type default)
 		)
 		(uuid "8877ba27-c394-4193-a48e-f20ae9fba7e6")
-	)
-	(wire
-		(pts
-			(xy 281.94 222.25) (xy 288.29 222.25)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "88a79fc4-6614-45c9-a3ff-b2f3faf12aeb")
 	)
 	(wire
 		(pts
@@ -9620,16 +9598,6 @@
 	)
 	(wire
 		(pts
-			(xy 297.18 223.52) (xy 300.99 223.52)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a4863886-8d97-4eb7-926b-05ed827216cf")
-	)
-	(wire
-		(pts
 			(xy 745.49 53.34) (xy 745.49 55.88)
 		)
 		(stroke
@@ -10217,16 +10185,6 @@
 			(type default)
 		)
 		(uuid "b74337cd-8e83-4a3c-9d64-2e2c38038920")
-	)
-	(wire
-		(pts
-			(xy 285.75 219.71) (xy 285.75 218.44)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b80c6fa8-0991-430d-b404-f423d8d5d5df")
 	)
 	(wire
 		(pts
@@ -10887,16 +10845,6 @@
 			(type default)
 		)
 		(uuid "cbddcc3f-3912-426c-8027-085c11f9cee0")
-	)
-	(wire
-		(pts
-			(xy 281.94 219.71) (xy 285.75 219.71)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cc08aee6-0973-48f7-8e94-ab9ee6019040")
 	)
 	(wire
 		(pts
@@ -11757,16 +11705,6 @@
 			(type default)
 		)
 		(uuid "ea7f74e0-e0a9-4744-836a-a843f68d3923")
-	)
-	(wire
-		(pts
-			(xy 288.29 222.25) (xy 288.29 220.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "eb43b2e2-4102-47a2-9829-18b0875fc1eb")
 	)
 	(wire
 		(pts
@@ -17283,72 +17221,6 @@
 			(project "GRID"
 				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
 					(reference "D85")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 300.99 223.52 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "2b04ea28-446c-496d-8424-b3e130ac963c")
-		(property "Reference" "#PWR06"
-			(at 300.99 229.87 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 300.99 228.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 300.99 223.52 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 300.99 223.52 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 300.99 223.52 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "e8b6f9ed-cff7-4210-8e14-2717bd6e4bf8")
-		)
-		(instances
-			(project "GRID"
-				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
-					(reference "#PWR06")
 					(unit 1)
 				)
 			)
@@ -22905,72 +22777,6 @@
 			(project "GRID"
 				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
 					(reference "D174")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:VCC")
-		(at 297.18 226.06 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "5c332ac0-13fd-4d26-b08e-221486ad315d")
-		(property "Reference" "#PWR05"
-			(at 297.18 222.25 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "VCC"
-			(at 297.18 231.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 297.18 226.06 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 297.18 226.06 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"VCC\""
-			(at 297.18 226.06 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "bf410988-85ea-4bd1-9a52-66c50d141f58")
-		)
-		(instances
-			(project "GRID"
-				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
-					(reference "#PWR05")
 					(unit 1)
 				)
 			)
@@ -30193,80 +29999,6 @@
 			(project "GRID"
 				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
 					(reference "C197")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:Conn_01x04_Pin")
-		(at 292.1 220.98 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "93239bd2-0f7d-4f25-a5f5-6ebab52059fd")
-		(property "Reference" "J3"
-			(at 292.735 213.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "Conn_01x04_Pin"
-			(at 292.735 215.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
-			(at 292.1 220.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 292.1 220.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic connector, single row, 01x04, script generated"
-			(at 292.1 220.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "4"
-			(uuid "d3b52a32-8a83-49e2-af0b-c2885050a48b")
-		)
-		(pin "3"
-			(uuid "856b1533-14c3-4ea7-a5b4-6531cce0b14b")
-		)
-		(pin "1"
-			(uuid "363383e6-a51c-4100-9117-3d8d77361755")
-		)
-		(pin "2"
-			(uuid "e537e23f-0848-4a3b-b907-5eefc1ffe010")
-		)
-		(instances
-			(project "GRID"
-				(path "/c669befd-cccf-43db-92af-3fe6a71006f4"
-					(reference "J3")
 					(unit 1)
 				)
 			)
