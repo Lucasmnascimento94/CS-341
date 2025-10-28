@@ -90,8 +90,8 @@ static void draw_pacman_frame_at(int offx, int offy, const uint8_t sprite[7][7])
         }
     }
 
-    // Robust end frame: at least (N+15)/16 bytes of 0xFF. You used “32 ones”; keep it:
-    for (int i=0;i<32;i++) sendOne();
+    // Robust end frame: at least (N+15)/16 bytes of 0xFF. You used “32 ones”; keep it:..
+    for (int i=0;i<32;i++) sendOne(); 
 }
 
 void pacman_walk_border(void) {
