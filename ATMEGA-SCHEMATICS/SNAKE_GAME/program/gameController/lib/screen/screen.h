@@ -61,6 +61,10 @@ void screenInit(SCREEN *screen, bool default_conf);
 void screenWrite(SCREEN *screen, char *buffer);
 void setCursor(uint8_t pos, uint8_t pcf_address);
 uint8_t getAddress(uint8_t row, uint8_t column);
+void screenClear(SCREEN *screen);
+void screenSetCursor(SCREEN *screen, uint8_t row, uint8_t column);
+void screenWriteAt(SCREEN *screen, uint8_t row, uint8_t column, char *text);
+void updateGameScreen(SCREEN *screen, const char *game_name, uint8_t top_score, uint8_t current_score);
 
 #ifdef __cplusplus
 }

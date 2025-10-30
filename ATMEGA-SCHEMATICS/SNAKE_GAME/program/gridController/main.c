@@ -135,19 +135,6 @@ void test(){
 
 
 int main(void){
-<<<<<<< HEAD
-    //allocateVar();
-    DDRC |= (1<<PC5) | (1<<PC4);
-    PORTC |= (1<<PC5) | (1<<PC4);
-
-    //char c[20];
-    //LED_DDR |= (1 << LED_PIN);   // data pin as output
-    //DDRB |= (1<<PB1);
-    //PORTB &= ~(1<<PB1);
-    //seed_prng();
-    //gpioConfig();
-    //clear();
-=======
 
     LED_DDR |= (1 << LED_PIN);  
     //DDRB |= (1<<PB1);
@@ -155,7 +142,6 @@ int main(void){
     //seed_prng();
     gpioConfig();
     clear();
->>>>>>> SNAKE_V4_PROGRAMMER_LUCAS
 
 
     //print("STARTING\n", 1);
@@ -176,11 +162,7 @@ int main(void){
     sramWriteStringPoll(0x00, 0xFF, len);
     _delay_ms(10);
     */
-<<<<<<< HEAD
-    
-=======
     allocateVar();
->>>>>>> SNAKE_V4_PROGRAMMER_LUCAS
     screenInit(&i2c_port, &i2c_target);
 
 
@@ -189,23 +171,20 @@ int main(void){
     uartWrite_(c);
     _delay_ms(100);
     memset(i2c_port.data, 0, strlen(i2c_port.data));
-<<<<<<< HEAD
-    i2c_port.data = c; */
-    //screenWrite(&i2c_port, &i2c_target, &screen);
-=======
     i2c_port.data = c;
     screenWrite(&i2c_port, &i2c_target, &screen);
->>>>>>> SNAKE_V4_PROGRAMMER_LUCAS
     //sprintf(c, "THIS IS ADDR IN CONF: %X\n", i2c_conf.slave[0]->addr);
    // uartWrite_(c);
 
     //setCursorAt(&i2c_port, &i2c_target, 0, 0);
 
     screenPrintAt(&i2c_port, &i2c_target, 0, 0, "HELLO SNAKE");
-    _delay_ms(500);
+    _delay_ms(500);*/
    /* screenClearAt(&i2c_port, &i2c_target, 0, 0, 5);
     _delay_ms(500);*/
-
+    
+    //screenWriteAt(&screen, 0, 3, "Hello");
+    updateGameScreen(&screen, "Spacecraft", 3000, 209);
     while(1){
         //test();
         uartWrite("lOOPING\n", 9);

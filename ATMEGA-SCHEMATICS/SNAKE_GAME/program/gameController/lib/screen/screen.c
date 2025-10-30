@@ -18,7 +18,7 @@ void screenDefault(SCREEN *screen){
     screen->pcf8574_addr = 0x4E>>1;
 }
 
-uint8_t *buildInstrucion(uint16_t command){
+uint8_t *buildInstruction(uint16_t command){
     static uint8_t instruction[5];
     memset(instruction, 0, 5);
 
@@ -170,3 +170,37 @@ void screenWrite(SCREEN *screen, char *buffer){
         _delay_us(45); 
     }
 }
+
+void screenClear(SCREEN *screen) {
+    i2cWritePol((char *)buildInstrucion(CLEAR_DISPLAY), 4, screen->pcf8574_addr);
+    _delay_ms(2);
+    screen->current_column = 0;
+    screen->current_row = 0;
+}
+
+void screenSetCursor(SCREEN *screen, uint8_t row, uint8_t column) {
+    screen->current_row = row;
+    screen->current_column = column;
+    uint8_t addr = getAddress(row, column);
+    setCursor(addr, screen->pcf8574_addr);
+}
+
+void screenWriteAt(SCREEN *screen, uint8_t row, uint8_t column, char *text) {
+    screenSetCursor(screen, row, column);
+    screenWrite(screen, text);
+}
+
+void updateGameScreen(SCREEN *screen, const char *game_name, uint8_t top_score, uint8_t current_score) {
+    char top_str[10];
+    snprintf(top_str, sizeof(top_str), "Top Score: %-3d", top_score);
+
+    screenWriteAt(screen, 0, 0, "Game:");
+    screenWriteAt(screen, 0, 6, (char *)game_name); 
+    screenWriteAt(screen, 0, 15, top_str);
+
+
+    char score_str[20];
+    snprintf(score_str, sizeof(score_str), "Current score: %-3d", current_score);
+    screenWriteAt(screen, 3, 0, score_str);
+}
+

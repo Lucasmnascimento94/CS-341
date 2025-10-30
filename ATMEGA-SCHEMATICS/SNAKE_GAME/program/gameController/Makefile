@@ -22,7 +22,7 @@
 
 
 # ===== Project =====
-MCU := atmega168
+MCU := ATmega328P
 F_CPU    = 16000000UL
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
 TARGET := main
@@ -208,8 +208,8 @@ SRC_DIRS = \
   snake \
   startSetUp \
   startSetUp/flash startSetUp/i2c startSetUp/isr startSetUp/spi \
-  startSetUp/sram startSetUp/timer startSetUp/uart startSetUp/ws2812b
-
+  startSetUp/sram startSetUp/timer startSetUp/uart startSetUp/ws2812b \
+  startSetUp/allocation
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
 OBJS   := $(SRCS:.c=.o)
@@ -225,7 +225,7 @@ CFLAGS  = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra -std=c11 $(INCS) -MMD 
 LDFLAGS = -mmcu=$(MCU)
 
 PROGRAMMER    = usbasp
-AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m168
+AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m328p
 
 # ===== Build =====
 all: $(TARGET).hex size
