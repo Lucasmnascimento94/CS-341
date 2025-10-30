@@ -194,10 +194,8 @@ void updateGameScreen(SCREEN *screen, const char *game_name, uint8_t top_score, 
     char top_str[10];
     snprintf(top_str, sizeof(top_str), "Top Score: %-3d", top_score);
 
-    screenWriteAt(screen, 0, 0, "Game:");
-    screenWriteAt(screen, 0, 6, (char *)game_name); 
-    screenWriteAt(screen, 0, 15, top_str);
-
+    screenWriteAt(screen, 0, 0, (char *)game_name); 
+    screenWriteAt(screen, 0, 10, top_str);
 
     char score_str[20];
     snprintf(score_str, sizeof(score_str), "Current score: %-3d", current_score);
