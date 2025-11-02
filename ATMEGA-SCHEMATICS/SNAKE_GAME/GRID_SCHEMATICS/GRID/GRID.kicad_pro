@@ -523,7 +523,7 @@
       "idf": "",
       "netlist": "",
       "plot": "VERSION2/",
-      "pos_files": "",
+      "pos_files": "./",
       "specctra_dsn": "",
       "step": "",
       "svg": "",
@@ -537,9 +537,9 @@
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
-      "keep_line_breaks": false,
+      "keep_line_breaks": true,
       "keep_tabs": false,
-      "name": "CSV",
+      "name": "---",
       "ref_delimiter": ",",
       "ref_range_delimiter": "",
       "string_delimiter": "\""
@@ -555,13 +555,13 @@
           "show": true
         },
         {
-          "group_by": true,
+          "group_by": false,
           "label": "Value",
           "name": "Value",
           "show": true
         },
         {
-          "group_by": true,
+          "group_by": false,
           "label": "Footprint",
           "name": "Footprint",
           "show": true
@@ -591,19 +591,19 @@
           "show": false
         },
         {
-          "group_by": true,
+          "group_by": false,
           "label": "DNP",
           "name": "${DNP}",
           "show": true
         },
         {
-          "group_by": true,
+          "group_by": false,
           "label": "Exclude from BOM",
           "name": "${EXCLUDE_FROM_BOM}",
           "show": true
         },
         {
-          "group_by": true,
+          "group_by": false,
           "label": "Exclude from Board",
           "name": "${EXCLUDE_FROM_BOARD}",
           "show": true
