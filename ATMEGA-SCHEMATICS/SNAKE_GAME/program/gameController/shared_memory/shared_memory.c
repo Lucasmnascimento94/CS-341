@@ -1,8 +1,16 @@
 #include "shared_memory.h"
 #include "uart.h"
 
+#if (GAME == SNAKE)
+
 void loadInitials(){
 
+}
+
+void erase(){
+    for(uint32_t i=0; i < SRAM_SIZE; i++){
+        sramWriteByte(&spi, NULL_PTR, i);
+    }
 }
 
 void pushCell(struct Cell *cell){
@@ -81,6 +89,24 @@ void popCell(){
     /*_____________RAM metadata________*/
     sram_map.cell.current_base = tail_base; 
     sram_map.cell.count--;
+}
+
+void bufferWrite(uint16_t i, uint16_t j, uint8_t data){
+    uint32_t index = (uint32_t)(i + j*(SCREEN_WIDTH - 1) + GRID_BUFFER_BASE); // RETURNS THE ARRAY INDEX.
+    uint32_t addr = BUFFER_SCREEN(BUFFER_MAGIC) + index;
+    if(addr >= BELLY_BASE) return;
+    sramWriteByte(data, addr);
+}
+
+void bufferRead(uint16_t i, uint16_t j, uint8_t data){
+    
+}
+
+void buferClear(){
+    uint32_t addr = GRID_BUFFER_BASE;
+    for(uint32_t i = 0; addr < BUFFER_SIZE; i++){
+        sramWriteByte(NULL_PTR, addr++);
+    }
 }
 
 void loadBelly(SnakeBelly *belly){
@@ -162,3 +188,9 @@ void readCell(struct Cell *cell, uint32_t base){
     sramReadByte(&spi, &cell->j, CELL_J(base));
     sramReadByte(&spi, &cell->poison, CELL_POISON(base));
 }
+
+#elif (GAME == SPACE)
+
+#elif (GAME == PONG)
+
+#endif

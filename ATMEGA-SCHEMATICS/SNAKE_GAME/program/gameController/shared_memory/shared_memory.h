@@ -5,11 +5,12 @@
 #include "spi.h"
 #include "sram.h"
 #include "data_types.h"
-/*_______________Header Names______________*/
-#define MAGIC_BELLY         "SB"
-#define MAGIC_CELL          "CL"
-#define MAGIC_MAIL          "ML"
-#define MAGIC_SCORE         "SC"
+
+#define SNAKE 1
+#define SPACE 2
+#define PONG 3
+#define PACMAN 4
+#define GAME SNAKE
 
 /*________Constant PreDefined Values______*/
 #define PAGE_SIZE            32
@@ -17,11 +18,22 @@
 #define FLAG_DIRTY           0x00u
 #define FLAG_VALID           0xA5u
 #define SRAM_SIZE            0x1FFFF
-#define BUFFER_SIZE         (65*65)
+#define SCREEN_WIDTH        70
+#define SCREEN_HEIGHT       60
+#define BUFFER_SIZE         (SCREEN_WIDTH*SCREEN_HEIGHT)
+
+
+#if (GAME == SNAKE)
+/*_______________Header Names______________*/
+#define MAGIC_BELLY         "SB"
+#define MAGIC_CELL          "CL"
+#define MAGIC_MAIL          "ML"
+#define MAGIC_SCORE         "SC"
+#define MAGIC_BUFFER        "BF"
 
 /*__________Base addresses Definition___________*/
 #define GRID_BUFFER_BASE   ((uint32_t)0x10u)
-#define BELLY_BASE         ((uint32_t)((uint32_t)GRID_BUFFER_BASE + (uint32_t)BUFFER_SIZE))
+#define BELLY_BASE         ((uint32_t)((uint32_t)GRID_BUFFER_BASE + (uint32_t)BUFFER_SIZE) + 0x20u)
 #define MAIL_BASE          ((uint32_t)((uint32_t)BELLY_BASE + 0x20u))
 #define FOOD_START_BASE    ((uint32_t)((uint32_t)MAIL_BASE + 0x40u))
 #define FOOD_MAX           ((uint32_t)4u)   /* allow space for 4 foods */
@@ -77,6 +89,10 @@ struct SRAM_MAP {
 };
 #pragma pack(pop)
 
+#define BUFFER_MAGIC(BASE)            ((uint32_t)(BASE) + (uint32_t)0x00u)
+#define BUFFER_FLAGS(BASE)            ((uint32_t)(BASE) + (uint32_t)0x03u)
+#define BUFFER_SCREEN(BASE)           ((uint32_t)(BASE) + (uint32_t)0x05u)
+
 #define SNAKE_BELLY_MAGIC(BASE)       ((uint32_t)(BASE) + (uint32_t)0x00u)
 #define SNAKE_BELLY_FLAGS(BASE)       ((uint32_t)(BASE) + (uint32_t)0x03u)
 #define SNAKE_BELLY_HEAD(BASE)        ((uint32_t)(BASE) + (uint32_t)0x05u)
@@ -130,7 +146,11 @@ void loadBelly(SnakeBelly *belly);
 void loadMail();
 void loadScore();
 
-
 void testMem();
 
+#elif (GAME == SPACE)
+
+#elif (GAME == PONG)
+
+#endif
 #endif
