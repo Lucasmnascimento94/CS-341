@@ -20,7 +20,7 @@ uint8_t val[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 int main(){
 
     i2cInit(&i2c, true);
-    //screenInit(&screen, true);
+    screenInit(&screen, true);
 
     //sram_map.cell.block_size = 16;
     //char c[100];
@@ -59,14 +59,15 @@ int main(){
     //_delay_ms(500);
     //spiWritePoll(&spi, "HELLO WORLD");
 */
+_delay_ms(1000);
 
-//screenWrite(&screen, "HELLO WORLD UMB");
     while(1){
-        i2cStartPol(screen.pcf8574_addr, MODE_MASTER_POL);
+        screenWrite(&screen, "HELLO WORLD UMB");
+        //i2cStartPol(screen.pcf8574_addr, MODE_MASTER_POL);
         //i2cWritePol_("Hello World", 10);
-        i2cWritePol_("Hello World", 11);
-        i2cStop();
-        _delay_ms(100);
+        //i2cWritePol_("Hello World", 11);
+        //i2cStop();
+        _delay_ms(1000);
         //uartWrite_("MAIN LOOP\n");
     }
 }

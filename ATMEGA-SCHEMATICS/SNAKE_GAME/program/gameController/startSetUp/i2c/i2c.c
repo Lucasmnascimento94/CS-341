@@ -8,8 +8,8 @@
 #include "i2c.h"
 
 void i2cdefault(I2C_CONF *conf){
-    conf->f_cpu = 16000000;
-    conf->frequency = 400000;
+    conf->f_cpu = 0;
+    conf->frequency = 0;
     conf->mode = MODE_MASTER_POL;
     conf->prescaler = 1;
 }
@@ -41,7 +41,7 @@ void i2cConfSlaveInt(){
 void i2cInit(I2C_CONF *conf, bool default_conf){
     DDRC  &= ~((1<<PC5) | (1<<PC4)); 
     PORTC |= (1<<PC5) | (1<<PC4);
-    if(default_conf) i2cdefault(conf);
+    //if(default_conf) i2cdefault(conf);
     i2cClockConfig(conf);
     i2cModeConf(conf);
 }
@@ -52,33 +52,20 @@ Slave operation does not depend on Bit Rate or Prescaler settings, but the CPU c
 frequency in the Slave must be at least 16 times higher than the SCL frequency. 
 */
 
-    switch (conf->prescaler){
-        case 1:
-            TWSR &= ~(1<<TWPS1) & ~(1<<TWPS0);
-            break;
-        case 4:
-            TWSR &= ~(1<<TWPS1);
-            TWSR |=  (1<<TWPS0);
-            break;
-        case 16:
-            TWSR |=  (1<<TWPS1);
-            TWSR &= ~(1<<TWPS0);
-            break;
-        case 64:
-            TWSR |=  (1<<TWPS1);
-            TWSR |=  (1<<TWPS0);
-            break;
-        default:
-            /*to do*/
-            break;
-
-    }
-
-    uint32_t twbr_num = (conf->f_cpu / conf->frequency);
-    uint32_t twbr_den = 2*(conf->prescaler);
-
-    uint8_t twbr = (uint8_t)((twbr_num - 16)/twbr_den);
-    TWBR = (twbr < 2)?2U:twbr;
+    switch (conf->prescaler){ 
+        case 1: 
+        TWSR &= ~(1<<TWPS1) & ~(1<<TWPS0); break; 
+        case 4: TWSR &= ~(1<<TWPS1); TWSR |= (1<<TWPS0); break; 
+        case 16: TWSR |= (1<<TWPS1); TWSR &= ~(1<<TWPS0); break; 
+        case 64: TWSR |= (1<<TWPS1); TWSR |= (1<<TWPS0); break; 
+        default: /*to do*/ break; } 
+        
+    if (conf->frequency >= conf->f_cpu/16UL) { 
+        TWBR = 0; conf->TWBR_VAL = TWBR; return; 
+    } 
+    uint32_t twbr_calc = (conf->f_cpu/conf->frequency - 16UL) / (2UL * conf->prescaler); 
+    if (twbr_calc > 255UL) twbr_calc = 255UL; 
+    TWBR = (uint8_t)twbr_calc; 
     conf->TWBR_VAL = TWBR;
 }
 

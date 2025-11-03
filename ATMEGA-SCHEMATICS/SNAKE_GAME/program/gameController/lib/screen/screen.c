@@ -15,7 +15,7 @@ void screenDefault(SCREEN *screen){
 
     screen->current_column = 0;
     screen->current_row = 0;
-    screen->pcf8574_addr = 0x4E>>1;
+    screen->pcf8574_addr = 0x4E;
 }
 
 uint8_t *buildInstrucion(uint16_t command){
