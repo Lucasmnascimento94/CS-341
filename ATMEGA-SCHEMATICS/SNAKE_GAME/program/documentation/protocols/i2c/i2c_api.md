@@ -13,10 +13,11 @@ This struct holds the configuration for the I2C protocol. A variable holding thi
 | `mode` | `uint8_t` | This sets the mode the MCU will work. The accepted opcodes are: MODE_MASTER_POL, MODE_MASTER_INT, MODE_SLAVE_POL, MODE_SLAVE_INT. Note That since the API is not yet complete, the only mode working at this point is: MODE_MASTER_POL. |
 | `f_cpu` | `uint32_t` | This value has to be set to the current clock speed in the environment. Note that the arduino UNO is by default set to 16MHz or (16000000 Hz). |
 
+Note: Notice as well that the I2C hardware configuration will get hold of both SDA and SCL pins. Therefore, they will not be able to be used as a GPIO, unless carefull configuration and unconfiguration routine is planned.
 
 ## Methods
 
-### ` void i2cInit(I2C_CONF *conf, bool default_conf)`
+### `void i2cInit(I2C_CONF *conf, bool default_conf)`
 
 Initializes the I2C protocol with either a default configuration or a custom one.
 
@@ -31,13 +32,12 @@ Initializes the I2C protocol with either a default configuration or a custom one
     frequency = (f_cpu)/(16 + 2*TWBR*prescaler)
 
 
-    - Store data buffer to be sent out or to store data coming in.
+### `uint8_t i2cWritePol(char *buffer, size_t size, uint8_t address)`
 
-- char *instruction
-    - Store temporary command instructions
+This method is used to write a string of a certain size to a target address. To understand how the address argument works, you should read a little about how the I2C packaging works. In this protocol, each slave is set with a predefined address, which is included in the first byte sent by the master when trying to communicate with devices connected in the data bus.
 
-- uint8_t last_target
-    - Holds the address of the last target address
+
+- When using this method, it will try to connect with the given address 10 times and skip the loop without sending the message if the target, .
 
 
 **I2C_TARGET**
