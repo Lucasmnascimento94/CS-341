@@ -1,9 +1,36 @@
-##### DATA TYPES ######
+# I2C Firmware Configuration Reference
 
-**I2C_CONF**
-    This struct holds the configuration for the I2C protocol. A variable holding this strucut must be created before calling the I2C initialization. However, the user can either call init with a true argument for a default configuration or adjust it based on custom needs and initializing I2C with a false argument to bypass the default.
+## Data Types
 
-- <>
+### `I2C_CONF`
+This struct holds the configuration for the I2C protocol. A variable holding this strucut must be created before calling the I2C initialization. However, the user can either call init with a true argument for a default configuration or adjust it based on custom needs and initializing I2C with a false argument to bypass the default.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `TWBR_VAL` | `uint32_t` | This value is calculated based on the other values set in the struct. This value is inserted in the I2C register and saved in this variable for debug purposes. |
+| `frequency` | `uint32_t` | This is the maximum frequency you want to achieve. Note that this maximum speed has to stay within the limits of both the master and the slave. |
+| `prescaler` | `uint8_t` | This is the parameter used in the formula given by the MCU datasheet to divide the speed set in frequency. Therefore, the protocol can be slowed down by given a higher prescaler. Note that the accepted values for prescaler are: 1, 4, 16 or 64. |
+| `mode` | `uint8_t` | This sets the mode the MCU will work. The accepted opcodes are: MODE_MASTER_POL, MODE_MASTER_INT, MODE_SLAVE_POL, MODE_SLAVE_INT. Note That since the API is not yet complete, the only mode working at this point is: MODE_MASTER_POL. |
+| `f_cpu` | `uint32_t` | This value has to be set to the current clock speed in the environment. Note that the arduino UNO is by default set to 16MHz or (16000000 Hz). |
+
+
+## Methods
+
+### ` void i2cInit(I2C_CONF *conf, bool default_conf)`
+
+Initializes the I2C protocol with either a default configuration or a custom one.
+
+- If `default_conf == true`, the I2C_CONF struct passed in the methods is filled with default values.
+- If `default_conf == false`, you must manually set the values to configure the i2c protocol. Note that these values will be used in the formula:
+
+    uint32_t twbr_num = (conf->f_cpu / conf->frequency);
+    uint32_t twbr_den = 2*(conf->prescaler);
+    uint8_t twbr = (uint8_t)((twbr_num - 16)/twbr_den);
+
+    This calculation derives from the datasheet formula:
+    frequency = (f_cpu)/(16 + 2*TWBR*prescaler)
+
+
     - Store data buffer to be sent out or to store data coming in.
 
 - char *instruction
