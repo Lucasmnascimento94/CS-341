@@ -1,9 +1,9 @@
 ##### DATA TYPES ######
 
-**I2C_PORT**
-    This struct holds the data from where the reading/writing function will read/write data from/into
+**I2C_CONF**
+    This struct holds the configuration for the I2C protocol. A variable holding this strucut must be created before calling the I2C initialization. However, the user can either call init with a true argument for a default configuration or adjust it based on custom needs and initializing I2C with a false argument to bypass the default.
 
-- char *data
+- <>
     - Store data buffer to be sent out or to store data coming in.
 
 - char *instruction
