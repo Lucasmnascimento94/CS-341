@@ -49,36 +49,6 @@ void pushCell(struct Cell *cell){
     sram_map.cell.count++;
     sram_map.cell.tail_base = base;
     sram_map.cell.current_base = sram_map.cell.tail_base + bs;
-
-    /*sprintf(c, "VAL: %d\n", cell->val);
-    uartWrite_(c);
-    sprintf(c, "MAGIC_ADDR: %lX\n", CELL_MAGIC(base));
-    uartWrite_(c);
-    sprintf(c, "FLAG_ADDR: %lX\n", CELL_FLAGS(base));
-    uartWrite_(c);
-    sprintf(c, "NEXT_ADDR: %lX\n", CELL_NEXT(base));
-    uartWrite_(c);
-    sprintf(c, "NEXT_VAL: %lX\n", cell->next_addr);
-    uartWrite_(c);
-    sprintf(c, "PREV_ADDR: %lX\n", CELL_PREV(base));
-    uartWrite_(c);
-    sprintf(c, "PREV_VAL: %lX\n", cell->prev_addr);
-    uartWrite_(c);
-    sprintf(c, "VAL_ADDR: %lX\n", CELL_VAL(base));
-    uartWrite_(c);
-    sprintf(c, "I_ADDR: %lX\n", CELL_I(base));
-    uartWrite_(c);
-    sprintf(c, "J_ADDR: %lX\n", CELL_J(base));
-    uartWrite_(c);
-    sprintf(c, "POS_ADDR: %lX\n", CELL_POISON(base));
-    uartWrite_(c);
-    sprintf(c, "CURRENT_ADDR: %lX\n", sram_map.cell.current_base);
-    uartWrite_(c);
-    sprintf(c, "TAIL_ADDR: %lX\n", sram_map.cell.tail_base);
-    uartWrite_(c);
-    sprintf(c, "HEAD_ADDR: %lX\n", sram_map.cell.head_base);
-    uartWrite_(c);
-    uartWrite_("*******************\n\n");*/
 }
 
 void popCell(){
@@ -175,6 +145,7 @@ void loadScore(){
 
 void updateCell(struct Cell *cell, uint32_t base){
 }
+
 void readCell(struct Cell *cell, uint32_t base){
     memset(cell, 0, sizeof(Cell));
     uint8_t magic[3];
