@@ -1,23 +1,18 @@
 # SPI APPLICATION NOTE
 
-**Author(s):** Lucas Nascimento 
+**Author(s):** Lucas Nascimento
 **Date:** 10/01/2025
 **Related Module:** protocols
 
 # --------------------------------------------------------------------------------------------------------------- #
 ## Purpose
 
-This application note explains how the **SPI protocol** is configured and used on the **ATmega168A**. 
-It outlines how the **memory map** is used to set up the SPI hardware module, how to access the **SPI Data Register (SPDR)** to send and receive data, and how the related **control and status registers** are organized.  
-The goal is to provide a clear reference so other teams can understand SPI operation without needing to parse the full datasheet.
-
-
+--
 
 # --------------------------------------------------------------------------------------------------------------- #
 # Scope
 
-- Serial Peripheral Interface protocol
-- SPI Registers configuration
+- I2C protocol
 
 
 
@@ -25,30 +20,8 @@ The goal is to provide a clear reference so other teams can understand SPI opera
 # Configuration / Design
 
 - **Hardware Settings**:
-    GPIO #19 (PB5): **SCK**     > Clock 
-    GPIO #18 (PB4): **MISO**    > Master-In-Slave-out
-    GPIO #17 (PB3): **MOSI**    > Master-out-Slave-in
-    GPIO #16 (PB2): **SS**      > Slave select
-
-    **Clock** >> 
-    **MISO** >> 
-    **MOSI** >> Oe
-    **SS** >> C
-
-
-- **Wiring**
-
-    
-- **Modes of Operation**:
-
-    - **Slave Mode**: 
-
-    - **Master Mode**: I
-
-
-
-### Data Modes (CPOL/CPHA)
-
+    GPIO #28 (PC5): **SCK**     > SCL
+    GPIO #27 (PC4): **MISO**    > SDA
 
 # --------------------------------------------------------------------------------------------------------------- #
 ### Software SetUp **Registers**
@@ -57,8 +30,8 @@ The goal is to provide a clear reference so other teams can understand SPI opera
 **TWCR** (I2C Control Register)
     This register is responsible to configure how the I2C will be operated. This register is formed by the following 8 bits:
 
-      7   |   6   |   5   |    4   |   3   |   2   |  1   |  0   
-    TWINT |  TWEA | TWSTA |  TWSTO |  TWWC |  TWEN |  -   | TWIE 
+      7   |   6   |   5   |    4   |   3   |   2   |  1   |  0
+    TWINT |  TWEA | TWSTA |  TWSTO |  TWWC |  TWEN |  -   | TWIE
 
 
 -  **TWINT**: TWI Interrupt Flag
@@ -73,10 +46,10 @@ The goal is to provide a clear reference so other teams can understand SPI opera
     The TWEA bit controls the generation of the acknowledge pulse. If the TWEA bit is written to one, the ACK
     pulse is generated on the TWI bus if the following conditions are met:
     1. The device’s own slave address has been received.
-    2. A general call has been received, while the TWGCE bit in the TWAR is set.    
+    2. A general call has been received, while the TWGCE bit in the TWAR is set.
     3. A data byte has been received in Master Receiver or Slave Receiver mode.
     By writing the TWEA bit to zero, the device can be virtually disconnected from the 2-wire Serial Bus temporarily.
-    Address recognition can then be resumed by writing the TWEA bit to one again. 
+    Address recognition can then be resumed by writing the TWEA bit to one again.
 
 -   **TWSTA**: TWI START Condition Bit
     The application writes the TWSTA bit to one when it desires to become a Master on the 2-wire Serial Bus. The
@@ -114,7 +87,7 @@ The goal is to provide a clear reference so other teams can understand SPI opera
     the data was sent, has arrived or if there was any interrupt caused by this specific protocol port.
 
 
-      7   |   6   |   5   |   4   |   3    |   2  |     1   |   0   
+      7   |   6   |   5   |   4   |   3    |   2  |     1   |   0
     TWS7  |  TWS6 |  TWS5 |  TWS4 |  TWS3  |   -  |   TWPS1 | TWPS0
 
 -   **TWS[7-3]**: TWI Status
@@ -142,7 +115,7 @@ The goal is to provide a clear reference so other teams can understand SPI opera
     modes. In multi master systems, TWAR must be set in masters which can be addressed as Slaves by other
     Masters.
 
-      7   |   6   |   5   |   4   |   3    |   2   |    1   |   0   
+      7   |   6   |   5   |   4   |   3    |   2   |    1   |   0
     TWA6  |  TWA5 |  TWA4 |  TWA3 |  TWA2  |  TWA1 |   TWA0 | TWGCE
 
 - **TWA[7-1]**: TWA: TWI (Slave) Address Register
@@ -159,7 +132,7 @@ The goal is to provide a clear reference so other teams can understand SPI opera
     modes. In multi master systems, TWAR must be set in masters which can be addressed as Slaves by other
     Masters.
 
-      7   |    6   |    5   |    4   |    3    |    2   |    1   |   0   
+      7   |    6   |    5   |    4   |    3    |    2   |    1   |   0
     TWAM6 |  TWAM5 |  TWAM4 |  TWAM3 |  TWAM2  |  TWAM1 |  TWAM0 |   -
 
 - **TWAM[7-1]**: TWA: TWI (Slave) Address Register
@@ -167,49 +140,10 @@ The goal is to provide a clear reference so other teams can understand SPI opera
 
 
 **TWDR**
-    This is the data register for this specific protocol. After the SPI protocol has been configured, the next action to start a 
+    This is the data register for this specific protocol. After the SPI protocol has been configured, the next action to start a
     transfer is to move data into this register, and the protocol will be handled by the hardware, shitfing the buffer bit by bit
     in either MSB or LSB, based on the control register configuration.
 
-
-
-# --------------------------------------------------------------------------------------------------------------- #
-## Implementation Flow
-
-
-### MASTER MODE
-
-Step-by-step description of how this feature is implemented:  
-1. Initialization  
-    - Configure Control Register **Crossing data with the target protocol expectations**
-    - Clear flags in the Status Register **avoiding false triggers**
-    - Enable protocol in Control Register
-    
-2. Data flow / command handling
-    - Initilize communication by driving SS/CS Low
-    - Send Data to register if you are sending data
-    - Send Dummy byte if you are expecting to receive data (master mode)
-    - Check SPIF in a loop to confirm that data the transmission is complete
-    - Clear flag by reading it in the status register (done in the bullet above)
-    - Drive SS/CS HIGH to end the communication
-
-3. Error handling  
-    - Check WCOL in the status register to confirm that there was no collision
-    - CRC?
-
-
-# --------------------------------------------------------------------------------------------------------------- #
-## Testing & Validation
-
-- logic analyzer.
-
-- Unit test present at ./Documentation/unitTest
-
-- Known limitations
-    Current design uses a 16MHz external clock.
-
-    -> Maximum speed = fosc/2 -> 8MHz
-    -> Minimum speed = fosc 128 -> 125kHz
 
 
 # --------------------------------------------------------------------------------------------------------------- #

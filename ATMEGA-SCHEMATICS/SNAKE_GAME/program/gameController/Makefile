@@ -30,18 +30,20 @@ OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
 
 SRC_DIRS = \
   . \
+  startSetUp/i2c \
+  lib/screen \
   sram \
   data_types\
   libC \
-  shared_memory\
   startSetUp \
   startSetUp/flash \
   startSetUp/spi \
-  games/snake \
   startSetUp/timer \
   startSetUp/uart \
   startSetUp/ws2812b \
-  grid
+  grid \
+  #games/snake \
+  #shared_memory
 
 #######################################################################################################################################################                                                                            
 #                               					 			GRID CONTROLLER MCU                                  	             				  #

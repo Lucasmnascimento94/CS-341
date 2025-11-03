@@ -8,7 +8,7 @@
 #include "i2c.h"
 
 void i2cdefault(I2C_CONF *conf){
-    conf->f_cpu = 8000000;
+    conf->f_cpu = 16000000;
     conf->frequency = 400000;
     conf->mode = MODE_MASTER_POL;
     conf->prescaler = 1;
@@ -196,13 +196,14 @@ uint8_t i2cWritePol(char *buffer, size_t size, uint8_t address){
     return i2cStop();         // Send a Stop condition                            
  }
 
- uint8_t i2cWritePol_(char *buffer, size_t size){
+uint8_t i2cWritePol_(char *buffer, size_t size){
     if(buffer == NULL) return 0x01;
     for(size_t i=0; i<size; i++){
+        uint8_t count = 0;
         while(!(TWCR & (1<<TWINT)));
         TWDR = buffer[i];
         TWCR = (1<<TWINT) | (1<<TWEN); 
-        while((TWSR & I2C_TWSR_FLAG_MASK) != DATA_BYTE_TRANSMITTED_ACK){}
+        while((TWSR & I2C_TWSR_FLAG_MASK) != DATA_BYTE_TRANSMITTED_ACK){if(count++ >=10)break; _delay_us(1);}
     }
     return (I2C_TWSR_FLAG_MASK) != DATA_BYTE_TRANSMITTED_ACK;
  }

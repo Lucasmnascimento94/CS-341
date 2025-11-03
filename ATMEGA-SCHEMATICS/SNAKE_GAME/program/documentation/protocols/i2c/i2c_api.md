@@ -37,111 +37,35 @@ Initializes the I2C protocol with either a default configuration or a custom one
 This method is used to write a string of a certain size to a target address. To understand how the address argument works, you should read a little about how the I2C packaging works. In this protocol, each slave is set with a predefined address, which is included in the first byte sent by the master when trying to communicate with devices connected in the data bus.
 
 
-- When using this method, it will try to connect with the given address 10 times and skip the loop without sending the message if the target, .
+- When using this method, it will try to connect with the given address 10 times and skip the loop without sending the message if the target isn't found.
 
+### `uint8_t i2cWritePol_(char *buffer, size_t size)`
 
-**I2C_TARGET**
-    This struct holds the target info.
+This method can be used to achieve the same result and <uint8_t i2cWritePol()>. This function however, does not call a private method <i2cPolHelper()> to start the protocol. Therefore, by using this method you have to call <i2cStartPol()> first, which will use the address argument and mode to connect to the target. If This method is used without the i2cStart, it will send the message using the protocol, but since the start signal was not initiated no target will ever respond to it. However, you can also use this method to check that the data you are sending is the one you are expecting by using an analyzer.
 
-- uint32_t TWBR_VAL
-    - Holds the value stores in the TWBR register that is used for the clock generator
+### `uint8_t i2cStartPol(uint8_t address, uint8_t mode)`
 
-- uint8_t prescaler
-    - Sets the value which will be used to fraction the clock used in the protocol
+This method is a helper, which has to be used to send a start signal to the data bus, if the users wants to control when the protocol has to start and stop.
 
-- uint8_t addr
-    - Holds the target address
-    
-- uint8_t direction
-    - Can be either **read** (1) or **write** (0)
+### `uint8_t i2cStop()`
 
-- uint8_t mode (HIGH NIBBLE:: MASTER(0)/SLAVE(1) | LOW NIBBLE:: POLLING(0)/INTERRUPT(1))
-    - Can be either 
-    **master + polling mode** (0X00)
-    **master + interrupt mode** (0X01)
-    **slave + polling mode** (0X10)
-    **slave + interrupt mode** (0X11)
+This method is a helper, which has to be used to send a stop signal to the data bus, if the user wants to control when the protocol has to start and stop.
 
 
 
-# I2C Configuration
--
-    **void i2cClockConfig(I2C_TARGET *target)**
-        This function sets the clock (frequency) based on the target maximum speed
+### Using the API:
+1. Initialization  
+    - Create a variable of the type I2C_CONF. You can either configure the parameters or just leave it blank.
+    `i2cInit(I2C_CONF *conf, bool default_conf)` :: Call this function, sending the pointer from the I2C_CONF variable, and a true or false for default configuration. 
+    - default_conf = TRUE - If you are not configuring the paramaters and wants to use the default values.
+    - default_conf = FALSE - If you are adjusting the parameters and wants to bypass the default values.  
 
+2. Writing
+    - `i2cWritePol(char *buffer, size_t size, uint8_t address)`:: Call this method you have a target connected and doesn't need to control the start/stop or does not need to keep the slave and master connected once the buffer is shifted out.
 
-# I2C Start/Stop Function
--
-    **uint8_t start_POL(I2C_TARGET *target)**
-        This function starts the protocol in two steps:
-
-        - Start:
-            It sends a start signal on the SDA bus
-        - Sends target address on SDA bus
-        - Return status flasg
-    
--
-    **uint8_t start_INT(I2C_TARGET *target)**
-        This function starts the protocol, setting up the registers to work in interrupt mode.
-
--
-    **uint8_t i2cSTOP()**
-        This function is a helper for a caller that is handling start/stop externally
-        
-
-# I2C Writing Functions
--
-    **uint8_t i2cMasterWrite_POL(I2C_PORT *port, I2C_TARGET *target)**
-        This function writes a data stream stored in pot to the target.
--
-    **uint8_t i2cMasterWriteNoCtrl_POL(I2C_PORT *port, I2C_TARGET *target)**
-        This function write a data stream stored in port to the target. However, instead
-        of handling the Start/Stop signal in the SDA bus, this task is delagated to the caller.
-        Therefore, Call a starter function before using this function and call a stopper afterwards.
+    - `i2cWritePol_(char *buffer, size_t size)` :: Call this method if you either need to control start/stop in a different way or if you just want to send data in the data bus to check output in an analyzer.
     
 
-##### METHODS ######
+### NOTE:
 
-
-**_uint8_t i2cStartPOL(uint8_t address, uint8_t Mode)_** 
-
--   Starts I2C protocol in Polling mode. To initialize the protocol, the first instrucion has to be the target address + W/R command, 
-    usually refered to SLA+W.
-
-    <uint8_t address>   Target Address
-    <uint8_t Mode>      O to write, 1 to read.
-
-**_uint8_t i2cStartInt(uint8_t address, uint8_t Mode)_** 
-
--   Starts I2C protocol in Interrupt mode. To initialize the protocol, the first instrucion has to be the target address + W/R command, 
-    usually refered to SLA+W.
-
-    <uint8_t address>   Target Address
-    <uint8_t Mode>      O to write, 1 to read.
-
-
-**_uint8_t i2cSTOP()_**
-
--   Sends a stop signal to the I2C bus line. It is necessary to ensure that a Stop signal is sent to the bus line, otherwise the target
-    will never free the bus.
-
-
-
-**_uint8_t i2cWritePOL(char *buffer, size_t size, uint8_t address)_**
-
--   Sends a data buffer in polling mode to the a target address;
-
-    <char *buffer>    Data being sent
-    <size_t size>     Length of bytes being sent
-    <uint8_t address> Target address
-    <return:: (WSR & I2C_TWSR_FLAG_MASK)  > Returns the flag to indicate the status of the communication
-
-
-**_uint8_t i2cWritePOL_(char *buffer, size_t size)_**
-
--   Send a data buffer in polling modewithout managing the I2C start signal. For some applications, the start/stop signal has to be 
-    handled more loosely. Therefore, you can use this method combined with i2cStart() and i2cStop() to control the flow externally
-
-    <char *buffer>    Data being sent
-    <size_t size>     Length of bytes being sent
-
+Since the API is not yet complete, there are the only method supported at this point.
