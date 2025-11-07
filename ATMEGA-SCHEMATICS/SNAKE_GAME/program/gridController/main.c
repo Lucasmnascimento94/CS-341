@@ -1,285 +1,80 @@
-#include "start.h"
+#include "includes.h"
+#include "spi.h"
 #include "uart.h"
-/*
-DDRX -> DIRECTION
-*/
-#define max 220
+#include "i2c.h"
+#include "sram.h"
+#include "screen.h"
+#include "shared_memory.h"
+void sramVarsInit(SPI *spi);
 
+SCREEN            screen;
+I2C_CONF          i2c;
+SPI_CS_TARGET     spi_cs_flash;
+SPI               spi;//
+struct SRAM_MAP   sram_map;
 
-#define W 14
-#define H 14
-#define SCALE 2                // 7x7 -> 14x14
-#define BRIGHT 0x03
-#define BKG_R 0
-#define BKG_G 0
-#define BKG_B 0
-#define PAC_B 0xFF
-#define PAC_G 0x00
-#define PAC_R 0x00
-
-extern void sendZero(void);
-extern void sendOne(void);
-
-static inline void send8Zeros(void){ for(int i=0;i<8;i++) sendZero(); }
-static inline void send8Ones(void) { for(int i=0;i<8;i++) sendOne();  }
-
-
-static inline void sendByte(uint8_t v){
-    for (int b = 7; b >= 0; --b) (v & (1u<<b)) ? sendOne() : sendZero();
-}
-
-static inline void sendBrightMin(void){ sendByte(0xE1); }
-
-static inline void sendPixel_BGR(uint8_t B, uint8_t G, uint8_t R){
-    sendBrightMin();                // global brightness (min)
-    // B:
-    for(int b=7;b>=0;--b) (B & (1u<<b)) ? sendOne() : sendZero();
-    // G:
-    for(int b=7;b>=0;--b) (G & (1u<<b)) ? sendOne() : sendZero();
-    // R:
-    for(int b=7;b>=0;--b) (R & (1u<<b)) ? sendOne() : sendZero();
-}
-
-
-static const uint8_t PAC7_OPEN[7][7] = {
-    {0,0,1,1,1,0,0},
-    {0,1,1,1,1,1,0},
-    {1,1,1,1,1,1,1},
-    {1,1,1,0,0,0,0},
-    {1,1,1,1,1,0,0},
-    {0,1,1,1,1,0,0},
-    {0,0,1,1,1,0,0},
-};
-// Closed (circle)
-static const uint8_t PAC7_CLOSED[7][7] = {
-    {0,0,1,1,1,0,0},
-    {0,1,1,1,1,1,0},
-    {1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1},
-    {0,1,1,1,1,1,0},
-    {0,0,1,1,1,0,0},
-};
-
-
-static inline int phys_x_for_row(int x, int y) {
-    return (y & 1) ? (W - 1 - x) : x;
-}
-static void draw_pacman_frame_at(int offx, int offy, const uint8_t sprite[7][7]) {
-    // Start frame: 32 zero bits
-    for (int i=0;i<32;i++) sendZero();
-
-    for (int y=0; y<H; ++y) {
-        // serpentine: even rows left->right, odd rows right->left
-        int x_start = (y & 1) ? (W-1) : 0;
-        int x_end   = (y & 1) ? -1    : W;
-        int x_step  = (y & 1) ? -1    : 1;
-
-        for (int x = x_start; x != x_end; x += x_step) {
-            int sx = x - offx;
-            int sy = y - offy;
-            uint8_t on = 0;
-            if (sx >= 0 && sx < 7 && sy >= 0 && sy < 7) {
-                on = sprite[sy][sx];
-            }
-            if (on) {
-                sendPixel_BGR(PAC_B, PAC_G, PAC_R);   // Pac-Man pixel
-            } else {
-                sendPixel_BGR(0x00, 0x00, 0x00);      // background
-            }
-        }
-    }
-
-    // Robust end frame: at least (N+15)/16 bytes of 0xFF. You used “32 ones”; keep it:..
-    for (int i=0;i<32;i++) sendOne(); 
-}
-
-void pacman_walk_border(void) {
-    // Pac-Man’s top-left placement window in a 14x14 for a 7x7 sprite is 0..7
-    const int MIN = 0;
-    const int MAX = W - 7; // 7
-
-    int x = MIN, y = MIN;      // start top-left (inside the border)
-    int phase = 0;             // 0: move right, 1: move down, 2: move left, 3: move up
-    bool mouth_open = true;
-
-    for (;;) {
-        // pick sprite (toggle mouth)
-        const uint8_t (*spr)[7] = mouth_open ? PAC7_OPEN : PAC7_CLOSED;
-        mouth_open = !mouth_open;
-
-        // draw at current position
-        draw_pacman_frame_at(x, y, spr);
-
-        // small pace delay (tweak as needed)
-        _delay_ms(105);
-
-        // advance along the perimeter
-        switch (phase) {
-            case 0: // → along top edge (y = MIN), x: MIN..MAX
-                if (x < MAX) x++;
-                else phase = 1;
-                break;
-            case 1: // ↓ along right edge (x = MAX), y: MIN..MAX
-                if (y < MAX) y++;
-                else phase = 2;
-                break;
-            case 2: // ← along bottom edge (y = MAX), x: MAX..MIN
-                if (x > MIN) x--;
-                else phase = 3;
-                break;
-            case 3: // ↑ along left edge (x = MIN), y: MAX..MIN
-                if (y > MIN) y--;
-                else phase = 0;
-                break;
-        }
+void testBuffer_1(){
+    for(uint16_t i=0; i<SCREEN_BUFFER_SIZE; i++){
+        if(i%2) bufferWrite(0x0F, 0x00, 0x00, i);
     }
 }
 
-
-void sendOne(){
-    PORTC |= (1<<PC5) | (1<<PC4);
-    _delay_us(1);
-    PORTC &= ~(1<<PC5);
-    _delay_us(1);
-}
-
-void sendZero(){
-    PORTC &= ~(1<<PC4);
-    PORTC |= (1<<PC5);
-    _delay_us(1);
-    PORTC &= ~(1<<PC5);
-    _delay_us(1);
-}
-
-void sendBright(){
-    sendOne();
-    sendOne();
-    sendOne();
-
-    sendZero();
-    sendZero();
-    sendZero();
-    sendOne();
-    sendOne();
-    
-}
-void test(){
-    for(int i=0; i<32;i++){
-        sendZero();
-    }
-
-    for(int i=0; i<max; i++){
-        sendBright();
-        for(int j=0; j<8; j++){
-            sendOne();
-        }
-        for(int j=0; j<8; j++){
-            sendZero();
-        }
-        for(int j=0; j<8; j++){
-            sendZero();
-        }
-    }
-
-    for(int i=0; i<32;i++){
-        sendOne();
-    }
-
-      _delay_ms(1000);
-
-
-
-
-      for(int i=0; i<32;i++){
-        sendZero();
-    }
-
-    for(int i=0; i<max; i++){
-        sendBright();
-        for(int j=0; j<8; j++){
-            sendZero();
-        }
-        for(int j=0; j<8; j++){
-            sendOne();
-        }
-        for(int j=0; j<8; j++){
-            sendZero();
-        }
-    }
-
-    for(int i=0; i<32;i++){
-        sendOne();
-    }
-
-      _delay_ms(1000);
-
-
-
-
-
-
-
-
-      for(int i=0; i<32;i++){
-        sendZero();
-    }
-
-    for(int i=0; i<max; i++){
-        sendBright();
-        for(int j=0; j<8; j++){
-            sendZero();
-        }
-        for(int j=0; j<8; j++){
-            sendZero();
-        }
-        for(int j=0; j<8; j++){
-            sendOne();
-        }
-    }
-
-    for(int i=0; i<32;i++){
-        sendOne();
-    }
-
-      _delay_ms(1000);
-
-    for(int i=0; i<32;i++){
-        sendZero();
-    }
-    
-    for(int i=0; i<max; i++){
-        sendBright();
-        for(int j=0; j<24; j++){
-            sendZero();
-        }
-    }
-    for(int i=0; i<32;i++){
-        sendOne();
+void testBuffer_2(){
+    for(uint16_t i=0; i<SCREEN_BUFFER_SIZE; i++){
+        if(!i%2) bufferWrite(0xff, 0x00, 0x00, i);
     }
 }
-
 
 int main(void){
+    DATA_DDR |= (1<<DATA_PIN);
+    DATA_PORT |= (1<<DATA_PIN);
+    /*________Initialize SRAM parameters______*/
+    sramVarsInit(&spi);     
 
-    DDRC |= (1<<PC5) | (1<<PC4);
-    LED_DDR |= (1 << LED_PIN);  
-    //DDRB |= (1<<PB1);
-    //PORTB &= ~(1<<PB1);
-    //seed_prng();
-    gpioConfig();
+    /*________Initialize Protocols______*/
+    spiInit(&spi);                             
+    i2cInit(&i2c, true);                        
+    uartInit();                                 
+    
+    /*________Initialize Screen______*/
+    screenInit(&screen, true);                             
 
+    /*________Initialize Shared Memory System______*/
+    sharedMemoryInit();
 
-    char c[30];
-    sprintf(c, "HELLO WORLD SNAKE PROJECT");
-    uartWrite_(c);
-    _delay_ms(100);
+    
     while(1){
-        pacman_walk_border();
-        //draw_pacman_frame(3,3,1);
-         //_delay_ms(1000);
-        //test();
-        //uartWrite("lOOPING\n", 9);
-       // _delay_ms(300);
+        //DATA_PORT ^= (1<<DATA_PIN);
+
+        //screenWrite(&screen, "hello world");
+        testBuffer_1();
+        displayGrid();
+        //_delay_ms(500);
+        //testBuffer_2();
+        //displayGrid();
+        //spiWritePoll(&spi, "hello world");
+        _delay_ms(500);
+        
     }
+}
+
+void sramVarsInit(SPI *spi){
+    static SPI_CS_TARGET cs_reg;
+    static SPI_CONF spi_conf;
+    static SPI_MODE spi_mode;
+
+    spi_mode.en = true;
+    spi_mode.irq = false;
+    spi_mode.mode = 0;
+    spi_mode.lsbfirst = false;
+    spi_mode.prescaler = 8;
+    spi_mode.mstr = true;
+    spi_conf.mode_conf = &spi_mode;
+
+    cs_reg.CS_DDR = &DDRB;
+    cs_reg.CS_PORT = &PORTB;
+    cs_reg.CS_PIN = PB1;
+
+    spi->conf = &spi_conf;
+    spi->cs_reg = &cs_reg;
 }

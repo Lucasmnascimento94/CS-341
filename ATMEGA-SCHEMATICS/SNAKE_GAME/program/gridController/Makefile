@@ -27,6 +27,30 @@ F_CPU    = 16000000UL
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
 TARGET := main
 
+# Add any source directories here
+SRC_DIRS = \
+  ./ \
+  src \
+  libC \
+  src/protocols \
+  src/screen \
+  src/snake \
+  src/sram \
+  src/tim \
+  src/ws2812b
+
+  INC_DIRS = \
+  ./ \
+  libC \
+  includes/protocols \
+  includes/ \
+  includes/screen \
+  includes/snake \
+  includes/sram \
+  includes/tim \
+  includes/ws2812b
+  
+
 #######################################################################################################################################################                                                                            
 #                               					 			GRID CONTROLLER MCU                                  	             				  #
 #######################################################################################################################################################
@@ -66,20 +90,10 @@ endif
 #  Date       : 09/22/2025                                                  
 ifeq ($(INIT), INIT_UBUNTU)
 
-# Add any source directories here
-SRC_DIRS = \
-  . \
-  lib lib/console lib/esp \
-  libC \
-  startSetUp \
-  startSetUp/spi \
-  startSetUp/timer startSetUp/uart \
-  ISP
-
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
 OBJS   := $(SRCS:.c=.o)
-INCS   := $(addprefix -I,$(SRC_DIRS))
+INCS   := $(addprefix -I,$(INC_DIRS))
 
 # ===== Tools/Flags =====
 CC      = avr-gcc
@@ -132,21 +146,11 @@ endif
 #  Author     : Lucas Nascimento                                               
 #  Date       : 09/22/2025  
 ifeq ($(INIT), INIT_POSIX)
-# Add any source directories here
-SRC_DIRS = \
-  . \
-  lib lib/console lib/esp lib/screen \
-  libC \
-  snake \
-  startSetUp \
-  startSetUp/flash startSetUp/i2c startSetUp/isr startSetUp/spi \
-  startSetUp/sram startSetUp/timer startSetUp/uart startSetUp/ws2812b startSetUp/allocation \
-  ISP
-  
+
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
 OBJS   := $(SRCS:.c=.o)
-INCS   := $(addprefix -I,$(SRC_DIRS))
+INCS   := $(addprefix -I,$(INC_DIRS))
 
 # ===== Tools/Flags =====
 CC      = avr-gcc
@@ -198,16 +202,6 @@ endif
 #  Author     : Lucas Nascimento                                               
 #  Date       : 09/22/2025  
 ifeq ($(INIT), INIT_WIN)
-
-# Add any source directories here
-SRC_DIRS = \
-  . \
-  lib lib/console lib/esp lib/screen \
-  libC \
-  snake \
-  startSetUp \
-  startSetUp/flash startSetUp/i2c startSetUp/isr startSetUp/spi \
-  startSetUp/sram startSetUp/timer startSetUp/uart startSetUp/ws2812b
 
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
