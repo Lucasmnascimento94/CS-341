@@ -158,7 +158,7 @@ void sharedMemoryInit();
 void pushNode(struct NODE *node);
 void popNode();
 
-void bufferWrite(uint8_t g, uint8_t r, uint8_t b,  uint16_t index);
+void bufferWrite(uint8_t g, uint8_t r, uint8_t b,  uint32_t index);
 void bufferRead();
 void bufferClear();
 
@@ -171,6 +171,7 @@ void loadScore();
 void getScore();
 
 #elif (GAME == SPACE)
+#define FRAME 5
 
 #elif (GAME == PONG)
 

@@ -97,7 +97,6 @@ void sramtesting(){
     memset(sram_map.score.player_name, 0, 12);
 }
 
-
 void sramVarsInit(SPI *spi){
     static SPI_CS_TARGET cs_reg;
     static SPI_CONF spi_conf;

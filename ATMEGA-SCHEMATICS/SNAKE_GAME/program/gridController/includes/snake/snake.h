@@ -28,7 +28,11 @@
 #include "string.h"
 #include "colors.h"
 
-
+/* ________________GAME RULES_________________
+CAN'T DO:
+1 - Hit own body
+2 - Eat Poisoned Food
+*/
 
 /*============================================================================================*
  * RENDER — framebuffer/bitset and scanout                                                     *

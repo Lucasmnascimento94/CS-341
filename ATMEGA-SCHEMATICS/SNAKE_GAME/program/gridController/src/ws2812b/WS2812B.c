@@ -37,3 +37,14 @@ void ws2812bInit(){
     DATA_DDR |= (1<<DATA_PIN);
     DATA_PORT |= (1<<DATA_PIN);
 }
+
+void ws2812bWrite(uint8_t g, uint8_t r, uint8_t b, uint8_t i, uint8_t j){
+    
+}
+#if (GAME == SNAKE)
+
+#elif (GAME == SPACE)
+
+#elif (GAME == PONG)
+
+#endif

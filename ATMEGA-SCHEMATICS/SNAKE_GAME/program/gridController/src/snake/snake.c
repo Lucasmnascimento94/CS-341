@@ -2,6 +2,7 @@
 #include "WS2812B.h"
 #include "uart.h"
 
+#if (GAME == SNAKE)
 /*============================================================================================*
  * RENDER — framebuffer/bitset and scanout                                                     *
  *============================================================================================*/
@@ -234,3 +235,97 @@ bool ruleCheck(SnakeBelly *belly, uint16_t food){
 
     popAll(belly);
  }
+
+ void initialAnimation(){
+    uint32_t color_ = COLOR_CYAN;
+
+    uint8_t x_start = 45;
+    uint8_t y_start = 26;
+
+    uint8_t s[9] = {0x7E, 0x40, 0x40, 0x40, 0x7E, 0x02, 0x02, 0x02, 0x7E};
+    uint8_t n[9] = {0x42, 0x52, 0x52, 0x4A, 0x46, 0x46, 0x42, 0x42, 0x42};
+    uint8_t a[9] = {0x18, 0x42, 0x42, 0x42, 0x7E, 0x42, 0x42, 0x42, 0x42};
+    uint8_t k[9] = {0x42, 0x4C, 0x66, 0x70, 0x78, 0x70, 0x66, 0x4C, 0x42};
+    uint8_t e[9] = {0x7E, 0x40, 0x40, 0x40, 0x7E, 0x40, 0x40, 0x40, 0x7E};
+
+    draw(s, x_start, y_start, color_);
+    x_start -= 8;
+    draw(n, x_start, y_start, color_);
+    x_start -= 8;
+    draw(a, x_start, y_start, color_);
+    x_start -= 8;
+    draw(k, x_start, y_start, color_);
+    x_start -= 8;
+    draw(e, x_start, y_start, color_);
+
+    
+ }
+
+ void draw(uint8_t *arr, uint8_t x_start, uint8_t y_start, uint32_t color){
+
+    for(int i=0; i<9; i++){
+        for(int j=0; j<8; j++){
+            if((arr[i])<<j & 0x80){
+                ws2812bWrite((color >> 16 & 0xff), (color >> 8 & 0xff), color & 0xff, x_start-j, y_start-i);
+            }
+            else{
+                ws2812bWrite(0x00, 0x00, 0x00, x_start-j, y_start-i);
+            }
+        }
+    }
+ }
+
+ /*
+0------0 
+0-000000
+0-000000
+0-000000
+0------0
+000000-0
+000000-0
+000000-0
+0------0
+
+0-0000-0 
+0-0-00-0
+0-0-00-0
+0-00-0-0
+0-000--0
+0-000--0
+0-0000-0
+0-0000-0
+0-0000-0
+
+000--000
+0-0000-0
+0-0000-0
+0-0000-0
+0------0
+0-0000-0
+0-0000-0
+0-0000-0
+0-0000-0
+
+0-0000-0
+0-000-00
+0-00-000
+0-0-0000
+0--00000
+0---0000
+0-00-000
+0-000-00
+0-0000-0
+
+0------0
+0-000000
+0-000000
+0-000000
+0------0
+0-000000
+0-000000
+0-000000
+0------0
+ 
+ 
+ */
+ #endif

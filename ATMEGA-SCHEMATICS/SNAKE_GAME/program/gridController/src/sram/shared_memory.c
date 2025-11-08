@@ -171,7 +171,7 @@ void loadStack(){
 
 
 /*________Buffer______*/
-void bufferWrite(uint8_t g, uint8_t r, uint8_t b,  uint16_t index){
+void bufferWrite(uint8_t g, uint8_t r, uint8_t b,  uint32_t index){
 
     uint32_t addr = index*3 + BUFFER_DATA(bases.buffer_start);
     if(addr > (BUFFER_DATA(bases.buffer_start) + (uint32_t)sram_map.buffer.block_size)) return;
