@@ -3,7 +3,7 @@
     "configurations": [
         {
             "name": "/opt/homebrew/bin/avr-gcc",
-            "compilerPath": "/opt/homebrew/bin/avr-gcc",
+            "compilerPath": "/usr/bin/avr-gcc",
             "compilerArgs": [
                 "-mmcu=atmega168",
                 "-DF_CPU=16000000UL"

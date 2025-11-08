@@ -37,6 +37,10 @@ void sramWriteU32(SPI *spi, uint32_t data, uint32_t address){
     sramWriteByte(spi, (uint8_t)data, address + 3);
 }
 
+void sramWriteBuffer(SPI *spi, uint32_t size, uint32_t address){
+
+}
+
 /* Writing One Byte Process:
 >> 1byte: command Instruction [SRAM_WRITE]
 >> 3bytes: 24 bit address
@@ -90,24 +94,33 @@ void sramReadU32(SPI *spi, uint32_t *data, uint32_t address){
     *data |= ((uint32_t) byte);
 }
 
-void sramReadString(SPI *spi, uint8_t *data, size_t len, uint32_t address){
+void sramReadString(SPI *spi, uint8_t *buffer, size_t len, uint32_t address){
     address = (SRAM_READ << 24) | address;
     spiStart(spi);
     sendInstruction(address); 
-    spiReadPoll_((uint8_t *)data, len);
+    spiReadPoll_((uint8_t *)buffer, len);
     spiStop(spi); 
 }
 
+void sramReadBuffer(SPI *spi, uint32_t size, uint32_t addr_start){
+    addr_start = (uint32_t)(SRAM_READ << 24) | addr_start; // Combine Command instruction to the address data
+    spiStart(spi);                        // CS low
+    sendInstruction(addr_start);          // Send instruction + address
+    _delay_ms(100);
+    spiReadBufferWs2812b(spi, size);
+    spiStop(spi);   
+}
 
-void sramReadModeRegister(SPI *spi){
-   // uint8_t data = 0x00;
+uint8_t sramReadModeRegister(SPI *spi){
+   uint8_t data = 0x00;
     spiStart(spi);                         // CS low
     SPDR = (uint8_t)(SRAM_RDMR & 0xFF);
     while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
-    SPDR = 0xFF;
+    SPDR = 0x00;
     while(!(SPSR & (1<<SPIF))){}
-    //data = SPDR;                       // Get data from buffer
-    spiStop(spi);    
+    data = SPDR;                       // Get data from buffer
+    spiStop(spi);  
+    return data;  
 }
 
 void sramWriteModeRegister(SPI *spi, uint8_t mode){

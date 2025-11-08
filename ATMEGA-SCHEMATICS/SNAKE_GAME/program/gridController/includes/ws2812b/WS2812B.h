@@ -55,8 +55,41 @@
 #define SNAKE_SIZE_INIT 20
 #define SNAKE_MAX_COUNT 40
 
-void clear();
+void send_byte(uint8_t b);
+void writeZero(void);
+void latch(void);
+void writeOne(void);
+void displayClear();
 void displayGrid();
+void ws2812bInit();
 
 
 #endif
+
+
+
+/*
+
+#ifndef CYCLE_NS
+  #if !defined(F_CPU)
+    #error "F_CPU must be defined before including this header"
+  #endif
+
+  #if   (F_CPU == 16000000UL)
+    #define T1H_TOT 13  
+    #define T1L_TOT 7    
+    #define T0H_TOT 6    
+    #define T0L_TOT 14   
+    #define TLL 100
+  #elif (F_CPU == 20000000UL)
+    #define T1H_TOT 14   // 0.70us high
+    #define T1L_TOT 9   // 0.55us low
+    #define T0H_TOT 7    // 0.35us high
+    #define T0L_TOT 18   // 0.90us low
+    #define TLL 100
+  #else
+    #define CYCLE_NS (1000000000UL / (F_CPU))
+  #endif
+#endif
+
+*/

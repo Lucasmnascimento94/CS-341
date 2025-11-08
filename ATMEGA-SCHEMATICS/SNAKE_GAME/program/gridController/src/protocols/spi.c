@@ -1,7 +1,8 @@
 #include "spi.h"
 #include "string.h"
+#include "WS2812B.h"
 
-
+static inline void dcy_(uint16_t c){__builtin_avr_delay_cycles(c);}
 /*=============================================================================
  * SPI Protocol Initialization
  * SPI struct needs to be configured before calling this function
@@ -139,7 +140,7 @@ void spiWritePoll(SPI *spi, char *data){
  * It is the caller responsibility to determine how many bytes are to be sent.
 
  *============================================================================*/
-void spiWritePoll_(uint8_t *data, uint16_t len){
+void spiWritePoll_(uint8_t *data, uint32_t len){
     for(uint16_t i=0; i< len; i++){
         SPDR = (uint8_t)data[i];        
         while(!(SPSR & (1<<SPIF))){}
@@ -201,7 +202,6 @@ void spiReadPoll(SPI *spi, char *data, uint16_t size){
     spiStop(spi);   
 }
 
-
 void spiReadPoll_( uint8_t *data, uint16_t len){
     for(uint16_t i=0; i<len; i++){
         SPDR = 0x00;
@@ -216,6 +216,51 @@ void spiReadPollByte_(uint8_t *data){
     *data = SPDR;                       // Get data from buffer
 
 }
+
+
+void spiReadBufferWs2812b(SPI *spi, uint32_t size){
+    uint8_t data = 0x00;
+    for(uint32_t i=0; i<size*3; i++){
+        SPDR = 0x00;
+        while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
+        data = SPDR;                       // Get data from buffer
+        send_byte(data);
+    }
+    latch();
+}
+
+
+/*void spiReadBufferWs2812b(SPI *spi, uint16_t size){
+    SPCR &= ~(1<<SPE);
+    uint8_t data = 0x00;
+    PORTB &= ~_BV(PB5);
+    for(uint16_t i=0; i<size; i++){
+        for(int j=0; j<8; j++){
+            PORTB |= _BV(PB5);
+            if((PINB >> PB4) & 0X01){
+                DATA_PORT |=  (1<<DATA_PIN);
+                dcy_(T1H);
+                DATA_PORT &= ~(1<<DATA_PIN);
+                //dcy_(T1L);
+                //writeOne_();
+            }
+            else{ 
+                DATA_PORT |=  (1<<DATA_PIN);
+                dcy_(T0H);
+                DATA_PORT &= ~(1<<DATA_PIN);
+                dcy_(T0L);
+                //writeZero_();
+            }
+            PORTB &= ~_BV(PB5);
+        }
+        //SPDR = 0x00;
+        //while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
+        //data = SPDR;                       // Get data from buffer
+        //send_byte(data);
+    }
+    SPCR |= (1<<SPE);
+}*/
+
 /*=============================================================================
  * SPI Protocol – Read (Polling)
  *

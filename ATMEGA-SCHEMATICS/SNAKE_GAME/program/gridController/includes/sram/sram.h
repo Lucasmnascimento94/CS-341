@@ -62,7 +62,8 @@ void sramReadByte(SPI *spi, uint8_t *data, uint32_t address);
 void sramReadU16(SPI *spi, uint16_t *data, uint32_t address);
 void sramReadU32(SPI *spi, uint32_t *data, uint32_t address);
 void sramReadString(SPI *spi, uint8_t *data, size_t len, uint32_t address);
+void sramReadBuffer(SPI *spi, uint32_t size, uint32_t addr_start);
 
-void sramReadModeRegister(SPI *spi);
+uint8_t sramReadModeRegister(SPI *spi);
 void sramWriteModeRegister(SPI *spi, uint8_t mode);
 #endif

@@ -6,6 +6,10 @@
 #include "spi.h"
 #include "sram.h"
 
+#define SRAM_CTA_PORT PORTC
+#define SRAM_CTA_DDR  DDRC
+#define SRAM_CTA_PIN  PC3
+
 #define SNAKE 1
 #define SPACE 2
 #define PONG 3
@@ -18,8 +22,8 @@
 #define FLAG_DIRTY                  0x00u
 #define FLAG_VALID                  0xA5u
 #define SRAM_SIZE                   0x1FFFF
-#define SCREEN_WIDTH                70
-#define SCREEN_HEIGHT               60
+#define SCREEN_WIDTH                48
+#define SCREEN_HEIGHT               32
 #define SCREEN_BUFFER_SIZE          (SCREEN_WIDTH*SCREEN_HEIGHT)
 
 /*________Block Sizes______*/
@@ -41,7 +45,7 @@ struct BUFFER{
     uint8_t width;
     uint8_t height;
     uint16_t size;
-    uint16_t block_size;
+    uint32_t block_size;
 };
 #pragma pack(pop)
 
@@ -98,6 +102,7 @@ struct SRAM_MAP {
     struct STACK stack;
     struct NODE node;
     struct BUFFER buffer;
+    bool sram_cta;
 };
 #pragma pack(pop)
 
@@ -154,17 +159,16 @@ void pushNode(struct NODE *node);
 void popNode();
 
 void bufferWrite(uint8_t g, uint8_t r, uint8_t b,  uint16_t index);
-void bufferRead(uint32_t *data, uint16_t index);
-void buferClear();
+void bufferRead();
+void bufferClear();
 
 void updateNode(struct NODE *node, uint32_t base);
 void readNode(struct NODE *node, uint32_t base);
 
-void loadBelly(SnakeBelly *belly);
-void loadMail();
+void loadCommand();
+void getCommand();
 void loadScore();
-
-void testMem();
+void getScore();
 
 #elif (GAME == SPACE)
 

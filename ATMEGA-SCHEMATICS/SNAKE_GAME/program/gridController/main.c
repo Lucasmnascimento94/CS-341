@@ -5,6 +5,7 @@
 #include "sram.h"
 #include "screen.h"
 #include "shared_memory.h"
+void sramtesting();
 void sramVarsInit(SPI *spi);
 
 SCREEN            screen;
@@ -12,51 +13,90 @@ I2C_CONF          i2c;
 SPI_CS_TARGET     spi_cs_flash;
 SPI               spi;//
 struct SRAM_MAP   sram_map;
-
+char c[50];
 void testBuffer_1(){
-    for(uint16_t i=0; i<SCREEN_BUFFER_SIZE; i++){
-        if(i%2) bufferWrite(0x0F, 0x00, 0x00, i);
+    for(uint32_t i=0; i<SCREEN_BUFFER_SIZE; i++){
+        uint32_t color_ = COLOR_BLUE;
+        if(i%2 == 0) bufferWrite((color_ >> 16) & 0xff, (color_ >> 8) & 0xff, color_  & 0xff, i);
+        else bufferWrite(0x00, 0x00, 0x00, i);
     }
 }
 
 void testBuffer_2(){
-    for(uint16_t i=0; i<SCREEN_BUFFER_SIZE; i++){
-        if(!i%2) bufferWrite(0xff, 0x00, 0x00, i);
+    for(uint32_t i=0; i<SCREEN_BUFFER_SIZE; i++){
+        uint32_t color_ = COLOR_BLUE;
+        if(i%2 != 0) bufferWrite((color_ >> 16) & 0xff, (color_ >> 8) & 0xff, color_  & 0xff, i);
+        else bufferWrite(0x00, 0x00, 0x00, i);
     }
 }
 
 int main(void){
-    DATA_DDR |= (1<<DATA_PIN);
-    DATA_PORT |= (1<<DATA_PIN);
     /*________Initialize SRAM parameters______*/
     sramVarsInit(&spi);     
 
     /*________Initialize Protocols______*/
     spiInit(&spi);                             
     i2cInit(&i2c, true);                        
-    uartInit();                                 
+    uartInit();
+    ws2812bInit();                                 
     
-    /*________Initialize Screen______*/
+    /*________Enforce SRAM Sequencial Mode______*/
+    sramWriteModeRegister(&spi, SRAM_MODE_SEQU);
+
+    /*________Initialize Screen (Liquid Crystak)______*/
     screenInit(&screen, true);                             
 
     /*________Initialize Shared Memory System______*/
     sharedMemoryInit();
 
+    bufferClear();
+    testBuffer_1();
+    _delay_ms(500);
+    bufferRead();
     
-    while(1){
-        //DATA_PORT ^= (1<<DATA_PIN);
+    sramtesting();
 
-        //screenWrite(&screen, "hello world");
+    while(1){
+        /*________Wait for SRAM Access______*/
+        //while(((PINC >> SRAM_CTA_PIN) & 1)){}
+
+        /*________Store Command______*/
+
+        /*________Display Buffer______*/
         testBuffer_1();
         displayGrid();
-        //_delay_ms(500);
-        //testBuffer_2();
-        //displayGrid();
-        //spiWritePoll(&spi, "hello world");
-        _delay_ms(500);
         
+        /*________Store Command______*/
+        testBuffer_2();
+        displayGrid();  
     }
 }
+
+void sramtesting(){
+    sram_map.cmd.cmdID = 0xF0AB;
+    sram_map.cmd.arg1 = 0xAA;
+    sram_map.cmd.arg2 = 0XBB;
+    sram_map.cmd.arg3 = 0XCC;
+
+    sram_map.score.current_score = 0X81;
+    sram_map.score.record_score = 0X99;
+    strcpy((char *)sram_map.score.game_name, "SNAKE");
+    strcpy((char *)sram_map.score.player_name, "LUCAS");
+    
+    loadScore();
+    loadCommand();
+
+    sram_map.cmd.cmdID = 0;
+    sram_map.cmd.arg1 = 0;
+    sram_map.cmd.arg2 = 0;
+    sram_map.cmd.arg3 = 0;
+
+    sram_map.score.current_score = 0;
+    sram_map.score.record_score = 0;
+    memset(sram_map.score.game_name, 0, 12);
+    memset(sram_map.score.player_name, 0, 12);
+}
+
 
 void sramVarsInit(SPI *spi){
     static SPI_CS_TARGET cs_reg;
@@ -67,7 +107,7 @@ void sramVarsInit(SPI *spi){
     spi_mode.irq = false;
     spi_mode.mode = 0;
     spi_mode.lsbfirst = false;
-    spi_mode.prescaler = 8;
+    spi_mode.prescaler = 2;
     spi_mode.mstr = true;
     spi_conf.mode_conf = &spi_mode;
 

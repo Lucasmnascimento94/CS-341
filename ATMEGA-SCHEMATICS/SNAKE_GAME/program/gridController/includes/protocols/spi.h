@@ -82,14 +82,14 @@ void spiInit(SPI *spi);
 void spiStart(SPI *spi);
 void spiStop(SPI *spi);
 void spiWritePoll(SPI *spi, char *data);
-void spiWritePoll_(uint8_t *data, uint16_t len);
+void spiWritePoll_(uint8_t *data, uint32_t len);
 void spiWritePollByte_(uint8_t data);
 void spiWriteInt(SPI *spi, char *data);
 void spiReadPoll(SPI *spi, char *data, uint16_t size);
 void spiReadPoll_(uint8_t *data, uint16_t len);
 void spiReadPollByte_(uint8_t *data);
 void spiReadInt(SPI *spi, char *data, uint16_t size);
-
+void spiReadBufferWs2812b(SPI *spi, uint32_t size);
 
 uint8_t spiWriteCheckPollByte_(uint8_t data);
 

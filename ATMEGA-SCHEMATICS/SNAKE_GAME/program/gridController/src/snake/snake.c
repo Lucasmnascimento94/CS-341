@@ -214,12 +214,12 @@ bool ruleCheck(SnakeBelly *belly, uint16_t food){
     belly->color = COLOR_RED;
 
     for(int i=0; i<4; i++){
-        clear();
+        displayClear();
         displayGrid(belly, food);
         _delay_ms(300);
     }
 
-    clear();
+    displayClear();
     popAll(belly);
  }
 
@@ -227,7 +227,7 @@ bool ruleCheck(SnakeBelly *belly, uint16_t food){
     belly->color = COLOR_RED;
 
     for(int i=0; i<10; i++){
-        clear();
+        displayClear();
         displayGrid(belly, food);
         _delay_ms(300);
     }
