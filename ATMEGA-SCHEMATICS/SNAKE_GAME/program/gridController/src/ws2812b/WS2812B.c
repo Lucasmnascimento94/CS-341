@@ -39,8 +39,19 @@ void ws2812bInit(){
 }
 
 void ws2812bWrite(uint8_t g, uint8_t r, uint8_t b, uint8_t i, uint8_t j){
-    
+    bufferWrite(g, r, b, PIXEL_ADDRESS(i,j));
 }
+
+void testWs2812b(){
+    for(int j=0; j<SCREEN_HEIGHT; j++){
+        for(int i=0; i<SCREEN_WIDTH; i++){
+            bufferWrite(0xff, 0x00, 0x00, PIXEL_ADDRESS(i, j));
+            displayGrid();
+            bufferWrite(0,0,0,PIXEL_ADDRESS(i, j));
+        }
+    }
+}
+
 #if (GAME == SNAKE)
 
 #elif (GAME == SPACE)

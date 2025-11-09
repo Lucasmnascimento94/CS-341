@@ -106,8 +106,7 @@ void sramReadBuffer(SPI *spi, uint32_t size, uint32_t addr_start){
     addr_start = (uint32_t)(SRAM_READ << 24) | addr_start; // Combine Command instruction to the address data
     spiStart(spi);                        // CS low
     sendInstruction(addr_start);          // Send instruction + address
-    _delay_ms(100);
-    spiReadBufferWs2812b(spi, size);
+    spiReadBufferWs2812b(size);
     spiStop(spi);   
 }
 

@@ -7,6 +7,7 @@ typedef struct{
     uint32_t stack_start;
     uint32_t node_start;
     uint32_t buffer_start;
+    uint32_t food_start;
 }BASES;
 BASES bases;
 
@@ -26,14 +27,13 @@ void computeBases(){
     bases.stack_start     = bases.buffer_start + sram_map.buffer.block_size;
     bases.cmd_start       = bases.stack_start + sram_map.stack.block_size;
     bases.score_start     = bases.cmd_start + sram_map.cmd.block_size;
-    bases.node_start      = bases.score_start + sram_map.score.block_size; 
+    bases.food_start      = bases.score_start + sram_map.score.block_size + MEMORY_PADDING; 
+    bases.node_start      = bases.food_start + sram_map.node.block_size; 
 }
 
 void initCtaInt(){
     SRAM_CTA_DDR &= ~(1<<SRAM_CTA_PIN);
     SRAM_CTA_PORT |= (1<<SRAM_CS_PIN);
-
-
 }
 
 void sharedMemoryInit(){
@@ -41,6 +41,7 @@ void sharedMemoryInit(){
     computeBases();
     sram_map.sram_cta = false;
 }
+
 /*_____ Clear SRAM_____*/
 void erase(){
     for(uint32_t i=0; i < SRAM_SIZE; i++){
@@ -66,7 +67,7 @@ void pushNode(struct NODE *node){
     sramWriteStringPoll(&spi, MAGIC_NODE, NODE_MAGIC(base), 4);    // keep 4 if that's your spec
 
     /*_____________payload_____________*/
-    sramWriteU16(&spi, node->addr, NODE_ADDR(base));
+    sramWriteU32(&spi, node->addr, NODE_ADDR(base));
     sramWriteByte(&spi, node->i, NODE_I(base));
     sramWriteByte(&spi, node->j, NODE_J(base));
     sramWriteByte(&spi, node->g, NODE_G(base));
@@ -132,22 +133,57 @@ void popNode(){
 
 void readNode(struct NODE *node, uint32_t base){
     memset(node, 0, sizeof(struct NODE));
+    char c[40];
     char magic[5];
     magic[4] = '\0';
     sramReadString(&spi, (uint8_t *)magic, 4, NODE_MAGIC(base));
     if(strcmp(magic, MAGIC_NODE) != 0){
         uartWrite_("Error... <Invalid Header> \n");
-        uartWrite_(magic);
+        sprintf(c, "..expected..<%s>..actual..<%s>\n", MAGIC_NODE, magic);
+        uartWrite_(c);
     }
     sramReadU32(&spi, &node->next,      NODE_NEXT(base));
     sramReadU32(&spi, &node->prev,      NODE_PREV(base));
-    sramReadU16(&spi, &node->addr,      NODE_ADDR(base));
+    sramReadU32(&spi, &node->addr,      NODE_ADDR(base));
     sramReadByte(&spi, &node->i,        NODE_I(base));
     sramReadByte(&spi, &node->j,        NODE_J(base));
     sramReadByte(&spi, &node->g,        NODE_G(base));
     sramReadByte(&spi, &node->r,        NODE_R(base));
     sramReadByte(&spi, &node->b,        NODE_B(base));
     sramReadByte(&spi, &node->opcode,   NODE_OPCODE(base));
+}
+
+void updateNode(struct NODE *node, uint32_t base){
+    sramWriteU32(&spi, node->next,      NODE_NEXT(base));
+    sramWriteU32(&spi, node->prev,      NODE_PREV(base));
+    sramWriteU32(&spi, node->addr,      NODE_ADDR(base));
+    sramWriteByte(&spi, node->i,        NODE_I(base));
+    sramWriteByte(&spi, node->j,        NODE_J(base));
+    sramWriteByte(&spi, node->g,        NODE_G(base));
+    sramWriteByte(&spi, node->r,        NODE_R(base));
+    sramWriteByte(&spi, node->b,        NODE_B(base));
+    sramWriteByte(&spi, node->opcode,   NODE_OPCODE(base));
+}
+
+void loadFood(struct NODE *food){
+    static bool init = true;
+    uint32_t base = bases.food_start;
+
+
+    if(init){
+        sramWriteStringPoll(&spi, MAGIC_NODE, NODE_MAGIC(base), 4);
+        init = false;
+        sram_map.stack.food = base;
+    }
+    
+    sramWriteU32(&spi, food->addr, NODE_ADDR(base));
+    sramWriteByte(&spi, food->i, NODE_I(base));
+    sramWriteByte(&spi, food->j, NODE_J(base));
+    sramWriteByte(&spi, food->g, NODE_G(base));
+    sramWriteByte(&spi, food->r, NODE_R(base));
+    sramWriteByte(&spi, food->b, NODE_B(base));
+    sramWriteByte(&spi, food->opcode, NODE_OPCODE(base));
+    bufferWrite(food->g, food->r, food->b, food->addr);
 }
 
 void loadStack(){
@@ -169,6 +205,23 @@ void loadStack(){
 
 }
 
+void loadBufferFromStack(){
+    char c[70];
+    uint32_t addr_head = sram_map.stack.head;
+    uint32_t count = sram_map.stack.count;
+    if(count == 0) return;
+
+    struct NODE node;
+    readNode(&node, addr_head);
+    for(;node.next != NULL_PTR; readNode(&node, node.next)){
+        bufferWrite(node.g, node.r, node.b, node.addr);
+
+       // sprintf(c, "NODE: i:%d | j: %d | addr: %ld | NEXT_ADDR: %lx | PREV_ADDR: %lx\n", node.i, node.j, node.addr, node.next, node.prev);
+       // uartWrite_(c);
+       // sprintf(c, "pushing: g_: %x | r_: %x | b_: %x\n", node.g, node.r, node.b);
+       // uartWrite_(c);
+    }
+}
 
 /*________Buffer______*/
 void bufferWrite(uint8_t g, uint8_t r, uint8_t b,  uint32_t index){
@@ -179,6 +232,7 @@ void bufferWrite(uint8_t g, uint8_t r, uint8_t b,  uint32_t index){
     sramWriteByte(&spi, r, addr++);
     sramWriteByte(&spi, b, addr);
 }
+
 
 void bufferRead(){
     uint32_t addr = BUFFER_DATA(bases.buffer_start);

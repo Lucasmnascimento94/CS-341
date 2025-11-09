@@ -21,12 +21,30 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
+/*________NODE_OPCODES_______*/
+#define SPECIAL_1 0X01
+#define SPECIAL_2 0X02
+#define FOOD_POISON 0X03
+
+/*________COMMAND_OPCODES_______*/
+#define WALK_UP 0X01
+#define WALK_DOWN 0X02
+#define WALK_LEFT 0X03
+#define WALK_RIGHT 0X04
+#define END_GAME   0X05
+
+#define ARG_POISON_FOOD 0X06
+#define ARG_COLLISION 0X07
+
 #include "includes.h"
 #include "DataStructures.h"
 #include "WS2812B.h"
 #include "stdio.h"
 #include "string.h"
 #include "colors.h"
+
+#define SNAKE_COLOR COLOR_YELLOW
+#define FOOD_COLOR COLOR_GREEN
 
 /* ________________GAME RULES_________________
 CAN'T DO:
@@ -37,25 +55,29 @@ CAN'T DO:
 /*============================================================================================*
  * RENDER — framebuffer/bitset and scanout                                                     *
  *============================================================================================*/
-void walk(SnakeBelly *belly, struct Cell *food);
-void initSnake(SnakeBelly *belly, struct Cell *food);
-
+void walk();
+void initSnake();
+void generateFood();
 /*============================================================================================*
  * RULES — collisions, growth, scoring, bounds, difficulty                                    *
  *============================================================================================*/
-bool ruleCheck(SnakeBelly *belly, uint16_t food);
-bool foodCheck(SnakeBelly *belly, struct Cell *food,  uint16_t address, bool *eatFood);
+bool collisionCheck(uint32_t new_node_addr);
+bool foodCheck(uint32_t new_node_addr, bool *poison);
 /*============================================================================================*
  * EFFECTS — sound, LED flashes, animations                                                    *
  *============================================================================================*/
 
 void gameInit(SnakeBelly *belly, struct Cell *food);
 void gameEnd(SnakeBelly *belly,struct Cell *food);
+
 void gameLose(SnakeBelly *belly, struct Cell *food);
 void gameWin(SnakeBelly *belly, struct Cell *food);
+
 void foodPoison(SnakeBelly *belly);
 void foodEat(SnakeBelly *belly);
 void foodLoosing(Cell *food);
+
+void initialAnimation();
 
 
 #endif

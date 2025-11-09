@@ -1,4 +1,5 @@
 #include "snake.h"
+#include "shared_memory.h"
 #include "WS2812B.h"
 #include "uart.h"
 
@@ -6,223 +7,189 @@
 /*============================================================================================*
  * RENDER — framebuffer/bitset and scanout                                                     *
  *============================================================================================*/
-void walk(SnakeBelly *belly, struct Cell *food){
-    if(belly == NULL || food == NULL) return;
 
-    uint8_t new_i = belly->head->i;
-    uint8_t new_j = belly->head->j;
-    bool eatFood = false;
+struct NODE node;
+struct STACK stack;
 
-    switch (belly->direction){
-        case UP:    new_j++; break;
-        case DOWN:  new_j--; break;
-        case LEFT:  new_i--; break;
-        case RIGHT: new_i++; break;
+void walk(){
+    getCommand();
+
+    struct NODE node;
+    readNode(&node, sram_map.stack.tail);
+    uint32_t old_tail_pixel = node.addr;
+
+    uint8_t cmd = sram_map.cmd.cmdID;
+    struct NODE prev;
+    readNode(&node, sram_map.stack.head);
+    uint8_t new_i = node.i;
+    uint8_t new_j = node.j;
+    bool poison = false;
+
+    switch (cmd){
+        case WALK_UP:    new_j++; break;
+        case WALK_DOWN:  new_j--; break;
+        case WALK_RIGHT:  new_i--; break;
+        case WALK_LEFT: new_i++; break;
     }
 
-    if(new_i>48){new_i=1;}
-    else if(new_i == 0){new_i=48;}
+    if(new_i==SCREEN_WIDTH){new_i=0;}
+    else if(new_i == (uint8_t)-1){new_i=SCREEN_WIDTH-1;}
+    if(new_j==SCREEN_HEIGHT){new_j=0;}
+    else if(new_j == (uint8_t)-1){new_j=SCREEN_HEIGHT-1;}
 
-    if(new_j>32){new_j=1;}
-    else if(new_j == 0){new_j=32;}
-
-    uint16_t k = CURRENT_PAD(new_i);
-    uint16_t I = LOCAL_I(new_i, k);
-
-    if(!ruleCheck(belly, PIXEL_ADDRESS(I, new_j, k))){
-        belly->end = true;
-        return;
-    }
-
-    if(!foodCheck(belly, food, PIXEL_ADDRESS(I, new_j, k), &eatFood)){
-        belly->end = true;
-        return;
-    }
-
-    struct Cell *temp;
-
-    if(!eatFood){
-        for(temp= belly->tail; temp->prev != NULL; temp = temp->prev){
-        temp->i = temp->prev->i;
-        temp->j = temp->prev->j;
-        temp->val = temp->prev->val;
+    if(collisionCheck(PIXEL_ADDRESS(new_i, new_j))){uartWrite_("collision detected\n"); return;}
+    bool eat = foodCheck(PIXEL_ADDRESS(new_i, new_j), &poison);
+    if(poison){uartWrite_("Poison food detected\n"); return;}
+    
+    if(1){
+        for(readNode(&node, sram_map.stack.tail);node.prev != NULL_PTR; readNode(&node, node.prev)){
+            readNode(&prev, node.prev);
+            node.i = prev.i;
+            node.j = prev.j;
+            node.addr = prev.addr;
+            updateNode(&node, prev.next);
         }
-        belly->head->i = new_i;
-        belly->head->j = new_j;
-        belly->head->val = PIXEL_ADDRESS(I, new_j, k);
+
+        readNode(&node, sram_map.stack.head);
+        node.i = new_i;
+        node.j = new_j;
+        node.addr = PIXEL_ADDRESS(new_i, new_j);
+        updateNode(&node, sram_map.stack.head);
     }
 
     else{
-        new_i = belly->head->i;
-        new_j = belly->head->j;
+        readNode(&node, sram_map.stack.head);
+        new_i = node.i;
+        new_j = node.j;
 
-        switch (belly->direction){
-        case UP:    new_j++; break;
-        case DOWN:  new_j--; break;
-        case LEFT:  new_i--; break;
-        case RIGHT: new_i++; break;
+        switch (cmd){
+        case WALK_UP:    new_j++; break;
+        case WALK_DOWN:  new_j--; break;
+        case WALK_RIGHT:  new_i--; break;
+        case WALK_LEFT: new_i++; break;
         }
 
-        if(new_i>48){new_i=1;}
-        else if(new_i == 0){new_i=48;}
+        if(new_i>SCREEN_WIDTH){new_i=1;}
+        else if(new_i == 0){new_i=SCREEN_WIDTH;}
 
-        if(new_j>32){new_j=1;}
-        else if(new_j == 0){new_j=32;}
+        if(new_j>SCREEN_HEIGHT){new_j=1;}
+        else if(new_j == 0){new_j=SCREEN_HEIGHT;}
 
-        uint16_t k = CURRENT_PAD(new_i);
-        uint16_t I = LOCAL_I(new_i, k);
-
-        if(!ruleCheck(belly, PIXEL_ADDRESS(I, new_j, k))){
-            belly->end = true;
-            return;
+        if(collisionCheck(PIXEL_ADDRESS(new_i, new_j)))return;
+        
+        readNode(&node, sram_map.stack.tail);
+        for(;node.prev != NULL_PTR; readNode(&node, node.prev)){
+            readNode(&prev, node.prev);
+            node.i = prev.i;
+            node.j = prev.j;
+            node.addr = prev.addr;
         }
-        for(temp= belly->tail; temp->prev != NULL; temp = temp->prev){
-        temp->i = temp->prev->i;
-        temp->j = temp->prev->j;
-        temp->val = temp->prev->val;
-        }
-        belly->head->i = new_i;
-        belly->head->j = new_j;
-        belly->head->val = PIXEL_ADDRESS(I, new_j, k);
+        readNode(&node, sram_map.stack.head);
+        node.i = new_i;
+        node.j = new_j;
+        node.addr = PIXEL_ADDRESS(new_i, new_j);
+        updateNode(&node, sram_map.stack.head);
     }
-    //sort(belly);
-    eatFood = false;
-    displayGrid(belly, food);
-
+    bufferWrite(0x00, 0x00, 0x00, old_tail_pixel);
+    loadBufferFromStack();
 }
 
-void initSnake(SnakeBelly *belly, struct Cell *food){
-
+void initSnake(){
+    displayClear();
     uint8_t x = FIRST_PIXEL_X;
-    uint8_t y = FIRST_PIXEL_Y;
-    uint8_t z = CURRENT_PAD(x);
-    uint8_t i_ = LOCAL_I(x, z);
+    node.g = (SNAKE_COLOR >> 16) & 0XFF;
+    node.r = (SNAKE_COLOR >> 8) & 0XFF;
+    node.b = (SNAKE_COLOR) & 0XFF;
+    node.j = FIRST_PIXEL_Y;
+    node.opcode = SPECIAL_2;
 
     for(uint8_t i=0; i<SNAKE_SIZE_INIT; i++){
+        node.addr = (uint32_t) (PIXEL_ADDRESS(x, FIRST_PIXEL_Y));
+        node.i = x;
+        pushNode(&node);
         x--;
-        z = CURRENT_PAD(x);
-        i_ = LOCAL_I(x, z);
-        push(belly, PIXEL_ADDRESS(i_, y, z), x, y, false);
     }
-    displayGrid(belly, food);
+    loadBufferFromStack();
+    displayGrid();
 }
 
 /*============================================================================================*
  * RULES — collisions, growth, scoring, bounds, difficulty                                    *
  *============================================================================================*/
-bool ruleCheck(SnakeBelly *belly, uint16_t food){
-    struct Cell *temp;
-
-    for(temp = belly->head; temp != NULL; temp = temp->next){
-        if(food == temp->val){
-            return false;
+bool collisionCheck(uint32_t new_node_addr){
+    struct NODE temp;
+    readNode(&temp, sram_map.stack.head);
+    for(; temp.next!=NULL_PTR; readNode(&temp, temp.next)){
+        if(new_node_addr == temp.addr){
+            sram_map.cmd.cmdID = END_GAME;
+            sram_map.cmd.arg1 = ARG_COLLISION;
+            return true;
         }
     }
-    return true;
+    return false;
 }
 
- bool foodCheck(SnakeBelly *belly, struct Cell *food, uint16_t address, bool *eatFood){
-    uint8_t x;
-    uint8_t y;
-    uint8_t z;
-    uint16_t val;
+bool foodCheck(uint32_t new_node_addr, bool *poison){
+    struct NODE food;
+    struct NODE temp;
+    readNode(&food, sram_map.stack.food);
+    readNode(&temp, sram_map.stack.head);
+    for(;temp.next != NULL_PTR; readNode(&temp, temp.next)){
+        if(new_node_addr != food.addr) return false;
+    }
 
-    char c[30];
-    if(address == food->val){
-        *eatFood = true;
-        push(belly, food->val, food->i, food->j, food->poison);
-        sprintf(c, "Belly Count: %d\n", belly->count);
+    food.g = temp.g;
+    food.r = temp.r;
+    food.b = temp.b;
+    food.opcode = temp.opcode;
+    pushNode(&food);
+    sram_map.score.current_score++;
+    generateFood();
 
-        bool stop = false;
-        while(!stop){
-            struct Cell *temp;
-            x = (rand() % 48) + 1;
-            y = (rand() % 32) + 1;
-            z = CURRENT_PAD(x);
-            val = PIXEL_ADDRESS(x, y, z);
-
-            for(temp = belly->head; temp != NULL; temp = temp->next){
-                if(temp->val == val){
-                    stop = false;
-                    break;
-                }
-                stop = true;
-            }
-        }
-
-        food->i = x;
-        food->j = y;
-        food->val = PIXEL_ADDRESS(LOCAL_I(x, z), y, z);
-        return !food->poison;
+    if(food.opcode == FOOD_POISON){
+        sram_map.cmd.cmdID = END_GAME;
+        sram_map.cmd.arg1 = FOOD_POISON;
+        *poison = true;
     }
     return true;
+ }
+
+ void generateFood(){
+    struct NODE temp;
+    struct NODE food;
+    uint8_t x;
+    uint8_t y;
+    uint32_t val;
+    bool stop = false;
+    readNode(&food, sram_map.stack.food);
+    while(!stop){
+        readNode(&temp, sram_map.stack.head);
+        x = (rand() % SCREEN_WIDTH) + 1;
+        y = (rand() % SCREEN_HEIGHT) + 1;
+        val = PIXEL_ADDRESS(x, y);
+
+        for(;temp.next != NULL_PTR; readNode(&temp, temp.next)){
+            if(temp.addr == val){
+                stop = false;
+                break;
+            }
+            stop = true;
+        }
+    }
+
+    food.i = x;
+    food.j = y;
+    food.g = (FOOD_COLOR >> 16) & 0xff;
+    food.r = (FOOD_COLOR >> 8) & 0xff;
+    food.b = (FOOD_COLOR ) & 0xff;
+    food.addr = PIXEL_ADDRESS(x, y);
+    loadFood(&food);
  }
 
 /*============================================================================================*
  * EFFECTS — sound, LED flashes, animations                                                    *
  *============================================================================================*/
 
- void gameInit(SnakeBelly *belly, struct Cell *food){
-
-    /*Square coil*/
-    uint8_t x = FIRST_PIXEL_X;
-    uint8_t y = FIRST_PIXEL_Y;
-    uint8_t z = CURRENT_PAD(x);
-    uint8_t i_ = LOCAL_I(x, z);
-    uint16_t p = 2;
-
-    bool x_left = false;
-    bool y_up = false;
-    while(p<5){
-        
-        for(uint8_t i=0; i<p; i++){
-            if(!x_left){
-                x--;
-            }
-            else{
-                x++;
-            }
-            z = CURRENT_PAD(x);
-            i_ = LOCAL_I(x, z);
-            push(belly, PIXEL_ADDRESS(i_, y, z), x, y, false);
-            displayGrid(belly, food);
-            _delay_ms(50);
-        }
-        p++;
-
-        for(uint8_t j=0; j<p; j++){
-            if(!y_up){
-                y--;
-            }
-            else{
-                y++;
-            }
-            z = CURRENT_PAD(x);
-            i_ = LOCAL_I(x, z);
-            push(belly, PIXEL_ADDRESS(i_, y, z), x, y, false);
-            displayGrid(belly, food);
-            _delay_ms(50);
-        }
-        p++;
-
-        y_up = (!y_up)?true:false;
-        x_left = (!x_left)?true:false;
-
-        displayGrid(belly, food);
-         _delay_ms(50);
-    }
-
-    belly->color = COLOR_RED;
-
-    for(int i=0; i<4; i++){
-        displayClear();
-        displayGrid(belly, food);
-        _delay_ms(300);
-    }
-
-    displayClear();
-    popAll(belly);
- }
 
  void gameEnd(SnakeBelly *belly, struct Cell *food){
     belly->color = COLOR_RED;
@@ -236,34 +203,9 @@ bool ruleCheck(SnakeBelly *belly, uint16_t food){
     popAll(belly);
  }
 
- void initialAnimation(){
-    uint32_t color_ = COLOR_CYAN;
+  void draw(uint8_t *arr, uint8_t x_start, uint8_t y_start, uint32_t color){
 
-    uint8_t x_start = 45;
-    uint8_t y_start = 26;
-
-    uint8_t s[9] = {0x7E, 0x40, 0x40, 0x40, 0x7E, 0x02, 0x02, 0x02, 0x7E};
-    uint8_t n[9] = {0x42, 0x52, 0x52, 0x4A, 0x46, 0x46, 0x42, 0x42, 0x42};
-    uint8_t a[9] = {0x18, 0x42, 0x42, 0x42, 0x7E, 0x42, 0x42, 0x42, 0x42};
-    uint8_t k[9] = {0x42, 0x4C, 0x66, 0x70, 0x78, 0x70, 0x66, 0x4C, 0x42};
-    uint8_t e[9] = {0x7E, 0x40, 0x40, 0x40, 0x7E, 0x40, 0x40, 0x40, 0x7E};
-
-    draw(s, x_start, y_start, color_);
-    x_start -= 8;
-    draw(n, x_start, y_start, color_);
-    x_start -= 8;
-    draw(a, x_start, y_start, color_);
-    x_start -= 8;
-    draw(k, x_start, y_start, color_);
-    x_start -= 8;
-    draw(e, x_start, y_start, color_);
-
-    
- }
-
- void draw(uint8_t *arr, uint8_t x_start, uint8_t y_start, uint32_t color){
-
-    for(int i=0; i<9; i++){
+    for(int i=0; i<6; i++){
         for(int j=0; j<8; j++){
             if((arr[i])<<j & 0x80){
                 ws2812bWrite((color >> 16 & 0xff), (color >> 8 & 0xff), color & 0xff, x_start-j, y_start-i);
@@ -275,57 +217,31 @@ bool ruleCheck(SnakeBelly *belly, uint16_t food){
     }
  }
 
- /*
-0------0 
-0-000000
-0-000000
-0-000000
-0------0
-000000-0
-000000-0
-000000-0
-0------0
+ void initialAnimation(){
+    uint32_t color_ = COLOR_CYAN;
 
-0-0000-0 
-0-0-00-0
-0-0-00-0
-0-00-0-0
-0-000--0
-0-000--0
-0-0000-0
-0-0000-0
-0-0000-0
+    uint8_t x_start = 45;
+    uint8_t y_start = 21;
 
-000--000
-0-0000-0
-0-0000-0
-0-0000-0
-0------0
-0-0000-0
-0-0000-0
-0-0000-0
-0-0000-0
+   /*uint8_t s[9] = {0x7E, 0x40, 0x40, 0x40, 0x7E, 0x02, 0x02, 0x02, 0x7E};
+    uint8_t n[9] = {0x42, 0x42, 0x62, 0x52, 0x4A, 0x46, 0x42, 0x42, 0x42};
+    uint8_t a[9] = {0x3C, 0x42, 0x42, 0x42, 0x7E, 0x42, 0x42, 0x42, 0x42};
+    uint8_t k[9] = {0x42, 0x44, 0x48, 0x50, 0x60, 0x70, 0x48, 0x44, 0x42};
+    uint8_t e[9] = {0x7E, 0x40, 0x40, 0x40, 0x7E, 0x40, 0x40, 0x40, 0x7E};
 
-0-0000-0
-0-000-00
-0-00-000
-0-0-0000
-0--00000
-0---0000
-0-00-000
-0-000-00
-0-0000-0
+    draw(s, x_start, y_start, color_);
+    x_start -= 8;
+    draw(n, x_start, y_start, color_);
+    x_start -= 8;
+    draw(a, x_start, y_start, color_);
+    x_start -= 8;
+    draw(k, x_start, y_start, color_);
+    x_start -= 8;
+    draw(e, x_start, y_start, color_);*/
 
-0------0
-0-000000
-0-000000
-0-000000
-0------0
-0-000000
-0-000000
-0-000000
-0------0
- 
- 
- */
+    uint8_t pac[6] = {0x78, 0xFC, 0xEC, 0xF8, 0xFC, 0x78};
+    draw(pac, x_start, y_start, color_);
+
+    
+ }
  #endif

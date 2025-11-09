@@ -23,7 +23,7 @@
 
 # ===== Project =====
 MCU := atmega328p
-F_CPU    = 16000000UL
+F_CPU    = 20000000UL
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
 TARGET := main
 

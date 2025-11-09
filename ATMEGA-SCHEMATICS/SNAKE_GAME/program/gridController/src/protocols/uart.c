@@ -20,10 +20,6 @@ void uartWrite_(char *c){
     }
 }
 
-void uartRead(char *c){
-    
-}
-
 void uartGPIO(){
     DDRD |= (1<<PD1);
     DDRD &= !(1<<PD0);

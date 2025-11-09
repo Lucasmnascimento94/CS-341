@@ -1,3 +1,4 @@
+
 #include "spi.h"
 #include "string.h"
 #include "WS2812B.h"
@@ -218,7 +219,7 @@ void spiReadPollByte_(uint8_t *data){
 }
 
 
-void spiReadBufferWs2812b(SPI *spi, uint32_t size){
+void spiReadBufferWs2812b(uint32_t size){
     uint8_t data = 0x00;
     for(uint32_t i=0; i<size*3; i++){
         SPDR = 0x00;
@@ -228,38 +229,6 @@ void spiReadBufferWs2812b(SPI *spi, uint32_t size){
     }
     latch();
 }
-
-
-/*void spiReadBufferWs2812b(SPI *spi, uint16_t size){
-    SPCR &= ~(1<<SPE);
-    uint8_t data = 0x00;
-    PORTB &= ~_BV(PB5);
-    for(uint16_t i=0; i<size; i++){
-        for(int j=0; j<8; j++){
-            PORTB |= _BV(PB5);
-            if((PINB >> PB4) & 0X01){
-                DATA_PORT |=  (1<<DATA_PIN);
-                dcy_(T1H);
-                DATA_PORT &= ~(1<<DATA_PIN);
-                //dcy_(T1L);
-                //writeOne_();
-            }
-            else{ 
-                DATA_PORT |=  (1<<DATA_PIN);
-                dcy_(T0H);
-                DATA_PORT &= ~(1<<DATA_PIN);
-                dcy_(T0L);
-                //writeZero_();
-            }
-            PORTB &= ~_BV(PB5);
-        }
-        //SPDR = 0x00;
-        //while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
-        //data = SPDR;                       // Get data from buffer
-        //send_byte(data);
-    }
-    SPCR |= (1<<SPE);
-}*/
 
 /*=============================================================================
  * SPI Protocol – Read (Polling)

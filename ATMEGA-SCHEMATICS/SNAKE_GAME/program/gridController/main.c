@@ -13,7 +13,7 @@ I2C_CONF          i2c;
 SPI_CS_TARGET     spi_cs_flash;
 SPI               spi;//
 struct SRAM_MAP   sram_map;
-char c[50];
+
 void testBuffer_1(){
     for(uint32_t i=0; i<SCREEN_BUFFER_SIZE; i++){
         uint32_t color_ = COLOR_BLUE;
@@ -48,32 +48,28 @@ int main(void){
 
     /*________Initialize Shared Memory System______*/
     sharedMemoryInit();
+    sramtesting();
+    struct NODE food;
+    loadFood(&food);
+
 
     bufferClear();
-    testBuffer_1();
-    _delay_ms(500);
-    bufferRead();
+    displayClear();
+    initialAnimation();
+    initSnake();
     
-    sramtesting();
+    generateFood();
+    displayGrid();
 
     while(1){
-        /*________Wait for SRAM Access______*/
-        //while(((PINC >> SRAM_CTA_PIN) & 1)){}
-
-        /*________Store Command______*/
-
-        /*________Display Buffer______*/
-        testBuffer_1();
+        while(!((PINC >> PC3) & 0x01)){uartWrite_("..waiting for ram..\n");}
+        walk();
         displayGrid();
-        
-        /*________Store Command______*/
-        testBuffer_2();
-        displayGrid();  
     }
 }
 
 void sramtesting(){
-    sram_map.cmd.cmdID = 0xF0AB;
+    sram_map.cmd.cmdID = WALK_LEFT;
     sram_map.cmd.arg1 = 0xAA;
     sram_map.cmd.arg2 = 0XBB;
     sram_map.cmd.arg3 = 0XCC;
@@ -85,7 +81,6 @@ void sramtesting(){
     
     loadScore();
     loadCommand();
-
     sram_map.cmd.cmdID = 0;
     sram_map.cmd.arg1 = 0;
     sram_map.cmd.arg2 = 0;

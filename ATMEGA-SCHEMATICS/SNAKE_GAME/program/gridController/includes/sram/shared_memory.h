@@ -35,6 +35,7 @@
 #define MAGIC_SCORE         "SCOR"
 #define MAGIC_BUFFER        "BUFF"
 #define MAGIC_COMMANDS      "COMM"
+#define MAGIC_FOOD          "FOOD"
 
 /*__________Base addresses Definition___________*/
 #define MEMORY_PADDING     ((uint32_t)0x20u)
@@ -84,7 +85,7 @@ struct SCORE{
 struct NODE{
     uint32_t next;
     uint32_t prev;
-    uint16_t addr;
+    uint32_t addr;
     uint8_t i;
     uint8_t j;
     uint8_t r;
@@ -128,12 +129,12 @@ struct SRAM_MAP {
 #define NODE_NEXT(BASE)               ((uint32_t)(BASE) + (uint32_t)0x05u)
 #define NODE_PREV(BASE)               ((uint32_t)(BASE) + (uint32_t)0x09u)
 #define NODE_ADDR(BASE)               ((uint32_t)(BASE) + (uint32_t)0x0Du)
-#define NODE_I(BASE)                  ((uint32_t)(BASE) + (uint32_t)0x0Fu)
-#define NODE_J(BASE)                  ((uint32_t)(BASE) + (uint32_t)0x10u)
-#define NODE_G(BASE)                  ((uint32_t)(BASE) + (uint32_t)0x11u)
-#define NODE_R(BASE)                  ((uint32_t)(BASE) + (uint32_t)0x12u)
-#define NODE_B(BASE)                  ((uint32_t)(BASE) + (uint32_t)0x13u)
-#define NODE_OPCODE(BASE)             ((uint32_t)(BASE) + (uint32_t)0x14u)
+#define NODE_I(BASE)                  ((uint32_t)(BASE) + (uint32_t)0x11u)
+#define NODE_J(BASE)                  ((uint32_t)(BASE) + (uint32_t)0x12u)
+#define NODE_G(BASE)                  ((uint32_t)(BASE) + (uint32_t)0x13u)
+#define NODE_R(BASE)                  ((uint32_t)(BASE) + (uint32_t)0x14u)
+#define NODE_B(BASE)                  ((uint32_t)(BASE) + (uint32_t)0x15u)
+#define NODE_OPCODE(BASE)             ((uint32_t)(BASE) + (uint32_t)0x16u)
 
 
 #define COMMANDS_MAGIC(BASE)          ((uint32_t)(BASE)  + (uint32_t)0X00u)
@@ -157,6 +158,7 @@ extern struct SRAM_MAP sram_map;
 void sharedMemoryInit();
 void pushNode(struct NODE *node);
 void popNode();
+void loadBufferFromStack();
 
 void bufferWrite(uint8_t g, uint8_t r, uint8_t b,  uint32_t index);
 void bufferRead();
@@ -165,6 +167,7 @@ void bufferClear();
 void updateNode(struct NODE *node, uint32_t base);
 void readNode(struct NODE *node, uint32_t base);
 
+void loadFood(struct NODE *food);
 void loadCommand();
 void getCommand();
 void loadScore();

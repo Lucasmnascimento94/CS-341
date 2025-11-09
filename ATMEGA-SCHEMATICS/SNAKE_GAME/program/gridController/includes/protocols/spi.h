@@ -89,7 +89,7 @@ void spiReadPoll(SPI *spi, char *data, uint16_t size);
 void spiReadPoll_(uint8_t *data, uint16_t len);
 void spiReadPollByte_(uint8_t *data);
 void spiReadInt(SPI *spi, char *data, uint16_t size);
-void spiReadBufferWs2812b(SPI *spi, uint32_t size);
+void spiReadBufferWs2812b(uint32_t size);
 
 uint8_t spiWriteCheckPollByte_(uint8_t data);
 
