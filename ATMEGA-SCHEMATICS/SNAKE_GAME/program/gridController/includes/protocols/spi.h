@@ -79,6 +79,8 @@ typedef struct {
 
 
 void spiInit(SPI *spi);
+void spiPause(SPI *spi);
+void spiResume(SPI *spi);
 void spiStart(SPI *spi);
 void spiStop(SPI *spi);
 void spiWritePoll(SPI *spi, char *data);

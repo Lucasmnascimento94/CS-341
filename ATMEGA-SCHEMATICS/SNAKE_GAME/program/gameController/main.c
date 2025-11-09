@@ -1,77 +1,106 @@
 #include "includes.h"
 #include "spi.h"
-//#include "shared_memory.h"
-#include "data_types.h"
 #include "uart.h"
 #include "i2c.h"
+#include "sram.h"
 #include "screen.h"
+#include "shared_memory.h"
+
+void sramtesting();
 void sramVarsInit(SPI *spi);
 
+SCREEN            screen;
+I2C_CONF          i2c;
+SPI_CS_TARGET     spi_cs_flash;
+SPI               spi;//
+struct SRAM_MAP   sram_map;
 
-SPI_CS_TARGET spi_cs_flash;
-SPI          spi;
-//struct SRAM_MAP sram_map;
-
-I2C_CONF i2c;
-SCREEN screen;
-
-uint8_t val[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-
-int main(){
-
-    i2cInit(&i2c, true);
-    screenInit(&screen, true);
-
-    //sram_map.cell.block_size = 16;
-    //char c[100];
-    //sramVarsInit(&spi);
-    //setUpUART();
-    //spiInit(&spi);
-    _delay_ms(100);
-//    struct Cell cell;
-//    struct Cell temp;
-/*
-    uartWrite_(c);
-    _delay_ms(1000);
-    for(uint32_t i=0; i < 0x1330*4; i++){
-        sramWriteByte(&spi, NULL_PTR, i);
-    }
-
-    _delay_ms(1000);
-    temp = cell;
-    for(int i=0; i<500; i++){
-        cell.val = i;
-        pushCell(&cell);
-    }
-
-    _delay_ms(1000);
-
-    readCell(&cell, sram_map.cell.head_base);
-    for(; cell.next_addr != NULL_PTR; readCell(&cell, cell.next_addr)){
-        sprintf(c, "PREV: %lX | NEXT: %lX | VAL: %d\n", \
-            cell.prev_addr\
-            ,cell.next_addr\
-            ,cell.val);
-        uartWrite_(c);
-        
-    }
-
-    //_delay_ms(500);
-    //spiWritePoll(&spi, "HELLO WORLD");
-*/
-_delay_ms(1000);
-
-    while(1){
-        screenWrite(&screen, "HELLO WORLD UMB");
-        //i2cStartPol(screen.pcf8574_addr, MODE_MASTER_POL);
-        //i2cWritePol_("Hello World", 10);
-        //i2cWritePol_("Hello World", 11);
-        //i2cStop();
-        _delay_ms(1000);
-        //uartWrite_("MAIN LOOP\n");
+void testBuffer_1(){
+    for(uint32_t i=0; i<SCREEN_BUFFER_SIZE; i++){
+        uint32_t color_ = COLOR_BLUE;
+        if(i%2 == 0) bufferWrite((color_ >> 16) & 0xff, (color_ >> 8) & 0xff, color_  & 0xff, i);
+        else bufferWrite(0x00, 0x00, 0x00, i);
     }
 }
 
+void testBuffer_2(){
+    for(uint32_t i=0; i<SCREEN_BUFFER_SIZE; i++){
+        uint32_t color_ = COLOR_BLUE;
+        if(i%2 != 0) bufferWrite((color_ >> 16) & 0xff, (color_ >> 8) & 0xff, color_  & 0xff, i);
+        else bufferWrite(0x00, 0x00, 0x00, i);
+    }
+}
+
+int main(void){
+    /*________Initialize SRAM parameters______*/
+    sramVarsInit(&spi);     
+
+    /*________Initialize Protocols______*/
+    spiInit(&spi);                             
+    i2cInit(&i2c, true);                        
+    uartInit();
+    ws2812bInit();                                 
+    
+    /*________Enforce SRAM Sequencial Mode______*/
+    sramWriteModeRegister(&spi, SRAM_MODE_SEQU);
+
+    /*________Initialize Screen (Liquid Crystak)______*/
+    screenInit(&screen, true);                             
+
+    /*________Initialize Shared Memory System______*/
+    sharedMemoryInit();
+    sramtesting();
+    struct NODE food;
+    loadFood(&food);
+
+
+    bufferClear();
+    displayClear();
+    initialAnimation();
+    initSnake();
+    
+    generateFood();
+    displayGrid();
+
+    while(1){
+        /*___________Wait for Clear_To_Access signal__________*/
+        while(!((PINC >> PC3) & 0x01)){uartWrite_("..waiting for ram..\n");}
+
+        /*________Control SPI data bus to access sram_________*/
+        spiResume(&spi);
+
+        /*_________Read Commands_________*/
+        /*_________Read Buffer_________*/
+        /*_________Free RAM ans data bus_________*/
+        walk();
+        displayGrid();
+        spiPause(&spi);
+    }
+}
+
+void sramtesting(){
+    sram_map.cmd.cmdID = WALK_LEFT;
+    sram_map.cmd.arg1 = 0xAA;
+    sram_map.cmd.arg2 = 0XBB;
+    sram_map.cmd.arg3 = 0XCC;
+
+    sram_map.score.current_score = 0X81;
+    sram_map.score.record_score = 0X99;
+    strcpy((char *)sram_map.score.game_name, "SNAKE");
+    strcpy((char *)sram_map.score.player_name, "LUCAS");
+    
+    loadScore();
+    loadCommand();
+    sram_map.cmd.cmdID = 0;
+    sram_map.cmd.arg1 = 0;
+    sram_map.cmd.arg2 = 0;
+    sram_map.cmd.arg3 = 0;
+
+    sram_map.score.current_score = 0;
+    sram_map.score.record_score = 0;
+    memset(sram_map.score.game_name, 0, 12);
+    memset(sram_map.score.player_name, 0, 12);
+}
 
 void sramVarsInit(SPI *spi){
     static SPI_CS_TARGET cs_reg;
