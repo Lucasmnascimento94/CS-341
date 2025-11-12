@@ -1,5 +1,6 @@
 #include "shared_memory.h"
 #include "uart.h"
+#include "string.h"
 
 typedef struct{
     uint32_t score_start;
@@ -32,13 +33,44 @@ void computeBases(){
 }
 
 void initCtaInt(){
-    SRAM_CTA_DDR &= ~(1<<SRAM_CTA_PIN);
-    SRAM_CTA_PORT |= (1<<SRAM_CS_PIN);
+    SRAM_CTS_DDR  &= ~(1<<SRAM_CTS_PIN);
+
+    SRAM_RTS_PORT |= (1<<SRAM_RTS_PIN);
+    SRAM_RTS_DDR  |= (1<<SRAM_RTS_PIN);
+}
+
+void waitRand(uint16_t n){
+    for(int i=0; i<n;i++){
+        _delay_us(1);
+    }
+}
+
+void memAcquire(){
+    uint16_t k=10;
+    char c[15];
+    while(1){
+        while(!((SRAM_CTS_PIN_PORT >> SRAM_CTS_PIN) & 0x01)); // check availability
+        SRAM_RTS_PORT &= ~(1<<SRAM_RTS_PIN); // Acquire memory
+        _delay_us(1); // Gieve it a brief
+
+        if((SRAM_CTS_PIN_PORT >> SRAM_CTS_PIN) & 0x01){break;}
+        else{
+            sprintf(c, "k: %d\n", k);
+            uartWrite_(c);
+            memFree();
+            waitRand((int)((rand() % k++) + 1)); // Gieve it a random brief
+        }
+    }
+}
+
+void memFree(){
+    SRAM_RTS_PORT |= (1<<SRAM_RTS_PIN);
 }
 
 void sharedMemoryInit(){
     computeBlockSizes();
     computeBases();
+    initCtaInt();
     sram_map.sram_cta = false;
 }
 
@@ -55,7 +87,7 @@ void pushNode(struct NODE *node){
     uint32_t bs        = sram_map.node.block_size;
     uint8_t  first     = (sram_map.stack.count == 0);
     uint32_t base      = first ? bases.node_start : sram_map.stack.current_node;
-    uint32_t tail = first ? NULL_PTR : sram_map.stack.tail;
+    uint32_t head = first ? NULL_PTR : sram_map.stack.head;
 
 
     // Capacity guard (choose: wrap, free-list, or error)
@@ -77,26 +109,28 @@ void pushNode(struct NODE *node){
 
 
     /*_____________links (new node)____*/
-    sramWriteU32(&spi, tail, NODE_PREV(base));
-    node->prev = tail;
-    sramWriteU32(&spi, NULL_PTR,  NODE_NEXT(base));
-    node->next = NULL_PTR;
+    sramWriteU32(&spi, head, NODE_NEXT(base));
+    node->next = head;
+    sramWriteU32(&spi, NULL_PTR,  NODE_PREV(base));
+    node->prev = NULL_PTR;
 
     /*_____________link old tail______*/
     if (!first) {
-        sramWriteU32(&spi, base, NODE_NEXT(tail));
+        sramWriteU32(&spi, base, NODE_PREV(head));
     } else {
-        sram_map.stack.head = base; // first node
+        sram_map.stack.tail = base; // first node
     }
 
 
+
+    
     /*_____________commit flag last____*/
     sramWriteByte(&spi, FLAG_VALID, NODE_FLAGS(base));
 
     /*_____________RAM metadata________*/
     sram_map.stack.count++;
-    sram_map.stack.tail = base;
-    sram_map.stack.current_node = sram_map.stack.tail + bs;
+    sram_map.stack.head = base;
+    sram_map.stack.current_node = sram_map.stack.head + bs;
 }
 
 void popNode(){
@@ -139,7 +173,7 @@ void readNode(struct NODE *node, uint32_t base){
     sramReadString(&spi, (uint8_t *)magic, 4, NODE_MAGIC(base));
     if(strcmp(magic, MAGIC_NODE) != 0){
         uartWrite_("Error... <Invalid Header> \n");
-        sprintf(c, "..expected..<%s>..actual..<%s>\n", MAGIC_NODE, magic);
+        sprintf(c, "..expected..<%s>..actual..<%s>\n", (char *)MAGIC_NODE, magic);
         uartWrite_(c);
     }
     sramReadU32(&spi, &node->next,      NODE_NEXT(base));
@@ -206,7 +240,6 @@ void loadStack(){
 }
 
 void loadBufferFromStack(){
-    char c[70];
     uint32_t addr_head = sram_map.stack.head;
     uint32_t count = sram_map.stack.count;
     if(count == 0) return;
@@ -259,7 +292,8 @@ void loadCommand(){
     uint32_t base        = bases.cmd_start;
 
     /*______________header_____________*/
-    sramWriteStringPoll(&spi, MAGIC_COMMANDS, COMMANDS_MAGIC(base), 2);    // keep 4 if that's your spec
+    sramWriteStringPoll(&spi, MAGIC_COMMANDS, COMMANDS_MAGIC(base), 4
+);    // keep 4 if that's your spec
 
     /*_____________payload_____________*/
     sramWriteU32(&spi, sram_map.cmd.cmdID,            COMMANDS_CMDID(base));

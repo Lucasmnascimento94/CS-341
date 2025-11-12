@@ -37,10 +37,6 @@ void sramWriteU32(SPI *spi, uint32_t data, uint32_t address){
     sramWriteByte(spi, (uint8_t)data, address + 3);
 }
 
-void sramWriteBuffer(SPI *spi, uint32_t size, uint32_t address){
-
-}
-
 /* Writing One Byte Process:
 >> 1byte: command Instruction [SRAM_WRITE]
 >> 3bytes: 24 bit address

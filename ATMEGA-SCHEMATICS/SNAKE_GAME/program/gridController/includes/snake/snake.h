@@ -37,14 +37,13 @@
 #define ARG_COLLISION 0X07
 
 #include "includes.h"
-#include "DataStructures.h"
 #include "WS2812B.h"
 #include "stdio.h"
 #include "string.h"
 #include "colors.h"
 
 #define SNAKE_COLOR COLOR_YELLOW
-#define FOOD_COLOR COLOR_GREEN
+#define FOOD_COLOR COLOR_RED
 
 /* ________________GAME RULES_________________
 CAN'T DO:

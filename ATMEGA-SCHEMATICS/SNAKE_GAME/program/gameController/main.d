@@ -1,17 +1,25 @@
-main.o: main.c includes.h startSetUp/spi/spi.h includes.h \
- data_types/data_types.h startSetUp/uart/uart.h startSetUp/i2c/i2c.h \
- lib/screen/screen.h
+main.o: main.c includes/includes.h includes/protocols/spi.h \
+ includes/protocols/uart.h includes/sram/sram.h \
+ includes/sram/shared_memory.h includes/snake/snake.h \
+ includes/colors/colors.h includes/sram/sram.h includes/console/console.h \
+ includes/isr/isr.h
 
-includes.h:
+includes/includes.h:
 
-startSetUp/spi/spi.h:
+includes/protocols/spi.h:
 
-includes.h:
+includes/protocols/uart.h:
 
-data_types/data_types.h:
+includes/sram/sram.h:
 
-startSetUp/uart/uart.h:
+includes/sram/shared_memory.h:
 
-startSetUp/i2c/i2c.h:
+includes/snake/snake.h:
 
-lib/screen/screen.h:
+includes/colors/colors.h:
+
+includes/sram/sram.h:
+
+includes/console/console.h:
+
+includes/isr/isr.h:

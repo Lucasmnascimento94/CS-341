@@ -6,9 +6,15 @@
 #include "spi.h"
 #include "sram.h"
 
-#define SRAM_CTA_PORT PORTC
-#define SRAM_CTA_DDR  DDRC
-#define SRAM_CTA_PIN  PC3
+#define SRAM_RTS_PORT PORTC
+#define SRAM_RTS_DDR  DDRC
+#define SRAM_RTS_PIN  PC2
+#define SRAM_RTS_PIN_PORT PINC
+
+#define SRAM_CTS_PORT PORTB
+#define SRAM_CTS_DDR  DDRB
+#define SRAM_CTS_PIN  PB0
+#define SRAM_CTS_PIN_PORT PINB
 
 #define SNAKE 1
 #define SPACE 2
@@ -22,7 +28,7 @@
 #define FLAG_DIRTY                  0x00u
 #define FLAG_VALID                  0xA5u
 #define SRAM_SIZE                   0x1FFFF
-#define SCREEN_WIDTH                48
+#define SCREEN_WIDTH                24
 #define SCREEN_HEIGHT               32
 #define SCREEN_BUFFER_SIZE          (SCREEN_WIDTH*SCREEN_HEIGHT)
 
@@ -156,6 +162,10 @@ extern SPI             spi;
 extern struct SRAM_MAP sram_map;
 
 void sharedMemoryInit();
+void memAcquire();
+void memFree();
+
+
 void pushNode(struct NODE *node);
 void popNode();
 void loadBufferFromStack();
@@ -167,6 +177,7 @@ void bufferClear();
 void updateNode(struct NODE *node, uint32_t base);
 void readNode(struct NODE *node, uint32_t base);
 
+void loadStack();
 void loadFood(struct NODE *food);
 void loadCommand();
 void getCommand();

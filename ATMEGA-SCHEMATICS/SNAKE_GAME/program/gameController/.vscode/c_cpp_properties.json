@@ -1,25 +1,34 @@
 {
-    
     "version": 4,
     "configurations": [
         {
-            "name": "macos-clang-arm64",
+            "name": "/opt/homebrew/bin/avr-gcc",
             "compilerPath": "/usr/bin/avr-gcc",
             "compilerArgs": [
                 "-mmcu=atmega168",
-                "-DF_CPU=8000000UL"
+                "-DF_CPU=16000000UL"
             ],
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/",
-                "${workspaceFolder}/data_types",
-                "${workspaceFolder}/startSetUp",
-                "${workspaceFolder}/sram",
-                "${workspaceFolder}/games/snake",
-                "${workspaceFolder}/startSetUp/uart",
-                "${workspaceFolder}/startSetUp/spi",
-                "${workspaceFolder}/startSetUp/flash",
-                "${workspaceFolder}/libC"
+                "${workspaceFolder}/includes/",
+                "${workspaceFolder}/includes/isr",
+                "${workspaceFolder}/includes/protocols",
+                "${workspaceFolder}/includes/screen",
+                "${workspaceFolder}/includes/snake",
+                "${workspaceFolder}/includes/sram",
+                "${workspaceFolder}/includes/tim",
+                "${workspaceFolder}/includes/console",
+                "${workspaceFolder}/includes/ws2812b",
+                "${workspaceFolder}/includes/colors",
+                "${workspaceFolder}/src/",
+                "${workspaceFolder}/src/isr",
+                "${workspaceFolder}/src/protocols",
+                "${workspaceFolder}/src/screen",
+                "${workspaceFolder}/src/snake",
+                "${workspaceFolder}/src/sram",
+                "${workspaceFolder}/src/tim",
+                "${workspaceFolder}/src/console",
+                "${workspaceFolder}/src/ws2812b"
             ],
             "defines": [
                 "__AVR_ATmega168__"
