@@ -83,4 +83,5 @@ int main() {
     // Close the device
     FT_Close(ftHandle);
     return 0;
+    // cho tung dia chi 1 roi viet
 }
