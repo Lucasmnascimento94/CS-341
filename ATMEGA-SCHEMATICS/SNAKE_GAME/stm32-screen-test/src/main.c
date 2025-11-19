@@ -11,11 +11,12 @@
 
 #define IO_WRITE_CYC 6
 
-#define T1H_TOT 0 // TODO:
-#define T1L_TOT 0 // TODO:
-#define T0H_TOT 0 // TODO:
-#define T0L_TOT 0 // TODO:
-#define TLL     0 // TODO:
+// TODO:
+#define T1H_TOT 0
+#define T1L_TOT 0
+#define T0H_TOT 0
+#define T0L_TOT 0
+#define TLL     0
 
 #define T1H (T1H_TOT - IO_WRITE_CYC)
 #define T1L (T1L_TOT - IO_WRITE_CYC)
@@ -57,22 +58,22 @@ static inline void writeOne(void) {
     dcy(T1L);
   }
 }
-static inline void latch(void) {
+void latch(void) {
   DIN_L();
   dcy(TLL);
 }
 
-static inline size_t pixel_address(uint8_t i, uint8_t j, uint8_t k) {
-  return j % 2 == 0 ? (j * PAD_WIDTH) + i
-                    : (j * PAD_WIDTH) + (PAD_WIDTH - i - 1);
-}
+// size_t pixel_address(uint8_t i, uint8_t j, uint8_t k) {
+//   return j % 2 == 0 ? (j * PAD_WIDTH) + i
+//                     : (j * PAD_WIDTH) + (PAD_WIDTH - i - 1);
+// }
 
 static inline void send_byte(uint8_t b) {
   for (uint8_t m = 0x80; m; m >>= 1)
     (b & m) ? writeOne() : writeZero();
 }
 
-static inline void send_pixel(uint8_t b, uint8_t r, uint8_t g) {
+void send_pixel(uint8_t b, uint8_t r, uint8_t g) {
   send_byte(b);
   send_byte(r);
   send_byte(g);
