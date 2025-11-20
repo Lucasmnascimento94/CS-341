@@ -3,6 +3,8 @@
 
 void gpioConfig(){
     joyStickConf();
+    setUpUART();
+    spiInitPoll();
 }
 
 

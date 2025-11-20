@@ -1,0 +1,35 @@
+{
+    "version": 4,
+    "configurations": [
+        {
+            "name": "macos-clang-arm64",
+            "compilerPath": "C:/Users/mhuyn/AppData/Local/Microsoft/WinGet/Packages/ZakKemble.avr-gcc_Microsoft.Winget.Source_8wekyb3d8bbwe/avr-gcc-14.1.0-x64-windows/bin/avr-gcc.exe",
+            "compilerArgs": [
+                "-mmcu=atmega328p",
+                "-DF_CPU=16000000UL"
+            ],
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/gameController",
+                "${workspaceFolder}/gameController/startSetUp",
+                "${workspaceFolder}/gameController/sram",
+                "${workspaceFolder}/gameController/startSetUp/timer",
+                "${workspaceFolder}/gameController/startSetUp/uart",
+                "${workspaceFolder}/gameController/startSetUp/ws2812b",
+                "${workspaceFolder}/gameController/startSetUp/spi",
+                "${workspaceFolder}/gameController/startSetUp/isr",
+                "${workspaceFolder}/gameController/startSetUp/flash",
+                "${workspaceFolder}/gameController/startSetUp/allocation",
+                "${workspaceFolder}/gameController/startSetUp/i2c",
+                "${workspaceFolder}/gameController/games/snake",
+                "${workspaceFolder}/gameController/libC"
+            ],
+            "defines": [
+                "__AVR_ATmega328P__"
+            ],
+            "cStandard": "${default}",
+            "cppStandard": "${default}",
+            "intelliSenseMode": "${default}"
+        }
+    ]
+}

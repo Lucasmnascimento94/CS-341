@@ -163,7 +163,7 @@ int main(void){
     _delay_ms(10);
     */
     allocateVar();
-    screenInit(&screen, true);
+    //screenInit(&screen, true);
 
 
     /*char c[30];
@@ -183,8 +183,7 @@ int main(void){
    /* screenClearAt(&i2c_port, &i2c_target, 0, 0, 5);
     _delay_ms(500);*/
 
-    //screenWriteAt(&screen, 0, 3, "Hello");
-    updateGameScreen(&screen, "Spacecraft", 3000, 209);
+   
     while(1){
         //test();
         uartWrite("lOOPING\n", 9);

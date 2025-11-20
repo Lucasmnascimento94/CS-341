@@ -21,6 +21,7 @@ extern "C" {
 #include <stdbool.h>
 
 /*──────────── Macros ────────────*/
+#define PCF8574_ADDR_WRITE 0x40
 #define I2C_WRITE 0
 #define I2C_READ  1
 #define I2C_TWSR_FLAG_MASK 0XF8
@@ -48,6 +49,23 @@ typedef struct {
     uint32_t f_cpu;             /* CPU clock (Hz) */
 }I2C_CONF;
 
+typedef struct{
+    uint32_t TWBR_VAL; /*value for the clock generator*/
+    uint32_t frequency; /*Maximum Speed frequency for the clock generator*/
+    uint8_t prescaler; /**/
+    uint8_t addr;
+    uint8_t direction;
+    uint8_t mode;
+}I2C_TARGET;
+
+typedef struct{
+    char *data;
+    size_t data_size;
+    char *instruction;
+    size_t instruction_size;
+    uint8_t current_target_addr;
+    uint8_t current_mode;
+}I2C_PORT;
 /*___________CLOCK & GPIO ____________*/
  void i2cInit(I2C_CONF *conf, bool default_conf);
  void i2cClockConfig(I2C_CONF *conf);

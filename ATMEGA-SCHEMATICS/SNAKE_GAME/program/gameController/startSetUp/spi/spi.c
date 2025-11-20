@@ -14,7 +14,7 @@
  * change the parameters in the header: spi.h
  *============================================================================*/
 void spiConf(SPI *spi);
-void spiInit(SPI *spi){
+void spiInitPoll(SPI *spi){
     
     spiConf(spi);
     DDRB |= (1<<PB5) | (1<<PB3) | (1<<PB2);

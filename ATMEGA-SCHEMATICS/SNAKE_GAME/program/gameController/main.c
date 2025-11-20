@@ -15,8 +15,28 @@ int main(){
     i2cInit(&i2c, true);
     screenInit(&screen, true);
     _delay_ms(100);
-    while(1){
-        screenWrite(&screen, "HELLO WORLD ");
+    
+    //updateGameScreen(&screen, "Snake",100,210);
+    
+    
+    //updateGameScreen(&screen, "Pacman",100, 210);
+   
+
+    //updateGameScreen(&screen, "Pong",100, 210);
+    
+
+    //updateGameScreen(&screen, "Spacecraft",100,210);
+  
+
+    screenWriteAt(&screen, 0, 3, "Hello");
+    //_delay_ms(2);
+    
+    //screenClear(&screen);
+    //_delay_ms();
+    //_delay_ms();
+   
+    /*while(1){
+        screenWriteDDRAM(&screen, "Hello World ");
         _delay_ms(2000);
-    }
+    }*/
 }

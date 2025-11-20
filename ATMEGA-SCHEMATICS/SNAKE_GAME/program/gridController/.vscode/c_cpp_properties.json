@@ -3,11 +3,7 @@
     "configurations": [
         {
             "name": "macos-clang-arm64",
-<<<<<<< HEAD:ATMEGA-SCHEMATICS/SNAKE_GAME/program/.vscode/c_cpp_properties.json
             "compilerPath": "C:/Users/mhuyn/AppData/Local/Microsoft/WinGet/Packages/ZakKemble.avr-gcc_Microsoft.Winget.Source_8wekyb3d8bbwe/avr-gcc-14.1.0-x64-windows/bin/avr-gcc.exe",
-=======
-            "compilerPath": "/opt/homebrew/bin/avr-gcc",
->>>>>>> SNAKE_V4_PROGRAMMER_LUCAS:ATMEGA-SCHEMATICS/SNAKE_GAME/program/gridController/.vscode/c_cpp_properties.json
             "compilerArgs": [
                 "-mmcu=atmega328p",
                 "-DF_CPU=16000000UL"

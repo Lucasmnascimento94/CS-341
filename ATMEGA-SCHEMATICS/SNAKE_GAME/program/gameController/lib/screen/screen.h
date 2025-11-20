@@ -8,6 +8,8 @@ extern "C" {
 #include "stdint.h"
 #include "stdbool.h"
 #include "i2c.h"
+#include <stdio.h>
+#include "string.h"
 
 // default values.
 #define RS_BIT      0
@@ -37,6 +39,7 @@ extern "C" {
 #define FUNCTION_SET(DL, N, F)        ((0X20) | (DL<<DL_BIT) | (N<<N_BIT) | (F<<F_BIT))
 
 
+
 #define READ_BUSY_FLAG  (uint16_t)0x0200
 #define WRITE_TO_RAM    (uint16_t)0x0400
 #define READ_FROM_RAM   (uint16_t)0x0800
@@ -57,14 +60,29 @@ typedef struct{
     SCREEN_CONF conf;
 }SCREEN;
 
+typedef struct {
+    uint8_t pattern[8];
+    uint8_t row;
+    uint8_t col;
+    uint8_t slot;
+} LCDTile;
+
 void screenInit(SCREEN *screen, bool default_conf);
-void screenWrite(SCREEN *screen, char *buffer);
-void setCursor(uint8_t pos, uint8_t pcf_address);
+void setCursorDDRAM(uint8_t pos, uint8_t pcf_address);
+void screenWriteDDRAM(SCREEN *screen, char *buffer);
+void setCursorCGRAM(uint8_t pos, uint8_t pcf_address);
+void screenWriteCGRAM(SCREEN *screen, const uint8_t *pattern, uint8_t char_index);
 uint8_t getAddress(uint8_t row, uint8_t column);
 void screenClear(SCREEN *screen);
 void screenSetCursor(SCREEN *screen, uint8_t row, uint8_t column);
 void screenWriteAt(SCREEN *screen, uint8_t row, uint8_t column, char *text);
-void updateGameScreen(SCREEN *screen, const char *game_name, uint8_t top_score, uint8_t current_score);
+void loadTileBatch(SCREEN *screen, LCDTile *tiles, uint8_t count);
+void snakeGameIcon(SCREEN *screen);
+void pacmanIcon(SCREEN *screen);
+void pongIcon(SCREEN *screen);
+void spacecraftIcon(SCREEN *screen);
+void updateGameIcon(SCREEN *screen, const char *game_name);
+void updateGameScreen(SCREEN *screen,char *game_name, uint8_t top_score, uint8_t current_score);
 
 #ifdef __cplusplus
 }

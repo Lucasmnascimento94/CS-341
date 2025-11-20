@@ -22,7 +22,7 @@
 
 
 # ===== Project =====
-MCU := ATmega328p
+MCU := ATmega328P
 F_CPU    = 16000000UL
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
 TARGET := main
@@ -223,7 +223,6 @@ SIZE    = avr-size
 AVRDUDE = avrdude
 
 CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra -std=c11 $(INCS) -MMD -MP -Wno-unused-function -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-parameter
-
 LDFLAGS = -mmcu=$(MCU)
 
 PROGRAMMER    = usbasp

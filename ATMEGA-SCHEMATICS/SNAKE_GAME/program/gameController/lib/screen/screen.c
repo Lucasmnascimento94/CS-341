@@ -1,5 +1,4 @@
 #include  "screen.h"
-#include "string.h"
 
 void screenDefault(SCREEN *screen){
     screen->conf.I_D = 1;
@@ -60,30 +59,30 @@ uint8_t *buildInstruction(uint16_t command){
 void screenInit(SCREEN *screen, bool default_conf){
     if(default_conf) screenDefault(screen);
     i2cWritePol(\
-        (char *)buildInstrucion(FUNCTION_SET(screen->conf.DL, screen->conf.N, screen->conf.F)), 4, screen->pcf8574_addr);
+        (char *)buildInstruction(FUNCTION_SET(screen->conf.DL, screen->conf.N, screen->conf.F)), 4, screen->pcf8574_addr);
         _delay_us(100);
 
     i2cWritePol(\
-        (char *)buildInstrucion(FUNCTION_SET(screen->conf.DL, screen->conf.N, screen->conf.F)), 4, screen->pcf8574_addr);
+        (char *)buildInstruction(FUNCTION_SET(screen->conf.DL, screen->conf.N, screen->conf.F)), 4, screen->pcf8574_addr);
         _delay_us(100);
     
-    i2cWritePol((char *)buildInstrucion(CLEAR_DISPLAY), 4, screen->pcf8574_addr);
+    i2cWritePol((char *)buildInstruction(CLEAR_DISPLAY), 4, screen->pcf8574_addr);
     _delay_ms(2);
 
     i2cWritePol(\
-        (char *)buildInstrucion(ENTRY_MODE(screen->conf.I_D, screen->conf.SH)), 4, screen->pcf8574_addr);
+        (char *)buildInstruction(ENTRY_MODE(screen->conf.I_D, screen->conf.SH)), 4, screen->pcf8574_addr);
         _delay_us(100);
 
     i2cWritePol(\
-        (char *)buildInstrucion(DISPLAY_ON_OFF(screen->conf.D, screen->conf.C, screen->conf.B)), 4, screen->pcf8574_addr);
+        (char *)buildInstruction(DISPLAY_ON_OFF(screen->conf.D, screen->conf.C, screen->conf.B)), 4, screen->pcf8574_addr);
         _delay_us(100);
 
     i2cWritePol(\
-        (char *)buildInstrucion(CURSOR(screen->conf.S_C, screen->conf.R_L)), 4, screen->pcf8574_addr);
+        (char *)buildInstruction(CURSOR(screen->conf.S_C, screen->conf.R_L)), 4, screen->pcf8574_addr);
         _delay_us(100);
 
     i2cWritePol(\
-        (char *)buildInstrucion(HOME), 4, screen->pcf8574_addr);
+        (char *)buildInstruction(HOME), 4, screen->pcf8574_addr);
         _delay_ms(2);
 }
 
@@ -91,7 +90,7 @@ void screenInit(SCREEN *screen, bool default_conf){
 uint8_t newAddrLine4(SCREEN *screen){
     uint8_t current_column = screen->current_column;
 
-    if(current_column < 20){
+    if(current_column < 19){
         screen->current_column++;
     }
     else{
@@ -151,28 +150,49 @@ void buildBytes(uint8_t *buffer, uint8_t byte){
 }
 
 
-void setCursor(uint8_t pos, uint8_t pcf_address){
-    i2cWritePol((char *)buildInstrucion(((1<<RAM_BIT) | pos)), 4, pcf_address); // Set Address
+void setCursorDDRAM(uint8_t pos, uint8_t pcf_address){
+    i2cWritePol((char *)buildInstruction(((1<<RAM_BIT) | pos)), 4, pcf_address); // Set DDRAM Address
     _delay_us(100);
 }
 
-void screenWrite(SCREEN *screen, char *buffer){
+void screenWriteDDRAM(SCREEN *screen, char *buffer){
     if(buffer == NULL) return;
 
-    for(uint16_t i=0; i<strlen(buffer); i++){
-        uint8_t next_addr = (screen->conf.N)?newAddrLine4(screen):newAddrLine2(screen);
-        setCursor(next_addr, screen->pcf8574_addr); // Set Address
+    for(uint16_t i = 0; i < strlen(buffer); i++){
+        uint8_t next_addr = (screen->conf.N) ? newAddrLine4(screen) : newAddrLine2(screen);
+        setCursorDDRAM(next_addr, screen->pcf8574_addr); // Set DDRAM Address
 
         // This calculates the control byte *with* E=1
         uint8_t bytes[5] = {0};
         buildBytes(bytes, (uint8_t)buffer[i]);
         i2cWritePol((char *)bytes, 4, screen->pcf8574_addr);
-        _delay_us(45); 
+        _delay_us(45);
     }
 }
 
+void setCursorCGRAM(uint8_t pos, uint8_t pcf_address){
+    i2cWritePol((char *)buildInstruction((1 << (RAM_BIT - 1)) | pos), 4, pcf_address); // Set CGRAM address
+    _delay_us(100);
+}
+
+void screenWriteCGRAM(SCREEN *screen, const uint8_t *pattern, uint8_t char_index) {
+    if (!pattern) return;
+    char_index &= 0x07;
+
+    setCursorCGRAM(char_index * 8, screen->pcf8574_addr);
+
+    for (uint8_t i = 0; i < 8; i++) {
+        uint8_t bytes[5];
+        buildBytes(bytes, pattern[i]);
+        i2cWritePol((char *)bytes, 4, screen->pcf8574_addr);
+        _delay_us(45);
+    }
+}
+
+
+
 void screenClear(SCREEN *screen) {
-    i2cWritePol((char *)buildInstrucion(CLEAR_DISPLAY), 4, screen->pcf8574_addr);
+    i2cWritePol((char *)buildInstruction(CLEAR_DISPLAY), 4, screen->pcf8574_addr);
     _delay_ms(2);
     screen->current_column = 0;
     screen->current_row = 0;
@@ -182,23 +202,106 @@ void screenSetCursor(SCREEN *screen, uint8_t row, uint8_t column) {
     screen->current_row = row;
     screen->current_column = column;
     uint8_t addr = getAddress(row, column);
-    setCursor(addr, screen->pcf8574_addr);
+    setCursorDDRAM(addr, screen->pcf8574_addr);
 }
 
 void screenWriteAt(SCREEN *screen, uint8_t row, uint8_t column, char *text) {
     screenSetCursor(screen, row, column);
-    screenWrite(screen, text);
+    screenWriteDDRAM(screen, text);
 }
 
-void updateGameScreen(SCREEN *screen, const char *game_name, uint8_t top_score, uint8_t current_score) {
-    char top_str[10];
-    snprintf(top_str, sizeof(top_str), "Top Score: %-3d", top_score);
 
-    screenWriteAt(screen, 0, 0, (char *)game_name); 
-    screenWriteAt(screen, 0, 10, top_str);
-
-    char score_str[20];
-    snprintf(score_str, sizeof(score_str), "Current score: %-3d", current_score);
-    screenWriteAt(screen, 3, 0, score_str);
+void screenPrintCustomChar(SCREEN *screen, uint8_t row, uint8_t col, uint8_t char_index) { 
+    screenSetCursor(screen, row, col); 
+    uint8_t bytes[5]; buildBytes(bytes, char_index); 
+    i2cWritePol((char *)bytes, 4, screen->pcf8574_addr); 
+    _delay_us(45); 
 }
 
+void loadTileBatch(SCREEN *screen, LCDTile *tiles, uint8_t count) {
+    for (uint8_t i = 0; i < count && i < 8; i++) {
+        screenWriteCGRAM(screen, tiles[i].pattern, tiles[i].slot);
+        screenPrintCustomChar(screen, tiles[i].row, tiles[i].col, tiles[i].slot);
+    }
+}
+
+//SnakeGame
+void snakeGameIconUp(SCREEN *screen) {
+    LCDTile snakeTiles[] = {
+        {{0, 3, 7, 7, 3, 0, 3, 7},          0, 18, 0},
+        {{0, 0, 16, 16, 0, 0, 0, 16},       0, 19, 1},
+        {{0, 0, 0, 0, 0, 1, 1, 1},          1, 17, 2},
+        {{7, 3, 7, 14, 28, 24, 16, 16},     1, 18, 3},
+        {{16, 0, 0, 0, 0, 0, 0, 0},         1, 19, 4},
+        {{1, 0, 0, 0, 0, 0, 0, 0},          2, 17, 5},
+        {{24, 24, 24, 28, 14, 7, 3, 1},     2, 18, 6},
+        {{0, 0, 0, 0, 0, 0, 16, 16},        2, 19, 7},
+    };
+    loadTileBatch(screen, snakeTiles, sizeof(snakeTiles) / sizeof(LCDTile));
+}
+
+
+void pacmanGameIcon(SCREEN *screen) {
+    LCDTile pacmanTiles[] = {
+        {{0, 0, 0, 1, 3, 3, 7, 7},         1, 17, 0},
+        {{0, 0, 14, 31, 31, 27, 31, 30},   1, 18, 1},
+        {{0, 0, 0, 16, 24, 16, 0, 4},      1, 19, 2},
+        {{7, 3, 3, 1, 0, 0, 0, 0},         2, 17, 3},
+        {{31, 31, 31, 31, 14, 0, 0, 0},    2, 18, 4},
+        {{0, 16, 24, 16, 0, 0, 0, 0},      2, 19, 5},
+    };
+    loadTileBatch(screen, pacmanTiles, sizeof(pacmanTiles) / sizeof(LCDTile));
+}
+
+
+//Pong
+void pongIcon(SCREEN *screen) {
+    LCDTile pongTiles[] = {
+        {{0, 0, 7, 7, 7, 7, 7, 7},         0, 17, 0},
+        {{7, 7, 7, 7, 7, 7, 7, 7},         1, 17, 1},
+        {{0, 0, 0, 12, 30, 30, 12, 0},     1, 19, 2},
+        {{7, 7, 7, 7, 7, 7, 7, 7},         2, 17, 3},
+        {{7, 7, 7, 7, 7, 7, 0, 0},         3, 17, 4},
+    };
+
+    loadTileBatch(screen, pongTiles, sizeof(pongTiles) / sizeof(LCDTile));
+}								
+
+//Spacecraft
+void spacecraftIcon(SCREEN *screen) {
+    LCDTile spacecraftTiles[] = {
+        {{0, 0, 0, 0, 0, 0, 0, 8},         0, 18, 0},
+        {{0, 4, 0, 2, 0, 4, 0, 8},         1, 18, 1},
+        {{0, 0, 0, 0, 0, 0, 0, 3},         2, 17, 2},
+        {{0, 4, 0, 0, 14, 14, 14, 17},     2, 18, 3},
+        {{0, 0, 0, 0, 0, 0, 0, 24},        2, 19, 4},
+        {{3, 3, 0, 0, 0, 0, 0, 0},         3, 17, 5},
+        {{17, 17, 0, 0, 0, 0, 0, 0},       3, 18, 6},
+        {{24, 24, 0, 0, 0, 0, 0, 0},       3, 19, 7},
+    };
+
+    loadTileBatch(screen, spacecraftTiles, sizeof(spacecraftTiles) / sizeof(LCDTile));
+}
+
+
+void updateGameIcon(SCREEN *screen, const char *game_name) {
+    if (strcmp(game_name, "Snake") == 0) snakeGameIconUp(screen);
+    else if (strcmp(game_name, "Pacman") == 0) pacmanGameIcon(screen);
+    else if (strcmp(game_name, "Pong") == 0) pongIcon(screen);
+    else if (strcmp(game_name, "Spacecraft") == 0) spacecraftIcon(screen);
+}
+
+void updateGameScreen(SCREEN *screen, char *game_name, uint8_t current_score, uint8_t top_score) {
+    char top_buf[10];  
+    char cur_buf[10];
+    char title_buf[20];  
+
+    snprintf(top_buf, sizeof(top_buf), "TS:%d", top_score);
+    snprintf(cur_buf, sizeof(cur_buf), "CS:%d", current_score);
+    snprintf(title_buf, sizeof(title_buf), "GAME: %s", game_name);
+
+    screenWriteAt(screen, 0, 0, title_buf);  
+    screenWriteAt(screen, 3, 0, cur_buf);     
+    screenWriteAt(screen, 3, 9, top_buf);  
+    updateGameIcon(screen, game_name);   
+}													

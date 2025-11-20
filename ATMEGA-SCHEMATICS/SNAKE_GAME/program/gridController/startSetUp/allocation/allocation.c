@@ -37,7 +37,7 @@ I2C_PORT i2c_port = {
     .instruction         = 0,
     .intruction_size     = 6,
     .current_target_addr = 0xFF,
-    .current_mode        = 0xFF
+    .current_mode        = 0xFF,
     
 };
 
@@ -47,5 +47,5 @@ SCREEN_CONF screen = {
 
 uint8_t allocateVar(){
     i2c_port.instruction = malloc(sizeof(char)*i2c_port.intruction_size);
-    return (i2c_port.instruction != NULL) ? 1 : 0;
+    return 0;
 }
