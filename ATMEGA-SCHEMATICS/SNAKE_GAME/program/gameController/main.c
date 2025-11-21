@@ -16,25 +16,37 @@ int main(){
     screenInit(&screen, true);
     _delay_ms(100);
     
-    //updateGameScreen(&screen, "Snake",100,210);
-    
-    
-    //updateGameScreen(&screen, "Pacman",100, 210);
-   
-
-    //updateGameScreen(&screen, "Pong",100, 210);
     
 
-    //updateGameScreen(&screen, "Spacecraft",100,210);
-  
-
-    screenWriteAt(&screen, 0, 3, "Hello");
-    //_delay_ms(2);
+    screenWriteAt(&screen, 0, 1, "Hello! Welcome :)");
+    screenWriteAt(&screen, 3, 3, "Let's play!!!");
+    _delay_ms(5000);
     
-    //screenClear(&screen);
-    //_delay_ms();
+    screenClear(&screen);
+    _delay_ms(500);
     //_delay_ms();
    
+    updateGameScreen(&screen, "Snake",100,2500);
+    _delay_ms(5000);
+    
+    screenClear(&screen);
+    _delay_ms(500);
+
+    updateGameScreen(&screen, "Pac-Man",100, 3000);
+    _delay_ms(5000);
+
+    screenClear(&screen);
+    _delay_ms(500);
+
+    updateGameScreen(&screen, "Pong",100, 3500);
+    _delay_ms(5000);
+
+    screenClear(&screen);
+    _delay_ms(500);
+
+    updateGameScreen(&screen, "Spacecraft",100,5000);
+    _delay_ms(500);
+
     /*while(1){
         screenWriteDDRAM(&screen, "Hello World ");
         _delay_ms(2000);

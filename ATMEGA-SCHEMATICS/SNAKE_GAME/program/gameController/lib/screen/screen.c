@@ -189,8 +189,6 @@ void screenWriteCGRAM(SCREEN *screen, const uint8_t *pattern, uint8_t char_index
     }
 }
 
-
-
 void screenClear(SCREEN *screen) {
     i2cWritePol((char *)buildInstruction(CLEAR_DISPLAY), 4, screen->pcf8574_addr);
     _delay_ms(2);
@@ -210,7 +208,6 @@ void screenWriteAt(SCREEN *screen, uint8_t row, uint8_t column, char *text) {
     screenWriteDDRAM(screen, text);
 }
 
-
 void screenPrintCustomChar(SCREEN *screen, uint8_t row, uint8_t col, uint8_t char_index) { 
     screenSetCursor(screen, row, col); 
     uint8_t bytes[5]; buildBytes(bytes, char_index); 
@@ -226,22 +223,23 @@ void loadTileBatch(SCREEN *screen, LCDTile *tiles, uint8_t count) {
 }
 
 //SnakeGame
-void snakeGameIconUp(SCREEN *screen) {
+void snakeGameIcon(SCREEN *screen) {
     LCDTile snakeTiles[] = {
-        {{0, 3, 7, 7, 3, 0, 3, 7},          0, 18, 0},
-        {{0, 0, 16, 16, 0, 0, 0, 16},       0, 19, 1},
-        {{0, 0, 0, 0, 0, 1, 1, 1},          1, 17, 2},
-        {{7, 3, 7, 14, 28, 24, 16, 16},     1, 18, 3},
-        {{16, 0, 0, 0, 0, 0, 0, 0},         1, 19, 4},
-        {{1, 0, 0, 0, 0, 0, 0, 0},          2, 17, 5},
-        {{24, 24, 24, 28, 14, 7, 3, 1},     2, 18, 6},
-        {{0, 0, 0, 0, 0, 0, 16, 16},        2, 19, 7},
+        {{0, 0, 6, 15, 15, 6, 0, 6},      0, 18, 0},
+        {{0, 0, 0, 0, 0, 1, 1, 1},        1, 17, 1},
+        {{15, 15, 6, 14, 28, 24, 16, 16}, 1, 18, 2},
+        {{1, 0, 0, 0, 0, 0, 0, 0},        2, 17, 3},
+        {{24, 24, 24, 28, 14, 7, 3, 1},   2, 18, 4},
+        {{0, 0, 0, 0, 0, 0, 16, 16},      2, 19, 5},
+        {{1, 1, 8, 16, 8, 4, 0, 0},       3, 18, 6},
+        {{16, 16, 0, 0, 0, 0, 0, 0},      3, 19, 7},
+
     };
     loadTileBatch(screen, snakeTiles, sizeof(snakeTiles) / sizeof(LCDTile));
 }
 
-
-void pacmanGameIcon(SCREEN *screen) {
+//Pacman
+void pacManGameIcon(SCREEN *screen) {
     LCDTile pacmanTiles[] = {
         {{0, 0, 0, 1, 3, 3, 7, 7},         1, 17, 0},
         {{0, 0, 14, 31, 31, 27, 31, 30},   1, 18, 1},
@@ -263,7 +261,6 @@ void pongIcon(SCREEN *screen) {
         {{7, 7, 7, 7, 7, 7, 7, 7},         2, 17, 3},
         {{7, 7, 7, 7, 7, 7, 0, 0},         3, 17, 4},
     };
-
     loadTileBatch(screen, pongTiles, sizeof(pongTiles) / sizeof(LCDTile));
 }								
 
@@ -279,19 +276,18 @@ void spacecraftIcon(SCREEN *screen) {
         {{17, 17, 0, 0, 0, 0, 0, 0},       3, 18, 6},
         {{24, 24, 0, 0, 0, 0, 0, 0},       3, 19, 7},
     };
-
     loadTileBatch(screen, spacecraftTiles, sizeof(spacecraftTiles) / sizeof(LCDTile));
 }
 
 
 void updateGameIcon(SCREEN *screen, const char *game_name) {
-    if (strcmp(game_name, "Snake") == 0) snakeGameIconUp(screen);
-    else if (strcmp(game_name, "Pacman") == 0) pacmanGameIcon(screen);
+    if (strcmp(game_name, "Snake") == 0) snakeGameIcon(screen);
+    else if (strcmp(game_name, "Pac-Man") == 0) pacManGameIcon(screen);
     else if (strcmp(game_name, "Pong") == 0) pongIcon(screen);
     else if (strcmp(game_name, "Spacecraft") == 0) spacecraftIcon(screen);
 }
 
-void updateGameScreen(SCREEN *screen, char *game_name, uint8_t current_score, uint8_t top_score) {
+void updateGameScreen(SCREEN *screen, char *game_name, uint16_t current_score, uint16_t top_score) {
     char top_buf[10];  
     char cur_buf[10];
     char title_buf[20];  
