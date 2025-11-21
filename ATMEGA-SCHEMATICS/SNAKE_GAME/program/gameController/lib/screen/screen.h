@@ -76,13 +76,14 @@ uint8_t getAddress(uint8_t row, uint8_t column);
 void screenClear(SCREEN *screen);
 void screenSetCursor(SCREEN *screen, uint8_t row, uint8_t column);
 void screenWriteAt(SCREEN *screen, uint8_t row, uint8_t column, char *text);
+void screenPrintCustomChar(SCREEN *screen, uint8_t row, uint8_t col, uint8_t char_index);
 void loadTileBatch(SCREEN *screen, LCDTile *tiles, uint8_t count);
 void snakeGameIcon(SCREEN *screen);
 void pacManIcon(SCREEN *screen);
 void pongIcon(SCREEN *screen);
 void spacecraftIcon(SCREEN *screen);
 void updateGameIcon(SCREEN *screen, const char *game_name);
-void updateGameScreen(SCREEN *screen,char *game_name, uint16_t top_score, uint16_t current_score);
+void updateGameScreen(SCREEN *screen, char *game_name, uint16_t current_score, uint16_t top_score);
 
 #ifdef __cplusplus
 }
