@@ -1,17 +1,34 @@
-main.o: main.c includes.h startSetUp/spi/spi.h includes.h \
- data_types/data_types.h startSetUp/uart/uart.h startSetUp/i2c/i2c.h \
- lib/screen/screen.h
+main.o: main.c includes/includes.h includes/protocols/spi.h \
+ includes/protocols/uart.h includes/protocols/i2c.h includes/sram/sram.h \
+ includes/ws2812b/start.h includes/screen/screen.h \
+ includes/sram/shared_memory.h includes/snake/snake.h \
+ libC/DataStructures.h includes/ws2812b/WS2812B.h \
+ includes/ws2812b/start.h includes/ws2812b/colors.h includes/sram/sram.h
 
-includes.h:
+includes/includes.h:
 
-startSetUp/spi/spi.h:
+includes/protocols/spi.h:
 
-includes.h:
+includes/protocols/uart.h:
 
-data_types/data_types.h:
+includes/protocols/i2c.h:
 
-startSetUp/uart/uart.h:
+includes/sram/sram.h:
 
-startSetUp/i2c/i2c.h:
+includes/ws2812b/start.h:
 
-lib/screen/screen.h:
+includes/screen/screen.h:
+
+includes/sram/shared_memory.h:
+
+includes/snake/snake.h:
+
+libC/DataStructures.h:
+
+includes/ws2812b/WS2812B.h:
+
+includes/ws2812b/start.h:
+
+includes/ws2812b/colors.h:
+
+includes/sram/sram.h:
