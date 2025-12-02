@@ -1,5 +1,5 @@
 ############################################################################################################
-#                                        MAKEFILE — GAME_CONTROLLER (MULTI-MCU)                                  #
+#                                        MAKEFILE — GRID_CONTROLLER (MULTI-MCU)                                  #
 ############################################################################################################
 #  Project     : Snake                                                                                     #
 #  Subprojects : gridController (grid/ISRs), gameController (game/UI/audio)                                #
@@ -21,29 +21,35 @@
 ############################################################################################################
 
 
-
-
 # ===== Project =====
 MCU := atmega328p
-F_CPU    = 16000000UL
+F_CPU    = 20000000UL
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
+TARGET := main
 
+# Add any source directories here
 SRC_DIRS = \
-  . \
-  startSetUp/i2c \
-  lib/screen \
-  sram \
-  data_types\
+  ./ \
+  src \
   libC \
-  startSetUp \
-  startSetUp/flash \
-  startSetUp/spi \
-  startSetUp/timer \
-  startSetUp/uart \
-  startSetUp/ws2812b \
-  grid \
-  #games/snake \
-  #shared_memory
+  src/protocols \
+  src/screen \
+  src/snake \
+  src/sram \
+  src/tim \
+  src/ws2812b
+
+  INC_DIRS = \
+  ./ \
+  libC \
+  includes/protocols \
+  includes/ \
+  includes/screen \
+  includes/snake \
+  includes/sram \
+  includes/tim \
+  includes/ws2812b
+  
 
 #######################################################################################################################################################                                                                            
 #                               					 			GRID CONTROLLER MCU                                  	             				  #
@@ -87,7 +93,7 @@ ifeq ($(INIT), INIT_UBUNTU)
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
 OBJS   := $(SRCS:.c=.o)
-INCS   := $(addprefix -I,$(SRC_DIRS))
+INCS   := $(addprefix -I,$(INC_DIRS))
 
 # ===== Tools/Flags =====
 CC      = avr-gcc
@@ -144,7 +150,7 @@ ifeq ($(INIT), INIT_POSIX)
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
 OBJS   := $(SRCS:.c=.o)
-INCS   := $(addprefix -I,$(SRC_DIRS))
+INCS   := $(addprefix -I,$(INC_DIRS))
 
 # ===== Tools/Flags =====
 CC      = avr-gcc
@@ -156,7 +162,7 @@ CFLAGS  = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra -std=c11 $(INCS) -MMD 
 LDFLAGS = -mmcu=$(MCU)
 
 PROGRAMMER    = usbasp
-AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m168
+AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m328p
 
 # ===== Build =====
 all: $(TARGET).hex size
@@ -196,6 +202,52 @@ endif
 #  Author     : Lucas Nascimento                                               
 #  Date       : 09/22/2025  
 ifeq ($(INIT), INIT_WIN)
+
+# Auto-discover sources/headers
+SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
+OBJS   := $(SRCS:.c=.o)
+INCS   := $(addprefix -I,$(SRC_DIRS))
+
+# ===== Tools/Flags =====
+CC      = avr-gcc
+OBJCOPY = avr-objcopy
+SIZE    = avr-size
+AVRDUDE = avrdude
+
+CFLAGS  = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra -std=c11 $(INCS) -MMD -MP
+LDFLAGS = -mmcu=$(MCU)
+
+PROGRAMMER    = usbasp
+AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m168
+
+# ===== Build =====
+all: $(TARGET).hex size
+
+$(TARGET).elf: $(OBJS)
+	$(CC) $(LDFLAGS) $^ -o $@
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(TARGET).hex: $(TARGET).elf
+	$(OBJCOPY) -O ihex -R .eeprom $< $@
+
+size: $(TARGET).elf
+	$(SIZE) --format=sysv $<
+
+flash: $(TARGET).hex
+	$(AVRDUDE) $(AVRDUDE_FLAGS) -U flash:w:$<
+
+fuse:
+	$(AVRDUDE) $(AVRDUDE_FLAGS) -U lfuse:w:0xFF:m
+
+readfuse:
+	$(AVRDUDE) $(AVRDUDE_FLAGS) -U lfuse:r:-:h -U hfuse:r:-:h -U efuse:r:-:h
+
+clean:
+	rm -f $(OBJS) $(SRCS:.c=.d) $(TARGET).elf $(TARGET).hex
+
+-include $(SRCS:.c=.d)
 
 endif
 

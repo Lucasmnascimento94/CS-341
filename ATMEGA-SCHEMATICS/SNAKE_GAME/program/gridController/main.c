@@ -62,9 +62,18 @@ int main(void){
     displayGrid();
 
     while(1){
+        /*___________Wait for Clear_To_Access signal__________*/
         while(!((PINC >> PC3) & 0x01)){uartWrite_("..waiting for ram..\n");}
+
+        /*________Control SPI data bus to access sram_________*/
+        spiResume(&spi);
+
+        /*_________Read Commands_________*/
+        /*_________Read Buffer_________*/
+        /*_________Free RAM ans data bus_________*/
         walk();
         displayGrid();
+        spiPause(&spi);
     }
 }
 

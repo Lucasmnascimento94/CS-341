@@ -16,6 +16,7 @@ static inline void dcy_(uint16_t c){__builtin_avr_delay_cycles(c);}
  * change the parameters in the header: spi.h
  *============================================================================*/
 void spiConf(SPI *spi);
+
 void spiInit(SPI *spi){
     
     spiConf(spi);
@@ -39,6 +40,16 @@ void spiInit(SPI *spi){
     SPSR =  (SPSR & ~_BV(SPI2X)) | ((spi->conf->spr2x & 1u) << SPI2X);              // Adjust prescaler 
 
     SPCR =  (SPCR & ~_BV(SPE))  | ((spi->conf->mode_conf->en & 1u)<< SPE);           // Enable/Disable SPI
+}
+
+void spiPause(SPI *spi){
+    spi->conf->mode_conf->en = false;
+    SPCR &=  ~(SPCR & ~_BV(SPE))  & ~((spi->conf->mode_conf->en & 1u)<< SPE);   
+}
+
+void spiResume(SPI *spi){
+    spi->conf->mode_conf->en = true;
+    spiInit(spi);  
 }
 
 void spiStart(SPI *spi){
