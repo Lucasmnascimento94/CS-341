@@ -41,61 +41,27 @@ void walk(){
     bool eat = foodCheck(PIXEL_ADDRESS(new_i, new_j), &poison);
     if(poison){uartWrite_("Poison food detected\n"); return;}
     
-    if(1){
-        for(readNode(&node, sram_map.stack.tail);node.prev != NULL_PTR; readNode(&node, node.prev)){
-            readNode(&prev, node.prev);
-            node.i = prev.i;
-            node.j = prev.j;
-            node.addr = prev.addr;
-            updateNode(&node, prev.next);
-        }
 
-        readNode(&node, sram_map.stack.head);
-        node.i = new_i;
-        node.j = new_j;
-        node.addr = PIXEL_ADDRESS(new_i, new_j);
-        updateNode(&node, sram_map.stack.head);
+    for(readNode(&node, sram_map.stack.tail);node.prev != NULL_PTR; readNode(&node, node.prev)){
+        readNode(&prev, node.prev);
+        node.i = prev.i;
+        node.j = prev.j;
+        node.addr = prev.addr;
+        updateNode(&node, prev.next);
     }
 
-    else{
-        readNode(&node, sram_map.stack.head);
-        new_i = node.i;
-        new_j = node.j;
+    readNode(&node, sram_map.stack.head);
+    node.i = new_i;
+    node.j = new_j;
+    node.addr = PIXEL_ADDRESS(new_i, new_j);
+    updateNode(&node, sram_map.stack.head);
+    
 
-        switch (cmd){
-        case WALK_UP:    new_j++; break;
-        case WALK_DOWN:  new_j--; break;
-        case WALK_RIGHT:  new_i--; break;
-        case WALK_LEFT: new_i++; break;
-        }
-
-        if(new_i>SCREEN_WIDTH){new_i=1;}
-        else if(new_i == 0){new_i=SCREEN_WIDTH;}
-
-        if(new_j>SCREEN_HEIGHT){new_j=1;}
-        else if(new_j == 0){new_j=SCREEN_HEIGHT;}
-
-        if(collisionCheck(PIXEL_ADDRESS(new_i, new_j)))return;
-        
-        readNode(&node, sram_map.stack.tail);
-        for(;node.prev != NULL_PTR; readNode(&node, node.prev)){
-            readNode(&prev, node.prev);
-            node.i = prev.i;
-            node.j = prev.j;
-            node.addr = prev.addr;
-        }
-        readNode(&node, sram_map.stack.head);
-        node.i = new_i;
-        node.j = new_j;
-        node.addr = PIXEL_ADDRESS(new_i, new_j);
-        updateNode(&node, sram_map.stack.head);
-    }
     bufferWrite(0x00, 0x00, 0x00, old_tail_pixel);
     loadBufferFromStack();
 }
 
 void initSnake(){
-    displayClear();
     uint8_t x = FIRST_PIXEL_X;
     node.g = (SNAKE_COLOR >> 16) & 0XFF;
     node.r = (SNAKE_COLOR >> 8) & 0XFF;
@@ -110,7 +76,6 @@ void initSnake(){
         x--;
     }
     loadBufferFromStack();
-    displayGrid();
 }
 
 /*============================================================================================*
@@ -134,9 +99,8 @@ bool foodCheck(uint32_t new_node_addr, bool *poison){
     struct NODE temp;
     readNode(&food, sram_map.stack.food);
     readNode(&temp, sram_map.stack.head);
-    for(;temp.next != NULL_PTR; readNode(&temp, temp.next)){
-        if(new_node_addr != food.addr) return false;
-    }
+ 
+    if(new_node_addr != food.addr) return false;
 
     food.g = temp.g;
     food.r = temp.r;
@@ -161,11 +125,10 @@ bool foodCheck(uint32_t new_node_addr, bool *poison){
     uint8_t y;
     uint32_t val;
     bool stop = false;
-    readNode(&food, sram_map.stack.food);
     while(!stop){
         readNode(&temp, sram_map.stack.head);
-        x = (rand() % SCREEN_WIDTH) + 1;
-        y = (rand() % SCREEN_HEIGHT) + 1;
+        x = (rand() % SCREEN_WIDTH);
+        y = (rand() % SCREEN_HEIGHT);
         val = PIXEL_ADDRESS(x, y);
 
         for(;temp.next != NULL_PTR; readNode(&temp, temp.next)){
@@ -183,25 +146,13 @@ bool foodCheck(uint32_t new_node_addr, bool *poison){
     food.r = (FOOD_COLOR >> 8) & 0xff;
     food.b = (FOOD_COLOR ) & 0xff;
     food.addr = PIXEL_ADDRESS(x, y);
+    bufferWrite(food.g, food.r, food.b, food.addr);
     loadFood(&food);
  }
 
 /*============================================================================================*
  * EFFECTS — sound, LED flashes, animations                                                    *
  *============================================================================================*/
-
-
- void gameEnd(SnakeBelly *belly, struct Cell *food){
-    belly->color = COLOR_RED;
-
-    for(int i=0; i<10; i++){
-        displayClear();
-        displayGrid(belly, food);
-        _delay_ms(300);
-    }
-
-    popAll(belly);
- }
 
   void draw(uint8_t *arr, uint8_t x_start, uint8_t y_start, uint32_t color){
 

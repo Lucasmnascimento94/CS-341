@@ -44,6 +44,10 @@ void spiInit(SPI *spi){
 
 void spiPause(SPI *spi){
     spi->conf->mode_conf->en = false;
+    DDRB &= ~(1<<PB3) & ~(1<<PB2);
+    PORTB |= (1<<PB3) | (1<<PB2);
+
+    spiStop(spi);
     SPCR &=  ~(SPCR & ~_BV(SPE))  & ~((spi->conf->mode_conf->en & 1u)<< SPE);   
 }
 
@@ -53,10 +57,12 @@ void spiResume(SPI *spi){
 }
 
 void spiStart(SPI *spi){
+    *spi->cs_reg->CS_DDR |= (1<<spi->cs_reg->CS_PIN);
     *spi->cs_reg->CS_PORT &= ~(1<<spi->cs_reg->CS_PIN);
 }
 
 void spiStop(SPI *spi){
+    *spi->cs_reg->CS_DDR &= ~(1<<spi->cs_reg->CS_PIN);
     *spi->cs_reg->CS_PORT |= (1<<spi->cs_reg->CS_PIN);
 }
 

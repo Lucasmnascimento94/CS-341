@@ -44,6 +44,10 @@ void spiInit(SPI *spi){
 
 void spiPause(SPI *spi){
     spi->conf->mode_conf->en = false;
+    DDRB &= ~(1<<PB3) & ~(1<<PB2);
+    PORTB |= (1<<PB3) | (1<<PB2);
+
+    spiStop(spi);
     SPCR &=  ~(SPCR & ~_BV(SPE))  & ~((spi->conf->mode_conf->en & 1u)<< SPE);   
 }
 
@@ -53,10 +57,12 @@ void spiResume(SPI *spi){
 }
 
 void spiStart(SPI *spi){
+    *spi->cs_reg->CS_DDR |= (1<<spi->cs_reg->CS_PIN);
     *spi->cs_reg->CS_PORT &= ~(1<<spi->cs_reg->CS_PIN);
 }
 
 void spiStop(SPI *spi){
+    *spi->cs_reg->CS_DDR &= ~(1<<spi->cs_reg->CS_PIN);
     *spi->cs_reg->CS_PORT |= (1<<spi->cs_reg->CS_PIN);
 }
 
@@ -232,15 +238,90 @@ void spiReadPollByte_(uint8_t *data){
 
 void spiReadBufferWs2812b(uint32_t size){
     uint8_t data = 0x00;
-    for(uint32_t i=0; i<size*3; i++){
+    uint8_t buff_1[PAD_LEN*3*8];
+
+    for(int i=0; i<3; i++){
+        for(uint16_t j=0; j<PAD_LEN*3*8; j++){
+            SPDR = 0x00;
+            while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
+            buff_1[j]  = SPDR;                       // Get data from buffer        
+        }
+        writeBurst(buff_1);
+    }                 // Get data from buffer
+}
+
+/*
+
+void spiReadBufferWs2812b(uint32_t size){
+    uint8_t data = 0x00;
+    uint8_t buff_1[PAD_LEN*3];
+    uint8_t buff_2[PAD_LEN*3];
+    uint8_t buff_3[PAD_LEN*3];
+    uint8_t buff_4[PAD_LEN*3];
+    uint8_t buff_5[PAD_LEN*3];
+    uint8_t buff_6[PAD_LEN*3];
+    uint8_t buff_7[PAD_LEN*3];
+    uint8_t buff_8[PAD_LEN*3];
+
+    for(int i=0; i<8; i++){
+    for(uint16_t j=0; j<PAD_LEN; j++){
+        SPDR = 0x00;
+        while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
+        buff_1[j]  = SPDR;                       // Get data from buffer        
+    }
+    for(uint16_t j=0; j<PAD_LEN; j++){
         SPDR = 0x00;
         while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
         data = SPDR;                       // Get data from buffer
-        send_byte(data);
+        buff_2[j] = data;
     }
-    latch();
-}
 
+    for(uint16_t j=0; j<PAD_LEN; j++){
+        SPDR = 0x00;
+        while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
+        data = SPDR;                       // Get data from buffer
+        buff_3[j] = data;
+    }
+
+    for(uint16_t j=0; j<PAD_LEN; j++){
+        SPDR = 0x00;
+        while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
+        data = SPDR;                       // Get data from buffer
+        buff_4[j] = data;
+    }                 // Get data from buffer
+
+    for(uint16_t j=0; j<PAD_LEN; j++){
+        SPDR = 0x00;
+        while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
+        data = SPDR;                       // Get data from buffer
+        buff_5[j] = data;
+    }                 // Get data from buffer
+
+    for(uint16_t j=0; j<PAD_LEN; j++){
+        SPDR = 0x00;
+        while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
+        data = SPDR;                       // Get data from buffer
+        buff_6[j] = data;
+    }                 // Get data from buffer
+
+        for(uint16_t j=0; j<PAD_LEN; j++){
+        SPDR = 0x00;
+        while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
+        data = SPDR;                       // Get data from buffer
+        buff_7[j] = data;
+    }                 // Get data from buffer
+
+        for(uint16_t j=0; j<PAD_LEN; j++){
+        SPDR = 0x00;
+        while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
+        data = SPDR;                       // Get data from buffer
+        buff_8[j] = data;
+    }                 // Get data from buffer
+
+    writeBurst(buff_1, buff_2, buff_3, buff_4, buff_5, buff_6);
+    }                 // Get data from buffer
+}
+*/
 /*=============================================================================
  * SPI Protocol – Read (Polling)
  *

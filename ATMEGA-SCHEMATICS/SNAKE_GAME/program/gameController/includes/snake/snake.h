@@ -37,9 +37,6 @@
 #define ARG_COLLISION 0X07
 
 #include "includes.h"
-#include "DataStructures.h"
-#include "WS2812B.h"
-#include "stdio.h"
 #include "string.h"
 #include "colors.h"
 
@@ -67,15 +64,6 @@ bool foodCheck(uint32_t new_node_addr, bool *poison);
  * EFFECTS — sound, LED flashes, animations                                                    *
  *============================================================================================*/
 
-void gameInit(SnakeBelly *belly, struct Cell *food);
-void gameEnd(SnakeBelly *belly,struct Cell *food);
-
-void gameLose(SnakeBelly *belly, struct Cell *food);
-void gameWin(SnakeBelly *belly, struct Cell *food);
-
-void foodPoison(SnakeBelly *belly);
-void foodEat(SnakeBelly *belly);
-void foodLoosing(Cell *food);
 
 void initialAnimation();
 

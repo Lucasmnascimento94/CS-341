@@ -22,7 +22,7 @@
 #ifndef ISR_H
 #define ISR_H
 
-#include "start.h"
-#include "DataStructures.h"
+#include "console.h"
 
+extern uint8_t isr_flag;
 #endif

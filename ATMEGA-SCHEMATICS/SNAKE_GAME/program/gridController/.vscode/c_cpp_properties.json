@@ -11,20 +11,16 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/includes/",
-                "${workspaceFolder}/includes/isr",
                 "${workspaceFolder}/includes/protocols",
                 "${workspaceFolder}/includes/screen",
                 "${workspaceFolder}/includes/snake",
                 "${workspaceFolder}/includes/sram",
-                "${workspaceFolder}/includes/tim",
                 "${workspaceFolder}/includes/ws2812b",
                 "${workspaceFolder}/src/",
-                "${workspaceFolder}/src/isr",
                 "${workspaceFolder}/src/protocols",
                 "${workspaceFolder}/src/screen",
                 "${workspaceFolder}/src/snake",
                 "${workspaceFolder}/src/sram",
-                "${workspaceFolder}/src/tim",
                 "${workspaceFolder}/src/ws2812b"
             ],
             "defines": [

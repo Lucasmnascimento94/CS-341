@@ -19,7 +19,7 @@
     #define T1L_TOT 7    
     #define T0H_TOT 6    
     #define T0L_TOT 14   
-    #define TLL 30
+    #define TLL 15
   #elif (F_CPU == 20000000UL)
     #define T1H_TOT 14   // 0.70us high
     #define T1L_TOT 9   // 0.55us low
@@ -39,20 +39,36 @@
 #define COLOR_G 0xFF
 #define COLOR_R 0x00
 #define COLOR_B 0xFF
-#define DATA_PORT PORTC
-#define DATA_PIN PC0
-#define DATA_DDR DDRC
+
+#define DATA_PORT_ PORTD
+#define DATA_DDR_ DDRD
+#define DATA_PIN_1 PD0
+#define DATA_PIN_2 PD1
+#define DATA_PIN_3 PD2
+#define DATA_PIN_4 PD3
+#define DATA_PIN_5 PD4
+#define DATA_PIN_6 PD5
+#define DATA_PIN_7 PD6
+#define DATA_PIN_8 PD7
 
 
-#define PAD_WIDTH   8
+#define DATA_PORT PORTD
+#define DATA_PIN PD2
+#define DATA_DDR DDRD
+
+
+
+#define PAD_WIDTH  8
+#define PAD_HEIGHT 8
+#define PAD_LEN PAD_HEIGHT*PAD_WIDTH
 #define STRIDE  256
 #define PIXEL_ADDRESS(i,j) \
   ( ((j)%2)==0 ?\
                   (((PAD_WIDTH-1) - (i%PAD_WIDTH)) + (PAD_WIDTH*j) + (((i/PAD_WIDTH)*(STRIDE)))):\
                   ((PAD_WIDTH*j) + (i%PAD_WIDTH) + (((i/PAD_WIDTH)*(STRIDE)))))
 
-#define FIRST_PIXEL_X 24
-#define FIRST_PIXEL_Y 16
+#define FIRST_PIXEL_X 4
+#define FIRST_PIXEL_Y 4
 #define SNAKE_SIZE_INIT 10
 #define SNAKE_MAX_COUNT 1000
 

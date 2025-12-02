@@ -36,7 +36,6 @@ SRC_DIRS = \
   src/screen \
   src/snake \
   src/sram \
-  src/tim \
   src/ws2812b
 
   INC_DIRS = \
@@ -47,7 +46,6 @@ SRC_DIRS = \
   includes/screen \
   includes/snake \
   includes/sram \
-  includes/tim \
   includes/ws2812b
   
 

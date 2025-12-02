@@ -8,7 +8,7 @@
 #include "i2c.h"
 
 void i2cdefault(I2C_CONF *conf){
-    conf->f_cpu = 8000000;
+    conf->f_cpu = 20000000;
     conf->frequency = 400000;
     conf->mode = MODE_MASTER_POL;
     conf->prescaler = 1;

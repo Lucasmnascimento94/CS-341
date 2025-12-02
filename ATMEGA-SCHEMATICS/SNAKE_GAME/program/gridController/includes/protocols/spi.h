@@ -36,12 +36,6 @@
  *    usage patterns) are documented in the application notes listed above.
  *
  *============================================================================*/
-#define SPI_MODEuu        0       // 0,1,2,3  (SRAM likes 0)
-#define SPI_MSBFIRST    0       // 1=MSB first, 0=LSB first
-#define SPI_PRESCALER   64       // 2,4,8,16,32,64,128
-#define SPI_USE_IRQ     0       // 1=use SPI interrupt, 0=poll
-#define SPI_SPE         1       // SPI Enable(1) Disable(0)
-#define SPI_MSTR        1       // MSTR: Master(1)/Slave Select(0)
 
 
 typedef struct {

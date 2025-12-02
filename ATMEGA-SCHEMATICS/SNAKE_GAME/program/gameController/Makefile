@@ -37,7 +37,9 @@ SRC_DIRS = \
   src/snake \
   src/sram \
   src/tim \
-  src/ws2812b
+  src/console\
+  src/ws2812b\
+  src/isr
 
   INC_DIRS = \
   ./ \
@@ -48,7 +50,10 @@ SRC_DIRS = \
   includes/snake \
   includes/sram \
   includes/tim \
-  includes/ws2812b
+  includes/console\
+  includes/ws2812b\
+  includes/isr\
+  includes/colors
   
 
 #######################################################################################################################################################                                                                            

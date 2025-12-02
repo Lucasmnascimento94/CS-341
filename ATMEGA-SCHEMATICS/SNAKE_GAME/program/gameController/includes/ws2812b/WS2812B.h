@@ -1,10 +1,6 @@
 #ifndef WS2812B_H
 #define WS2812B_H
 #include "includes.h"
-#include "start.h"
-#include "DataStructures.h"
-
-
 
 #define IO_WRITE_CYC 4
 
