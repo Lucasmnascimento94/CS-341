@@ -28,7 +28,8 @@
 #define FLAG_DIRTY                  0x00u
 #define FLAG_VALID                  0xA5u
 #define SRAM_SIZE                   0x1FFFF
-#define SCREEN_WIDTH                24
+/* Must match gridController so both MCUs agree on buffer layout in SRAM */
+#define SCREEN_WIDTH                48
 #define SCREEN_HEIGHT               32
 #define SCREEN_BUFFER_SIZE          (SCREEN_WIDTH*SCREEN_HEIGHT)
 

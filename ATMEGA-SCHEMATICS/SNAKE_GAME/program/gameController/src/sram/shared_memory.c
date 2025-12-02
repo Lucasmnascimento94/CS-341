@@ -1,6 +1,7 @@
 #include "shared_memory.h"
 #include "uart.h"
 #include "string.h"
+#include <stdio.h>
 
 typedef struct{
     uint32_t score_start;
@@ -273,7 +274,8 @@ void bufferRead(){
 }
 
 void bufferClear(){
-    for(int i=0; i<SCREEN_BUFFER_SIZE*3; i++){
+    /* index is in pixels; bufferWrite multiplies by 3 internally */
+    for(int i=0; i<SCREEN_BUFFER_SIZE; i++){
         bufferWrite(0, 0, 0, i);
     }
 

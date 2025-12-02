@@ -1,5 +1,6 @@
 #include "shared_memory.h"
 #include "uart.h"
+#include <stdio.h>
 
 typedef struct{
     uint32_t score_start;
@@ -239,7 +240,8 @@ void bufferRead(){
 }
 
 void bufferClear(){
-    for(int i=0; i<SCREEN_BUFFER_SIZE*3; i++){
+    /* index is in pixels; bufferWrite multiplies by 3 internally */
+    for(int i=0; i<SCREEN_BUFFER_SIZE; i++){
         bufferWrite(0, 0, 0, i);
     }
 
@@ -258,7 +260,8 @@ void loadCommand(){
     uint32_t base        = bases.cmd_start;
 
     /*______________header_____________*/
-    sramWriteStringPoll(&spi, MAGIC_COMMANDS, COMMANDS_MAGIC(base), 2);    // keep 4 if that's your spec
+    /* Write full 4-byte magic so it matches gameController layout */
+    sramWriteStringPoll(&spi, MAGIC_COMMANDS, COMMANDS_MAGIC(base), 4);
 
     /*_____________payload_____________*/
     sramWriteU32(&spi, sram_map.cmd.cmdID,            COMMANDS_CMDID(base));

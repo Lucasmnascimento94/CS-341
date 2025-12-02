@@ -38,23 +38,17 @@ int main(void){
     init();
     isr_flag = sram_map.cmd.cmdID;
     while(1){
-        /*___________Wait for Clear_To_Access signal__________*/
-
-        /*________Control SPI data bus to access sram_________*/
+        /*________Control SPI data bus to access SRAM to write commands only_________*/
         memAcquire();
         spiResume(&spi);
 
-        if(isr_flag == WALK_UP) sram_map.cmd.cmdID = WALK_UP;
-        else if(isr_flag == WALK_DOWN) sram_map.cmd.cmdID = WALK_DOWN;
-        else if(isr_flag == WALK_LEFT) sram_map.cmd.cmdID = WALK_LEFT;
-        else sram_map.cmd.cmdID = WALK_RIGHT;
-        loadCommand();
-        /*_________Write Commands_________*/
-        /*_________Read Buffer_________*/
-        /*_________Free RAM ans data bus_________*/
-        walk();
-        
-        spiPause(&spi);
+        if(isr_flag == WALK_UP)      sram_map.cmd.cmdID = WALK_UP;
+        else if(isr_flag == WALK_DOWN)  sram_map.cmd.cmdID = WALK_DOWN;
+        else if(isr_flag == WALK_LEFT)  sram_map.cmd.cmdID = WALK_LEFT;
+        else                            sram_map.cmd.cmdID = WALK_RIGHT;
+
+        loadCommand();   /* write latest joystick command into shared SRAM */
+
         spiPause(&spi);
         memFree();
         _delay_us(10);

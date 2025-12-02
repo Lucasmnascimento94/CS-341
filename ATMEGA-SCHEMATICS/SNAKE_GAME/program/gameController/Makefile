@@ -211,7 +211,7 @@ ifeq ($(INIT), INIT_WIN)
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
 OBJS   := $(SRCS:.c=.o)
-INCS   := $(addprefix -I,$(SRC_DIRS))
+INCS   := $(addprefix -I,$(INC_DIRS))
 
 # ===== Tools/Flags =====
 CC      = avr-gcc
