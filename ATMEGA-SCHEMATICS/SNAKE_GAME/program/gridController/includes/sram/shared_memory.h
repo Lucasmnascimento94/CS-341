@@ -6,16 +6,9 @@
 #include "spi.h"
 #include "sram.h"
 
-#define SRAM_CTS_PORT PORTC
-#define SRAM_CTS_DDR  DDRC
-#define SRAM_CTS_PIN  PC3
-#define SRAM_CTS_PIN_PORT PINC
-
-#define SRAM_RTS_PORT PORTC
-#define SRAM_RTS_DDR  DDRC
-#define SRAM_RTS_PIN  PC2
-#define SRAM_RTS_PIN_PORT PINC
-
+#define SRAM_CTA_PORT PORTC
+#define SRAM_CTA_DDR  DDRC
+#define SRAM_CTA_PIN  PC3
 
 #define SNAKE 1
 #define SPACE 2
@@ -163,9 +156,6 @@ extern SPI             spi;
 extern struct SRAM_MAP sram_map;
 
 void sharedMemoryInit();
-void memAcquire();
-void memFree();
-
 void pushNode(struct NODE *node);
 void popNode();
 void loadBufferFromStack();

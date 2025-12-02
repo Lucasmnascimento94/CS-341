@@ -32,41 +32,12 @@ void computeBases(){
 }
 
 void initCtaInt(){
-    SRAM_CTS_DDR  &= ~(1<<SRAM_CTS_PIN);
-
-    SRAM_RTS_PORT |= (1<<SRAM_RTS_PIN);
-    SRAM_RTS_DDR  |= (1<<SRAM_RTS_PIN);
-}
-
-
-void waitRand(int n){
-    for(int i=0; i<n;i++){
-        _delay_us(1);
-    }
-}
-
-void memAcquire(){
-    while(1){
-        while(!((SRAM_CTS_PIN_PORT >> SRAM_CTS_PIN) & 0x01)); // check availability
-        SRAM_RTS_PORT &= ~(1<<SRAM_RTS_PIN); // Acquire memory
-        _delay_us(1); // Gieve it a brief
-
-        if((SRAM_CTS_PIN_PORT >> SRAM_CTS_PIN) & 0x01)break;
-        else{
-            memFree();
-            waitRand((int)((rand() % 10) + 1)); // Gieve it a random brief
-        }
-    }
-}
-
-void memFree(){
-    SRAM_RTS_PORT |= (1<<SRAM_RTS_PIN);
+    SRAM_CTA_DDR &= ~(1<<SRAM_CTA_PIN);
 }
 
 void sharedMemoryInit(){
     computeBlockSizes();
     computeBases();
-    initCtaInt();
     sram_map.sram_cta = false;
 }
 
@@ -161,13 +132,14 @@ void popNode(){
 
 void readNode(struct NODE *node, uint32_t base){
     memset(node, 0, sizeof(struct NODE));
+    char c[40];
     char magic[5];
     magic[4] = '\0';
     sramReadString(&spi, (uint8_t *)magic, 4, NODE_MAGIC(base));
     if(strcmp(magic, MAGIC_NODE) != 0){
-       // uartWrite_("Error... <Invalid Header> \n");
-       // sprintf(c, "..expected..<%s>..actual..<%s>\n", MAGIC_NODE, magic);
-       // uartWrite_(c);
+        uartWrite_("Error... <Invalid Header> \n");
+        sprintf(c, "..expected..<%s>..actual..<%s>\n", MAGIC_NODE, magic);
+        uartWrite_(c);
     }
     sramReadU32(&spi, &node->next,      NODE_NEXT(base));
     sramReadU32(&spi, &node->prev,      NODE_PREV(base));
@@ -233,6 +205,7 @@ void loadStack(){
 }
 
 void loadBufferFromStack(){
+    char c[70];
     uint32_t addr_head = sram_map.stack.head;
     uint32_t count = sram_map.stack.count;
     if(count == 0) return;

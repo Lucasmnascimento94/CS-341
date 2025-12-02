@@ -16,28 +16,6 @@ void send_byte(uint8_t b){
     for (uint8_t m = 0x80; m; m >>= 1) (b & m) ? writeOne() : writeZero();
 }
 
-void writeBurst(uint8_t *buff1){
-    cli();
-        for(uint16_t j=0; j< PAD_LEN*3*8; j++){
-
-            /*First 0.4us cycle*/
-            uint8_t burst_ = 0x00 | (1<<DATA_PIN_1) | (1<<DATA_PIN_2) | (1<<DATA_PIN_3) | (1<<DATA_PIN_4) | (1<<DATA_PIN_5) | (1<<DATA_PIN_6) | (1<<DATA_PIN_7) | (1<<DATA_PIN_8);
-            DATA_PORT_ |= burst_;
-            dcy(4);
-            
-            /*Second 0.4us cycle*/
-            DATA_PORT_ &= buff1[j];
-            dcy(6);
-            /*Third 0.4us cycle*/
-            DATA_PORT_ &= ~(1<<DATA_PIN_1) & ~(1<<DATA_PIN_2) & ~(1<<DATA_PIN_3) & ~(1<<DATA_PIN_4) & ~(1<<DATA_PIN_5) & ~(1<<DATA_PIN_6) & ~(1<<DATA_PIN_7) & ~(1<<DATA_PIN_8);
-            dcy(4);
-        }
-                    
-    sei();
-
-    latch();
-}
-
 static inline void send_pixel(uint8_t g, uint8_t r, uint8_t b){ // GRB order
     send_byte(g); send_byte(r); send_byte(b);
 }
@@ -49,16 +27,15 @@ void displayGrid(){
 }
 
 void displayClear(){
-    for(uint32_t i = 0; i<(int)SCREEN_BUFFER_SIZE; i++){
-        bufferWrite(0, 0, 0, i);   
+    for(int i = 0; i<(int)SCREEN_BUFFER_SIZE; i++){
+        send_pixel(0x00, 0x00, 0x00);      
     }
     latch();
 }
 
 void ws2812bInit(){
-    
-    DATA_DDR_ |= (1<<DATA_PIN_1) | (1<<DATA_PIN_2) | (1<<DATA_PIN_3) | (1<<DATA_PIN_4) | (1<<DATA_PIN_5) | (1<<DATA_PIN_6) | (1<<DATA_PIN_7) | (1<<DATA_PIN_8);
-    DATA_PORT_ |= (1<<DATA_PIN_1) | (1<<DATA_PIN_2) | (1<<DATA_PIN_3) | (1<<DATA_PIN_4) | (1<<DATA_PIN_5) | (1<<DATA_PIN_6) | (1<<DATA_PIN_7) | (1<<DATA_PIN_8);
+    DATA_DDR |= (1<<DATA_PIN);
+    DATA_PORT |= (1<<DATA_PIN);
 }
 
 void ws2812bWrite(uint8_t g, uint8_t r, uint8_t b, uint8_t i, uint8_t j){

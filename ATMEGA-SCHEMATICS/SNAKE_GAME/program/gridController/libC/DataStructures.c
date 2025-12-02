@@ -70,4 +70,3 @@ void insertion_sort(uint16_t arr[], uint16_t n) {
         arr[j + 1] = key;
     }
 }
-

@@ -14,13 +14,20 @@ JoyStick_RIGHT >> PD5 - PCINT21
 
 */
 
+//GOOD
+#define JOYSTICK_PORT PORTD
+#define JOYSTICK_DDR DDRD
+#define JOYSTICK_UP   PIN2
+#define JOYSTICK_DOWN PIN3
+#define JOYSTICK_LEFT PIN4
+#define JOYSTICK_RIGHT PIN5
+//GOOD
 
 #define STALL   0x00
 #define UP      0x01
 #define DOWN    0x02
 #define LEFT    0x03
 #define RIGHT   0x04
-
 
 #define LED_PORT PORTC
 #define LED_DDR  DDRC
