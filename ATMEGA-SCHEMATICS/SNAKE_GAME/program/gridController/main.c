@@ -5,8 +5,9 @@
 #include "sram.h"
 #include "screen.h"
 #include "shared_memory.h"
+#include "start.h"
+
 void sramtesting();
-void sramVarsInit(SPI *spi);
 
 SCREEN            screen;
 I2C_CONF          i2c;
@@ -30,15 +31,63 @@ void testBuffer_2(){
     }
 }
 
+void sramVarsInit(SPI *spi){
+    static SPI_CS_TARGET cs_reg;
+    static SPI_CONF spi_conf;
+    static SPI_MODE spi_mode;
+
+    spi_mode.en = true;
+    spi_mode.irq = false;
+    spi_mode.mode = 0;
+    spi_mode.lsbfirst = false;
+    spi_mode.prescaler = 2;
+    spi_mode.mstr = true;
+    spi_conf.mode_conf = &spi_mode;
+
+    cs_reg.CS_DDR = &DDRB;
+    cs_reg.CS_PORT = &PORTB;
+    cs_reg.CS_PIN = PB1;
+
+    spi->conf = &spi_conf;
+    spi->cs_reg = &cs_reg;
+}
+
+
+void sramtesting(){
+    sram_map.cmd.cmdID = WALK_LEFT;
+    sram_map.cmd.arg1 = 0xAA;
+    sram_map.cmd.arg2 = 0XBB;
+    sram_map.cmd.arg3 = 0XCC;
+
+    sram_map.score.current_score = 0X81;
+    sram_map.score.record_score = 0X99;
+    strcpy((char *)sram_map.score.game_name, "SNAKE");
+    strcpy((char *)sram_map.score.player_name, "LUCAS");
+    
+    loadScore();
+    loadCommand();
+    sram_map.cmd.cmdID = 0;
+    sram_map.cmd.arg1 = 0;
+    sram_map.cmd.arg2 = 0;
+    sram_map.cmd.arg3 = 0;
+
+    sram_map.score.current_score = 0;
+    sram_map.score.record_score = 0;
+    memset(sram_map.score.game_name, 0, 12);
+    memset(sram_map.score.player_name, 0, 12);
+}
+
+
 int main(void){
     /*________Initialize SRAM parameters______*/
     sramVarsInit(&spi);     
 
     /*________Initialize Protocols______*/
-    spiInit(&spi);                             
+    spiInit(&spi);                        
     i2cInit(&i2c, true);                        
     uartInit();
-    ws2812bInit();                                 
+    ws2812bInit();
+    gpioConfig();  // Enable joystick interrupt                                 
     
     /*________Enforce SRAM Sequencial Mode______*/
     sramWriteModeRegister(&spi, SRAM_MODE_SEQU);
@@ -67,8 +116,11 @@ int main(void){
 
         /*________Control SPI data bus to access sram_________*/
         spiResume(&spi);
-
+        
         /*_________Read Commands_________*/
+         /*_________Persist command from ISR to SRAM_________*/
+         loadCommand();
+
         /*_________Read Buffer_________*/
         /*_________Free RAM ans data bus_________*/
         walk();
@@ -77,47 +129,3 @@ int main(void){
     }
 }
 
-void sramtesting(){
-    sram_map.cmd.cmdID = WALK_LEFT;
-    sram_map.cmd.arg1 = 0xAA;
-    sram_map.cmd.arg2 = 0XBB;
-    sram_map.cmd.arg3 = 0XCC;
-
-    sram_map.score.current_score = 0X81;
-    sram_map.score.record_score = 0X99;
-    strcpy((char *)sram_map.score.game_name, "SNAKE");
-    strcpy((char *)sram_map.score.player_name, "LUCAS");
-    
-    loadScore();
-    loadCommand();
-    sram_map.cmd.cmdID = 0;
-    sram_map.cmd.arg1 = 0;
-    sram_map.cmd.arg2 = 0;
-    sram_map.cmd.arg3 = 0;
-
-    sram_map.score.current_score = 0;
-    sram_map.score.record_score = 0;
-    memset(sram_map.score.game_name, 0, 12);
-    memset(sram_map.score.player_name, 0, 12);
-}
-
-void sramVarsInit(SPI *spi){
-    static SPI_CS_TARGET cs_reg;
-    static SPI_CONF spi_conf;
-    static SPI_MODE spi_mode;
-
-    spi_mode.en = true;
-    spi_mode.irq = false;
-    spi_mode.mode = 0;
-    spi_mode.lsbfirst = false;
-    spi_mode.prescaler = 2;
-    spi_mode.mstr = true;
-    spi_conf.mode_conf = &spi_mode;
-
-    cs_reg.CS_DDR = &DDRB;
-    cs_reg.CS_PORT = &PORTB;
-    cs_reg.CS_PIN = PB1;
-
-    spi->conf = &spi_conf;
-    spi->cs_reg = &cs_reg;
-}

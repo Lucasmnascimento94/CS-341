@@ -1,12 +1,5 @@
 #include "start.h"
 
-
-void gpioConfig(){
-    //joyStickConf();
-    //spiInitPoll();
-}
-
-
 void joyStickConf(){
     /*Pin Data Direction*/
     JOYSTICK_DDR &= ~((1<<JOYSTICK_UP) | (1<<JOYSTICK_DOWN) | (1<<JOYSTICK_LEFT) | (1<<JOYSTICK_RIGHT));

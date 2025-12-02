@@ -34,12 +34,7 @@ JoyStick_RIGHT >> PD5 - PCINT21
 #define GRID_PIXELS (48u*32u)
 
 
-void gpioConfig();
-void setUpISR();
-void setUpUART();
 void joyStickConf();
-void setUpSPI();
-void spiInitPoll();
 void seed_prng(void);
 
 #endif
