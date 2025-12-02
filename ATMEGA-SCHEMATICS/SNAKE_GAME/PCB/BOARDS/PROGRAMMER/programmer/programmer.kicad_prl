@@ -62,6 +62,7 @@
     "version": 5
   },
   "net_inspector_panel": {
+<<<<<<< HEAD
     "col_hidden": [
       false,
       false,
@@ -98,6 +99,11 @@
       136,
       136
     ],
+=======
+    "col_hidden": [],
+    "col_order": [],
+    "col_widths": [],
+>>>>>>> SNAKE_V4_PROGRAMMER_LUCAS
     "custom_group_rules": [],
     "expanded_rows": [],
     "filter_by_net_name": true,
@@ -108,7 +114,11 @@
     "show_unconnected_nets": false,
     "show_zero_pad_nets": false,
     "sort_ascending": true,
+<<<<<<< HEAD
     "sorting_column": 0
+=======
+    "sorting_column": -1
+>>>>>>> SNAKE_V4_PROGRAMMER_LUCAS
   },
   "open_jobsets": [],
   "project": {

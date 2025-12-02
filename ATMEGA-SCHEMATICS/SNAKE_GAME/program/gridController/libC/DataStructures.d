@@ -1,5 +1,8 @@
 libC/DataStructures.o: libC/DataStructures.c libC/DataStructures.h \
- StartSetUp/includes.h libC/print.h
+ includes/includes.h includes/protocols/uart.h
+
 libC/DataStructures.h:
-StartSetUp/includes.h:
-libC/print.h:
+
+includes/includes.h:
+
+includes/protocols/uart.h:
