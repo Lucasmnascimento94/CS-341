@@ -5,6 +5,7 @@
 #include "sram.h"
 #include "screen.h"
 #include "shared_memory.h"
+#include "isr.h"
 
 void sramtesting();
 void sramVarsInit(SPI *spi);
@@ -32,6 +33,14 @@ void testBuffer_2(){
 }
 
 int main(void){
+
+    
+    seed_prng();
+
+    /*________Initialize Joystick_________*/
+    joyStickConf();
+
+
     /*________Initialize SRAM parameters______*/
     sramVarsInit(&spi);     
 
@@ -39,32 +48,52 @@ int main(void){
     spiInit(&spi);                             
     i2cInit(&i2c, true);                        
     uartInit();
-    ws2812bInit();                                 
+    memAcquire();
+                                     
     
     /*________Enforce SRAM Sequencial Mode______*/
     sramWriteModeRegister(&spi, SRAM_MODE_SEQU);
 
     /*________Initialize Screen (Liquid Crystak)______*/
-    screenInit(&screen, true);                             
+    // screenInit(&screen, true);                             
 
     /*________Initialize Shared Memory System______*/
     sharedMemoryInit();
     sramtesting();
+
+    bufferClear();
+    initSnake();
+
+    
     struct NODE food;
     loadFood(&food);
 
 
-    bufferClear();
+    
     displayClear();
     initialAnimation();
-    initSnake();
+    
     
     generateFood();
-    displayGrid();
+
+    isr_flag = sram_map.cmd.cmdID;
 
     while(1){
         /*___________Wait for Clear_To_Access signal__________*/
-        while(!((PINC >> PC3) & 0x01)){uartWrite_("..waiting for ram..\n");}
+        memAcquire();
+
+        if (isr_flag == WALK_UP) {
+            sram_map.cmd.cmdID = WALK_UP;
+        }
+        if (isr_flag == WALK_DOWN) {
+            sram_map.cmd.cmdID = WALK_DOWN;
+        }
+        if (isr_flag == WALK_LEFT) {
+            sram_map.cmd.cmdID = WALK_LEFT;
+        }
+        if (isr_flag == WALK_RIGHT) {
+            sram_map.cmd.cmdID = WALK_RIGHT;
+        }
 
         /*________Control SPI data bus to access sram_________*/
         spiResume(&spi);
@@ -73,7 +102,6 @@ int main(void){
         /*_________Read Buffer_________*/
         /*_________Free RAM ans data bus_________*/
         walk();
-        displayGrid();
         spiPause(&spi);
     }
 }

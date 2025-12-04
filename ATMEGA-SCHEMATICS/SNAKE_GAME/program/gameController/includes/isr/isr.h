@@ -25,4 +25,7 @@
 #include "start.h"
 #include "DataStructures.h"
 
+
+extern uint8_t isr_flag;
+
 #endif

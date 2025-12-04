@@ -20,7 +20,12 @@ void uartWrite_(char *c){
     }
 }
 void uartRead(char *c){
-    
+    // Wait for data to be received
+    while(!(UCSR0A & (1<<RXC0))){
+        __builtin_avr_delay_cycles(1);
+    }
+    // Read the received data from UDR0
+    *c = (char)UDR0;
 }
 
 

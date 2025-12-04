@@ -32,13 +32,41 @@ void computeBases(){
 }
 
 void initCtaInt(){
-    SRAM_CTA_DDR &= ~(1<<SRAM_CTA_PIN);
-    SRAM_CTA_PORT |= (1<<SRAM_CS_PIN);
+    SRAM_CTS_DDR  &= ~(1<<SRAM_CTS_PIN);
+
+    SRAM_RTS_PORT |= (1<<SRAM_RTS_PIN);
+    SRAM_RTS_DDR  |= (1<<SRAM_RTS_PIN);
 }
+
+void waitRand(int n){
+    for(int i=0; i<n;i++){
+        _delay_us(1);
+    }
+}
+
+void memAcquire(){
+    while(1){
+        while(!((SRAM_CTS_PIN_PORT >> SRAM_CTS_PIN) & 0x01)); // check availability
+        SRAM_RTS_PORT &= ~(1<<SRAM_RTS_PIN); // Acquire memory
+        _delay_us(1); // Gieve it a brief
+
+        if((SRAM_CTS_PIN_PORT >> SRAM_CTS_PIN) & 0x01)break;
+        else{
+            memFree();
+            waitRand((int)((rand() % 10) + 1)); // Gieve it a random brief
+        }
+    }
+}
+
+void memFree(){
+    SRAM_RTS_PORT |= (1<<SRAM_RTS_PIN);
+}
+
 
 void sharedMemoryInit(){
     computeBlockSizes();
     computeBases();
+    initCtaInt();
     sram_map.sram_cta = false;
 }
 

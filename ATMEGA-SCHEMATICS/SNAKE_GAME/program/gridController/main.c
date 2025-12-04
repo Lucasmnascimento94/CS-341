@@ -38,42 +38,28 @@ int main(void){
     spiInit(&spi);                             
     i2cInit(&i2c, true);                        
     uartInit();
-    ws2812bInit();                                 
-    
-    /*________Enforce SRAM Sequencial Mode______*/
-    sramWriteModeRegister(&spi, SRAM_MODE_SEQU);
+                                
 
     /*________Initialize Screen (Liquid Crystak)______*/
     screenInit(&screen, true);                             
 
     /*________Initialize Shared Memory System______*/
     sharedMemoryInit();
-    sramtesting();
-    struct NODE food;
-    loadFood(&food);
-
-
+    
     bufferClear();
     displayClear();
-    initialAnimation();
-    initSnake();
-    
-    generateFood();
+       
     displayGrid();
 
     while(1){
         /*___________Wait for Clear_To_Access signal__________*/
-        while(!((PINC >> PC3) & 0x01)){uartWrite_("..waiting for ram..\n");}
-
+        memAcquire();
         /*________Control SPI data bus to access sram_________*/
         spiResume(&spi);
 
-        /*_________Read Commands_________*/
-        /*_________Read Buffer_________*/
-        /*_________Free RAM ans data bus_________*/
-        walk();
         displayGrid();
         spiPause(&spi);
+        memFree();
     }
 }
 

@@ -32,6 +32,7 @@ SRC_DIRS = \
   ./ \
   src \
   libC \
+  src/isr \
   src/protocols \
   src/screen \
   src/snake \
@@ -44,6 +45,7 @@ SRC_DIRS = \
   libC \
   includes/protocols \
   includes/ \
+  includes/isr \
   includes/screen \
   includes/snake \
   includes/sram \
@@ -206,7 +208,7 @@ ifeq ($(INIT), INIT_WIN)
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
 OBJS   := $(SRCS:.c=.o)
-INCS   := $(addprefix -I,$(SRC_DIRS))
+INCS   := $(addprefix -I,$(INC_DIRS))
 
 # ===== Tools/Flags =====
 CC      = avr-gcc

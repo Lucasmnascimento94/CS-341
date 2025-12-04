@@ -16,10 +16,13 @@ JoyStick_RIGHT >> PD5 - PCINT21
 
 #define JOYSTICK_PORT PORTD
 #define JOYSTICK_DDR DDRD
-#define JOYSTICK_UP   PIN2
-#define JOYSTICK_DOWN PIN3
-#define JOYSTICK_LEFT PIN4
-#define JOYSTICK_RIGHT PIN5
+#define JOYSTICK_UP   PD2
+#define JOYSTICK_DOWN PD3
+#define JOYSTICK_LEFT PD4
+// V6 CONSOLE.H
+#define JOYSTICK_RIGHT_DDR DDRC
+#define JOYSTICK_RIGHT_PORT PORTC
+#define JOYSTICK_RIGHT PC0
 
 #define STALL   0x00
 #define UP      0x01
@@ -31,7 +34,7 @@ JoyStick_RIGHT >> PD5 - PCINT21
 #define LED_PORT PORTC
 #define LED_DDR  DDRC
 #define LED_PIN  PC0
-#define GRID_PIXELS (48u*32u)
+#define GRID_PIXELS (8u*32u)
 
 
 void gpioConfig();
@@ -40,6 +43,7 @@ void setUpUART();
 void joyStickConf();
 void setUpSPI();
 void spiInitPoll();
+void enableReg();
 void seed_prng(void);
 
 #endif

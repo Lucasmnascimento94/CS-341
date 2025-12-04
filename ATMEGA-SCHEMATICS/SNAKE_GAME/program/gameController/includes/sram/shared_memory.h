@@ -6,9 +6,15 @@
 #include "spi.h"
 #include "sram.h"
 
-#define SRAM_CTA_PORT PORTC
-#define SRAM_CTA_DDR  DDRC
-#define SRAM_CTA_PIN  PC3
+#define SRAM_RTS_PORT PORTC
+#define SRAM_RTS_DDR  DDRC
+#define SRAM_RTS_PIN  PC2
+#define SRAM_RTS_PIN_PORT PINC
+
+#define SRAM_CTS_PORT PORTB
+#define SRAM_CTS_DDR  DDRB
+#define SRAM_CTS_PIN  PB0
+#define SRAM_CTS_PIN_PORT PINB
 
 #define SNAKE 1
 #define SPACE 2
@@ -22,7 +28,7 @@
 #define FLAG_DIRTY                  0x00u
 #define FLAG_VALID                  0xA5u
 #define SRAM_SIZE                   0x1FFFF
-#define SCREEN_WIDTH                48
+#define SCREEN_WIDTH                8
 #define SCREEN_HEIGHT               32
 #define SCREEN_BUFFER_SIZE          (SCREEN_WIDTH*SCREEN_HEIGHT)
 
@@ -172,6 +178,9 @@ void loadCommand();
 void getCommand();
 void loadScore();
 void getScore();
+void memAcquire();
+void memFree();
+void waitRand(uint16_t n);
 
 #elif (GAME == SPACE)
 #define FRAME 5

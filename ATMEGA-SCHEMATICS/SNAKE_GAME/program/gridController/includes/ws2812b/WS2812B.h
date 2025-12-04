@@ -51,9 +51,9 @@
                   (((PAD_WIDTH-1) - (i%PAD_WIDTH)) + (PAD_WIDTH*j) + (((i/PAD_WIDTH)*(STRIDE)))):\
                   ((PAD_WIDTH*j) + (i%PAD_WIDTH) + (((i/PAD_WIDTH)*(STRIDE)))))
 
-#define FIRST_PIXEL_X 24
+#define FIRST_PIXEL_X 2
 #define FIRST_PIXEL_Y 16
-#define SNAKE_SIZE_INIT 10
+#define SNAKE_SIZE_INIT 4
 #define SNAKE_MAX_COUNT 1000
 
 void send_byte(uint8_t b);
