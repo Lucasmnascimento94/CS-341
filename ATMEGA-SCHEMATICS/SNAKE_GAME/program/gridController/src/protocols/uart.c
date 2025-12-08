@@ -22,7 +22,7 @@ void uartWrite_(char *c){
 
 void uartGPIO(){
     DDRD |= (1<<PD1);
-    DDRD &= !(1<<PD0);
+    DDRD &= ~(1<<PD0);
     PORTD |= (1<< PD1) | (1<<PD0);
 }
 

@@ -23,6 +23,7 @@ void spiInit(SPI *spi){
     DDRB |= (1<<PB5) | (1<<PB3) | (1<<PB2);
     DDRB &= ~(1<<PB4);
 
+
     PORTB |= (1<<PB5) | (1<<PB4) | (1<<PB3) | (1<<PB2);
 
     /*CS not static to accomodate different targets based on package command*/

@@ -31,9 +31,9 @@ JoyStick_RIGHT >> PD5 - PCINT21
 #define RIGHT   0x04
 
 
-#define LED_PORT PORTC
-#define LED_DDR  DDRC
-#define LED_PIN  PC0
+// #define LED_PORT PORTC
+// #define LED_DDR  DDRC
+// #define LED_PIN  PC0
 #define GRID_PIXELS (8u*32u)
 
 

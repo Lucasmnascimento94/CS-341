@@ -39,9 +39,9 @@
 #define COLOR_G 0xFF
 #define COLOR_R 0x00
 #define COLOR_B 0xFF
-#define DATA_PORT PORTC
-#define DATA_PIN PC0
-#define DATA_DDR DDRC
+// #define DATA_PORT PORTC
+// #define DATA_PIN PC0
+// #define DATA_DDR DDRC
 
 
 #define PAD_WIDTH   8

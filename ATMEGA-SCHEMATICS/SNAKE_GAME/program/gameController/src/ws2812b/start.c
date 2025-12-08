@@ -23,10 +23,6 @@ void joyStickConf(){
     sei();
 }
 
-void enableReg(){
-    DDRB |= (1<<PB1);
-    PORTB &= ~(1<<PB1);
-}
 
 
 void seed_prng(void){ srand(0xA5A5 ^ (uint16_t)TCNT0);}

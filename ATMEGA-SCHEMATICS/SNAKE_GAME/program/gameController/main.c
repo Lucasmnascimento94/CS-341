@@ -7,6 +7,7 @@
 #include "shared_memory.h"
 #include "isr.h"
 
+
 void sramtesting();
 void sramVarsInit(SPI *spi);
 
@@ -33,54 +34,50 @@ void testBuffer_2(){
 }
 
 int main(void){
-
     
-    seed_prng();
-
-    /*________Initialize Joystick_________*/
-    joyStickConf();
-
-
+    
     /*________Initialize SRAM parameters______*/
-    sramVarsInit(&spi);     
-
+    sramVarsInit(&spi); 
+      
     /*________Initialize Protocols______*/
-    spiInit(&spi);                             
-    i2cInit(&i2c, true);                        
+    spiInit(&spi);       
+    i2cInit(&i2c, true);       
     uartInit();
-    memAcquire();
-                                     
-    
+
+    /*________Initialize Shared Memory System FIRST______*/
+    sharedMemoryInit();   // Must initialize RTS/CTS pins before using them!
+             
     /*________Enforce SRAM Sequencial Mode______*/
+    memAcquire();
     sramWriteModeRegister(&spi, SRAM_MODE_SEQU);
-
-    /*________Initialize Screen (Liquid Crystak)______*/
-    // screenInit(&screen, true);                             
-
-    /*________Initialize Shared Memory System______*/
-    sharedMemoryInit();
+    memFree();
+    
+    /*________Initialize Game State in SRAM______*/
+    memAcquire();
     sramtesting();
-
+    memFree();
+    
+    memAcquire();
     bufferClear();
     initSnake();
-
-    
     struct NODE food;
     loadFood(&food);
-
-
-    
-    displayClear();
-    initialAnimation();
-    
-    
     generateFood();
+    loadStack();
+    loadBufferFromStack();
+    joyStickConf();
+    memFree();
+
 
     isr_flag = sram_map.cmd.cmdID;
+
 
     while(1){
         /*___________Wait for Clear_To_Access signal__________*/
         memAcquire();
+        
+         /*________Control SPI data bus to access sram_________*/
+        spiResume(&spi);
 
         if (isr_flag == WALK_UP) {
             sram_map.cmd.cmdID = WALK_UP;
@@ -95,25 +92,25 @@ int main(void){
             sram_map.cmd.cmdID = WALK_RIGHT;
         }
 
-        /*________Control SPI data bus to access sram_________*/
-        spiResume(&spi);
+        loadCommand(); // Send Commands to SRAM
 
         /*_________Read Commands_________*/
         /*_________Read Buffer_________*/
         /*_________Free RAM ans data bus_________*/
         walk();
         spiPause(&spi);
+        memFree();                              // Release SRAM access after operations
     }
 }
 
 void sramtesting(){
     sram_map.cmd.cmdID = WALK_LEFT;
-    sram_map.cmd.arg1 = 0xAA;
-    sram_map.cmd.arg2 = 0XBB;
-    sram_map.cmd.arg3 = 0XCC;
+    sram_map.cmd.arg1 = 0x00;
+    sram_map.cmd.arg2 = 0X00;
+    sram_map.cmd.arg3 = 0X00;
 
-    sram_map.score.current_score = 0X81;
-    sram_map.score.record_score = 0X99;
+    sram_map.score.current_score = 0X00;
+    sram_map.score.record_score = 0X00;
     strcpy((char *)sram_map.score.game_name, "SNAKE");
     strcpy((char *)sram_map.score.player_name, "LUCAS");
     
@@ -143,9 +140,9 @@ void sramVarsInit(SPI *spi){
     spi_mode.mstr = true;
     spi_conf.mode_conf = &spi_mode;
 
-    cs_reg.CS_DDR = &DDRB;
-    cs_reg.CS_PORT = &PORTB;
-    cs_reg.CS_PIN = PB1;
+    cs_reg.CS_DDR = &DDRC;
+    cs_reg.CS_PORT = &PORTC;
+    cs_reg.CS_PIN = PC2;
 
     spi->conf = &spi_conf;
     spi->cs_reg = &cs_reg;

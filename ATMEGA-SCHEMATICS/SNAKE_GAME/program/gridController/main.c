@@ -31,6 +31,7 @@ void testBuffer_2(){
 }
 
 int main(void){
+
     /*________Initialize SRAM parameters______*/
     sramVarsInit(&spi);     
 
@@ -38,24 +39,32 @@ int main(void){
     spiInit(&spi);                             
     i2cInit(&i2c, true);                        
     uartInit();
+    ws2812bInit();  
                                 
 
     /*________Initialize Screen (Liquid Crystak)______*/
     screenInit(&screen, true);                             
+    
+    /*________Acquire SRAM access before operations______*/
+    memAcquire();
+    
+
+    sramWriteModeRegister(&spi, SRAM_MODE_SEQU); 
 
     /*________Initialize Shared Memory System______*/
     sharedMemoryInit();
+
     
-    bufferClear();
-    displayClear();
-       
-    displayGrid();
+    memFree();
 
     while(1){
         /*___________Wait for Clear_To_Access signal__________*/
         memAcquire();
+
         /*________Control SPI data bus to access sram_________*/
         spiResume(&spi);
+
+        getCommand();
 
         displayGrid();
         spiPause(&spi);
@@ -73,6 +82,7 @@ void sramtesting(){
     sram_map.score.record_score = 0X99;
     strcpy((char *)sram_map.score.game_name, "SNAKE");
     strcpy((char *)sram_map.score.player_name, "LUCAS");
+    
     
     loadScore();
     loadCommand();
@@ -102,7 +112,7 @@ void sramVarsInit(SPI *spi){
 
     cs_reg.CS_DDR = &DDRB;
     cs_reg.CS_PORT = &PORTB;
-    cs_reg.CS_PIN = PB1;
+    cs_reg.CS_PIN = PB2;
 
     spi->conf = &spi_conf;
     spi->cs_reg = &cs_reg;

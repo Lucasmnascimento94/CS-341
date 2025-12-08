@@ -6,11 +6,13 @@
 #include "spi.h"
 #include "sram.h"
 
+// Good
 #define SRAM_RTS_PORT PORTC
 #define SRAM_RTS_DDR  DDRC
-#define SRAM_RTS_PIN  PC2
+#define SRAM_RTS_PIN  PC1
 #define SRAM_RTS_PIN_PORT PINC
 
+// GOOD
 #define SRAM_CTS_PORT PORTB
 #define SRAM_CTS_DDR  DDRB
 #define SRAM_CTS_PIN  PB0
@@ -178,9 +180,11 @@ void loadCommand();
 void getCommand();
 void loadScore();
 void getScore();
+void loadStack();
+
 void memAcquire();
 void memFree();
-void waitRand(uint16_t n);
+
 
 #elif (GAME == SPACE)
 #define FRAME 5
