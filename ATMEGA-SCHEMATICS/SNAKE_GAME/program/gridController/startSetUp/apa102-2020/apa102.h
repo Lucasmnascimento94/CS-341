@@ -1,12 +1,16 @@
 #ifndef APA102_H
 #define APA102_H
 
+#include "includes.h"
+#include "spi.h"
+#include <stdint.h>
+
 /*============================================================================
  *  APA102 GRID DRIVER - MULTI-TILE SUPPORT
  *============================================================================
  * Target MCU : ATmega168A (20MHz)
  * Author(s)  : Lucas Nascimento, Andres Nino.
- * Last update: 10/16/2025
+ * Last update: 12/10/2025
  *============================================================================
  *
  *  Reference:
@@ -18,152 +22,147 @@
  *    - Defines configuration and public API to use the ATmega168A MCU via SPI
  *      to address "APA102-2020 SUPER LED" diodes inside a snake-connected,
  *      multi-tile grid system of RGB pixels.
- *    - Serpentine (“snake”) means even rows go L→R, odd rows go R→L inside
- *      each tile.
  *
+ *  * Design:
+ *   - LED driver: no game logic.
+ *   - Uses global SPI module (spiInitPoll, spiWritePoll_).
+ *   - Supports one or more LxW serpentine tiles chained on MOSI/SCK.
+ *   - Uses a simple RGB framebuffer (R,G,B bytes per pixel).
+ *
+ *  * Coordinate system:
+ *   - i : column within tile,   1 <= i <= APA102_TILE_W
+ *   - j : row within tile,      1 <= j <= APA102_TILE_H
+ *   - k : tile index along chain, 1 <= k <= APA102_NUM_TILES
+ *
+ *   * Serpentine function per tile:
+ *    - Odd rows  (j = 1,3,5,...) : address increases to the right >>
+ *    - Even rows (j = 2,4,6,...) : address increases to the left  <<
+ *    - Then offset by (k-1)*APA102_STRIDE for each tile in the chain.
  *============================================================================*/
 
-#include "includes.h"
-#include "spi.h"
-#include "start.h"
+/*----------------------------------------------------------------------------
+ *  TILE GEOMETRY
+ *---------------------------------------------------------------------------*/
 
-/*============================================================================
- *  1) PROJECT CONFIG
- *===========================================================================*/
+/* Per-tile resolution (physical APA102-2020 matrix L x W). */
+#define APA102_TILE_W 9
+#define APA102_TILE_H 14
 
-/* size of ONE tile (in LEDs)*/
-#ifndef TILE_W
-#   define TILE_W 14
-#endif
-#ifndef TILE_H
-#   define TILE_H 14
-#endif
-#define TILE_PIXELS (TILE_W * TILE_H)
-
-/* tile grid size (tiles across x tiles down) */
-#ifndef TILE_COLUMNS
-#   define TILE_COLUMNS 1
-#endif
-#ifndef TILE_ROWS
-#   define TILE_ROWS 1
-#endif
-#define TILE_COUNT (TILE_COLUMNS * TILE_ROWS)
-
-/* size of ENTIRE grid (in LEDs) */
-#define GRID_W (TILE_COLUMNS * TILE_W)
-#define GRID_H (TILE_ROWS * TILE_H)
-#define GRID_PIXELS (GRID_W * GRID_H)
-
-/* default APA102 brightness 0-31 (pixel header 0xE0|GB) */
-#ifndef APA102_DEFAULT_GB
-#   define APA102_DEFAULT_GB 31
+/* Number of chained tiles. */
+#ifndef APA102_NUM_TILES
+#define APA102_NUM_TILES 1
 #endif
 
-/* Comentator: Lucas Nascimento
-The header file is used for declaring functions that will be accessed by other files... it the equivalent
-of "where your public functions are exposed to the callers".. you do not execute logic in header files.
+/* Pixels per tile and stride between tiles (in pixels). */
+#define APA102_TILE_PIXELS (APA102_TILE_W * APA102_TILE_H)
+#define APA102_STRIDE APA102_TILE_PIXELS
+#define APA102_TOTAL_PIXELS (APA102_STRIDE * APA102_NUM_TILES)
 
-*/
-/*===========================================================================
- * 2) MAPPING HELPERS - 2D(x,y) -> linear index in SPI stream.
- *===========================================================================*/
-
-/* Find linear tile index (0..TILE_COUNT-1) given (x,y) coordinates */
-static inline uint16_t tileIndexFromXY(uint16_t x, uint16_t y)
-{
-    uint16_t tx = x / TILE_W; // tile x
-    uint16_t ty = y / TILE_H; // tile y
-
-
-/* Commentator: Lucas Nascimento
--> tx = x/TILE_W (tx >= TILE_COLUMNS will probably always false becuase even if you try to access
-a coordinate greater than the width, x/TILE_W will be smaller than width size... it Will not protect against
-the out of bounds error... Try to check if x>=TILE_W at the begining of the function and y >= TILE_H)
-
-
--> if x and y are the coordinates, the return statement is also not returning the correct value..
-    0 < ty * TILE_COLUMNS  < TILE_COLUMNS
-
--> the reuturn statement is not considering the pixels you walked through when you jump to the next row..
-    it should be a multiplacation.. I see that ty seems to be trying to do that but it is actually a double < 1.
-
-    The grid will work with this pattern:
-    i
-j   (1,1).................................(w,1) 
-      .
-      .
-      .
-      .
-      .
-      .
-    (1,h).................................(w,h)
-
-    in the odd rows the address increases to the right >>
-    in the even rows the address increases to the left <<
-    so you need two functions, one for odd rows and another for even rows.. (like what you are trying to do)
-
-    so the function to get an address from i j in the odd rows would be:
-
-    addr = i + (j-1)*w, where 1 <= i <= w and 1 <= y <= h
-    so doing this patterns:
-    
-    First row:
-    addr = i + (1-1)*w -> addr = i
-
-    Third tow:
-    addr = i + (3-1)*w -> addr = i + 2*w (so now it is counting the amount of pixels you already passed before the third row
-    plus the pixels you passed in the current row...)
-*/
-
-
-    if (tx >= TILE_COLUMNS || ty >= TILE_ROWS) return 0; // out of bounds
-
-    /* linear tile order */
-    /* return (uint16_t)(ty * TILE_COLUMNS + tx); */
-
-    /* serpentine across each row of tiles */
-    if (ty & 1U) {
-        // odd: right->left
-        return (uint16_t)(ty * TILE_COLUMNS + ((TILE_COLUMNS - 1U) - tx));
-    } else {
-        // even: left->right
-        return (uint16_t)(ty * TILE_COLUMNS + tx);
-    }
-}
-
-/* find local 1D index (0..TILE_PIXELS-1) given (lx, ly) */
-static inline uint16_t tileLocalIdx(uint8_t lx, uint8_t ly)
-{
-    if (lx >= TILE_W || ly >= TILE_H) return 0; // out of bounds
-    uint16_t base = (uint16_t)ly * TILE_W;  // first pixel of row ly
-    /* serpentine inside tile (reverse odd rows) */
-    return (ly & 1U) ? (uint16_t)(base + (TILE_W - 1U - lx))
-                     : (uint16_t)(base + lx);
-}
-
-/* find global (x, y) linear index in SPI stream (0..GRID_PIXELS-1) */
-static inline uint32_t gridXYToLinear(uint16_t x, uint16_t y)
-{
-    if (x >= GRID_W || y >= GRID_H) return 0; // out of bounds
-    uint16_t t   = tileMapIndex(x, y);
-    uint8_t  lx  = (uint8_t)(x % TILE_W);
-    uint8_t  ly  = (uint8_t)(y % TILE_H);
-    return (uint32_t)t * (uint32_t)TILE_PIXELS + (uint32_t)tileLocalIdx(lx, ly);
-}
-
-/*===========================================================================
- *********************************** API ************************************
- *===========================================================================*/
-void apa102Init(void);
-void gridSetBrightness(uint8_t gb);
-
+/*----------------------------------------------------------------------------
+ *  GLOBAL BRIGHTNESS
+ *---------------------------------------------------------------------------*/
 /*
-    Clear does not have colors, so you do not need rgb.
-*/
-void gridClear(uint8_t r, uint8_t g, uint8_t b);           // fill framebuffer
-void gridSetXY(uint16_t x, uint16_t y,                       // update one pixel
-                 uint8_t r, uint8_t g, uint8_t b);          
-void gridSetRowRGB(uint16_t y, const uint8_t *rgb_line);     // update a whole row
-void gridShow(uint8_t brightness);                          // stream all pixels over SPI
+ * APA102 frame header per LED:
+ *   0b111xxxxx, where xxxxx is global brightness in [0..31].
+ * This is ANDed with per-channel RGB values, not a replacement for them.
+ */
 
+#ifndef APA102_GLOBAL_BRIGHTNESS
+#define APA102_GLOBAL_BRIGHTNESS 4 /* low brightness for bring-up */
 #endif
+
+/*----------------------------------------------------------------------------
+ *  BASIC FRAMEBUFFER LAYOUT
+ *---------------------------------------------------------------------------*/
+/*
+ * RGB framebuffer model:
+ *   fb[3*idx + 0] = R
+ *   fb[3*idx + 1] = G
+ *   fb[3*idx + 2] = B
+ *
+ * The driver treats 'fb' linear over all tiles:
+ *   idx in [0 .. APA102_TOTAL_PIXELS-1].
+ */
+
+#define APA102_FB_BYTES (APA102_TOTAL_PIXELS * 3)
+
+#define APA102_FB_R(fb, idx) ((fb)[3 * (idx) + 0])
+#define APA102_FB_G(fb, idx) ((fb)[3 * (idx) + 1])
+#define APA102_FB_B(fb, idx) ((fb)[3 * (idx) + 2])
+
+/*----------------------------------------------------------------------------
+ *  SERPENTINE MAPPING (i,j,k -> linear index)
+ *---------------------------------------------------------------------------*/
+/*
+ *  Odd rows  (j = 1,3,5,...):
+ *      base_row = (j-1) * w
+ *      offset   = (i-1)                // left -> right
+ *      idx_tile = base_row + offset
+ *
+ *  Even rows (j = 2,4,6,...):
+ *      base_row = (j-1) * w
+ *      offset   = (w - i)              // right -> left
+ *      idx_tile = base_row + offset
+ *
+ *  Then:
+ *      idx = idx_tile + (k-1) * STRIDE
+ *
+ *  All indices returned are 0-based.
+ */
+
+#define APA102_INDEX_IJK(i, j, k)                                                                              \
+    (((j) & 0x01) ? /* odd row: left -> right */                                                               \
+         (((uint32_t)((j) - 1) * APA102_TILE_W) + ((uint32_t)(i) - 1) + ((uint32_t)((k) - 1) * APA102_STRIDE)) \
+                  : /* even row: right -> left */                                                              \
+         (((uint32_t)((j) - 1) * APA102_TILE_W) + (uint32_t)(APA102_TILE_W - (i)) + ((uint32_t)((k) - 1) * APA102_STRIDE)))
+
+/*----------------------------------------------------------------------------
+ *  PUBLIC DRIVER API
+ *---------------------------------------------------------------------------*/
+
+/* Initialize SPI module for APA102 use.
+ *   - Calls spiInitPoll() (Mode, bit order, prescaler from spi.h).
+ *   - Leaves CS high (STOP_SPI) after init.
+ *   - Assumes DATA = MOSI, CLK = SCK as defined in spi.h.
+ */
+void apa102_init(void);
+
+/* Clear framebuffer (all LEDs off).
+ * 'fb' must point to APA102_FB_BYTES bytes.
+ */
+void apa102_fb_clear(uint8_t *fb);
+
+/* Fill framebuffer with a solid RGB color. */
+void apa102_fb_fill(uint8_t *fb,
+                    uint8_t r, uint8_t g, uint8_t b);
+
+/* Set one pixel by (i,j,k). Indices are 1-based; out-of-range is ignored. */
+void apa102_fb_set_ijk(uint8_t *fb,
+                       uint8_t i, uint8_t j, uint8_t k,
+                       uint8_t r, uint8_t g, uint8_t b);
+
+/* Set one pixel by linear index (0-based). */
+void apa102_fb_set_index(uint8_t *fb,
+                         uint32_t idx,
+                         uint8_t r, uint8_t g, uint8_t b);
+
+/* Push framebuffer to the APA102 chain.
+ *
+ * (using spiWritePoll_):
+ *   - START_SPI (assert CS low, LEDs ignore CS)
+ *   - 4 bytes start frame: 0x00 0x00 0x00 0x00
+ *   - For idx = 0 .. APA102_TOTAL_PIXELS-1:
+ *       send: 0xE0 | (APA102_GLOBAL_BRIGHTNESS & 0x1F)
+ *             B, G, R   (from framebuffer)
+ *   - End frame: enough 0xFF/0x00 clocks to latch last LEDs
+ *   - STOP_SPI
+ */
+void apa102_flush(const uint8_t *fb);
+
+/* Power helper:
+ *   Light first pixel (i=1,j=1,k=1) with given color and clear all others.
+ *   Useful for verifying wiring and serpentine mapping.
+ */
+void apa102_test_first(uint8_t r, uint8_t g, uint8_t b);
+
+#endif /* APA102_H */
