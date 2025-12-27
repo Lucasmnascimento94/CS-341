@@ -7,7 +7,7 @@
 # --------------------------------------------------------------------------------------------------------------- #
 ## Purpose
 
-This application note explains how the **SPI protocol** is configured and used on the **ATmega168A**. 
+This application note explains how the **SPI protocol** is configured and used on the **ATmega328**. 
 It outlines how the **memory map** is used to set up the SPI hardware module, how to access the **SPI Data Register (SPDR)** to send and receive data, and how the related **control and status registers** are organized.  
 The goal is to provide a clear reference so other teams can understand SPI operation without needing to parse the full datasheet.
 
