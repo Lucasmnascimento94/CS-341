@@ -43,6 +43,11 @@
 #define SPI_SPE         1       // SPI Enable(1) Disable(0)
 #define SPI_MSTR        1       // MSTR: Master(1)/Slave Select(0)
 
+enum SPI_MODES{
+    SPI_MASTER = 0X00,
+    SPI_SLAVE = 0X01,
+    SPI_MASTER_SLAVE = 0X02
+};
 
 typedef struct {
   volatile uint8_t  *CS_DDR;
@@ -56,7 +61,7 @@ typedef struct{
   uint8_t prescaler; // 2,4,8,16,32,64,128
   uint8_t irq; // 1=use SPI interrupt, 0=poll 
   uint8_t en;  // SPI Enable(1) Disable(0)
-  uint8_t mstr; // MSTR: Master(1)/Slave Select(0) 
+  uint8_t mstr; // SPI MODES
 }SPI_MODE;
 
 typedef struct{
@@ -71,6 +76,7 @@ typedef struct{
 typedef struct {
   SPI_CONF *conf;
   SPI_CS_TARGET  *cs_reg;
+  char *buffer[100];
 }SPI;
 
 /*==============================================================================

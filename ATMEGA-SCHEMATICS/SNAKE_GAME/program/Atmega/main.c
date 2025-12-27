@@ -5,6 +5,7 @@
 #include "sram.h"
 #include "screen.h"
 #include "shared_memory.h"
+#include "isr.h"
 
 #define CS_RAM_PORT GPIOB
 #define CS_RAM_PIN PB1
@@ -30,7 +31,8 @@ int main(void){
     /*________Initialize Protocols______*/
     uartInit(); 
     i2cInit(&i2c, true);   
-    spiInit(&spi);                                                                               
+    spiInit(&spi);
+    ISR_SPI_CONF((char *)spi.buffer);                                                    
     
     /*________Enforce SRAM Sequencial Mode______*/
     //sramWriteModeRegister(&spi, SRAM_MODE_SEQU);
@@ -95,7 +97,7 @@ void sramVarsInit(SPI *spi){
     spi_mode.mode = 0;
     spi_mode.lsbfirst = false;
     spi_mode.prescaler = 2;
-    spi_mode.mstr = true;
+    spi_mode.mstr = SPI_MASTER_SLAVE;
     spi_conf.mode_conf = &spi_mode;
 
     cs_reg.CS_DDR = &DDRB;

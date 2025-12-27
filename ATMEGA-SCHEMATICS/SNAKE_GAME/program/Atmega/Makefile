@@ -36,6 +36,7 @@ SRC_DIRS = \
   src/screen \
   src/sram \
   src/tim \
+  src/isr 
 
   INC_DIRS = \
   ./ \
@@ -45,6 +46,7 @@ SRC_DIRS = \
   includes/screen \
   includes/sram \
   includes/tim \
+  includes/isr 
   
 
 #######################################################################################################################################################                                                                            

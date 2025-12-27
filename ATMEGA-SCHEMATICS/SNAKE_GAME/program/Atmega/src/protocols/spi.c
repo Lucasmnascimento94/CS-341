@@ -19,12 +19,12 @@ void spiConf(SPI *spi);
 void spiGPIO(SPI *spi);
 
 void spiInit(SPI *spi){
-    spiConf(spi);
     spiGPIO(spi);
-
+    spiConf(spi);
+    uint8_t mstr = (spi->conf->mode_conf->mstr == SPI_MASTER || spi->conf->mode_conf->mstr == SPI_MASTER_SLAVE) ? 1 : 0;
     SPCR =  (SPCR & ~_BV(SPIE)) | ((spi->conf->mode_conf->irq& 1u) << SPIE);        // Enable/Disable Interrupt Mode
     SPCR =  (SPCR & ~_BV(DORD)) | ((spi->conf->mode_conf->lsbfirst & 1u)<< DORD);   // Set Data Orientation
-    SPCR =  (SPCR & ~_BV(MSTR)) | ((spi->conf->mode_conf->mstr & 1u)<< MSTR);       // Enable/Disable Master Mode
+    SPCR =  (SPCR & ~_BV(MSTR)) | ((mstr & 1u)<< MSTR);       // Enable/Disable Master Mode
     SPCR =  (SPCR & ~_BV(CPOL)) | ((spi->conf->cpol & 1u)<< CPOL);                  // Set Orientation for clock indle
     SPCR =  (SPCR & ~_BV(CPHA)) | ((spi->conf->cpha & 1u)<< CPHA);                  // Set clock phase
     SPCR =  (SPCR & ~_BV(SPR1)) | ((spi->conf->spr1 & 1u)<< SPR1);                  // Adjust prescaler 
@@ -34,38 +34,28 @@ void spiInit(SPI *spi){
     SPCR =  (SPCR & ~_BV(SPE))  | ((spi->conf->mode_conf->en & 1u)<< SPE);          // Enable/Disable SPI
 }
 
-void spiPause(SPI *spi){
-    spi->conf->mode_conf->en = false;
-    SPCR &=  ~(SPCR & ~_BV(SPE))  & ~((spi->conf->mode_conf->en & 1u)<< SPE);   
-}
-
-void spiResume(SPI *spi){
-    spi->conf->mode_conf->en = true;
-    spiInit(spi);  
-}
-
-void spiStart(SPI *spi){
-    *spi->cs_reg->CS_PORT &= ~(1<<spi->cs_reg->CS_PIN);
-}
-
-void spiStop(SPI *spi){
-    *spi->cs_reg->CS_PORT |= (1<<spi->cs_reg->CS_PIN);
-}
-
 void spiGPIO(SPI *spi){
-    if(spi->conf->mode_conf->mstr){
+    if(spi->conf->mode_conf->mstr == SPI_MASTER){
         DDRB |= (1<<PB5) | (1<<PB3) | (1<<PB2);
         DDRB &= ~(1<<PB4);
-
         PORTB |= (1<<PB5) | (1<<PB4) | (1<<PB3) | (1<<PB2);
 
         /*CS not static to accomodate different targets based on package command*/
         *spi->cs_reg->CS_DDR        |= (1<<spi->cs_reg->CS_PIN);
         *spi->cs_reg->CS_PORT       |= (1<<spi->cs_reg->CS_PIN);
-    } else {
-        DDRB |= (1<<PB4);
+    } else if (spi->conf->mode_conf->mstr == SPI_MASTER_SLAVE){
+        DDRB |= (1<<PB5) | (1<<PB3);
+        DDRB &= ~(1<<PB4) & ~(1<<PB2);
+        PORTB |= (1<<PB5) | (1<<PB4) | (1<<PB3) | (1<<PB2);
+
+        *spi->cs_reg->CS_DDR        |= (1<<spi->cs_reg->CS_PIN);
+        *spi->cs_reg->CS_PORT       |= (1<<spi->cs_reg->CS_PIN);
+    } else if (spi->conf->mode_conf->mstr == SPI_SLAVE){
+                DDRB |= (1<<PB4);
         DDRB &= ~(1<<PB5) & ~(1<<PB3) & ~(1<<PB2);
         PORTB |= (1<<PB5) | (1<<PB4) | (1<<PB3) | (1<<PB2);
+    } else {
+        // Invalid mode, handle error as needed
     }
 }
 
@@ -130,6 +120,24 @@ void spiConf(SPI *spi){
     }
 }
 
+void spiPause(SPI *spi){
+    spi->conf->mode_conf->en = false;
+    SPCR &=  ~(SPCR & ~_BV(SPE))  & ~((spi->conf->mode_conf->en & 1u)<< SPE);   
+}
+
+void spiResume(SPI *spi){
+    spi->conf->mode_conf->en = true;
+    spiInit(spi);  
+}
+
+void spiStart(SPI *spi){
+    *spi->cs_reg->CS_PORT &= ~(1<<spi->cs_reg->CS_PIN);
+}
+
+void spiStop(SPI *spi){
+    *spi->cs_reg->CS_PORT |= (1<<spi->cs_reg->CS_PIN);
+}
+
 /*=============================================================================
  * SPI Protocol – Write (Polling)
  *
@@ -144,13 +152,13 @@ void spiConf(SPI *spi){
  *   - CS is asserted low by caller before write; deasserted after.
  *============================================================================*/
 void spiWritePoll(SPI *spi, char *data){
-
-    spiStart(spi);                         // CS low
+    uint8_t mode = spi->conf->mode_conf->mstr;
+    if(mode == SPI_MASTER || mode == SPI_MASTER_SLAVE) {spiStart(spi);} // CS low
     for(uint16_t i=0; i< strlen(data); i++){
         SPDR = (uint8_t)data[i];        
         while(!(SPSR & (1<<SPIF))){}
     }
-    spiStop(spi);             
+    if(mode == SPI_MASTER || mode == SPI_MASTER_SLAVE) {spiStop(spi);} // CS high
 }
 
 
@@ -215,14 +223,14 @@ uint8_t spiWriteCheckPollByte_(uint8_t data){
  *   - Slave prepared to shift data out (master will clock by writing dummy 0xFF).
  *============================================================================*/
 void spiReadPoll(SPI *spi, char *data, uint16_t size){
-
-    spiStart(spi);
+    uint8_t mode = spi->conf->mode_conf->mstr;
+    if(mode == SPI_MASTER || mode == SPI_MASTER_SLAVE) {spiStart(spi);} // CS low
     for(uint16_t i=0; i<size; i++){
         SPDR = 0x00;
         while(!(SPSR & (1<<SPIF))){}       // Check flag to confirm the data is ready to be read.
         data[i] = SPDR;                       // Get data from buffer
     }
-    spiStop(spi);   
+    if(mode == SPI_MASTER || mode == SPI_MASTER_SLAVE) {spiStop(spi);} // CS high
 }
 
 void spiReadPoll_( uint8_t *data, uint16_t len){

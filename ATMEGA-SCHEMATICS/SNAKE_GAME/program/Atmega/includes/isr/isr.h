@@ -22,7 +22,5 @@
 #ifndef ISR_H
 #define ISR_H
 
-#include "start.h"
-#include "DataStructures.h"
-
+void ISR_SPI_CONF();
 #endif
