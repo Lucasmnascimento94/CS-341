@@ -24,7 +24,7 @@
 
 
 # ===== Project =====
-MCU := atmega328p
+MCU := atmega168
 F_CPU    = 8000000UL
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
 
@@ -70,12 +70,10 @@ ifeq ($(INIT), INIT_UBUNTU)
 # Add any source directories here
 SRC_DIRS = \
   . \
-  lib \
-  libC \
   startSetUp \
-  startSetUp/flash startSetUp/i2c startSetUp/isr startSetUp/spi \
-  startSetUp/sram startSetUp/timer startSetUp/uart startSetUp/allocation \
-  startSetUp/isp startSetUp/target
+  startSetUp/flash startSetUp/spi \
+  startSetUp/sram startSetUp/uart \
+  startSetUp/isp startSetUp/target \
 
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
@@ -92,7 +90,7 @@ CFLAGS  = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra -std=c11 $(INCS) -MMD 
 LDFLAGS = -mmcu=$(MCU)
 
 PROGRAMMER    = usbasp
-AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m328p
+AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m168
 
 # ===== Build =====
 all: $(TARGET).hex size
@@ -134,7 +132,15 @@ endif
 #  Date       : 09/22/2025  
 ifeq ($(INIT), INIT_POSIX)
 # Add any source directories here
-SRC_DIRS = . StartSetUp lib libC snake
+SRC_DIRS = \
+  . \
+  lib \
+  libC \
+  startSetUp \
+  startSetUp/flash startSetUp/i2c startSetUp/isr startSetUp/spi \
+  startSetUp/sram startSetUp/timer startSetUp/uart startSetUp/allocation \
+  startSetUp/isp startSetUp/targetclear
+  
 
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))

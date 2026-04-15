@@ -1,4 +1,4 @@
-# [TOPIC] APPLICATION NOTE
+# SCREEN APPLICATION NOTE
 
 **Author(s):** Lucas Nascimento
 **Date:** 10/13/2025 
@@ -36,189 +36,214 @@ It is intended to provide a clear reference for other teams so they can understa
     **K(LED-)** : LED KATHOD
 
 - Hardware settings.
-    The LCD screen is controlled by a GPIO expander (PCF8574), which is controlled through I2C protocol.
-    Since the PCF8574 only has 8 pins, the screen will be used in 4-bit mode operation with the following wiring:
+    The LCD screen is driven by a **PCF8574 GPIO expander**, which communicates with the microcontroller via the **I²C protocol**.  
+    Because the PCF8574 provides only 8 GPIO pins, the LCD operates in **4-bit mode**.
 
-    P0 (PCF8574) <<<<<<>>>>>> RS  (SCREEN)
-    P1 (PCF8574) <<<<<<>>>>>> R/W (SCREEN)
-    P2 (PCF8574) <<<<<<>>>>>> E   (SCREEN)
-    P3 (PCF8574) <<<<<<>>>>>> B   (SCREEN)
-    P4 (PCF8574) <<<<<<>>>>>> D4  (SCREEN)
-    P5 (PCF8574) <<<<<<>>>>>> D5  (SCREEN)
-    P6 (PCF8574) <<<<<<>>>>>> D6  (SCREEN)
-    P7 (PCF8574) <<<<<<>>>>>> D7  (SCREEN)
+    | PCF8574 Pin | LCD Pin | Description |
+    |--------------|----------|-------------|
+    | P0 | RS | Register Select |
+    | P1 | R/W | Read / Write control |
+    | P2 | E | Enable signal |
+    | P3 | B | Backlight control |
+    | P4 | D4 | Data bit 4 |
+    | P5 | D5 | Data bit 5 |
+    | P6 | D6 | Data bit 6 |
+    | P7 | D7 | Data bit 7 |
 
-- Writing Wave Form:
-    RS   [0-1]
-    R/W  [0]
-    E    [1]
-    DATA [D4-D7]
-    E    [0]
-    ...
-
-- Writing Wave Form:
-    RS   [0-1]
-    R/W  [1]
-    E    [1]
-    DATA [D4-D7]
-    E    [0]
-    ...
+- Writing Wave Form: 
+    Each byte is sent in **two 4-bit transfers** — first the high nibble, then the low nibble.  
+    During each transfer, the **Enable (E)** line toggles high–low while **RS**, **R/W**, and **DATA[4–7]** remain stable.
 
 
-- Opcodes:
-    **CLEAR_DISPLAY** : Clear Display (2ms)
-    [RS::0] [R/W::0] :: 0X01
 
-        Clear all the display data by writing “20H” (space code) to all DDRAM address, and set DDRAM address to “00H” into AC (address counter).
-        Return cursor to the original status, namely, bring the cursor to the left edge on the fist line of the display.
-        Make the entry mode increment (I/D=“High”).
-    
-    **HOME** : Return Home (2ms)
-    [RS::0] [R/W::0] :: 0X02
+| Phase | RS | R/W | E (Enable) | DATA Lines | Description |
+|--------|----|-----|-------------|-------------|--------------|
+| 1 | Set (0 = Command, 1 = Data) | 0 (Write) | Low | D7–D4 = High nibble | Prepare high nibble |
+| 2 | Hold | Hold | **High → Low** | D7–D4 = High nibble | Latch high nibble on **falling edge of E** |
+| 3 | Hold | Hold | Low | D7–D4 = Low nibble | Prepare low nibble |
+| 4 | Hold | Hold | **High → Low** | D7–D4 = Low nibble | Latch low nibble on **falling edge of E** |
 
-        Return home is cursor return home instruction.
-        Set DDRAM address to “00H” into the address counter.
-        Return cursor to its original site and return display to its original status, if shifted.
-        Contents of DDRAM does not change.
-
-    **ENTRY_MODE** : Entry Mode (39us)
-    [RS::0] [R/W::0] :: (0X04) | 0b0000 00(I/D)(SH)
-
-        Set the moving direction of cursor and display.
-        
-        I/D: increment / decrement of DDRAM address (cursor or blink)
-            When I/D=“high”, cursor/blink moves to right and DDRAM address is increased by 1.
-            When I/D=“Low”, cursor/blink moves to left and DDRAM address is increased by 1.   
-            *CGRAM operates the same way as DDRAM, when reading from or writing to CGRAM.
-        
-        SH: shift of entire display
-            When DDRAM read (CGRAM read/write) operation or SH=“Low”, shifting of entire display is not performed. If
-            SH =“High” and DDRAM write operation, shift of entire display is performed according to I/D value. (I/D=“high”.
-            shift left, I/D=“Low”. Shift right).
-
-    **DISPLAY_ON_OFF**  : Display ON/OFF Control
-    [RS::0] [R/W::0] :: (0X08) | 0b0000 0(D)(C)(B)
-
-        D: Display ON/OFF control bit
-            When D=“High”, entire display is turned on.
-            When D=“Low”, display is turned off, but display data remains in DDRAM.
-
-        C: cursor ON/OFF control bit
-            When D=“High”, cursor is turned on.
-            When D=“Low”, cursor is disappeared in current display, but I/D register preserves its data.
-
-        B: Cursor blink ON/OFF control bit
-            When B=“High”, cursor blink is on, which performs alternately between all the “High” data and display
-            characters at the cursor position.
-            When B=“Low”, blink is off.
-
-    **CURSOR** : Cursor or Display Shift (39us)
-    [RS::0] [R/W::0] :: (0X10) | | 0b0000 (S/C)(R/L)00
-
-        Shifting of right/left cursor position or display without writing or reading of display data.
-        This instruction is used to correct or search display data.
-        During 2-line mode display, cursor moves to the 2nd line after the 40th digit of the 1st line.
-        Note that display shift is performed simultaneously in all the lines.
-        When display data is shifted repeatedly, each line is shifted individually.
-        When display shift is performed, the contents of the address counter are not changed.
-
-        |   S/C |   R/L |                                   Operation                                   |
-        |   0   |   0   |   Shift cursor to the left, AC is decreased by 1                              |
-        |   0   |   1   |   Shift cursor to the right, AC is increased by 1                             |
-        |   1   |   0   |   Shift all the display to the left, cursor moves according to the display    |
-        |   1   |   1   |   Shift all the display to the right, cursor moves according to the display   |
-
-    **FUNCTION_SET** : Function Set   (39us)
-    [RS::0] [R/W::0] :: (0x20) | 0b000(DL) (N)(F)00
-
-        DL: Interface data length control bit
-            When DL=“High”, it means 8-bit bus mode with MPU.
-            When DL=“Low”, it means 4-bit bus mode with MPU. Hence, DL is a signal to select 8-bit or 4-bit bus mode.
-            When 4-but bus mode, it needs to transfer 4-bit data twice.
-        
-        N: Display line number control bit
-            When N=“Low”, 1-line display mode is set.
-            When N=“High”, 2-line display mode is set.
-        
-        F: Display line number control bit
-        When F=“Low”, 5x8 dots format display mode is set.
-        When F=“High”, 5x11 dots format display mode.
+> ⚙️ **Summary:**  
+> - `RS` determines whether you’re sending a **command** (`RS = 0`) or **data** (`RS = 1`).  
+> - `R/W` remains **0** for writing.  
+> - Each nibble is latched when **E transitions from HIGH to LOW**.  
+> - Timing between nibbles must meet the LCD’s setup/hold requirements (typically a few microseconds).
 
 
-    **SET_CGRAM_ADDR** : Set CGRAM ADDRESS (39us)
-    [RS::0] [R/W::0]  0X40 | 0b00(AC5)(AC4) (AC3)(AC2)(AC1)(AC0)
 
-        Set CGRAM address to AC.
-        The instruction makes CGRAM data available from MPU.
+## LCD Opcodes Reference
 
-    **SET_DDRAM_ADDR** : Set DDRAM Address (39us)
-    [RS::0] [R/W::0] :: 0X80 | 0b0(AC6)(AC5)(AC4) (AC3)(AC2)(AC1)(AC0)
-
-        Set DDRAM address to AC.
-        This instruction makes DDRAM data available form MPU.
-        When 1-line display mode (N=LOW), DDRAM address is form “00H” to “4FH”.In 2-line display mode (N=High),
-        DDRAM address in the 1st line form “00H” to “27H”, and DDRAM address in the 2nd line is from “40H” to
-        “67H”.
-
-    **READ_BUSY_FLAG** : 
-    [RS::0] [R/W:1] :: 0b(BF)(AC6)(AC5)(AC4) (AC3)(AC2)(AC1)(AC0)
-
-        This instruction shows whether S6A0069 is in internal operation or not.
-        If the resultant BF is “High”, internal operation is in progress and should wait BF is to be LOW, which by then
-        the nest instruction can be performed. In this instruction you can also read the value of the address counter.
-
-    **WRITE_TO_RAM** : Write data to Address (43us)
-    [RS::1] [R/W::0] :: 0b(DB7)(DB6)(DB5)(DB4) (DB3)(DB2)(DB1)(DB0)
-
-        Write binary 8-bit data to DDRAM/CGRAM.
-        The selection of RAM from DDRAM, and CGRAM, is set by the previous address set instruction (DDRAM
-        address set, CGRAM address set).
-        RAM set instruction can also determine the AC direction to RAM.
-        After write operation. The address is automatically increased/decreased by 1, according to the entry mode.
-
-    **READ_FROM_RAM**  : Read data From RAM (43us)
-    [RS::1] [R/W::1] :: 0b(DB7)(DB6)(DB5)(DB4) (DB3)(DB2)(DB1)(DB0)
-
-        Read binary 8-bit data from DDRAM/CGRAM.
-        The selection of RAM is set by the previous address set instruction. If the address set instruction of RAM
-        is not performed before this instruction, the data that has been read first is invalid, as the direction of AC is not
-        yet determined. If RAM data is read several times without RAM address instructions set before, read operation,
-        the correct RAM data can be obtained from the second. But the first data would be incorrect, as there is no
-        time margin to transfer RAM data.
-        In case of DDRAM read operation, cursor shift instruction plays the same role as DDRAM address set
-        instruction, it also transfers RAM data to output data register.
-        After read operation, address counter is automatically increased/decreased by 1 according to the entry
-        mode.
-        After CGRAM read operation, display shift may not be executed correctly.
-        NOTE: In case of RAM write operation, AC is increased/decreased by 1 as in read operation.
-        At this time, AC indicates next address position, but only the previous data can be read by the read
-        instruction.
+Below are the available LCD command opcodes and their functions.  
+All timing values assume standard HD44780/PCF8574 operation at 5 V.
 
 ---
+
+### **CLEAR_DISPLAY** — Clear Display *(~2 ms)*  
+**Opcode:** `0x01`  **[RS = 0, R/W = 0]`
+
+Clears all DDRAM data by writing spaces (`0x20`) to every address, then resets the DDRAM address counter (AC) to `0x00`.
+
+**Effect:**
+- Cursor returns to the top-left position (row 0, column 0).  
+- Entry mode is set to increment (`I/D = 1`).
+
+---
+
+### **HOME** — Return Cursor Home *(~2 ms)*  
+**Opcode:** `0x02`  **[RS = 0, R/W = 0]`
+
+Moves the cursor to the original position (address 0).  
+Display shift (if active) is cleared.  
+DDR content is not modified.
+
+---
+
+### **ENTRY_MODE** — Entry Mode Set *(~39 µs)*  
+**Opcode:** `0x04 | 0b0000 00(I/D)(SH)`  **[RS = 0, R/W = 0]**
+
+Controls cursor direction and display shift behavior.
+
+| Bit | Name | Description |
+|------|------|-------------|
+| I/D | Increment/Decrement | 1 = Cursor moves right (address ++); 0 = Cursor moves left (address – –) |
+| SH | Shift Display | 1 = Shift entire display during write; 0 = No shift |
+
+> 💡 *Both DDRAM and CGRAM follow the same increment/decrement rule.*
+
+---
+
+### **DISPLAY_ON_OFF** — Display Control *(~39 µs)*  
+**Opcode:** `0x08 | 0b0000 0(D)(C)(B)`  **[RS = 0, R/W = 0]**
+
+Controls display power, cursor visibility, and blinking.
+
+| Bit | Name | Description |
+|------|------|-------------|
+| D | Display On | 1 = Display on 0 = Display off (memory retained) |
+| C | Cursor On | 1 = Show cursor 0 = Hide cursor |
+| B | Blink On | 1 = Blink cursor 0 = Static cursor |
+
+---
+
+### **CURSOR** — Cursor / Display Shift *(~39 µs)*  
+**Opcode:** `0x10 | 0b0000 (S/C)(R/L)00`  **[RS = 0, R/W = 0]**
+
+Moves cursor or shifts entire display without altering DDRAM data.
+
+| S/C | R/L | Operation |
+|------|------|------------|
+| 0 | 0 | Move cursor left (AC – 1) |
+| 0 | 1 | Move cursor right (AC + 1) |
+| 1 | 0 | Shift entire display left |
+| 1 | 1 | Shift entire display right |
+
+> During 2-line mode, shifting affects all lines simultaneously.
+
+---
+
+### **FUNCTION_SET** — Interface Configuration *(~39 µs)*  
+**Opcode:** `0x20 | 0b000(DL)(N)(F)00`  **[RS = 0, R/W = 0]**
+
+Sets data length, number of display lines, and font.
+
+| Bit | Name | Description |
+|------|------|-------------|
+| DL | Data Length | 1 = 8-bit mode 0 = 4-bit mode |
+| N | Lines | 1 = 2-line display 0 = 1-line display |
+| F | Font | 1 = 5×11 dots 0 = 5×8 dots |
+
+---
+
+### **SET_CGRAM_ADDR** — Set CGRAM Address *(~39 µs)*  
+**Opcode:** `0x40 | 0b00(AC5)(AC4)(AC3)(AC2)(AC1)(AC0)`  **[RS = 0, R/W = 0]**
+
+Sets the CGRAM address for custom character writes.
+
+---
+
+### **SET_DDRAM_ADDR** — Set DDRAM Address *(~39 µs)*  
+**Opcode:** `0x80 | 0b0(AC6)(AC5)(AC4)(AC3)(AC2)(AC1)(AC0)`  **[RS = 0, R/W = 0]**
+
+Sets the DDRAM address counter.  
+- 1-line mode (N = 0): `00h–4Fh`  
+- 2-line mode (N = 1): line 1 → `00h–27h`, line 2 → `40h–67h`
+
+---
+
+### **READ_BUSY_FLAG** — Read Busy Flag & Address *(~39 µs)*  
+**Opcode:** `0b(BF)(AC6)(AC5)(AC4)(AC3)(AC2)(AC1)(AC0)`  **[RS = 0, R/W = 1]**
+
+Reads the busy flag and current address counter.  
+- `BF = 1`: internal operation in progress — wait until cleared.
+
+---
+
+### **WRITE_TO_RAM** — Write Data *(~43 µs)*  
+**Opcode:** `0b(DB7)(DB6)(DB5)(DB4)(DB3)(DB2)(DB1)(DB0)`  **[RS = 1, R/W = 0]**
+
+Writes 8-bit data to DDRAM or CGRAM (depending on previous address command).  
+Address automatically increments or decrements per **ENTRY_MODE**.
+
+---
+
+### **READ_FROM_RAM** — Read Data *(~43 µs)*  
+**Opcode:** `0b(DB7)(DB6)(DB5)(DB4)(DB3)(DB2)(DB1)(DB0)`  **[RS = 1, R/W = 1]**
+
+Reads 8-bit data from DDRAM or CGRAM.  
+The first read after an address change is invalid (dummy read).  
+Subsequent reads are valid.  
+Address counter auto-increments/decrements after each read.
 
 ## Implementation Flow
 
-Step-by-step description of how this feature is implemented:  
-1. Initialization  
-2. Data flow / command handling  
-3. Error handling  
-4. Interaction with other modules  
+This section describes how the LCD driver is organized and how control/data moves through the system.
+
+### 1) Initialization
+
+1. **Create globals**
+   - `I2C_CONF i2c;`
+   - `SCREEN screen;`
+
+2. **Initialize I²C**
+   - `i2cInit(&i2c, /*default_conf=*/true);`
+   - Programs TWBR/TWPS based on `f_cpu`, target SCL, and prescaler.
+
+3. **Initialize LCD**
+   - `screenInit(&screen);`
+   - Loads defaults (`screenDefault`), sends:
+     - `FUNCTION_SET`
+     - `CLEAR_DISPLAY` (≥1.52 ms)
+     - `ENTRY_MODE` (I/D, SH)
+     - `DISPLAY_ON_OFF` (D/C/B)
+     - `HOME`
+   - Sets software cursor: `current_row = 0`, `current_column = 0`.
 
 ---
 
-## Testing & Validation
+### 2) Data flow / command handling
 
-- Recommended test methods (logic analyzer, oscilloscope, UART logs, etc.).  
-- Expected outcomes
-- Known limitations
+**High-level API:**
+- `screenWrite(&screen, const char *buf)`
+  - For each character:
+    1. Compute DDRAM address with `newAddrLine4()` (returns *current* address, then advances internal `(row,col)` for next char).
+    2. `setCursor(addr, screen.pcf8574_addr)` → issues `SET_DDRAM_ADDR`.
+    3. Pack the byte into two 4-bit writes via `buildDataNibbles()` (RS=1, R/W=0, E high→low for each nibble).
+    4. `i2cWritePol(pkt, 4, screen.pcf8574_addr)` with inter-char delay (≥37 µs).
+
+**Address helpers:**
+- `getAddress(row, column)` → returns DDRAM address for `(row, col)`.
+- `newAddrLine4()` → uses internal `current_row/current_column` to maintain the “next write” position and wrap across lines.
+
+**Command packing:**
+- `buildInstruction(opcode)` (RS=0 path) → emits 4 bytes (hi nibble with E, hi without E, lo with E, lo without E).
+- `buildDataNibbles(byte)` (RS=1 path) → same pattern for data writes.
 
 ---
 
 ## References
 
-- Datasheets used  
-- External application notes or guides  
-- Internal cross-references (e.g., link to related AN docs in this repo)
+- [Datasheets used](https://github.com/Lucasmnascimento94/CS-341/tree/SNAKE_V4_PROGRAMMER_LUCAS/ATMEGA-SCHEMATICS/SNAKE_GAME/datasheet/SCREEN)
+- [Internal cross-references](https://github.com/Lucasmnascimento94/CS-341/tree/SNAKE_V4_PROGRAMMER_LUCAS/ATMEGA-SCHEMATICS/SNAKE_GAME/program/documentation/protocols/i2c)
 
 ---
 
@@ -226,21 +251,4 @@ Step-by-step description of how this feature is implemented:
 
 | Date       | Version | Author     | Notes/Changes |
 |------------|---------|------------|---------------|
-| MM/DD/YYYY | v0.1    | [Name]     | Initial draft |
-| MM/DD/YYYY | v0.2    | [Name]     | Updates/fixes |
-
-
-
-
-
-
-
-
-
-
-
-
-0b0010 1000
-
-1 - 0010 1100
-2 - 1000 1100
+| MM/DD/YYYY | v1.1    | [Lucas_Nascimento]     | Initial draft |

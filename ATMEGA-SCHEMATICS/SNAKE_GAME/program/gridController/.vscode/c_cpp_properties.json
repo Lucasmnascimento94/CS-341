@@ -2,26 +2,30 @@
     "version": 4,
     "configurations": [
         {
-            "name": "macos-clang-arm64",
+            "name": "/opt/homebrew/bin/avr-gcc",
             "compilerPath": "/usr/bin/avr-gcc",
             "compilerArgs": [
                 "-mmcu=atmega168",
-                "-DF_CPU=8000000UL"
+                "-DF_CPU=16000000UL"
             ],
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/gridController",
-                "${workspaceFolder}/gridController/startSetUp",
-                "${workspaceFolder}/gridController/startSetUp/sram",
-                "${workspaceFolder}/gridController/startSetUp/timer",
-                "${workspaceFolder}/gridController/startSetUp/uart",
-                "${workspaceFolder}/gridController/startSetUp/ws2812b",
-                "${workspaceFolder}/gridController/startSetUp/spi",
-                "${workspaceFolder}/gridController/startSetUp/isr",
-                "${workspaceFolder}/gridController/startSetUp/flash",
-                "${workspaceFolder}/gridController/startSetUp/allocation",
-                "${workspaceFolder}/gridController/snake",
-                "${workspaceFolder}/gridController/libC"
+                "${workspaceFolder}/includes/",
+                "${workspaceFolder}/includes/isr",
+                "${workspaceFolder}/includes/protocols",
+                "${workspaceFolder}/includes/screen",
+                "${workspaceFolder}/includes/snake",
+                "${workspaceFolder}/includes/sram",
+                "${workspaceFolder}/includes/tim",
+                "${workspaceFolder}/includes/ws2812b",
+                "${workspaceFolder}/src/",
+                "${workspaceFolder}/src/isr",
+                "${workspaceFolder}/src/protocols",
+                "${workspaceFolder}/src/screen",
+                "${workspaceFolder}/src/snake",
+                "${workspaceFolder}/src/sram",
+                "${workspaceFolder}/src/tim",
+                "${workspaceFolder}/src/ws2812b"
             ],
             "defines": [
                 "__AVR_ATmega168__"

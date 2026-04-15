@@ -1,4 +1,5 @@
 {
+    
     "version": 4,
     "configurations": [
         {
@@ -10,18 +11,15 @@
             ],
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/gridController",
-                "${workspaceFolder}/gridController/startSetUp",
-                "${workspaceFolder}/gridController/startSetUp/sram",
-                "${workspaceFolder}/gridController/startSetUp/timer",
-                "${workspaceFolder}/gridController/startSetUp/uart",
-                "${workspaceFolder}/gridController/startSetUp/ws2812b",
-                "${workspaceFolder}/gridController/startSetUp/spi",
-                "${workspaceFolder}/gridController/startSetUp/isr",
-                "${workspaceFolder}/gridController/startSetUp/flash",
-                "${workspaceFolder}/gridController/startSetUp/allocation",
-                "${workspaceFolder}/gridController/snake",
-                "${workspaceFolder}/gridController/libC"
+                "${workspaceFolder}/",
+                "${workspaceFolder}/data_types",
+                "${workspaceFolder}/startSetUp",
+                "${workspaceFolder}/sram",
+                "${workspaceFolder}/games/snake",
+                "${workspaceFolder}/startSetUp/uart",
+                "${workspaceFolder}/startSetUp/spi",
+                "${workspaceFolder}/startSetUp/flash",
+                "${workspaceFolder}/libC"
             ],
             "defines": [
                 "__AVR_ATmega168__"

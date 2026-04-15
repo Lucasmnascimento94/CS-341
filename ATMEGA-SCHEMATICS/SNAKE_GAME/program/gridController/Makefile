@@ -22,10 +22,34 @@
 
 
 # ===== Project =====
-MCU := atmega168
-F_CPU    = 16000000UL
+MCU := atmega328p
+F_CPU    = 20000000UL
 OS_NAME := $(if $(OS),$(OS),$(shell uname -s 2>/dev/null))
 TARGET := main
+
+# Add any source directories here
+SRC_DIRS = \
+  ./ \
+  src \
+  libC \
+  src/protocols \
+  src/screen \
+  src/snake \
+  src/sram \
+  src/tim \
+  src/ws2812b
+
+  INC_DIRS = \
+  ./ \
+  libC \
+  includes/protocols \
+  includes/ \
+  includes/screen \
+  includes/snake \
+  includes/sram \
+  includes/tim \
+  includes/ws2812b
+  
 
 #######################################################################################################################################################                                                                            
 #                               					 			GRID CONTROLLER MCU                                  	             				  #
@@ -66,21 +90,10 @@ endif
 #  Date       : 09/22/2025                                                  
 ifeq ($(INIT), INIT_UBUNTU)
 
-# Add any source directories here
-SRC_DIRS = \
-  . \
-  lib lib/console lib/esp lib/screen \
-  libC \
-  snake \
-  startSetUp \
-  startSetUp/flash startSetUp/i2c startSetUp/isr startSetUp/spi \
-  startSetUp/sram startSetUp/timer startSetUp/uart startSetUp/ws2812b startSetUp/allocation \
-  ISP
-
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
 OBJS   := $(SRCS:.c=.o)
-INCS   := $(addprefix -I,$(SRC_DIRS))
+INCS   := $(addprefix -I,$(INC_DIRS))
 
 # ===== Tools/Flags =====
 CC      = avr-gcc
@@ -92,7 +105,7 @@ CFLAGS  = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra -std=c11 $(INCS) -MMD 
 LDFLAGS = -mmcu=$(MCU)
 
 PROGRAMMER    = usbasp
-AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m168
+AVRDUDE_FLAGS = -c $(PROGRAMMER) -p m328p
 
 # ===== Build =====
 all: $(TARGET).hex size
@@ -133,20 +146,11 @@ endif
 #  Author     : Lucas Nascimento                                               
 #  Date       : 09/22/2025  
 ifeq ($(INIT), INIT_POSIX)
-# Add any source directories here
-SRC_DIRS = \
-  . \
-  lib lib/console lib/esp lib/screen \
-  libC \
-  snake \
-  startSetUp \
-  startSetUp/flash startSetUp/i2c startSetUp/isr startSetUp/spi \
-  startSetUp/sram startSetUp/timer startSetUp/uart startSetUp/ws2812b startSetUp/allocation
-  
+
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
 OBJS   := $(SRCS:.c=.o)
-INCS   := $(addprefix -I,$(SRC_DIRS))
+INCS   := $(addprefix -I,$(INC_DIRS))
 
 # ===== Tools/Flags =====
 CC      = avr-gcc
@@ -199,6 +203,7 @@ endif
 #  Date       : 09/22/2025  
 ifeq ($(INIT), INIT_WIN)
 
+<<<<<<< HEAD
 # Add any source directories here
 SRC_DIRS = \
   . \
@@ -209,6 +214,8 @@ SRC_DIRS = \
   startSetUp/flash startSetUp/i2c startSetUp/isr startSetUp/spi \
   startSetUp/sram startSetUp/timer startSetUp/uart startSetUp/ws2812b startSetUp/allocation
 
+=======
+>>>>>>> c9ad762b83de567936d50458676836b7f9050e11
 # Auto-discover sources/headers
 SRCS   := $(foreach d,$(SRC_DIRS),$(wildcard $(d)/*.c))
 OBJS   := $(SRCS:.c=.o)
