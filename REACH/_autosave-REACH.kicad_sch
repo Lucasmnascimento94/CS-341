@@ -8710,7 +8710,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "FC-1"
+		(property "Value" "FC-2"
 			(at 640.08 128.27 90)
 			(effects
 				(font
@@ -9249,7 +9249,6 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "a962dbca-0374-4e70-9ec5-3e813fb45c58")
 		(property "Reference" "J9"
 			(at 617.22 182.88 90)
@@ -9260,8 +9259,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "THERMOSTAT"
-			(at 619.76 182.88 90)
+		(property "Value" "RTU"
+			(at 620.776 182.626 90)
 			(effects
 				(font
 					(size 1.27 1.27)
