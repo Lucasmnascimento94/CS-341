@@ -11453,7 +11453,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "FC-1"
+		(property "Value" "FC-2"
 			(at 640.08 128.27 90)
 			(effects
 				(font
